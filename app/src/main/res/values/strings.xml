@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">PrudentialFinance</string>
+    <string name="start">Bắt đầu</string>
+    <string name="introduce1">Hỗ trợ quản lý chi tiêu</string>
+    <string name="introduce2">Quản lý các tài khoản cá nhân, thêm các danh mục chi tiêu, các mục tiêu tài chính bản thân muốn thiết lập.</string>
+    <string name="introduce3">Hỗ trợ các thông tin về tài khoản cá nhân</string>
+    <string name="introduce4">Quản lý các tài khoản cá nhân, thêm các danh mục chi tiêu, các mục tiêu tài chính bản thân muốn thiết lập.</string>
+    <string name="introduce5">Chào mừng quay lại,</string>
+    <string name="introduce6">hãy nhập thông tin để đăng nhập!</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="next">Tiếp tục</string>
+    <string name="greetings">Xin Chào !</string>
+    <string name="email">Email</string>
+    <string name="username">00xshen00@gmail.com</string>
+    <string name="pass">aIRLIkMax6yBC2</string>
+    <string name="password">Mật khẩu</string>
+    <string name="forget_password">Quên mật khẩu ?</string>
+    <string name="signIn">Đăng nhập</string>
+    <string name="or">Hoặc</string>
+    <string name="does_have_an_account">Chưa có tài khoản ?</string>
+    <string name="create_account">Tạo mới tài khoản</string>
+
+
+</resources>

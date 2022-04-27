@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".IntroduceActivity">
+
+    <TextView
+        android:id="@+id/introduceButtonSkip"
+        android:gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/skip"
+        style="@style/text_view_color_theme_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlHardcoded" />
+
+    <FrameLayout
+        android:id="@+id/introPhotoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/device2"
+            android:layout_width="match_parent"
+            android:layout_height="421dp"
+            android:gravity="center"
+            android:src="@drawable/device2" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:paddingStart="60dp"
+            android:src="@drawable/card"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:layout_marginTop="200dp"
+            android:layout_marginStart="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:src="@drawable/contact" />
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_below="@+id/introPhotoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/text_view_color_theme_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:text="@string/introduce3"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            style="@style/text_view_color_normal_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="70dp"
+            android:paddingEnd="60dp"
+            android:text="@string/introduce4"
+            android:textSize="11sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/introduceButtonNext"
+            android:text="@string/start"
+            style="@style/button_style"
+            tools:ignore="InvalidId" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+</RelativeLayout>
