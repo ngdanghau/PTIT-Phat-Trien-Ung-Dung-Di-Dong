@@ -109,8 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                         {
                             setAuthorizedToken( resource.getAccessToken() );
                             /*Print access token*/
-                            System.out.println("Access token: " + token);
-
 
                             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                             startActivity(intent);

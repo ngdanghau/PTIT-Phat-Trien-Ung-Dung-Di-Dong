@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="15dp"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:id="@+id/msgText"
             android:text="This is a popup window."
             android:layout_gravity="center"

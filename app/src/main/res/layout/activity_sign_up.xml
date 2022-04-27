@@ -66,6 +66,14 @@
             android:layout_marginTop="10dp"
             style="@style/custom_input" />
 
+        <EditText
+            android:id="@+id/signUpPassConfirm"
+            android:hint="@string/password_confirm"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/lock"
+            android:layout_marginTop="10dp"
+            style="@style/custom_input" />
+
     </LinearLayout>
 
     <Space

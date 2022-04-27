@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/background_color_launch_screen"
-    tools:context=".LaunchScreen">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_centerInParent="true"

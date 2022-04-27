@@ -27,6 +27,8 @@
     <string name="signUpFirstname">Họ và tên đệm</string>
     <string name="signUpLastname">Tên</string>
     <string name="signUp">Đăng ký</string>
+    <string name="password_confirm">Mhập lại mật khẩu</string>
+
 
 
 

@@ -24,9 +24,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="15dp"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:id="@+id/msgText"
-            android:text=""
+            android:text="dasdadasd"
             android:layout_gravity="center"
             android:textAlignment="center" />
 
@@ -38,7 +38,9 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 style="@style/button_style"
+                android:layout_width="wrap_content"
                 android:id="@+id/btnOK"
+                android:paddingHorizontal="30dp"
                 android:text="OK"/>
             <Space
                 android:layout_width="wrap_content"
@@ -46,6 +48,8 @@
                 android:minWidth="30dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="30dp"
                 style="@style/button_style"
                 android:id="@+id/btnCancel"
                 android:text="Cancel"/>

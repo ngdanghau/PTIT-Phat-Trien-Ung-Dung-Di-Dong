@@ -27,6 +27,15 @@ public interface HTTPRequest {
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
 
+    // Register
+    @FormUrlEncoded
+    @POST("api/signup")
+    Call<Login> signup(
+            @Field("firstname") String firstname, @Field("lastname") String lastname,
+            @Field("email") String email, @Field("password") String password,
+            @Field("password-confirm") String passwordConfirm
+    );
+
 
     /*GET ALL ACCOUNT*/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})
