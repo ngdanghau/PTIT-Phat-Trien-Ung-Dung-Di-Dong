@@ -25,4 +25,13 @@
     <style name="background_color_launch_screen">
         <item name="android:background">#1DAB87</item>
     </style>
+
+    <style name="custom_input">
+        <item name="android:background">@drawable/custom_input</item>
+        <item name="android:drawablePadding">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
 </resources>

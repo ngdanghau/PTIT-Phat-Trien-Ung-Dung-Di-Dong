@@ -19,4 +19,6 @@
 
     <color name="colorTransparentWhite">#cccccc</color>
 
+    <color name="backgroundInput">#ECEEF0</color>
+
 </resources>
