@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.Adapter.SliderAdapter;
+import com.example.prudentialfinance.Model.GlobalVariable;
 
 import org.w3c.dom.Text;
 
@@ -73,10 +75,14 @@ public class IntroduceActivity extends AppCompatActivity {
             }
         });
 
+        GlobalVariable state = ((GlobalVariable) this.getApplication());
+        SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(), this.MODE_PRIVATE);
+
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(currentPage == mDots.length - 1) {
+                    preferences.edit().putBoolean("isFirstOpen", false).apply();
                     StartLogin();
                 }else{
                     mSlideViewPager.setCurrentItem(currentPage + 1);
@@ -87,6 +93,7 @@ public class IntroduceActivity extends AppCompatActivity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                preferences.edit().putBoolean("isFirstOpen", false).apply();
                 StartLogin();
             }
         });

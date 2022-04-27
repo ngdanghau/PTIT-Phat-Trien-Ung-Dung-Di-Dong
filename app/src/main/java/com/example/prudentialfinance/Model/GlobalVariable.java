@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class GlobalVariable extends Application {
 
+    private String appName = "com.example.prudentialfinance";
     private String accessToken;
     private String contentType = "application/x-www-form-urlencoded";
     private Map<String, String> headers;
@@ -26,6 +27,14 @@ public class GlobalVariable extends Application {
         this.contentType = contentType;
     }
 
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
     /***
      * @author Phong-Kaster
