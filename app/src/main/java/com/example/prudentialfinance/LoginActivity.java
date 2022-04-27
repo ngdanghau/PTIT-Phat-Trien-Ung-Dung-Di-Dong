@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.API.HTTPRequest;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
     private LoginViewModel viewModel;
     private String token;
+    private TextView loginTextViewCreateAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setControl() {
         buttonSignIn = findViewById(R.id.loginButtonSignIn);
+        loginTextViewCreateAccount = findViewById(R.id.loginTextViewCreateAccount);
         username = findViewById(R.id.loginTextViewUsername);
         password = findViewById(R.id.loginTextViewPassword);
 
@@ -104,6 +108,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             });
+        });
+
+
+        loginTextViewCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
         });
 
 

@@ -22,4 +22,12 @@
     <string name="create_account">Tạo mới tài khoản</string>
 
 
+
+    <string name="have_a_account">Đã có tài khoản ?</string>
+    <string name="signUpFirstname">Họ và tên đệm</string>
+    <string name="signUpLastname">Tên</string>
+    <string name="signUp">Đăng ký</string>
+
+
+
 </resources>

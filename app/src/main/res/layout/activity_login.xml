@@ -55,7 +55,6 @@
            android:layout_height="10dp"/>
 
        <EditText
-           android:background="@drawable/custom_input"
            android:id="@+id/loginTextViewPassword"
            android:text="@string/pass"
            android:hint="@string/password"
