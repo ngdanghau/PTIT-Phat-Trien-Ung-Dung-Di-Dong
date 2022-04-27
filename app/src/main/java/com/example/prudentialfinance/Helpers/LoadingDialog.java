@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.Lib;
+package com.example.prudentialfinance.Helpers;
 
 import android.app.Activity;
 import android.app.AlertDialog;
