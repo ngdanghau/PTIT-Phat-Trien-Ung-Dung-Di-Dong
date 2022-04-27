@@ -16,4 +16,7 @@
     <color name="colorNormalText">#2D313D</color>
     <color name="colorSupportText">#8D8F97</color>
     <color name="colorBackground">#ffffff</color>
+
+    <color name="colorTransparentWhite">#cccccc</color>
+
 </resources>

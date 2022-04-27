@@ -11,45 +11,29 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    AppCompatButton buttonNext;
-    TextView buttonSkip;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setControl();
-        setEvent();
-    }
 
-    private void setControl()
-    {
-        buttonNext = findViewById(R.id.mainButtonNext);
-        buttonSkip = findViewById(R.id.mainButtonSkip);
+        Thread welcomeThread = new Thread() {
 
-    }
+            @Override
+            public void run() {
+                try {
+                    super.run();
+                    sleep(2000);  //Delay of 10 seconds
+                } catch (Exception e) {
 
-    private void setEvent()
-    {
-        buttonNext.setOnClickListener(view ->{
-            Intent intent = new Intent(MainActivity.this, IntroduceActivity.class);
-            startActivity(intent);
+                } finally {
 
-            /*Swith between light and dark mode*/
-//            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-//                setTheme(R.style.Theme_PrudentialFinance_Dark);
-//                Toast.makeText(this, "set theme light", Toast.LENGTH_SHORT).show();
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//            } else {
-//                setTheme(R.style.Theme_PrudentialFinance);
-//                Toast.makeText(this, "set theme dark", Toast.LENGTH_SHORT).show();
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//            }
-        });
+                    Intent i = new Intent(MainActivity.this, IntroduceActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        };
+        welcomeThread.start();
 
-        buttonSkip.setOnClickListener(view->{
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        });
     }
 }

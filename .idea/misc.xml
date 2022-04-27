@@ -14,7 +14,11 @@
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/layout/activity_introduce.xml" value="0.36923078006541266" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/layout/activity_login.xml" value="0.18461539003270633" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/layout/activity_main.xml" value="0.18461539003270633" />
+        <entry key="app/src/main/res/layout/activity_introduce.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_launch_screen.xml" value="0.33967391304347827" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33967391304347827" />
+        <entry key="app/src/main/res/layout/slide_layout.xml" value="0.375" />
       </map>
     </option>
   </component>
