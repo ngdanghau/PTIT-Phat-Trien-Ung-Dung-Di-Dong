@@ -88,4 +88,17 @@ public class User {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "account_type='" + account_type + '\'' +
+                ", email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", id=" + id +
+                ", is_active=" + is_active +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

@@ -37,6 +37,11 @@ public interface HTTPRequest {
     );
 
 
+    // Register
+    @GET("api/profile")
+    Call<Login> profile(@Header("Authorization") String authorization);
+
+
     /*GET ALL ACCOUNT*/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})
     @GET("api/accounts")

@@ -1,5 +1,6 @@
 package com.example.prudentialfinance;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
@@ -10,8 +11,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.prudentialfinance.API.HTTPRequest;
+import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Model.GlobalVariable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,26 +35,47 @@ public class MainActivity extends AppCompatActivity {
         String accessToken  = preferences.getString("accessToken",null);
         Boolean isFirstOpen  = preferences.getBoolean("isFirstOpen",true);
 
-        state.setAccessToken(accessToken);
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
 
         Thread welcomeThread = new Thread() {
-
             @Override
             public void run() {
-                try {
-                    super.run();
-                    sleep(2000);  //Delay of 10 seconds
-                } catch (Exception e) {
 
-                } finally {
+                if(accessToken != null){
+                    Call<Login> container = api.profile("JWT " + accessToken);
+                    container.enqueue(new Callback<Login>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+                            if(response.isSuccessful())
+                            {
+                                Login resource = response.body();
+                                assert resource != null;
+                                int result = resource.getResult();
 
-                    Intent i;
-                    if (accessToken == null){
-                        i = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
-                    }else{
-                        i = new Intent(MainActivity.this, DashboardActivity.class);
-                    }
+                                Intent i;
+                                if( result == 1 )
+                                {
+                                    state.setAccessToken(accessToken);
+                                    i = new Intent(MainActivity.this, DashboardActivity.class);
+                                }else{
+                                    i = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
+                                    preferences.edit().putString("accessToken", "").apply();
+                                }
 
+                                startActivity(i);
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Login> call, Throwable t) {
+
+                        }
+                    });
+                }else{
+                    Intent i = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
                     startActivity(i);
                     finish();
                 }
