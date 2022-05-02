@@ -4,6 +4,8 @@ import com.example.prudentialfinance.Container.AccountCreate;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.CategoryGetAll;
+import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 
 import java.util.Map;
@@ -27,7 +29,7 @@ public interface HTTPRequest {
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
 
-    // Register
+    /*Register*/
     @FormUrlEncoded
     @POST("api/signup")
     Call<Login> signup(
@@ -42,7 +44,7 @@ public interface HTTPRequest {
     Call<Login> profile(@Header("Authorization") String authorization);
 
 
-    /*GET ALL ACCOUNT*/
+    /****ACCOUNT****/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})
     @GET("api/accounts")
     Call<AccountGetAll> accountGetAll(@Header("Authorization") String authorization);
@@ -53,11 +55,11 @@ public interface HTTPRequest {
     @GET("api/accounts")
     Call<AccountGetAll> accountGetAll3(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> options);
 
-    /*GET BY ID*/
+    /*get by id*/
     @GET("api/accounts/{id}")
     Call<AccountGetById> accountGetById(@HeaderMap Map<String, String> headers, @Path("id") String id);
 
-    /*CREATE ACCOUNT*/
+    /*create*/
     @FormUrlEncoded
     @POST("api/accounts")
     Call<AccountCreate> accountCreate(@HeaderMap Map<String, String> headers,
@@ -66,7 +68,7 @@ public interface HTTPRequest {
                                       @Field("description") String description,
                                       @Field("accountnumber") String accountnumber);
 
-    /*EDIT ACCOUNT*/
+    /*edit*/
     @FormUrlEncoded
     @PUT("api/accounts/{id}")
     Call<AccountEdit> accountEdit(@HeaderMap Map<String, String> headers,
@@ -75,4 +77,21 @@ public interface HTTPRequest {
                                   @Field("balance") int balance,
                                   @Field("description") String description,
                                   @Field("accountnumber") String accountnumber);
+    /****END OF ACCOUNT****/
+
+    /****HOME****/
+
+    @GET("api/home/latestall")
+    Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers);
+
+    /****END OF HOME****/
+
+
+    /****CATEGORY**/
+
+    @GET("api/incomecategories")
+    Call<CategoryGetAll> categoryGetAll(@HeaderMap Map<String, String> headers);
+
+
+    /****END OF CATEGORY****/
 }

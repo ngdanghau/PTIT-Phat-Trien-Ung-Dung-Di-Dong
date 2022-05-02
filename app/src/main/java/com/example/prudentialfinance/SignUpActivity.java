@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
                             setAuthorizedToken( resource.getAccessToken() );
                             /*Print access token*/
 
-                            Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
+                            Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
                             startActivity(intent);
 
 

@@ -9,14 +9,27 @@ public class GlobalVariable extends Application {
 
     private String appName = "com.example.prudentialfinance";
     private String accessToken;
+
     private String contentType = "application/x-www-form-urlencoded";
     private Map<String, String> headers;
+
+
+    private User AuthUser;
+
+    public User getAuthUser() {
+        return AuthUser;
+    }
+
+    public void setAuthUser(User authUser) {
+        AuthUser = authUser;
+    }
+
     public String getAccessToken() {
         return accessToken;
     }
 
     public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+        this.accessToken = "JWT " + accessToken;
     }
 
     public String getContentType() {

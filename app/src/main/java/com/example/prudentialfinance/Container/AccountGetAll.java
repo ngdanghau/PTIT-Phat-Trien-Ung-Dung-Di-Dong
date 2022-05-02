@@ -1,7 +1,11 @@
 package com.example.prudentialfinance.Container;
 
+import com.example.prudentialfinance.Model.Account;
+import com.example.prudentialfinance.Model.Summary;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class AccountGetAll {
 
@@ -9,13 +13,15 @@ public class AccountGetAll {
     @Expose
     private int result;
 
-    @SerializedName("account")
+    @SerializedName("summary")
     @Expose
-    private int account;
+    private Summary summary;
 
-    @SerializedName("msg")
+
+    @SerializedName("data")
     @Expose
-    private String msg;
+    private ArrayList<Account> data;
+
 
     @SerializedName("method")
     @Expose
@@ -29,20 +35,20 @@ public class AccountGetAll {
         this.result = result;
     }
 
-    public int getAccount() {
-        return account;
+    public Summary getSummary() {
+        return summary;
     }
 
-    public void setAccount(int account) {
-        this.account = account;
+    public void setSummary(Summary summary) {
+        this.summary = summary;
     }
 
-    public String getMsg() {
-        return msg;
+    public ArrayList<Account> getData() {
+        return data;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setData(ArrayList<Account> data) {
+        this.data = data;
     }
 
     public String getMethod() {

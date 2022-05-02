@@ -7,23 +7,27 @@ public class Account {
 
     @SerializedName("id")
     @Expose
-    private int id;
+    private Integer id;
+
 
     @SerializedName("name")
     @Expose
     private String name;
 
-    @SerializedName("description")
-    @Expose
-    private String description;
 
     @SerializedName("balance")
     @Expose
-    private int balance;
+    private Integer balance;
+
 
     @SerializedName("accountnumber")
     @Expose
     private String accountnumber;
+
+
+    @SerializedName("description")
+    @Expose
+    private String description;
 
     public int getId() {
         return id;
@@ -63,5 +67,13 @@ public class Account {
 
     public void setAccountnumber(String accountnumber) {
         this.accountnumber = accountnumber;
+    }
+
+    public Account(Integer id, String name, Integer balance, String accountnumber, String description) {
+        this.id = id;
+        this.name = name;
+        this.balance = balance;
+        this.accountnumber = accountnumber;
+        this.description = description;
     }
 }

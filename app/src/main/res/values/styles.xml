@@ -34,4 +34,34 @@
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">20dp</item>
     </style>
+
+    <style name="dashboard_image_button_style">
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:layout_width">40sp</item>
+        <item name="android:layout_height">40sp</item>
+        <item name="android:layout_marginStart">50dp</item>
+        <item name="android:background">@color/colorSupportBackground</item>
+    </style>
+
+    <style name="dashboard_text_view_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">35dp</item>
+        <item name="android:textColor">@color/colorNormalText</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="income_expense_layout_style">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">180dp</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+    <style name="income_expense_text_view_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/colorAlternativeText</item>
+    </style>
 </resources>

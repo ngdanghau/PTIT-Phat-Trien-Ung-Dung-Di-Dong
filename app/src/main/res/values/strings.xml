@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PrudentialFinance</string>
+    <string name="app_name">Prudential Finance</string>
     <string name="start">Bắt đầu</string>
     <string name="introduce1">Hỗ trợ quản lý chi tiêu</string>
     <string name="introduce2">Quản lý các tài khoản cá nhân, thêm các danh mục chi tiêu, các mục tiêu tài chính bản thân muốn thiết lập.</string>
@@ -22,14 +22,28 @@
     <string name="create_account">Tạo mới tài khoản</string>
 
 
-
     <string name="have_a_account">Đã có tài khoản ?</string>
     <string name="signUpFirstname">Họ và tên đệm</string>
     <string name="signUpLastname">Tên</string>
     <string name="signUp">Đăng ký</string>
-    <string name="password_confirm">Mhập lại mật khẩu</string>
-
-
+    <string name="password_confirm">Nhập lại mật khẩu</string>
+    <string name="create_new_account">Tạo một tài khoản</string>
+    <string name="welcome_back">Xin chào, Nguyễn Thành Phong</string>
+    <string name="total_remaining">Tổng số dư</string>
+    <string name="total_remaining_value">$21.129.949</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="transaction">Giao Dịch</string>
+    <string name="income">Thu nhập</string>
+    <string name="expense">Chi phí</string>
+    <string name="goal">Mục tiêu</string>
+    <string name="income_example">$125.000</string>
+    <string name="recent">Gần đây</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Trang chủ</string>
+    <string name="setting">Cài đặt</string>
+    <string name="account">Tài khoản</string>
+    <string name="menus">Danh mục</string>
 
 
 </resources>

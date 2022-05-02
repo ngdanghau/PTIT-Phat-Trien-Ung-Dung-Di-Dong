@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorBackground"
     android:layout_height="match_parent"
-    tools:context=".Dashboard">
+    tools:context=".Fragment.HomeFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <!-- TODO: Update blank fragment layout -->
 
     <!-- HEADER -->
     <RelativeLayout
         android:orientation="vertical"
-        android:background="@color/colorTheme"
+        android:background="@drawable/home_fragment_header_style"
         android:layout_width="match_parent"
         android:layout_height="180dp">
 
 
         <TextView
-            android:id="@+id/dashboardTitle"
+            android:id="@+id/fragmentHomeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
@@ -27,10 +30,10 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/dashboardUsername"
+            android:id="@+id/fragmentHomeUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dashboardTitle"
+            android:layout_below="@+id/fragmentHomeTitle"
             android:layout_marginStart="20sp"
             android:layout_marginTop="3sp"
             android:text="@string/dashboard"
@@ -38,19 +41,19 @@
             android:textSize="12sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/dashboardButtonMenu"
+            android:id="@+id/fragmentHomeButtonMenu"
             android:layout_width="40sp"
             android:layout_height="40sp"
             android:layout_marginStart="-76dp"
             android:layout_marginTop="30dp"
-            android:layout_toEndOf="@+id/dashboardTitle"
+            android:layout_toEndOf="@+id/fragmentHomeTitle"
             android:src="@drawable/blue" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dashboardUsername"
+            android:layout_below="@+id/fragmentHomeUsername"
             android:layout_marginStart="20sp"
             android:layout_marginTop="20dp"
             android:text="@string/total_remaining"
@@ -61,7 +64,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dashboardUsername"
+            android:layout_below="@+id/fragmentHomeUsername"
             android:layout_marginStart="20sp"
             android:layout_marginTop="50sp"
             android:text="@string/total_remaining_value"
@@ -93,7 +96,7 @@
                 android:textColor="@color/colorAlternativeText" />
 
             <TextView
-                android:id="@+id/dashboardTotalIncome"
+                android:id="@+id/fragmentHomeTotalIncome"
                 style="@style/income_expense_text_view_style"
                 android:text="@string/income_example"
                 android:textStyle="bold" />
@@ -114,7 +117,7 @@
                 style="@style/income_expense_text_view_style" />
 
             <TextView
-                android:id="@+id/dashboardTotalExpense"
+                android:id="@+id/fragmentHomeTotalExpense"
                 style="@style/income_expense_text_view_style"
                 android:text="@string/income_example"
                 android:textStyle="bold" />
@@ -134,63 +137,63 @@
         tools:ignore="UseCompoundDrawables">
         <!-- Button Transactions -->
         <ImageButton
-            android:id="@+id/dashboardButtonTransactions"
+            android:id="@+id/fragmentHomeButtonTransactions"
             style="@style/dashboard_image_button_style"
             android:src="@drawable/transaction"
             tools:ignore="ContentDescription" />
 
         <TextView
             style="@style/dashboard_text_view_style"
-            android:id="@+id/dashboardTitleTransactions"
-            android:layout_below="@+id/dashboardButtonTransactions"
+            android:id="@+id/fragmentHomeTitleTransactions"
+            android:layout_below="@+id/fragmentHomeButtonTransactions"
             android:layout_marginStart="40dp"
             android:text="@string/transaction"/>
 
 
         <!-- Button Income Statistics -->
         <ImageButton
-            android:id="@+id/dashboardButtonIncomeStatistics"
+            android:id="@+id/fragmentHomeButtonIncomeStatistics"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/dashboardButtonTransactions"
+            android:layout_toEndOf="@+id/fragmentHomeButtonTransactions"
             android:src="@drawable/increased_list"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/dashboardTitleIncomeStatistics"
+            android:id="@+id/fragmentHomeTitleIncomeStatistics"
             style="@style/dashboard_text_view_style"
-            android:layout_below="@+id/dashboardButtonTransactions"
-            android:layout_toEndOf="@+id/dashboardTitleTransactions"
+            android:layout_below="@+id/fragmentHomeButtonTransactions"
+            android:layout_toEndOf="@+id/fragmentHomeTitleTransactions"
             android:text="@string/income" />
 
         <!-- Button Expense Statistics -->
         <ImageButton
-            android:id="@+id/dashboardButtonExpenseStatistics"
+            android:id="@+id/fragmentHomeButtonExpenseStatistics"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/dashboardButtonIncomeStatistics"
+            android:layout_toEndOf="@+id/fragmentHomeButtonIncomeStatistics"
             android:src="@drawable/decreased_list"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/dashboardTitleExpenseStatistics"
+            android:id="@+id/fragmentHomeTitleExpenseStatistics"
             style="@style/dashboard_text_view_style"
-            android:layout_below="@+id/dashboardButtonIncomeStatistics"
-            android:layout_toEndOf="@id/dashboardTitleIncomeStatistics"
+            android:layout_below="@+id/fragmentHomeButtonIncomeStatistics"
+            android:layout_toEndOf="@id/fragmentHomeTitleIncomeStatistics"
             android:text="@string/expense" />
 
 
         <!-- Button Goal -->
         <ImageButton
-            android:id="@+id/dashboardButtonGoal"
+            android:id="@+id/fragmentHomeButtonGoal"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/dashboardButtonExpenseStatistics"
+            android:layout_toEndOf="@+id/fragmentHomeButtonExpenseStatistics"
             android:src="@drawable/goal"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/dashboardTitleGoal"
             style="@style/dashboard_text_view_style"
-            android:layout_below="@+id/dashboardButtonGoal"
-            android:layout_toEndOf="@+id/dashboardButtonExpenseStatistics"
+            android:layout_below="@+id/fragmentHomeButtonGoal"
+            android:layout_toEndOf="@+id/fragmentHomeButtonExpenseStatistics"
             android:text="@string/goal" />
 
     </RelativeLayout>
@@ -216,12 +219,11 @@
             android:textColor="@color/colorSupportText" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dashboardRecentTractions"
+            android:id="@+id/fragmentHomeRecentTransactions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/recentImage" />
 
     </RelativeLayout>
-
-
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>
