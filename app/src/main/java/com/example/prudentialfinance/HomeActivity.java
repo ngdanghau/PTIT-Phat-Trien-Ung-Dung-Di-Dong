@@ -20,8 +20,11 @@ import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
+import com.example.prudentialfinance.Fragment.AccountFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
+import com.example.prudentialfinance.Fragment.SettingFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
 
@@ -60,10 +63,13 @@ public class HomeActivity extends AppCompatActivity {
         binding.bottomNavigationMenu.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.shortcutHome:
+                    fragment = new HomeFragment();
                     break;
                 case R.id.shortcutAccount:
+                    fragment = new AccountFragment();
                     break;
                 case R.id.shortcutSetting:
+                    fragment = new SettingFragment();
                     break;
             }
             enableFragment(fragment);
@@ -78,23 +84,32 @@ public class HomeActivity extends AppCompatActivity {
      * */
     private void enableFragment(Fragment fragment)
     {
+        /*Step 1*/
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
-        String name = "Hau";
-        Map<String, String > headers = ((GlobalVariable)getApplication()).getHeaders();
 
+        /*Step 2*/
+        Map<String, String > headers = ((GlobalVariable)getApplication()).getHeaders();
         String accessToken = headers.get("Authorization");
         String contentType = headers.get("Content-Type");
 
+        User AuthUser = ((GlobalVariable)getApplication()).getAuthUser();
+
+
+        /*Step 3*/
         Bundle bundle = new Bundle();
-        bundle.putString("name", name);
+
         bundle.putString("accessToken", accessToken);
         bundle.putString("contentType", contentType);
+        bundle.putParcelable("AuthUser", AuthUser);
 
         fragment.setArguments(bundle);
 
+
+        /*Step 4*/
         transaction.replace(R.id.frameLayout, fragment);
         transaction.commit();
     }
+
 }

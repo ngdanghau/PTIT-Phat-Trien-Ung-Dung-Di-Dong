@@ -1,9 +1,12 @@
 package com.example.prudentialfinance.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class User implements Parcelable {
 
     @SerializedName("account_type")
     @Expose
@@ -100,5 +103,15 @@ public class User {
                 ", is_active=" + is_active +
                 ", date='" + date + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
     }
 }
