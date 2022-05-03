@@ -24,8 +24,8 @@
         android:icon="@drawable/shortcut_transaction_state"/>
 
     <item
-        android:id="@+id/shortcutAccount"
-        android:title="@string/profile"
+        android:id="@+id/shortcutSettings"
+        android:title="@string/setting"
         app:labelVisibilityMode="unlabeled"
         android:icon="@drawable/shortcut_account_state"/>
 </menu>

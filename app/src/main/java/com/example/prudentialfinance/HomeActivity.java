@@ -11,22 +11,12 @@ import android.os.Bundle;
 
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
-import com.example.prudentialfinance.Fragment.ProfileFragment;
+import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
-import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -57,8 +47,8 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.shortcutCard:
                     fragment = new CardFragment();
                     break;
-                case R.id.shortcutAccount:
-                    fragment = new ProfileFragment();
+                case R.id.shortcutSettings:
+                    fragment = new SettingsFragment();
                     break;
             }
             enableFragment(fragment);
