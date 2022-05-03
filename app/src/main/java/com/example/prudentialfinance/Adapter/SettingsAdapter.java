@@ -13,10 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
-import com.example.prudentialfinance.Settings.ProfileActivity;
 
 import java.util.ArrayList;
 
