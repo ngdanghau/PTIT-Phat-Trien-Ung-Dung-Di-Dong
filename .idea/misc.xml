@@ -76,6 +76,8 @@
         <entry key="app/src/main/res/drawable/home_fragment_header_style.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/ic_baseline_web_24.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_info.xml" value="0.212" />

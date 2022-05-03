@@ -57,6 +57,25 @@
 
     <string name="old_password">Mật khẩu cũ</string>
     <string name="change_password">Thay đổi mật khẩu</string>
+    <string name="change_password_detail">Đổi mật khẩu và xác nhận mật khẩu mới để đăng nhập.</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="site_settings">Cài đặt chung</string>
+    <string name="application">Ứng dụng</string>
+    <string name="logo">Logo</string>
+    <string name="other">Khác</string>
+    <string name="logotype">Logotype</string>
+    <string name="logomark">Logomark</string>
+    <string name="currency">Tiền tệ</string>
+    <string name="language">Ngôn ngữ</string>
+
+
+    <string name="site_name">Tên site</string>
+    <string name="site_slogan">Khẩu hiệu</string>
+    <string name="site_keyword">Từ khoá</string>
+    <string name="site_description">Mô tả</string>
+
+
+
 
 
 </resources>

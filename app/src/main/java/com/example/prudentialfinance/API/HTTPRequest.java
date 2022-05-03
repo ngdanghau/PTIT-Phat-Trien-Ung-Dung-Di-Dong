@@ -8,6 +8,7 @@ import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
+import com.example.prudentialfinance.Container.SiteSettingsResponse;
 
 import java.util.Map;
 
@@ -56,6 +57,25 @@ public interface HTTPRequest {
     Call<Login> changePassword(@HeaderMap Map<String, String> headers,
                               @Field("password") String newPass, @Field("password-confirm") String confirmPass,
                               @Field("current-password") String currentPass);
+
+    /** Application settings*/
+
+
+    @GET("api/settings/site")
+    Call<SiteSettingsResponse> getSiteSettings(@HeaderMap Map<String, String> headers);
+
+    @FormUrlEncoded
+    @POST("api/settings/site")
+    Call<SiteSettingsResponse> saveSiteSettings(@HeaderMap Map<String, String> headers,
+                                                @Field("action") String action,
+                                                @Field("site_name") String site_name,
+                                                @Field("site_slogan") String site_slogan,
+                                                @Field("site_description") String site_description,
+                                                @Field("site_keywords") String site_keywords,
+                                                @Field("logotype") String logotype,
+                                                @Field("logomark") String logomark,
+                                                @Field("language") String language,
+                                                @Field("currency") String currency);
 
     /***************************ACCOUNT***************************/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})

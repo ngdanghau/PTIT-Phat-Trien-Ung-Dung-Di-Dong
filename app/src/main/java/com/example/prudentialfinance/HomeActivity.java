@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
 
         bundle.putString("accessToken", accessToken);
         bundle.putString("contentType", contentType);
+        bundle.putString("accountType", AuthUser.getAccount_type());
         bundle.putParcelable("AuthUser", AuthUser);
 
         fragment.setArguments(bundle);

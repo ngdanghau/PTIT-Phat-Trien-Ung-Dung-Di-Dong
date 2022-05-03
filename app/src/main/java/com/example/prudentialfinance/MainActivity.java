@@ -86,19 +86,10 @@ public class MainActivity extends AppCompatActivity {
 
                                 Intent i;
 
-                                User AuthUser = new User();
-                                AuthUser.setAccount_type( resource.getData().getAccount_type() );
-                                AuthUser.setEmail(        resource.getData().getEmail() );
-                                AuthUser.setFirstname(    resource.getData().getFirstname() );
-                                AuthUser.setLastname(     resource.getData().getLastname() );
-                                AuthUser.setId(           resource.getData().getId() );
-                                AuthUser.setIs_active(    resource.getData().getIs_active());
-                                AuthUser.setDate(         resource.getData().getDate() );
-                                globalVariable.setAuthUser( AuthUser );
-
                                 /*First situation*/
                                 if( result == 1 )
                                 {
+                                    globalVariable.setAuthUser( resource.getData() );
                                     globalVariable.setAccessToken(accessToken);
                                     i = new Intent(MainActivity.this, HomeActivity.class);
                                 }
