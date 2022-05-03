@@ -9,6 +9,11 @@
         android:id="@+id/shortcutSetting"
         android:title="@string/setting"
         android:icon="@drawable/icon_setting"/>
+
+    <item
+        android:id="@+id/addIcon"
+        android:title=""/>
+
     <item
         android:id="@+id/shortcutAccount"
         android:title="@string/account"

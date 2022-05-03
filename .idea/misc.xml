@@ -39,15 +39,19 @@
         <entry key="app/src/main/res/drawable/custom_input.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/layout_custom_dialog.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/transparent_background.xml" value="0.2775" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_introduce.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_launch_screen.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33967391304347827" />
+        <entry key="app/src/main/res/layout/activity_main2.xml" value="0.4615036231884058" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/confirm_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/normal_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/slide_layout.xml" value="0.375" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.47314814814814815" />
       </map>
     </option>
   </component>
