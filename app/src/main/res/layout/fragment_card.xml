@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.CardFragment">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/cardFragmentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="@color/colorNormalText"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Danh sách thẻ" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cardFragmentRecycleView"
+            android:layout_width="401dp"
+            android:layout_height="517dp"
+            android:layout_above="@+id/cardFragmentCreate"
+            android:layout_below="@+id/cardFragmentTitle"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cardFragmentCreate"
+            style="@style/button_style"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="28dp"
+            android:text="@string/create_card" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>
