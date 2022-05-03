@@ -4,26 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.Parcelable;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.prudentialfinance.API.HTTPRequest;
-import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.AccountGetAll;
-import com.example.prudentialfinance.Container.CategoryGetAll;
-import com.example.prudentialfinance.Container.HomeLatestTransactions;
-import com.example.prudentialfinance.Container.Login;
-import com.example.prudentialfinance.Fragment.AccountFragment;
+
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
-import com.example.prudentialfinance.Fragment.SettingFragment;
+import com.example.prudentialfinance.Fragment.ProfileFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
@@ -70,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new CardFragment();
                     break;
                 case R.id.shortcutAccount:
-                    fragment = new AccountFragment();
+                    fragment = new ProfileFragment();
                     break;
             }
             enableFragment(fragment);

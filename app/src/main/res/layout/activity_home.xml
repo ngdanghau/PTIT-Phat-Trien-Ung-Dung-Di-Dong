@@ -31,8 +31,8 @@
 
             android:layout_marginRight="16dp"
             android:background="@drawable/transparent_background"
-            app:itemIconTint="@drawable/item_menu_state"
-            app:itemTextColor="@drawable/item_menu_state"
+            app:itemIconTint="@drawable/shortcut_color_state"
+            app:itemTextColor="@drawable/shortcut_color_state"
             app:menu="@menu/bottom_navigation_menu" />
 
     </com.google.android.material.bottomappbar.BottomAppBar>

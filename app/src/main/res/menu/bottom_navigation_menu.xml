@@ -15,9 +15,7 @@
 
     <item
         android:id="@+id/shortcutCreate"
-        android:title="@string/create_new_transaction"
-        app:labelVisibilityMode="unlabeled"
-        android:icon="@drawable/shortcut_creation_state"/>
+        android:title=""/>
 
     <item
         android:id="@+id/shortcutTransaction"
@@ -27,7 +25,7 @@
 
     <item
         android:id="@+id/shortcutAccount"
-        android:title="@string/account"
+        android:title="@string/profile"
         app:labelVisibilityMode="unlabeled"
         android:icon="@drawable/shortcut_account_state"/>
 </menu>
