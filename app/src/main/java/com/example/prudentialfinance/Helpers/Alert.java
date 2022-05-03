@@ -1,19 +1,25 @@
 package com.example.prudentialfinance.Helpers;
 
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.prudentialfinance.LoginActivity;
 import com.example.prudentialfinance.R;
 
 public class Alert {
-    private Dialog dialog;
+    private View viewAlert;
+    private AlertDialog alert;
     private Context context;
-    private TextView msgText;
+    private TextView msgText, alertTitle;
     private ImageView iconAlert;
     public Button btnOK;
     public Button btnCancel;
@@ -23,45 +29,75 @@ public class Alert {
     }
 
     public void normal(){
-        dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.normal_alert);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(true);
+        viewAlert = View.inflate(context, R.layout.normal_alert, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(viewAlert);
+
+        alert = builder.create();
+        alert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        alert.setCancelable(false);
 
         setControl();
     }
 
     public void confirm(){
-        dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.confirm_alert);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(true);
+        viewAlert = View.inflate(context, R.layout.confirm_alert, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(viewAlert);
+
+        alert = builder.create();
+        alert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        alert.setCancelable(false);
+
         setControl();
     }
 
     private void setControl(){
-        msgText = dialog.findViewById(R.id.msgText);
-        iconAlert = dialog.findViewById(R.id.iconAlert);
-        btnOK = dialog.findViewById(R.id.btnOK);
-        btnCancel = dialog.findViewById(R.id.btnCancel);
+        msgText = viewAlert.findViewById(R.id.msgText);
+        alertTitle = viewAlert.findViewById(R.id.alertTitle);
+        iconAlert = viewAlert.findViewById(R.id.iconAlert);
+        btnOK = viewAlert.findViewById(R.id.btnOK);
+        btnCancel = viewAlert.findViewById(R.id.btnCancel);
     }
 
-    public void showAlert(String title, Integer ico){
-        msgText.setText(title);
-        iconAlert.setBackgroundResource(ico);
-        dialog.show();
+    public void showAlert(String title, String msg, Integer ico){
+        switch (ico){
+            case R.drawable.ic_close:
+                iconAlert.setBackgroundResource(R.drawable.bg_alert_danger);
+                break;
+            case R.drawable.ic_info:
+                iconAlert.setBackgroundResource(R.drawable.bg_alert_info);
+                break;
+            case R.drawable.ic_check:
+                iconAlert.setBackgroundResource(R.drawable.bg_alert_success);
+                break;
+        }
+        iconAlert.setImageResource(ico);
+        msgText.setText(msg);
+        alertTitle.setText(title);
+        alert.show();
     }
 
-    public void showAlert(Integer resid, Integer ico){
+    public void showAlert(Integer resid,  String msg, Integer ico){
         String title = context.getResources().getString(resid);
-        msgText.setText(title);
-        iconAlert.setBackgroundResource(ico);
-        dialog.show();
+        switch (ico){
+            case R.drawable.ic_close:
+                iconAlert.setBackgroundResource(R.drawable.bg_alert_danger);
+                break;
+            case R.drawable.ic_info:
+                iconAlert.setBackgroundResource(R.drawable.bg_alert_info);
+                break;
+            case R.drawable.ic_check:
+                iconAlert.setBackgroundResource(R.drawable.bg_alert_success);
+                break;
+        }
+        iconAlert.setImageResource(ico);
+        msgText.setText(msg);
+        alertTitle.setText(title);
+        alert.show();
     }
 
     public void dismiss(){
-        dialog.dismiss();
+        alert.dismiss();
     }
 }

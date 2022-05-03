@@ -111,7 +111,7 @@ public class SignUpActivity extends AppCompatActivity {
                         else
                         {
                             setAuthorizedToken( "" );
-                            alert.showAlert(resource.getMsg(), R.drawable.info_icon);
+                            alert.showAlert("Oops!",resource.getMsg(), R.drawable.info_icon);
                         }
                     }
                 }

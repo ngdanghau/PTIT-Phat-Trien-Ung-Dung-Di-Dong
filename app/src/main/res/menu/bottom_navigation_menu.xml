@@ -14,12 +14,14 @@
         android:id="@+id/addIcon"
         android:title=""/>
 
-    <item
-        android:id="@+id/shortcutAccount"
-        android:title="@string/account"
-        android:icon="@drawable/icon_account"/>
+
     <item
         android:id="@+id/shortcutMenus"
         android:title="@string/menus"
         android:icon="@drawable/icon_menu"/>
+
+    <item
+        android:id="@+id/shortcutProfile"
+        android:title="@string/profile"
+        android:icon="@drawable/icon_account"/>
 </menu>
