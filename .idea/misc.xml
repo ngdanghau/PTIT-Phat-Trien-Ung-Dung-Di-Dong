@@ -37,12 +37,15 @@
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/layout/activity_login.xml" value="0.18461539003270633" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/layout/activity_main.xml" value="0.18461539003270633" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/back_btn_background.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/bg_alert_danger.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/bg_alert_info.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/bg_alert_success.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/bg_alert_warning.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/bg_linear_layout.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/chevron_left.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/custom_input.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/home_fragment_header_style.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.212" />
