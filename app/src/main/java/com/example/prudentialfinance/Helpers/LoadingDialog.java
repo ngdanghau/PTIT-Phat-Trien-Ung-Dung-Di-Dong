@@ -22,6 +22,7 @@ public class LoadingDialog {
         builder.setCancelable(false);
 
         dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
     }
 

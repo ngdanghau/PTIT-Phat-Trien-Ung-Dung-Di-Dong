@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         {
                             setAuthorizedToken( "" );
 
-                            alert.showAlert(resource.getMsg(), R.drawable.info_icon);
+                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_check);
                         }
                     }
                 }

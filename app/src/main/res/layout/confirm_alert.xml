@@ -1,59 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#ffffff"
-    android:paddingBottom="20dp"
-    android:paddingTop="20dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/ll"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/info_icon"
-            android:id="@+id/iconAlert"
-            android:layout_gravity="center"/>
+        android:background="@drawable/bg_linear_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="15dp"
-            android:textSize="18sp"
+            android:layout_marginTop="50dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/alertTitle"
+            android:text="Info!"
+            android:textAlignment="center"
+            android:textColor="@color/colorTheme"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/msgText"
-            android:text="dasdadasd"
-            android:layout_gravity="center"
-            android:textAlignment="center" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:text="Xác nhận xoá!"
+            android:textAlignment="center"
+            android:textColor="@color/colorSupportText"
+            android:textSize="16sp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/button_style"
-                android:layout_width="wrap_content"
-                android:id="@+id/btnOK"
-                android:paddingHorizontal="30dp"
-                android:text="OK"/>
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="30dp"/>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:paddingHorizontal="30dp"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          android:layout_marginBottom="20dp"
+          >
+          <androidx.appcompat.widget.AppCompatButton
+              style="@style/button_style"
+              android:layout_width="wrap_content"
+              android:paddingHorizontal="40dp"
+              android:id="@+id/btnOK"
+              android:text="OK"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:paddingHorizontal="30dp"
-                style="@style/button_style"
-                android:id="@+id/btnCancel"
-                android:text="Cancel"/>
-        </LinearLayout>
+          <androidx.appcompat.widget.AppCompatButton
+              style="@style/button_style"
+              android:id="@+id/btnCancel"
+              android:layout_width="wrap_content"
+              android:paddingHorizontal="40dp"
+              android:layout_marginLeft="16dp"
+              android:text="Cancel"/>
+
+      </LinearLayout>
+
+
     </LinearLayout>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/iconAlert"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_alert_warning"
+        android:src="@drawable/ic_info"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/ll"
+        app:layout_constraintTop_toTopOf="@id/ll"
+        app:layout_constraintStart_toStartOf="@id/ll"
+        app:layout_constraintEnd_toEndOf="@id/ll"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
