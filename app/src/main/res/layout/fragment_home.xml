@@ -20,7 +20,7 @@
 
 
         <TextView
-            android:id="@+id/fragmentHomeTitle"
+            android:id="@+id/fragmentHomeAuthName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
@@ -30,10 +30,10 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/fragmentHomeUsername"
+            android:id="@+id/fragmentHomeTitleHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragmentHomeTitle"
+            android:layout_below="@+id/fragmentHomeAuthName"
             android:layout_marginStart="20sp"
             android:layout_marginTop="3sp"
             android:text="@string/dashboard"
@@ -41,19 +41,19 @@
             android:textSize="12sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/fragmentHomeButtonMenu"
+            android:id="@+id/fragmentHomeAuthAvatar"
             android:layout_width="40sp"
             android:layout_height="40sp"
             android:layout_marginStart="-76dp"
             android:layout_marginTop="30dp"
-            android:layout_toEndOf="@+id/fragmentHomeTitle"
+            android:layout_toEndOf="@+id/fragmentHomeTitleHeader"
             android:src="@drawable/blue" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragmentHomeUsername"
+            android:layout_below="@+id/fragmentHomeTitleHeader"
             android:layout_marginStart="20sp"
             android:layout_marginTop="20dp"
             android:text="@string/total_remaining"
@@ -62,9 +62,10 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/fragmentHomeAuthRemaining"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragmentHomeUsername"
+            android:layout_below="@+id/fragmentHomeTitleHeader"
             android:layout_marginStart="20sp"
             android:layout_marginTop="50sp"
             android:text="@string/total_remaining_value"
@@ -215,6 +216,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/recentImage"
+            android:textSize="12dp"
             android:text="@string/recent"
             android:textColor="@color/colorSupportText" />
 

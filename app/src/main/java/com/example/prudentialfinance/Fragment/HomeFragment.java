@@ -14,24 +14,19 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.CategoryGetAll;
-import com.example.prudentialfinance.Container.HomeLatestTransactions;
+import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
-import com.example.prudentialfinance.Dashboard;
-import com.example.prudentialfinance.Model.Account;
-import com.example.prudentialfinance.Model.Category;
-import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
@@ -39,14 +34,16 @@ import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.HeaderMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +65,11 @@ public class HomeFragment extends Fragment {
      private TransactionRecycleViewAdapter adapter;
 
      private HomeFragmentViewModel viewModel;
+     private TextView name, remaining;
+     private CircleImageView avatar;
+
+     private User AuthUser;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -84,22 +86,24 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        String name = this.getArguments().getString("name");
 
-
-
+        /*get parameters from home activity sends to this fragment*/
+        AuthUser = this.getArguments().getParcelable("AuthUser");
         String accessToken = this.getArguments().getString("accessToken");
         String contentType = this.getArguments().getString("contentType");
 
 
+        /*initialize headers to attach HTTP Request*/
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", accessToken);
+        headers.put("Content-Type", contentType);
 
-        System.out.println("Bundle access token: " + accessToken);
-        System.out.println("Bundle contentType: " + contentType);
-        System.out.println("Bundle name: " + name);
+
+        /*establish necessary functions*/
         setControl(view);
-        setViewModel(view);
+        setViewModel(view, headers);
         setEvent();
-
+        setScreen();
         return view;
     }
 
@@ -111,78 +115,73 @@ public class HomeFragment extends Fragment {
     private void setControl(View view) {
         buttonTransaction       = view.findViewById(R.id.fragmentHomeButtonTransactions);
         buttonIncomeStatistics  = view.findViewById(R.id.fragmentHomeButtonIncomeStatistics);
+
         buttonExpenseStatistics = view.findViewById(R.id.fragmentHomeButtonExpenseStatistics);
         buttonButtonGoal        = view.findViewById(R.id.fragmentHomeButtonGoal);
 
         recycleView  = view.findViewById(R.id.fragmentHomeRecentTransactions);
-
+        name = view.findViewById(R.id.fragmentHomeAuthName);
+        avatar = view.findViewById(R.id.fragmentHomeAuthAvatar);
+        remaining = view.findViewById(R.id.fragmentHomeAuthRemaining);
     }
 
     /**
      * @author Phong-Kaster
+     *
+     * @param view is the current context of the fragment
+     * @param headers is used to attach to HTTP Request headers include Access-Token and Content-Type
+     *
      * Step 1: declare viewModel which will be used in this fragment
      * Step 2: retrieve data from API
      * Step 3: observe data if some data changes on server then
      * the data in this fragment is also updated automatically
      * */
     @SuppressLint({"NotifyDataSetChanged", "FragmentLiveDataObserve"})
-    private void setViewModel(View view) {
+    private void setViewModel(View view, Map<String, String> headers) {
+
+        Context context = view.getContext();
+
         /*Step 1*/
-        viewModel = new ViewModelProvider((ViewModelStoreOwner) view.getContext()).get(HomeFragmentViewModel.class);
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(HomeFragmentViewModel.class);
 
         /*Step 2*/
-
-        /*Step 3*/
-        viewModel.getTransactions(view.getContext()).observe((LifecycleOwner) view.getContext(), new Observer<List<TransactionDetail>>() {
+        viewModel.getTransactions(headers).observe((LifecycleOwner) context, new Observer<List<TransactionDetail>>() {
 
             @Override
             public void onChanged(List<TransactionDetail> transactionDetails) {
-                adapter = new TransactionRecycleViewAdapter(view.getContext(), viewModel.getTransactions(view.getContext()).getValue());
-                recycleView.setAdapter(adapter);
+                setRecycleView(context, headers);
+            }
+        });
 
-                LinearLayoutManager manager =new LinearLayoutManager(view.getContext());
-                recycleView.setLayoutManager(manager);
+        /*Step 3*/
+        String date = "week";
+
+        viewModel.getTotalBalace(headers, date).observe((LifecycleOwner) context, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                String value = Helper.formatDoubleNumber(aDouble);
+                remaining.setText( value  );
             }
         });
     }
 
 
-    private void setRecycleView(Context context) {
+    /**
+     * @author Phong-Kaster
+     * @param context is the current context of the fragment
+     * @param headers is used to attach to HTTP Request headers include Access-Token and Content-Type
+     *
+     * set up RecyecleView for latest transactions
+     * */
+    private void setRecycleView(Context context, Map<String, String> headers) {
 
-        Account account = new Account(1,"BIDV", 2000,"0312","Ngan hang BIDV");
-        Category category = new Category(20,"Tank",2,"#6CFF5B","Xe tang");
-        TransactionDetail detail = new TransactionDetail();
-        detail.setAmount(254000);
-        detail.setDescription("abc");
-        detail.setName("Monday");
-        detail.setReference("germany");
-        detail.setTransactiondate("2022-05-02");
-        detail.setId(32);
-        detail.setType(2);
-        detail.setAccount(account);
-        detail.setCategory(category);
-
-        TransactionDetail detail2 = new TransactionDetail();
-        detail2.setAmount(123000);
-        detail2.setDescription("abc");
-        detail2.setName("Monday");
-        detail2.setReference("UK");
-        detail2.setTransactiondate("2022-05-02");
-        detail2.setId(32);
-        detail2.setType(2);
-        detail2.setAccount(account);
-        detail2.setCategory(category);
-
-        List<TransactionDetail> array = new ArrayList<>();
-        array.add(detail);
-        array.add(detail2);
-
-
-
-        adapter = new TransactionRecycleViewAdapter(context, viewModel.getTransactions(getContext()).getValue() );
-        System.out.println("Size: " + adapter.getItemCount());
+        List<TransactionDetail> latestTransactions = viewModel.getTransactions(headers).getValue();
+        /*Step 1*/
+        adapter = new TransactionRecycleViewAdapter(context, latestTransactions );
         recycleView.setAdapter(adapter);
 
+
+        /*Step 2*/
         LinearLayoutManager manager = new LinearLayoutManager(context);
         recycleView.setLayoutManager(manager);
     }
@@ -222,5 +221,15 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Income Statistics", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    /**
+     * @author Phong-Kaster
+     * after receiving data, show them on the screen of Home Fragment
+     * */
+    private void setScreen()
+    {
+        String fullName = "Xin chào, "+ AuthUser.getFirstname() + " " + AuthUser.getLastname();
+        name.setText(fullName);
     }
 }

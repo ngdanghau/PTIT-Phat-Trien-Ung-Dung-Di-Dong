@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrudentialFinance">
         <activity
-            android:name=".Dashboard"
-            android:exported="false" />
-        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity

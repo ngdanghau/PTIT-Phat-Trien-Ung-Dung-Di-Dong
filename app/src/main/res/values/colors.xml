@@ -22,6 +22,9 @@
     <color name="colorBottomNavigationMenu">@color/white</color>
     <color name="colorButtomNavigationMenuPressed">#0042C1</color>
     <color name="colorButtomNavigationMenuEnable">#8D8F97</color>
+
+    <color name="colorRed">#FC0303</color>
+    <color name="colorGreen">#43A047</color>
     <!--Hau's color-->
     <color name="colorTransparentWhite">#cccccc</color>
     <color name="backgroundInput">#ECEEF0</color>

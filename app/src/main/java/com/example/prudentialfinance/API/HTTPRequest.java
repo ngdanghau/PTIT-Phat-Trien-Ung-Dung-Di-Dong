@@ -7,6 +7,7 @@ import com.example.prudentialfinance.Container.AccountGetById;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
+import com.example.prudentialfinance.Container.ReportTotalBalance;
 
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface HTTPRequest {
@@ -44,7 +46,7 @@ public interface HTTPRequest {
     Call<Login> profile(@Header("Authorization") String authorization);
 
 
-    /****ACCOUNT****/
+    /***************************ACCOUNT***************************/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})
     @GET("api/accounts")
     Call<AccountGetAll> accountGetAll(@Header("Authorization") String authorization);
@@ -77,21 +79,23 @@ public interface HTTPRequest {
                                   @Field("balance") int balance,
                                   @Field("description") String description,
                                   @Field("accountnumber") String accountnumber);
-    /****END OF ACCOUNT****/
 
-    /****HOME****/
 
+
+    /***************************HOME*********************************/
     @GET("api/home/latestall")
     Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers);
 
-    /****END OF HOME****/
 
 
-    /****CATEGORY**/
-
+    /***************************CATEGORY*********************************/
     @GET("api/incomecategories")
     Call<CategoryGetAll> categoryGetAll(@HeaderMap Map<String, String> headers);
 
 
-    /****END OF CATEGORY****/
+    /***************************REPORT***************************/
+    @GET("/api/report/totalBalance")
+    Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
+                                               @Query("date") String date);
+
 }

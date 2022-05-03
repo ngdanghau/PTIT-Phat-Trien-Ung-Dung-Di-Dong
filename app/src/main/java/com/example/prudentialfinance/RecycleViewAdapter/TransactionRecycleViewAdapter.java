@@ -1,6 +1,10 @@
 package com.example.prudentialfinance.RecycleViewAdapter;
 
+import static com.example.prudentialfinance.Helpers.Helper.convertStringToDate;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.R;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,18 +49,38 @@ public class TransactionRecycleViewAdapter extends RecyclerView.Adapter<Transact
         return holder;
     }
 
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        /*Step 1*/
         TransactionDetail detail = objects.get(position);
 
         String transactionName     = detail.getName();
         String transactionCategory = detail.getCategory().getName();
-        String transactionAmount   = String.valueOf(detail.getAmount() );
+        String transactionAmount   = Helper.formatNumber( detail.getAmount());
         String transactionDate     = detail.getTransactiondate();
+        int transactionType  = detail.getType();
 
+
+        /*Step 2*/
+        try {
+            transactionDate = Helper.convertStringToDate(transactionDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        /*Step 3*/
         holder.name.setText(transactionName);
         holder.category.setText(transactionCategory);
-        holder.amount.setText(transactionAmount);
+        holder.amount.setText(transactionAmount + " VND");
+        if(transactionType == 2)
+        {
+            holder.amount.setTextColor(context.getColor(R.color.colorRed));
+        }
+
+
         holder.date.setText(transactionDate);
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
