@@ -30,7 +30,7 @@
     <!--Hau's color-->
     <color name="colorTransparentWhite">#cccccc</color>
     <color name="backgroundInput">#ECEEF0</color>
-    <!--    <color name="transparent">#00000000</color>-->
+    <color name="transparent">#00000000</color>
     <color name="colorWarning">#fb3</color>
     <color name="colorBlue">#33b5e5</color>
 

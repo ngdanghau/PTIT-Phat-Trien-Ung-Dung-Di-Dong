@@ -80,6 +80,7 @@
         <entry key="app/src/main/res/drawable/ic_info.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/icon_account.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/icon_bg_transparent.xml" value="0.1845" />
         <entry key="app/src/main/res/drawable/icon_home.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/layout_custom_dialog.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/transparent_background.xml" value="0.2775" />
@@ -89,6 +90,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.4615036231884058" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2658514492753623" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/confirm_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.33967391304347827" />
@@ -96,6 +98,8 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4615036231884058" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/fragment_settings_element.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/fragment_settings_element_header.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/normal_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/slide_layout.xml" value="0.375" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.47314814814814815" />
