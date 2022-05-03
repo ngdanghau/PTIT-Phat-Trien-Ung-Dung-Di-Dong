@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.HomeFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <!-- TODO: Update blank fragment layout -->
+
+    <!-- HEADER -->
+    <RelativeLayout
+        android:orientation="vertical"
+        android:background="@drawable/home_fragment_header_style"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+
+        <TextView
+            android:id="@+id/fragmentHomeAuthName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="30dp"
+            android:text="@string/welcome_back"
+            android:textColor="@color/colorAlternativeText"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/fragmentHomeTitleHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragmentHomeAuthName"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="3sp"
+            android:text="@string/dashboard"
+            android:textColor="@color/colorSupportText"
+            android:textSize="12sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fragmentHomeAuthAvatar"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="-76dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/fragmentHomeTitleHeader"
+            android:src="@drawable/blue" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragmentHomeTitleHeader"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="20dp"
+            android:text="@string/total_remaining"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragmentHomeAuthRemaining"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragmentHomeTitleHeader"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="50sp"
+            android:text="@string/total_remaining_value"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <!-- TOTAL INCOME & EXPENSE -->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlSymmetry">
+
+
+        <!-- TOTAL INCOME -->
+        <LinearLayout
+            android:background="@drawable/customized_layout_2"
+            style="@style/income_expense_layout_style">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                style="@style/income_expense_text_view_style"
+                android:text="@string/income"
+                android:textColor="@color/colorAlternativeText" />
+
+            <TextView
+                android:id="@+id/fragmentHomeTotalIncome"
+                style="@style/income_expense_text_view_style"
+                android:text="@string/income_example"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+
+        <!-- EXPENSE INCOME -->
+        <LinearLayout
+            android:background="@drawable/customized_layout_3"
+            style="@style/income_expense_layout_style">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="@string/expense"
+                style="@style/income_expense_text_view_style" />
+
+            <TextView
+                android:id="@+id/fragmentHomeTotalExpense"
+                style="@style/income_expense_text_view_style"
+                android:text="@string/income_example"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 4 SHORTCUTS -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/customized_layout"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+        <!-- Button Transactions -->
+        <ImageButton
+            android:id="@+id/fragmentHomeButtonTransactions"
+            style="@style/dashboard_image_button_style"
+            android:src="@drawable/icon_transactions"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/dashboard_text_view_style"
+            android:id="@+id/fragmentHomeTitleTransactions"
+            android:layout_below="@+id/fragmentHomeButtonTransactions"
+            android:layout_marginStart="40dp"
+            android:text="@string/transaction"/>
+
+
+        <!-- Button Income Statistics -->
+        <ImageButton
+            android:id="@+id/fragmentHomeButtonIncomeStatistics"
+            style="@style/dashboard_image_button_style"
+            android:layout_toEndOf="@+id/fragmentHomeButtonTransactions"
+            android:src="@drawable/icon_inflow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/fragmentHomeTitleIncomeStatistics"
+            style="@style/dashboard_text_view_style"
+            android:layout_below="@+id/fragmentHomeButtonTransactions"
+            android:layout_toEndOf="@+id/fragmentHomeTitleTransactions"
+            android:text="@string/income" />
+
+        <!-- Button Expense Statistics -->
+        <ImageButton
+            android:id="@+id/fragmentHomeButtonExpenseStatistics"
+            style="@style/dashboard_image_button_style"
+            android:layout_toEndOf="@+id/fragmentHomeButtonIncomeStatistics"
+            android:src="@drawable/icon_outflow"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/fragmentHomeTitleExpenseStatistics"
+            style="@style/dashboard_text_view_style"
+            android:layout_below="@+id/fragmentHomeButtonIncomeStatistics"
+            android:layout_toEndOf="@id/fragmentHomeTitleIncomeStatistics"
+            android:text="@string/expense" />
+
+
+        <!-- Button Goal -->
+        <ImageButton
+            android:id="@+id/fragmentHomeButtonGoal"
+            style="@style/dashboard_image_button_style"
+            android:layout_toEndOf="@+id/fragmentHomeButtonExpenseStatistics"
+            android:src="@drawable/icon_goal"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/dashboardTitleGoal"
+            style="@style/dashboard_text_view_style"
+            android:layout_below="@+id/fragmentHomeButtonGoal"
+            android:layout_toEndOf="@+id/fragmentHomeButtonExpenseStatistics"
+            android:text="@string/goal" />
+
+    </RelativeLayout>
+
+    <!-- RECENT TRANSACTIONS -->
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/recentImage"
+            android:src="@drawable/recent"
+            android:layout_width="20sp"
+            android:layout_height="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/recentImage"
+            android:text="@string/recent"
+            android:textColor="@color/colorSupportText"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/homeFragmentSeeAll"
+            android:layout_width="86dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="279dp"
+            android:layout_marginEnd="17dp"
+            android:layout_toEndOf="@+id/recentImage"
+            android:text="@string/see_all"
+            android:textColor="@color/colorShortcut"
+            android:textSize="12dp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragmentHomeRecentTransactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recentImage" />
+
+    </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

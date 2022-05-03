@@ -18,6 +18,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface HTTPRequest {
@@ -26,6 +27,7 @@ public interface HTTPRequest {
     @FormUrlEncoded
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
+
 
     //Recovery password
     @FormUrlEncoded
@@ -37,7 +39,7 @@ public interface HTTPRequest {
     @POST("api/reset")
     Call<Login> reset_pass(@Field("email") String email,@Field("code") String otp);
 
-    // Register
+    /*Register*/
     @FormUrlEncoded
     @POST("api/signup")
     Call<Login> signup(
@@ -50,6 +52,20 @@ public interface HTTPRequest {
     // Register
     @GET("api/profile")
     Call<Login> profile(@Header("Authorization") String authorization);
+
+    @FormUrlEncoded
+    @POST("api/profile")
+    Call<Login> updateProfile(@HeaderMap Map<String, String> headers,
+                              @Field("firstname") String firstname, @Field("lastname") String lastname);
+
+
+    @FormUrlEncoded
+    @POST("api/change-password")
+    Call<Login> changePassword(@HeaderMap Map<String, String> headers,
+                              @Field("password") String newPass, @Field("password-confirm") String confirmPass,
+                              @Field("current-password") String currentPass);
+
+    /** Application settings*/
 
 
     /*GET ALL ACCOUNT*/
@@ -85,4 +101,23 @@ public interface HTTPRequest {
                                   @Field("balance") int balance,
                                   @Field("description") String description,
                                   @Field("accountnumber") String accountnumber);
+
+
+
+    /***************************HOME*********************************/
+    @GET("api/home/latestall")
+    Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers);
+
+
+
+    /***************************CATEGORY*********************************/
+    @GET("api/incomecategories")
+    Call<CategoryGetAll> categoryGetAll(@HeaderMap Map<String, String> headers);
+
+
+    /***************************REPORT***************************/
+    @GET("/api/report/totalBalance")
+    Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
+                                               @Query("date") String date);
+
 }

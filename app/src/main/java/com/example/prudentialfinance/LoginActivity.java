@@ -111,11 +111,9 @@ public class LoginActivity extends AppCompatActivity {
                         if( result == 1 )
                         {
                             setAuthorizedToken( resource.getAccessToken() );
-                            /*Print access token*/
 
-                            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
-
 
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công !", Toast.LENGTH_LONG).show();
                             finish();
@@ -124,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                         {
                             setAuthorizedToken( "" );
 
-                            alert.showAlert(resource.getMsg(), R.drawable.info_icon);
+                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_check);
                         }
                     }
                 }

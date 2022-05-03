@@ -2,7 +2,6 @@ package com.example.prudentialfinance.ViewModel;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,10 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.Login;
-import com.example.prudentialfinance.DashboardActivity;
-import com.example.prudentialfinance.Model.GlobalVariable;
-
-import java.util.List;
+import com.example.prudentialfinance.HomeActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,7 +89,7 @@ public class LoginViewModel extends ViewModel {
                     {
                         setAccessToken( resource.getAccessToken() );
 
-                        Intent intent = new Intent(context, DashboardActivity.class);
+                        Intent intent = new Intent(context, HomeActivity.class);
                         context.startActivity(intent);
                         Toast.makeText(context, "Đăng nhập thành công !", Toast.LENGTH_LONG).show();
                     }

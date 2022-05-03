@@ -4,15 +4,224 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
     android:layout_height="match_parent"
-    tools:context=".DashboardActivity">
+    tools:context=".Dashboard">
 
-    <TextView
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:text="This is our dashboard !"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <!-- HEADER -->
+    <RelativeLayout
+        android:orientation="vertical"
+        android:background="@color/colorTheme"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+
+        <TextView
+            android:id="@+id/dashboardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="30dp"
+            android:text="@string/welcome_back"
+            android:textColor="@color/colorAlternativeText"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/dashboardUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dashboardTitle"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="3sp"
+            android:text="@string/dashboard"
+            android:textColor="@color/colorSupportText"
+            android:textSize="12sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/dashboardButtonMenu"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="-76dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/dashboardTitle"
+            android:src="@drawable/blue" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dashboardUsername"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="20dp"
+            android:text="@string/total_remaining"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dashboardUsername"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="50sp"
+            android:text="@string/total_remaining_value"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <!-- TOTAL INCOME & EXPENSE -->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:paddingStart="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlSymmetry">
+
+
+        <!-- TOTAL INCOME -->
+        <LinearLayout
+            android:background="@drawable/customized_layout_2"
+            style="@style/income_expense_layout_style">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                style="@style/income_expense_text_view_style"
+                android:text="@string/income"
+                android:textColor="@color/colorAlternativeText" />
+
+            <TextView
+                android:id="@+id/dashboardTotalIncome"
+                style="@style/income_expense_text_view_style"
+                android:text="@string/income_example"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
+
+        <!-- EXPENSE INCOME -->
+        <LinearLayout
+            android:background="@drawable/customized_layout_3"
+            style="@style/income_expense_layout_style">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="@string/expense"
+                style="@style/income_expense_text_view_style" />
+
+            <TextView
+                android:id="@+id/dashboardTotalExpense"
+                style="@style/income_expense_text_view_style"
+                android:text="@string/income_example"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 4 SHORTCUTS -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/customized_layout"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+        <!-- Button Transactions -->
+        <ImageButton
+            android:id="@+id/dashboardButtonTransactions"
+            style="@style/dashboard_image_button_style"
+            android:src="@drawable/transaction"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/dashboard_text_view_style"
+            android:id="@+id/dashboardTitleTransactions"
+            android:layout_below="@+id/dashboardButtonTransactions"
+            android:layout_marginStart="40dp"
+            android:text="@string/transaction"/>
+
+
+        <!-- Button Income Statistics -->
+        <ImageButton
+            android:id="@+id/dashboardButtonIncomeStatistics"
+            style="@style/dashboard_image_button_style"
+            android:layout_toEndOf="@+id/dashboardButtonTransactions"
+            android:src="@drawable/increased_list"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/dashboardTitleIncomeStatistics"
+            style="@style/dashboard_text_view_style"
+            android:layout_below="@+id/dashboardButtonTransactions"
+            android:layout_toEndOf="@+id/dashboardTitleTransactions"
+            android:text="@string/income" />
+
+        <!-- Button Expense Statistics -->
+        <ImageButton
+            android:id="@+id/dashboardButtonExpenseStatistics"
+            style="@style/dashboard_image_button_style"
+            android:layout_toEndOf="@+id/dashboardButtonIncomeStatistics"
+            android:src="@drawable/decreased_list"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/dashboardTitleExpenseStatistics"
+            style="@style/dashboard_text_view_style"
+            android:layout_below="@+id/dashboardButtonIncomeStatistics"
+            android:layout_toEndOf="@id/dashboardTitleIncomeStatistics"
+            android:text="@string/expense" />
+
+
+        <!-- Button Goal -->
+        <ImageButton
+            android:id="@+id/dashboardButtonGoal"
+            style="@style/dashboard_image_button_style"
+            android:layout_toEndOf="@+id/dashboardButtonExpenseStatistics"
+            android:src="@drawable/goal"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/dashboardTitleGoal"
+            style="@style/dashboard_text_view_style"
+            android:layout_below="@+id/dashboardButtonGoal"
+            android:layout_toEndOf="@+id/dashboardButtonExpenseStatistics"
+            android:text="@string/goal" />
+
+    </RelativeLayout>
+
+    <!-- RECENT TRANSACTIONS -->
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/recentImage"
+            android:src="@drawable/recent"
+            android:layout_width="20sp"
+            android:layout_height="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/recentImage"
+            android:text="@string/recent"
+            android:textColor="@color/colorSupportText" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dashboardRecentTractions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recentImage" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>
