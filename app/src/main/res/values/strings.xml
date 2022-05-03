@@ -44,6 +44,10 @@
     <string name="setting">Cài đặt</string>
     <string name="account">Tài khoản</string>
     <string name="menus">Danh mục</string>
+    <string name="see_all">Xem tất cả</string>
+    <string name="card">Thẻ</string>
+    <string name="create_new_transaction">Thêm mới</string>
+    <string name="create_card">Tạo thẻ mới</string>
 
 
 </resources>

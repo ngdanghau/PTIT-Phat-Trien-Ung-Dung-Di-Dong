@@ -20,8 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorBottomNavigationMenu"
-        app:itemIconTint="@drawable/item_menu_state"
-        app:itemTextColor="@drawable/item_menu_state"
+        app:itemIconTint="@drawable/shortcut_color_state"
+        app:itemTextColor="@drawable/shortcut_color_state"
         app:menu="@menu/bottom_navigation_menu" />
 
 </LinearLayout>

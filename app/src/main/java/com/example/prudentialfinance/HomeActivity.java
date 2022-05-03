@@ -21,6 +21,7 @@ import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Fragment.AccountFragment;
+import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
 import com.example.prudentialfinance.Fragment.SettingFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -65,11 +66,11 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.shortcutHome:
                     fragment = new HomeFragment();
                     break;
+                case R.id.shortcutCard:
+                    fragment = new CardFragment();
+                    break;
                 case R.id.shortcutAccount:
                     fragment = new AccountFragment();
-                    break;
-                case R.id.shortcutSetting:
-                    fragment = new SettingFragment();
                     break;
             }
             enableFragment(fragment);

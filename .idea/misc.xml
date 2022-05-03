@@ -11,18 +11,44 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/customized_layout_3.xml" value="0.144" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/edit_text_style.xml" value="0.134" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/home_fragment_header_style.xml" value="0.144" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/ic_baseline_account_circle.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/ic_baseline_format_list_bulleted.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/ic_outline_account_balance.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/ic_outline_account_circle.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/ic_outline_format_list_bulleted.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/ic_round_add_circle_24.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_account.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_creation.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_goal.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_home.xml" value="0.1445" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_inflow.xml" value="0.1445" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_menu.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_outflow.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_setting.xml" value="0.1215" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/icon_transactions.xml" value="0.1215" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/item_menu_state.xml" value="0.144" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_account_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_card_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_color_state.xml" value="0.1" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_create_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_creation_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_home_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_transaction_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shotcur_home_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shotcut_card_state.xml" value="0.109" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shotcut_home_state.xml" value="0.109" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_dashboard.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_introduce.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_login.xml" value="0.2436923148431724" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_main.xml" value="0.129981884057971" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_register.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_sign_up.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_account.xml" value="0.1890625" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card.xml" value="0.18461539003270633" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_dashboard.xml" value="0.129981884057971" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.36923078006541266" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.494769245287653" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_setting.xml" value="0.171875" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1890625" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_disabled.xml" value="0.1535" />
