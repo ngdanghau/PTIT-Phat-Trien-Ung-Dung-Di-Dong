@@ -27,6 +27,16 @@ public interface HTTPRequest {
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
 
+    //Recovery password
+    @FormUrlEncoded
+    @POST("api/recovery")
+    Call<Login> recovery(@Field("email") String email);
+
+    //RESET password
+    @FormUrlEncoded
+    @POST("api/reset")
+    Call<Login> reset_pass(@Field("email") String email,@Field("code") String otp);
+
     // Register
     @FormUrlEncoded
     @POST("api/signup")

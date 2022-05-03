@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
     private LoginViewModel viewModel;
     private String token;
-    private TextView loginTextViewCreateAccount;
+    private TextView loginTextViewCreateAccount,txt_forgotpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         loginTextViewCreateAccount = findViewById(R.id.loginTextViewCreateAccount);
         username = findViewById(R.id.loginTextViewUsername);
         password = findViewById(R.id.loginTextViewPassword);
-
+        txt_forgotpassword = findViewById(R.id.txt_forgotpassword);
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
     }
 
@@ -78,6 +78,11 @@ public class LoginActivity extends AppCompatActivity {
 
         alert.btnOK.setOnClickListener(view -> {
             alert.dismiss();
+        });
+
+        txt_forgotpassword.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this,RecoveryActivity.class);
+            startActivity(intent);
         });
 
         buttonSignIn.setOnClickListener(view->{

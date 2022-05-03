@@ -22,12 +22,32 @@
     <string name="create_account">Tạo mới tài khoản</string>
 
 
-
     <string name="have_a_account">Đã có tài khoản ?</string>
     <string name="signUpFirstname">Họ và tên đệm</string>
     <string name="signUpLastname">Tên</string>
     <string name="signUp">Đăng ký</string>
     <string name="password_confirm">Mhập lại mật khẩu</string>
+
+
+    <!--    RECOVERY -->
+    <string name="recovery_title">Lấy lại mật khẩu</string>
+    <string name="recovery_descrip">Hãy nhập email của bạn đã cung cấp cho chúng tôi.</string>
+    <string name="recovery_send_btn">Gửi email cho tôi</string>
+    <string name="recovery_code_btn">Nhập OTP</string>
+
+    <string name="reset_password_OTPtitle">Xác nhận danh tính của bạn</string>
+    <string name="reset_password_OTPdescription">Chúng tôi đã gửi mã OTP cho bạn. \nHãy nhập mã chúng tôi đã gửi cho bạn.</string>
+    <string name="reset_password_OTPresend">Gửi lại mã OTP.</string>
+    <string name="reset_password_OTPbtn_send">Xác nhận.</string>
+
+    <string name="reset_password_btn_reset">Thay đổi mật khẩu.</string>
+    <string name="reset_password_description">Hãy tạo mật khẩu mới và xác nhận mật khẩu mới để đăng nhập..</string>
+    <string name="reset_password_newpassword">Nhập mật khẩu mới.</string>
+    <string name="reset_password_confirm_newpassword">Nhập lại mật khẩu mới.</string>
+
+
+
+
 
 
 
