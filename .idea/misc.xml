@@ -49,6 +49,7 @@
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/confirm_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.33967391304347827" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/normal_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/slide_layout.xml" value="0.375" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.47314814814814815" />
