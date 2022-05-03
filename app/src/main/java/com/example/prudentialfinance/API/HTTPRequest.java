@@ -41,10 +41,21 @@ public interface HTTPRequest {
     );
 
 
-    // Register
+    // Profile
     @GET("api/profile")
     Call<Login> profile(@Header("Authorization") String authorization);
 
+    @FormUrlEncoded
+    @POST("api/profile")
+    Call<Login> updateProfile(@HeaderMap Map<String, String> headers,
+                              @Field("firstname") String firstname, @Field("lastname") String lastname);
+
+
+    @FormUrlEncoded
+    @POST("api/change-password")
+    Call<Login> changePassword(@HeaderMap Map<String, String> headers,
+                              @Field("password") String newPass, @Field("password-confirm") String confirmPass,
+                              @Field("current-password") String currentPass);
 
     /***************************ACCOUNT***************************/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})

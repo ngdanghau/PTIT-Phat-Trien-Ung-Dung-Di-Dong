@@ -106,11 +106,9 @@ public class LoginActivity extends AppCompatActivity {
                         if( result == 1 )
                         {
                             setAuthorizedToken( resource.getAccessToken() );
-                            /*Print access token*/
 
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
-
 
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công !", Toast.LENGTH_LONG).show();
                             finish();

@@ -49,5 +49,14 @@
     <string name="create_new_transaction">Thêm mới</string>
     <string name="create_card">Tạo thẻ mới</string>
 
+    <string name="personal_information">Thông tin cá nhân</string>
+    <string name="public_information">Thông tin công khai</string>
+    <string name="private_information">Thông tin ẩn</string>
+
+    <string name="save">Lưu thay đổi</string>
+
+    <string name="old_password">Mật khẩu cũ</string>
+    <string name="change_password">Thay đổi mật khẩu</string>
+
 
 </resources>

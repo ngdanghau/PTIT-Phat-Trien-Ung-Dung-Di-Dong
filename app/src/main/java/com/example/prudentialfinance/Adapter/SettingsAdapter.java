@@ -1,6 +1,5 @@
 package com.example.prudentialfinance.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,6 +14,9 @@ import androidx.annotation.Nullable;
 
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.Settings.PasswordActivity;
+import com.example.prudentialfinance.Settings.ProfileActivity;
+import com.example.prudentialfinance.Settings.SiteSettingsActivity;
 
 import java.util.ArrayList;
 
@@ -78,10 +80,20 @@ public class SettingsAdapter extends BaseAdapter {
                 break;
         }
 
-//        convertView.setOnClickListener(view1 -> {
-//            if(rowType == TYPE_SEPARATOR) return;
-//            ((SettingsFragment) context).startActivity(new Intent(context, ProfileActivity.class));
-//        });
+        convertView.setOnClickListener(view1 -> {
+            if(rowType == TYPE_SEPARATOR) return;
+            switch (entry.getId()){
+                case "personal_information":
+                    parent.getContext().startActivity(new Intent(parent.getContext(), ProfileActivity.class));
+                    break;
+                case "change_password":
+                    parent.getContext().startActivity(new Intent(parent.getContext(), PasswordActivity.class));
+                    break;
+                case "site_settings":
+                    parent.getContext().startActivity(new Intent(parent.getContext(), SiteSettingsActivity.class));
+                    break;
+            }
+        });
 
         return convertView;
     }

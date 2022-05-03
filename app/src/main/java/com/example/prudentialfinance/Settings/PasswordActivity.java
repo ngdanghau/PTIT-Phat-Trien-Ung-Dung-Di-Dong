@@ -4,8 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.app.Application;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,20 +27,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ProfileActivity extends AppCompatActivity {
+public class PasswordActivity extends AppCompatActivity {
 
     User AuthUser;
     ImageButton backBtn;
     TextView tvEmail;
-    EditText firstname, lastname;
+    EditText password, oldPassword, confirmPassword;
     AppCompatButton saveBtn;
 
     GlobalVariable global;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-
+        setContentView(R.layout.activity_password);
         getApplication();
         global = (GlobalVariable) getApplication();
 
@@ -51,13 +49,24 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    private void setAuthorizedToken( String accessToken) {
+        String token = "JWT " +  accessToken.trim();
+        GlobalVariable state = ((GlobalVariable) this.getApplication());
+
+
+        state.setAccessToken(token);
+
+        SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(), this.MODE_PRIVATE);
+        preferences.edit().putString("accessToken", accessToken.trim()).apply();
+    }
+
     private void setEvent() {
         backBtn.setOnClickListener(view -> {
             finish();
         });
 
-        final LoadingDialog loadingDialog = new LoadingDialog(ProfileActivity.this);
-        Alert alert = new Alert(ProfileActivity.this);
+        final LoadingDialog loadingDialog = new LoadingDialog(PasswordActivity.this);
+        Alert alert = new Alert(PasswordActivity.this);
         alert.normal();
 
         alert.btnOK.setOnClickListener(view -> {
@@ -66,8 +75,9 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         saveBtn.setOnClickListener(view -> {
-            String firstName = firstname.getText().toString().trim();
-            String lastName = lastname.getText().toString().trim();
+            String newPass = password.getText().toString().trim();
+            String oldPass = oldPassword.getText().toString().trim();
+            String confirmPass = confirmPassword.getText().toString().trim();
 
 
             Retrofit service = HTTPService.getInstance();
@@ -77,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             Map<String, String > headers = global.getHeaders();
 
-            Call<Login> container = api.updateProfile(headers, firstName, lastName);
+            Call<Login> container = api.changePassword(headers, newPass, confirmPass, oldPass);
             container.enqueue(new Callback<Login>() {
                 @Override
                 public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
@@ -90,8 +100,9 @@ public class ProfileActivity extends AppCompatActivity {
 
                         if( result == 1 )
                         {
+                            setAuthorizedToken( resource.getAccessToken() );
                             global.setAuthUser(resource.getData());
-                            Toast.makeText(ProfileActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(PasswordActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
                         }
                         else
                         {
@@ -111,15 +122,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setControl() {
         backBtn = findViewById(R.id.backBtn);
-        tvEmail = findViewById(R.id.signUpEmail);
-        firstname = findViewById(R.id.firstname);
-        lastname = findViewById(R.id.lastname);
+        password = findViewById(R.id.password);
+        oldPassword = findViewById(R.id.oldPassword);
+        confirmPassword = findViewById(R.id.confirmPassword);
         saveBtn = findViewById(R.id.saveBtn);
-
-        firstname.setText(AuthUser.getFirstname());
-        lastname.setText(AuthUser.getLastname());
-        tvEmail.setText(AuthUser.getEmail());
-
 
     }
 }
