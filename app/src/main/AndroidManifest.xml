@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrudentialFinance">
         <activity
+            android:name=".Settings.EmailSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Settings.SiteSettingsActivity"
             android:exported="false" />
         <activity

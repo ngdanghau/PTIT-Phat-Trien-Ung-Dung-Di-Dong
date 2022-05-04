@@ -15,7 +15,7 @@ public class Helper {
         return output;
     }
 
-    public static String formatNumber(int input)
+    public static String formatIntegerNumber(int input)
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(input);
@@ -25,5 +25,22 @@ public class Helper {
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(input);
+    }
+
+    public static String formatCardNumber(String input)
+    {
+        if( input.length() <= 4)
+            return input;
+
+        int first = (input.length() - 1) % 4 + 1;
+        StringBuilder ouput = new StringBuilder(input.substring(0, first));
+
+        for( int i = first ; i <input.length() ;i+=4)
+        {
+            String fourNumber = input.substring(i, i+4);
+            ouput.append(' ').append( fourNumber );
+        }
+
+        return ouput.toString();
     }
 }

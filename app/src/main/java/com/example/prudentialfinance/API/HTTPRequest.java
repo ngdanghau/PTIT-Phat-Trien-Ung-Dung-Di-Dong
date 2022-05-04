@@ -5,9 +5,11 @@ import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
 import com.example.prudentialfinance.Container.CategoryGetAll;
+import com.example.prudentialfinance.Container.EmailSettingsResponse;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
+import com.example.prudentialfinance.Container.SiteSettingsResponse;
 
 import java.util.Map;
 
@@ -52,7 +54,7 @@ public interface HTTPRequest {
     );
 
 
-    // Register
+    // Profile
     @GET("api/profile")
     Call<Login> profile(@Header("Authorization") String authorization);
 
@@ -71,7 +73,38 @@ public interface HTTPRequest {
     /** Application settings*/
 
 
-    /*GET ALL ACCOUNT*/
+    @GET("api/settings/site")
+    Call<SiteSettingsResponse> getSiteSettings(@HeaderMap Map<String, String> headers);
+
+    @FormUrlEncoded
+    @POST("api/settings/site")
+    Call<SiteSettingsResponse> saveSiteSettings(@HeaderMap Map<String, String> headers,
+                                                @Field("action") String action,
+                                                @Field("site_name") String site_name,
+                                                @Field("site_slogan") String site_slogan,
+                                                @Field("site_description") String site_description,
+                                                @Field("site_keywords") String site_keywords,
+                                                @Field("logotype") String logotype,
+                                                @Field("logomark") String logomark,
+                                                @Field("language") String language,
+                                                @Field("currency") String currency);
+
+    @GET("api/settings/smtp")
+    Call<EmailSettingsResponse> getEmailSettings(@HeaderMap Map<String, String> headers);
+
+    @FormUrlEncoded
+    @POST("api/settings/smtp")
+    Call<EmailSettingsResponse> saveEmailSettings(@HeaderMap Map<String, String> headers,
+                                                @Field("action") String action,
+                                                @Field("host") String host,
+                                                @Field("port") String port,
+                                                @Field("encryption") String encryption,
+                                                @Field("auth") Boolean auth,
+                                                @Field("username") String username,
+                                                @Field("password") String password,
+                                                @Field("from") String from);
+
+    /***************************ACCOUNT***************************/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})
     @GET("api/accounts")
     Call<AccountGetAll> accountGetAll(@Header("Authorization") String authorization);
@@ -82,11 +115,11 @@ public interface HTTPRequest {
     @GET("api/accounts")
     Call<AccountGetAll> accountGetAll3(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> options);
 
-    /*GET BY ID*/
+    /*get by id*/
     @GET("api/accounts/{id}")
     Call<AccountGetById> accountGetById(@HeaderMap Map<String, String> headers, @Path("id") String id);
 
-    /*CREATE ACCOUNT*/
+    /*create*/
     @FormUrlEncoded
     @POST("api/accounts")
     Call<AccountCreate> accountCreate(@HeaderMap Map<String, String> headers,
@@ -95,7 +128,7 @@ public interface HTTPRequest {
                                       @Field("description") String description,
                                       @Field("accountnumber") String accountnumber);
 
-    /*EDIT ACCOUNT*/
+    /*edit*/
     @FormUrlEncoded
     @PUT("api/accounts/{id}")
     Call<AccountEdit> accountEdit(@HeaderMap Map<String, String> headers,

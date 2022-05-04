@@ -1,14 +1,32 @@
 package com.example.prudentialfinance.Fragment;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.RecycleViewAdapter.CardRecycleViewAdapter;
+import com.example.prudentialfinance.ViewModel.CardFragmentViewModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,14 +35,10 @@ import com.example.prudentialfinance.R;
  */
 public class CardFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private AppCompatButton buttonCreate;
+    private ImageButton buttonGoBack;
+    private RecyclerView recycleView;
+    private CardFragmentViewModel viewModel;
 
     public CardFragment() {
         // Required empty public constructor
@@ -42,8 +56,6 @@ public class CardFragment extends Fragment {
     public static CardFragment newInstance(String param1, String param2) {
         CardFragment fragment = new CardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +63,74 @@ public class CardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_card, container, false);
+        View view = inflater.inflate(R.layout.fragment_card, container, false);
+
+        // Retrieve bundle's arguments
+        String accessToken = this.getArguments().getString("accessToken");
+        String contentType = this.getArguments().getString("contentType");
+
+
+        /*initialize headers to attach HTTP Request*/
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", accessToken);
+        headers.put("Content-Type", contentType);
+        setControl(view);
+        setViewModel(view, headers);
+        setEvent();
+        return view;
+    }
+
+    private void setControl(View view)
+    {
+        recycleView = view.findViewById(R.id.cardFragmentRecycleView);
+        buttonCreate = view.findViewById(R.id.cardFragmentButtonCreate);
+    }
+
+    /**
+     * @author Phong-Kaster
+     *
+     * @param view is the current context of the fragment
+     * @param headers is used to attach to HTTP Request headers include Access-Token and Content-Type
+     *
+     * Step 1: declare viewModel which will be used in this fragment
+     * Step 2: retrieve data from API
+     * Step 3: observe data if some data changes on server then
+     * the data in this fragment is also updated automatically
+     * */
+    @SuppressLint({"NotifyDataSetChanged", "FragmentLiveDataObserve"})
+    private void setViewModel(View view, Map<String, String> headers) {
+
+        Context context = view.getContext();
+        /*Step 1*/
+        viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(CardFragmentViewModel.class);
+
+        /*Step 2*/
+        viewModel.getAccounts(headers).observe((LifecycleOwner) context, accounts -> setRecycleView(view, headers));
+    }
+
+    private void setRecycleView(View view, Map<String, String> headers) {
+        /*Step 0*/
+        List<Account> accounts = viewModel.getAccounts(headers).getValue();
+        Context context = view.getContext();
+
+        /*Step 1*/
+        CardRecycleViewAdapter adapter = new CardRecycleViewAdapter(context, accounts);
+        recycleView.setAdapter(adapter);
+
+        /*Step 2*/
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        recycleView.setLayoutManager(manager);
+    }
+
+    private void setEvent()
+    {
+        buttonCreate.setOnClickListener(view->
+                Toast.makeText(getContext(), "Open new fragment", Toast.LENGTH_LONG).show());
     }
 }

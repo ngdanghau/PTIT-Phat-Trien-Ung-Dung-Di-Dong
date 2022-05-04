@@ -24,6 +24,10 @@ public class User implements Parcelable {
     @Expose
     private String lastname;
 
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -92,6 +96,14 @@ public class User implements Parcelable {
         this.date = date;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -99,6 +111,7 @@ public class User implements Parcelable {
                 ", email='" + email + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", id=" + id +
                 ", is_active=" + is_active +
                 ", date='" + date + '\'' +
