@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HTTPService {
 
     public static final String APP_PATH = "https://timeswriter.xyz/";
+    public static final String UPLOADS_URL = APP_PATH + "api/assets/uploads";
 
     private static Retrofit retrofit;
 
