@@ -42,7 +42,10 @@ public interface HTTPRequest {
     //RESET password
     @FormUrlEncoded
     @POST("api/reset")
-    Call<Login> reset_pass(@Field("email") String email,@Field("code") String otp);
+    Call<Login> process_reset(@Field("email") String email,@Field("code") String otp,@Field("action") String action);
+    @FormUrlEncoded
+    @POST("api/reset")
+    Call<Login> reset_pass(@Field("email") String email, @Field("hash") String hash,@Field("password") String password,@Field("password-confirm") String password_confirm,@Field("action") String action);
 
     /*Register*/
     @FormUrlEncoded
@@ -95,14 +98,14 @@ public interface HTTPRequest {
     @FormUrlEncoded
     @POST("api/settings/smtp")
     Call<EmailSettingsResponse> saveEmailSettings(@HeaderMap Map<String, String> headers,
-                                                @Field("action") String action,
-                                                @Field("host") String host,
-                                                @Field("port") String port,
-                                                @Field("encryption") String encryption,
-                                                @Field("auth") Boolean auth,
-                                                @Field("username") String username,
-                                                @Field("password") String password,
-                                                @Field("from") String from);
+                                                  @Field("action") String action,
+                                                  @Field("host") String host,
+                                                  @Field("port") String port,
+                                                  @Field("encryption") String encryption,
+                                                  @Field("auth") Boolean auth,
+                                                  @Field("username") String username,
+                                                  @Field("password") String password,
+                                                  @Field("from") String from);
 
     /***************************ACCOUNT***************************/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})

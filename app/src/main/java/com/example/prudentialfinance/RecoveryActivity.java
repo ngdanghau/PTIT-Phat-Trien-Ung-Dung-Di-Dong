@@ -39,11 +39,10 @@ public class RecoveryActivity extends AppCompatActivity {
 
     private void setControl()
     {
-        btn_send = findViewById(R.id.btn_Send);
+        btn_send = findViewById(R.id.btn_recovery_Send);
         txt_Email = findViewById(R.id.emailRecovery);
         input_layout = findViewById(R.id.reset_pass_layout);
         alert = new Alert(RecoveryActivity.this);
-
 
         alert.normal();
     }
@@ -69,12 +68,11 @@ public class RecoveryActivity extends AppCompatActivity {
                             assert resource != null;
                             int result = resource.getResult();
                             loadingDialog.dismissDialog();
-
+                            System.out.println(resource.toString());
                             if( result == 1 )
                             {
+
                                 alert.showAlert("Success",resource.getMsg(),R.drawable.ic_check);
-
-
                                 alert.btnOK.setOnClickListener(view ->{alert.dismiss();
                                        Intent intent = new Intent(RecoveryActivity.this, ResetPasswordActivity.class);
                                        intent.putExtra("email",resource.getEmail());

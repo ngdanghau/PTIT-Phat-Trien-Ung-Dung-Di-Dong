@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
@@ -30,7 +31,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     EditText txt_password,txt_confirmpassword;
     LinearLayout otp_layout,input_layout;
     TextView txt_title,txt_descrip;
-    String email;
+    String email,hash;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,15 +61,16 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     private void setEvent(){
         final LoadingDialog loadingDialog = new LoadingDialog(ResetPasswordActivity.this);
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest request = service.create(HTTPRequest.class);
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Retrofit service = HTTPService.getInstance();
-                HTTPRequest request = service.create(HTTPRequest.class);
+
                 loadingDialog.startLoadingDialog();
 
-                Call<Login> container = request.reset_pass(email,otp.getText().toString());
+                Call<Login> container = request.process_reset(email,otp.getText().toString(),"check");
                 container.enqueue(new Callback<Login>() {
                                       @Override
                                       public void onResponse(Call<Login> call, Response<Login> response) {
@@ -81,12 +83,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                                               if( result == 1 )
                                               {
-                                                  alert.showAlert("INFO",resource.getMsg(),R.drawable.ic_check);
-                                                  alert.btnOK.setOnClickListener(view ->
-                                                  {
-                                                      alert.dismiss();
-                                                      changeLayout(); // CHANGE LAYOUT INPUT OTP -> INPUT NEW PASSWORD
-                                                  });
+                                                  hash = resource.getHash();
+                                                  Toast.makeText(ResetPasswordActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
+                                                  changeLayout(); // CHANGE LAYOUT INPUT OTP -> INPUT NEW PASSWORD
                                               }
                                               else
                                               {
@@ -113,8 +112,61 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
 
 
+        btn_resetpass.setOnClickListener(view -> {
+            loadingDialog.startLoadingDialog();
+            String password =  txt_password.getText().toString();
+            String password_confirm = txt_confirmpassword.getText().toString();
+            Call<Login> container = request.reset_pass(email,hash,password,password_confirm,"reset");
+            container.enqueue(new Callback<Login>() {
+                @Override
+                public void onResponse(Call<Login> call, Response<Login> response) {
+                    if(response.isSuccessful()) // TO DO: FIX SOURCE WEB API STILL CAN't ENTER OTP
+                    {
+                        Login resource = response.body();
+                        assert resource != null;
+                        int result = resource.getResult();
+                        loadingDialog.dismissDialog();
+
+                        if( result == 1 )
+                        {
+                            alert.showAlert("Success",resource.getMsg(),R.drawable.ic_check);
+                            alert.btnOK.setOnClickListener(view ->
+                            {
+                                alert.dismiss();
+                                Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            });
+                        }
+                        else
+                        {
+                            alert.showAlert("Oops",resource.getMsg(), R.drawable.ic_close);
+                            alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
+                        }
+                    }
+                    else
+                    {
+                        loadingDialog.dismissDialog();
+                        alert.showAlert("Oops","Response is not success", R.drawable.ic_check);
+                        alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Login> call, Throwable t) {
+                    loadingDialog.dismissDialog();
+                    alert.showAlert("Oops","Something went wrong!", R.drawable.ic_check);
+                    alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
+                }
+            });
+        });
     }
 
+    private void validatePassword()
+    {
+//        VALIDATE
+    }
     private void changeLayout()
     {
 

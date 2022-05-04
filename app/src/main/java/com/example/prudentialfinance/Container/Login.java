@@ -34,6 +34,18 @@ public class Login {
     @Expose
     private String email;
 
+    @SerializedName("hash")
+    @Expose
+    private String hash;
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
     public String getEmail() {
         return email;
     }

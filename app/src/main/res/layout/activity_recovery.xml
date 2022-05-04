@@ -76,7 +76,7 @@
         android:layout_height="40dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_Send"
+        android:id="@+id/btn_recovery_Send"
         style="@style/button_style"
         android:layout_gravity="center"
         android:text="@string/recovery_send_btn" />
