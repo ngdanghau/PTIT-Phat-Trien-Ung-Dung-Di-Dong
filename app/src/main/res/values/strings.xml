@@ -53,6 +53,10 @@
     <string name="public_information">Thông tin công khai</string>
     <string name="private_information">Thông tin ẩn</string>
 
+    <string name="email_information">Cài đặt Email</string>
+    <string name="smtp_information">Thông tin smtp</string>
+    <string name="auth_smtp_information">Thông tin auth</string>
+
     <string name="save">Lưu thay đổi</string>
 
     <string name="old_password">Mật khẩu cũ</string>
@@ -74,8 +78,13 @@
     <string name="site_keyword">Từ khoá</string>
     <string name="site_description">Mô tả</string>
 
+    <string name="host">Host</string>
+    <string name="port">Port</string>
+    <string name="encryption">Encryption</string>
+    <string name="from">From</string>
+    <string name="auth">Auth</string>
 
-
+    <string name="username_email">Username</string>
 
 
 </resources>

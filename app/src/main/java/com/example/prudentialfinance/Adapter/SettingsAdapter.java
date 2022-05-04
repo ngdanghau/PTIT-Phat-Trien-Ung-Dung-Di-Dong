@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.Settings.EmailSettingsActivity;
 import com.example.prudentialfinance.Settings.PasswordActivity;
 import com.example.prudentialfinance.Settings.ProfileActivity;
 import com.example.prudentialfinance.Settings.SiteSettingsActivity;
@@ -91,6 +92,9 @@ public class SettingsAdapter extends BaseAdapter {
                     break;
                 case "site_settings":
                     parent.getContext().startActivity(new Intent(parent.getContext(), SiteSettingsActivity.class));
+                    break;
+                case "email_settings":
+                    parent.getContext().startActivity(new Intent(parent.getContext(), EmailSettingsActivity.class));
                     break;
             }
         });

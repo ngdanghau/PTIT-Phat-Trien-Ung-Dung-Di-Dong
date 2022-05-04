@@ -61,6 +61,9 @@ public class SettingsFragment extends Fragment {
             data.add(new Setting("header", "", 0));
             data.add(new Setting("setting", "Cài đặt", R.drawable.settings));
             data.add(new Setting("site_settings","Cài đặt website", R.drawable.ic_baseline_web_24));
+            data.add(new Setting("email_settings","Cài đặt Email", R.drawable.ic_baseline_email_24));
+
+            data.add(new Setting("header", "", 0));
             data.add(new Setting("user_management","Quản lý người dùng", R.drawable.ic_baseline_people_24));
         }
 
