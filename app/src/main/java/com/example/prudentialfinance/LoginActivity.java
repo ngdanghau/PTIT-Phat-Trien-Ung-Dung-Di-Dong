@@ -62,11 +62,8 @@ public class LoginActivity extends AppCompatActivity {
      *
      */
     private void setAuthorizedToken( String accessToken) {
-        token = "JWT " +  accessToken.trim();
         state = ((GlobalVariable) this.getApplication());
-
-
-        state.setAccessToken(token);
+        state.setAccessToken(accessToken.trim());
 
         SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(), this.MODE_PRIVATE);
         preferences.edit().putString("accessToken", accessToken.trim()).apply();
