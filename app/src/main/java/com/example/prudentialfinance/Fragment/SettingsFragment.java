@@ -16,6 +16,7 @@ import com.example.prudentialfinance.Adapter.SettingsAdapter;
 import com.example.prudentialfinance.LoginActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Setting;
+import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class SettingsFragment extends Fragment {
     ArrayList<Setting> data = new ArrayList<>();
     SettingsAdapter settingsAdapter;
     ListView lvSettings;
-    String accountType;
+    User authUser;
 
     AppCompatButton logout;
 
@@ -37,17 +38,17 @@ public class SettingsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            accountType = this.getArguments().getString("accountType");
+            authUser = this.getArguments().getParcelable("AuthUser");
         }
     }
 
-    private void setAuthorizedToken( String accessToken) {
-        String token = "JWT " +  accessToken.trim();
+    private void setAuthorizedToken( ) {
         GlobalVariable state = ((GlobalVariable) getActivity().getApplication());
-        state.setAccessToken(token);
+        state.setAccessToken("");
+        state.setAuthUser(null);
 
         SharedPreferences preferences = state.getSharedPreferences(state.getAppName(), state.MODE_PRIVATE);
-        preferences.edit().putString("accessToken", accessToken.trim()).apply();
+        preferences.edit().putString("accessToken", "").apply();
     }
 
     @Override
@@ -57,7 +58,7 @@ public class SettingsFragment extends Fragment {
         data.add(new Setting("personal_information", "Thông tin cá nhân", R.drawable.profile_color));
         data.add(new Setting("change_password", "Đổi mật khẩu", R.drawable.lock_color));
 
-        if(accountType.equals("admin")){
+        if(authUser.getAccount_type().equals("admin")){
             data.add(new Setting("header", "", 0));
             data.add(new Setting("setting", "Cài đặt", R.drawable.settings));
             data.add(new Setting("site_settings","Cài đặt website", R.drawable.ic_baseline_web_24));
@@ -74,8 +75,9 @@ public class SettingsFragment extends Fragment {
         lvSettings.setAdapter(settingsAdapter);
 
         view.findViewById(R.id.logout).setOnClickListener(view1 -> {
-            setAuthorizedToken("");
+            setAuthorizedToken();
             Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             getActivity().onBackPressed();
         });

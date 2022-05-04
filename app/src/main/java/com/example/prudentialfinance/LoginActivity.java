@@ -33,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
     private LoginViewModel viewModel;
     private String token;
-    private TextView loginTextViewCreateAccount,txt_forgotpassword;
+    private TextView loginTextViewCreateAccount, txt_forgotpassword;
+    GlobalVariable state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void setAuthorizedToken( String accessToken) {
         token = "JWT " +  accessToken.trim();
-        GlobalVariable state = ((GlobalVariable) this.getApplication());
+        state = ((GlobalVariable) this.getApplication());
 
 
         state.setAccessToken(token);
@@ -111,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                         if( result == 1 )
                         {
                             setAuthorizedToken( resource.getAccessToken() );
-
+                            state.setAuthUser(resource.getData());
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
 
@@ -121,8 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                         else
                         {
                             setAuthorizedToken( "" );
-
-                            alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);;
+                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_close);;
                         }
                     }
                 }
@@ -130,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Login> call, Throwable t) {
                     loadingDialog.dismissDialog();
+                    alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);;
                 }
             });
         });
