@@ -72,7 +72,7 @@ public class RecoveryActivity extends AppCompatActivity {
 
                             if( result == 1 )
                             {
-                                alert.showAlert(resource.getMsg(),R.drawable.check_icon);
+                                alert.showAlert("Success",resource.getMsg(),R.drawable.ic_check);
 
 
                                 alert.btnOK.setOnClickListener(view ->{alert.dismiss();
@@ -84,14 +84,14 @@ public class RecoveryActivity extends AppCompatActivity {
                             else
                             {
                                 loadingDialog.dismissDialog();
-                                alert.showAlert(resource.getMsg(), R.drawable.info_icon);
+                                alert.showAlert("Oops",resource.getMsg(), R.drawable.ic_info);
                                 alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                             }
                         }
                         else
                         {
                             loadingDialog.dismissDialog();
-                            alert.showAlert("Response is failed", R.drawable.info_icon);
+                            alert.showAlert("Oops","Response is failed", R.drawable.ic_info);
                             alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                         }
                     }
@@ -100,7 +100,7 @@ public class RecoveryActivity extends AppCompatActivity {
                     public void onFailure(Call<Login> call, Throwable t) {
                         t.printStackTrace();
                         loadingDialog.dismissDialog();
-                        alert.showAlert("Something went wrong", R.drawable.info_icon);
+                        alert.showAlert("Oops","Something went wrong", R.drawable.ic_info);
                         alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                     }
                 });

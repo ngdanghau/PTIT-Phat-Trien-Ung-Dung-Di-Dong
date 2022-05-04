@@ -81,7 +81,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                                               if( result == 1 )
                                               {
-                                                  alert.showAlert(resource.getMsg(),R.drawable.check_icon);
+                                                  alert.showAlert("INFO",resource.getMsg(),R.drawable.ic_check);
                                                   alert.btnOK.setOnClickListener(view ->
                                                   {
                                                       alert.dismiss();
@@ -90,14 +90,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                               }
                                               else
                                               {
-                                                  alert.showAlert(resource.getMsg()+"\n"+otp.getText(), R.drawable.info_icon);
+                                                  alert.showAlert("Oops",resource.getMsg(), R.drawable.ic_close);
                                                   alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                                               }
                                           }
                                           else
                                           {
                                               loadingDialog.dismissDialog();
-                                              alert.showAlert("response is not success", R.drawable.info_icon);
+                                              alert.showAlert("Oops","Response is not success", R.drawable.ic_check);
                                               alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                                           }
                                       }
@@ -105,7 +105,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                       @Override
                                       public void onFailure(Call<Login> call, Throwable t) {
                                           loadingDialog.dismissDialog();
-                                          alert.showAlert("Something went wrong!", R.drawable.info_icon);
+                                          alert.showAlert("Oops","Something went wrong!", R.drawable.ic_check);
                                           alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                                       }
                                   });
