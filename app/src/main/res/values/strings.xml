@@ -48,6 +48,7 @@
     <string name="card">Thẻ</string>
     <string name="create_new_transaction">Thêm mới</string>
     <string name="create_card">Tạo thẻ mới</string>
+    <string name="account">Tai khoan</string>
 
 
 </resources>

@@ -1,44 +1,21 @@
 package com.example.prudentialfinance;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Looper;
-import android.os.Parcelable;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.example.prudentialfinance.API.HTTPRequest;
-import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.AccountGetAll;
-import com.example.prudentialfinance.Container.CategoryGetAll;
-import com.example.prudentialfinance.Container.HomeLatestTransactions;
-import com.example.prudentialfinance.Container.Login;
-import com.example.prudentialfinance.Fragment.AccountFragment;
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
-import com.example.prudentialfinance.Fragment.SettingFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
-import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -70,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new CardFragment();
                     break;
                 case R.id.shortcutAccount:
-                    fragment = new AccountFragment();
+
                     break;
             }
             enableFragment(fragment);
