@@ -48,6 +48,7 @@
     <string name="card">Thẻ</string>
     <string name="create_new_transaction">Thêm mới</string>
     <string name="create_card">Tạo thẻ mới</string>
+    <string name="account">Tai khoan</string>
 
     <string name="personal_information">Thông tin cá nhân</string>
     <string name="public_information">Thông tin công khai</string>
@@ -77,6 +78,11 @@
     <string name="site_slogan">Khẩu hiệu</string>
     <string name="site_keyword">Từ khoá</string>
     <string name="site_description">Mô tả</string>
+  
+    <string name="list_of_card">Danh sách thẻ</string>
+    <string name="five_million_vnd">5 000 000 VND</string>
+    <string name="card_number">0312 0000 0000 7616</string>
+    <string name="card_description">Tài khoản ngân hàng Prudential Finance</string>
 
     <string name="host">Host</string>
     <string name="port">Port</string>

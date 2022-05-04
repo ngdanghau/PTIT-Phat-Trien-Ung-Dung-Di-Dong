@@ -1,13 +1,12 @@
 package com.example.prudentialfinance;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-
 
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
