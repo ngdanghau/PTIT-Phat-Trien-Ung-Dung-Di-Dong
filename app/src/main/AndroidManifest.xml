@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PrudentialFinance">
         <activity
+            android:name=".Settings.SiteSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Settings.PasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Settings.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity

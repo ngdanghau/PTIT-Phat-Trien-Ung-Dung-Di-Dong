@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
+import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
@@ -46,8 +46,8 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.shortcutCard:
                     fragment = new CardFragment();
                     break;
-                case R.id.shortcutAccount:
-
+                case R.id.shortcutSettings:
+                    fragment = new SettingsFragment();
                     break;
             }
             enableFragment(fragment);
@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
 
         bundle.putString("accessToken", accessToken);
         bundle.putString("contentType", contentType);
+        bundle.putString("accountType", AuthUser.getAccount_type());
         bundle.putParcelable("AuthUser", AuthUser);
 
         fragment.setArguments(bundle);

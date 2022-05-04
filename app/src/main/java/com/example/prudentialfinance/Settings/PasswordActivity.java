@@ -1,15 +1,13 @@
-package com.example.prudentialfinance;
+package com.example.prudentialfinance.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,49 +17,40 @@ import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
-import com.example.prudentialfinance.ViewModel.LoginViewModel;
+import com.example.prudentialfinance.Model.User;
+import com.example.prudentialfinance.R;
+
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class LoginActivity extends AppCompatActivity {
+public class PasswordActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
-    private  AppCompatButton buttonSignIn;
-    private EditText username, password;
-    private LoginViewModel viewModel;
-    private String token;
-    private TextView loginTextViewCreateAccount;
+    User AuthUser;
+    ImageButton backBtn;
+    TextView tvEmail;
+    EditText password, oldPassword, confirmPassword;
+    AppCompatButton saveBtn;
 
+    GlobalVariable global;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_password);
+        getApplication();
+        global = (GlobalVariable) getApplication();
+
+        AuthUser = global.getAuthUser();
         setControl();
         setEvent();
+
     }
 
-    private void setControl() {
-        buttonSignIn = findViewById(R.id.loginButtonSignIn);
-        loginTextViewCreateAccount = findViewById(R.id.loginTextViewCreateAccount);
-        username = findViewById(R.id.loginTextViewUsername);
-        password = findViewById(R.id.loginTextViewPassword);
-
-        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-    }
-
-
-    /***
-     * @author Phong-Kaster
-     *
-     * this function set Access token after loginning successfully. Then, this token can be utilized in
-     * header. To get Header, we call (Model/Global Variable) getHeader
-     *
-     */
     private void setAuthorizedToken( String accessToken) {
-        token = "JWT " +  accessToken.trim();
+        String token = "JWT " +  accessToken.trim();
         GlobalVariable state = ((GlobalVariable) this.getApplication());
 
 
@@ -72,27 +61,33 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        final LoadingDialog loadingDialog = new LoadingDialog(LoginActivity.this);
-        Alert alert = new Alert(LoginActivity.this);
+        backBtn.setOnClickListener(view -> {
+            finish();
+        });
+
+        final LoadingDialog loadingDialog = new LoadingDialog(PasswordActivity.this);
+        Alert alert = new Alert(PasswordActivity.this);
         alert.normal();
 
         alert.btnOK.setOnClickListener(view -> {
             alert.dismiss();
         });
 
-        buttonSignIn.setOnClickListener(view->{
 
-            String user = username.getText().toString();
-            String pass = password.getText().toString();
+        saveBtn.setOnClickListener(view -> {
+            String newPass = password.getText().toString().trim();
+            String oldPass = oldPassword.getText().toString().trim();
+            String confirmPass = confirmPassword.getText().toString().trim();
 
-            /*Step 1*/
+
             Retrofit service = HTTPService.getInstance();
             HTTPRequest api = service.create(HTTPRequest.class);
 
             loadingDialog.startLoadingDialog();
 
-            /*Step 2*/
-            Call<Login> container = api.login(user, pass);
+            Map<String, String > headers = global.getHeaders();
+
+            Call<Login> container = api.changePassword(headers, newPass, confirmPass, oldPass);
             container.enqueue(new Callback<Login>() {
                 @Override
                 public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
@@ -106,18 +101,12 @@ public class LoginActivity extends AppCompatActivity {
                         if( result == 1 )
                         {
                             setAuthorizedToken( resource.getAccessToken() );
-
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(intent);
-
-                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công !", Toast.LENGTH_LONG).show();
-                            finish();
+                            global.setAuthUser(resource.getData());
+                            Toast.makeText(PasswordActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
                         }
                         else
                         {
-                            setAuthorizedToken( "" );
-
-                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_check);
+                            alert.showAlert("Oops!",resource.getMsg(), R.drawable.ic_check);
                         }
                     }
                 }
@@ -125,19 +114,18 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Login> call, Throwable t) {
                     loadingDialog.dismissDialog();
+                    alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_check);
                 }
             });
         });
+    }
 
-
-        loginTextViewCreateAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
-        });
-
+    private void setControl() {
+        backBtn = findViewById(R.id.backBtn);
+        password = findViewById(R.id.password);
+        oldPassword = findViewById(R.id.oldPassword);
+        confirmPassword = findViewById(R.id.confirmPassword);
+        saveBtn = findViewById(R.id.saveBtn);
 
     }
 }

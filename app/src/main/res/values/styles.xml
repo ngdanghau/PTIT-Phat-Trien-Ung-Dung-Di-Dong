@@ -64,4 +64,17 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@color/colorAlternativeText</item>
     </style>
+
+    <style name="text_view_label">
+        <item name="android:textColor">#6B7280</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <style name="text_view_header">
+        <item name="android:textColor">@color/colorTheme</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>

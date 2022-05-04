@@ -3,13 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreen"
-    tools:context=".Fragment.SettingFragment">
+    tools:context=".Fragment.SettingsFragment"
+    android:padding="20dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingBottom="40dp">
+
+            <TextView
+                android:id="@+id/topTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/setting"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="@color/colorTheme"/>
+        </LinearLayout>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvSettings"
+        android:divider="@color/transparent"
+        android:layout_marginBottom="70dp"/>
+
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logout"
+        android:background="@drawable/custom_input"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:textColor="@color/colorRed"
+        android:layout_marginBottom="20dp"
+        android:text="@string/logout"/>
 
 </FrameLayout>
