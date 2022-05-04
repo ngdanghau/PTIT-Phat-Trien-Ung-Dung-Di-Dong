@@ -5,6 +5,7 @@ import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
 import com.example.prudentialfinance.Container.CategoryGetAll;
+import com.example.prudentialfinance.Container.EmailSettingsResponse;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
@@ -76,6 +77,21 @@ public interface HTTPRequest {
                                                 @Field("logomark") String logomark,
                                                 @Field("language") String language,
                                                 @Field("currency") String currency);
+
+    @GET("api/settings/smtp")
+    Call<EmailSettingsResponse> getEmailSettings(@HeaderMap Map<String, String> headers);
+
+    @FormUrlEncoded
+    @POST("api/settings/smtp")
+    Call<EmailSettingsResponse> saveEmailSettings(@HeaderMap Map<String, String> headers,
+                                                @Field("action") String action,
+                                                @Field("host") String host,
+                                                @Field("port") String port,
+                                                @Field("encryption") String encryption,
+                                                @Field("auth") Boolean auth,
+                                                @Field("username") String username,
+                                                @Field("password") String password,
+                                                @Field("from") String from);
 
     /***************************ACCOUNT***************************/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})

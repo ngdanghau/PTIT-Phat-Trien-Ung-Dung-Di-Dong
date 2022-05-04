@@ -114,7 +114,7 @@ public class PasswordActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Login> call, Throwable t) {
                     loadingDialog.dismissDialog();
-                    alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_check);
+                    alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
                 }
             });
         });

@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                         {
                             setAuthorizedToken( "" );
 
-                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_check);
+                            alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);;
                         }
                     }
                 }
