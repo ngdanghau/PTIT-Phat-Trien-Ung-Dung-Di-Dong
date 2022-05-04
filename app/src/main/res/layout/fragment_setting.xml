@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.SettingsFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp">
 
     <LinearLayout
@@ -16,9 +17,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal"
-            android:paddingBottom="40dp">
+            android:paddingBottom="25dp"
+            android:weightSum="1">
 
             <TextView
+                android:layout_marginLeft="40dp"
+                android:layout_weight="0.99"
                 android:id="@+id/topTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,28 +31,68 @@
                 android:textStyle="bold"
                 android:textSize="22sp"
                 android:textColor="@color/colorTheme"/>
+
+            <ImageButton
+                android:layout_weight="0.01"
+                android:id="@+id/logout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/back_btn_background"
+                android:src="@drawable/ic_baseline_login_24"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/image_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:id="@+id/ivAvatar"
+                android:src="@drawable/cat"
+                />
+
+            <TextView
+                android:id="@+id/fullName"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="@color/colorButtomNavigationMenuPressed"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"/>
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="@color/colorNormalText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/username"/>
+
         </LinearLayout>
 
 
     <ListView
-        android:padding="20dp"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lvSettings"
-        android:divider="@color/transparent"
-        android:layout_marginBottom="70dp"/>
+        android:divider="@color/transparent"/>
 
     </LinearLayout>
 
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/logout"
-        android:background="@drawable/custom_button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:textColor="@color/colorRed"
-        android:layout_marginBottom="20dp"
-        android:text="@string/logout"/>
 
 </FrameLayout>

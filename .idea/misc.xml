@@ -53,11 +53,6 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_setting.xml" value="0.171875" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1890625" />
-        <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/drawable/otp_edit_text.xml" value="0.154" />
-        <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_recovery.xml" value="0.2398753894080997" />
-        <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_reset_password.xml" value="0.22" />
-        <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_sign_up.xml" value="0.3482789855072464" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_disabled.xml" value="0.1535" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_enable.xml" value="0.1535" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_enabled.xml" value="0.1535" />
@@ -84,9 +79,14 @@
         <entry key="app/src/main/res/drawable/custom_input_disabled.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/home_fragment_header_style.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/ic_baseline_lock_open_24.xml" value="0.1975" />
+        <entry key="app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1975" />
+        <entry key="app/src/main/res/drawable/ic_baseline_stars_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_web_24.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.212" />
@@ -98,7 +98,9 @@
         <entry key="app/src/main/res/drawable/layout_custom_dialog.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/transparent_background.xml" value="0.2775" />
+        <entry key="app/src/main/res/layout/activity_categories.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_email_settings.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/activity_goals.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_introduce.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_launch_screen.xml" value="0.33967391304347827" />
@@ -119,6 +121,7 @@
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_settings_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_settings_element_header.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/logout_btn_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/normal_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/slide_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/spinner_element.xml" value="0.2740628166160081" />
