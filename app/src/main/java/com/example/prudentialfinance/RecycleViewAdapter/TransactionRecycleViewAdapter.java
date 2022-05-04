@@ -58,7 +58,7 @@ public class TransactionRecycleViewAdapter extends RecyclerView.Adapter<Transact
 
         String transactionName     = detail.getName();
         String transactionCategory = detail.getCategory().getName();
-        String transactionAmount   = Helper.formatNumber( detail.getAmount());
+        String transactionAmount   = Helper.formatIntegerNumber( detail.getAmount());
         String transactionDate     = detail.getTransactiondate();
         int transactionType  = detail.getType();
 

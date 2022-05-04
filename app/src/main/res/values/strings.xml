@@ -74,9 +74,10 @@
     <string name="site_slogan">Khẩu hiệu</string>
     <string name="site_keyword">Từ khoá</string>
     <string name="site_description">Mô tả</string>
-
-
-
+    <string name="list_of_card">Danh sách thẻ</string>
+    <string name="five_million_vnd">5 000 000 VND</string>
+    <string name="card_number">0312 0000 0000 7616</string>
+    <string name="card_description">Tài khoản ngân hàng Prudential Finance</string>
 
 
 </resources>

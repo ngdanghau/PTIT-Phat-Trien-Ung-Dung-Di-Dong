@@ -43,14 +43,17 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_introduce.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_login.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_profile.xml" value="0.18461539003270633" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_register.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_sign_up.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_account.xml" value="0.1890625" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card.xml" value="0.36923078006541266" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card_element.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_dashboard.xml" value="0.129981884057971" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_setting.xml" value="0.171875" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_settings_element_header.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1890625" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_disabled.xml" value="0.1535" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_enable.xml" value="0.1535" />

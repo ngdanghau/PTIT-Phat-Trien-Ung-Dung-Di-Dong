@@ -1,7 +1,5 @@
 package com.example.prudentialfinance.ViewModel;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,13 +10,9 @@ import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
-import com.example.prudentialfinance.Model.Account;
-import com.example.prudentialfinance.Model.Category;
-import com.example.prudentialfinance.Model.GlobalVariable;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +22,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class HomeFragmentViewModel extends ViewModel {
-    private static final String TAG = "HomeFragmentViewModel";
     private MutableLiveData<List<TransactionDetail>> transactions;
     private MutableLiveData<Double> totalBalace;
 
@@ -48,7 +41,7 @@ public class HomeFragmentViewModel extends ViewModel {
     public LiveData<List<TransactionDetail>> getTransactions(Map<String, String> headers) {
         if( transactions == null )
         {
-            transactions =  new MutableLiveData<List<TransactionDetail>>();
+            transactions = new MutableLiveData<>();
             retrieveDetailTransactions(headers);
         }
         return transactions;
@@ -101,7 +94,7 @@ public class HomeFragmentViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<HomeLatestTransactions> call, Throwable t) {
+            public void onFailure(@NonNull Call<HomeLatestTransactions> call, @NonNull Throwable t) {
 
             }
         });
@@ -126,14 +119,11 @@ public class HomeFragmentViewModel extends ViewModel {
         /*Step 3*/
         container.enqueue(new Callback<ReportTotalBalance>() {
             @Override
-            public void onResponse(Call<ReportTotalBalance> call, Response<ReportTotalBalance> response) {
+            public void onResponse(@NonNull Call<ReportTotalBalance> call, @NonNull Response<ReportTotalBalance> response) {
                 if(response.isSuccessful())
                 {
                     ReportTotalBalance resource = response.body();
-                    System.out.println("Line 133");
-                    System.out.println("result:" + resource.getResult());
-                    System.out.println("total balance:" + resource.getWeek());
-                    System.out.println("method:" + resource.getMethod());
+                    assert resource != null;
                     totalBalace.setValue(resource.getWeek());
                 }
                 if(response.errorBody() != null) {
@@ -147,7 +137,7 @@ public class HomeFragmentViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<ReportTotalBalance> call, Throwable t) {
+            public void onFailure(@NonNull Call<ReportTotalBalance> call,@NonNull Throwable t) {
 
             }
         });

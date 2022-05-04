@@ -5,35 +5,46 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.CardFragment">
 
-
-
     <RelativeLayout
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/cardFragmentTitle"
+        <LinearLayout
+            android:id="@+id/cardFragmentTitleAndButtonBack"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:textColor="@color/colorNormalText"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Danh sách thẻ" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/cardFragmentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/list_of_card"
+                android:textColor="@color/colorNormalText"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cardFragmentRecycleView"
-            android:layout_width="401dp"
-            android:layout_height="517dp"
-            android:layout_above="@+id/cardFragmentCreate"
-            android:layout_below="@+id/cardFragmentTitle"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="568dp"
+            android:layout_above="@+id/cardFragmentButtonCreate"
+            android:layout_below="@+id/cardFragmentTitleAndButtonBack"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="11dp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/cardFragmentCreate"
+            android:id="@+id/cardFragmentButtonCreate"
             style="@style/button_style"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
