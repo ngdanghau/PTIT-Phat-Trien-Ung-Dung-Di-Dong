@@ -43,7 +43,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logout"
-        android:background="@drawable/custom_input"
+        android:background="@drawable/custom_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"

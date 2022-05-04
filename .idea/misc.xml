@@ -74,6 +74,7 @@
         <entry key="app/src/main/res/drawable/bg_alert_warning.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/bg_linear_layout.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/chevron_left.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/custom_button.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/custom_input.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/custom_input_disabled.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/home_fragment_header_style.xml" value="0.212" />
@@ -108,6 +109,7 @@
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/fragment_account.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4615036231884058" />
+        <entry key="app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.25407608695652173" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_settings_element.xml" value="0.2740628166160081" />
