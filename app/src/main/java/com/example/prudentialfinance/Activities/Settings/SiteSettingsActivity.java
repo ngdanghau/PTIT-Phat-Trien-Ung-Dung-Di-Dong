@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.Settings;
+package com.example.prudentialfinance.Activities.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;

@@ -1,4 +1,4 @@
-package com.example.prudentialfinance;
+package com.example.prudentialfinance.Activities.Auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -17,6 +17,7 @@ import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Helpers.OTPEditText;
+import com.example.prudentialfinance.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

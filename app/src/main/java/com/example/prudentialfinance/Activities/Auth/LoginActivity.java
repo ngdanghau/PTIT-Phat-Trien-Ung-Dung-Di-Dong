@@ -1,4 +1,4 @@
-package com.example.prudentialfinance;
+package com.example.prudentialfinance.Activities.Auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,9 @@ import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
+import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.LoginViewModel;
 
 import retrofit2.Call;

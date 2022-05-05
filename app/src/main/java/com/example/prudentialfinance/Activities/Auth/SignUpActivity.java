@@ -1,4 +1,4 @@
-package com.example.prudentialfinance;
+package com.example.prudentialfinance.Activities.Auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
+import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
-import com.example.prudentialfinance.Settings.SiteSettingsActivity;
-import com.example.prudentialfinance.ViewModel.Settings.SiteSettingsViewModel;
+import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.SignUpViewModel;
 
 

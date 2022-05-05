@@ -1,37 +1,23 @@
-package com.example.prudentialfinance.Card;
+package com.example.prudentialfinance.Activities.Card;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.prudentialfinance.API.HTTPRequest;
-import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Helpers.NoticeDialog;
-import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.CardViewModel;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CardUpdateActivity extends AppCompatActivity {
 

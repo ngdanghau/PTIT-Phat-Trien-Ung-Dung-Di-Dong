@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.Settings;
+package com.example.prudentialfinance.Activities.Settings;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;

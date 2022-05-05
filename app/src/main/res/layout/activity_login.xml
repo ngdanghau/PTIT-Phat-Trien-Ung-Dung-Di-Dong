@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".Activities.Auth.LoginActivity">
 
     <TextView
         style="@style/text_view_color_theme_style"

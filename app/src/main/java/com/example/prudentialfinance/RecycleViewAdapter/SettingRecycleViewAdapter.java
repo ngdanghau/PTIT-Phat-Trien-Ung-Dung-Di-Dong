@@ -19,10 +19,10 @@ import com.example.prudentialfinance.General.CategoriesActivity;
 import com.example.prudentialfinance.General.GoalsActivity;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
-import com.example.prudentialfinance.Settings.EmailSettingsActivity;
-import com.example.prudentialfinance.Settings.PasswordActivity;
-import com.example.prudentialfinance.Settings.ProfileActivity;
-import com.example.prudentialfinance.Settings.SiteSettingsActivity;
+import com.example.prudentialfinance.Activities.Settings.EmailSettingsActivity;
+import com.example.prudentialfinance.Activities.Settings.PasswordActivity;
+import com.example.prudentialfinance.Activities.Settings.ProfileActivity;
+import com.example.prudentialfinance.Activities.Settings.SiteSettingsActivity;
 
 import java.util.List;
 

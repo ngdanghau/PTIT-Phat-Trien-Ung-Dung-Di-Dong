@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Helpers.Helper;
-import com.example.prudentialfinance.LoginActivity;
+import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.Model.User;
