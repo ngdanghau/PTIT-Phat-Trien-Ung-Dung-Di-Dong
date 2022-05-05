@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class CardFragment extends Fragment {
 
-    private AppCompatButton buttonCreate;
+    private AppCompatImageButton buttonCreate;
     private ImageButton buttonGoBack;
     private RecyclerView recycleView;
     private CardFragmentViewModel viewModel;
