@@ -1,6 +1,7 @@
 package com.example.prudentialfinance.API;
 
 import com.example.prudentialfinance.Container.AccountCreate;
+import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
@@ -17,6 +18,7 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -166,6 +168,10 @@ public interface HTTPRequest {
     @PUT("api/accounts/{id}")
     Call<AccountEdit> accountUpdate2(@HeaderMap Map<String, String> headers,
                                     @QueryMap Map<String, String> parameters);
+
+
+    @DELETE("api/accounts/{id}")
+    Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers,@Path("id") int id);
 
 
     /***************************HOME*********************************/
