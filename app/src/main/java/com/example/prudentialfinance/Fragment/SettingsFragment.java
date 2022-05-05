@@ -37,8 +37,6 @@ public class SettingsFragment extends Fragment {
     TextView fullName, email;
     User authUser;
 
-    AppCompatButton logout;
-
     public SettingsFragment() {
         // Required empty public constructor
     }

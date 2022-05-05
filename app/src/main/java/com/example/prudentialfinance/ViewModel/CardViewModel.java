@@ -27,7 +27,6 @@ public class CardViewModel extends ViewModel {
         {
             accountUpdate = new MutableLiveData<>();
         }
-        updateAccount(headers, id, name, balance, description, accountnumber);
         return accountUpdate;
     }
 
