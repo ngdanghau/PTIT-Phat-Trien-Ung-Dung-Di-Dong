@@ -51,4 +51,14 @@ public class AccountEdit {
     public void setMethod(String method) {
         this.method = method;
     }
+
+    @Override
+    public String toString() {
+        return "AccountEdit{" +
+                "result=" + result +
+                ", account=" + account +
+                ", msg='" + msg + '\'' +
+                ", method='" + method + '\'' +
+                '}';
+    }
 }

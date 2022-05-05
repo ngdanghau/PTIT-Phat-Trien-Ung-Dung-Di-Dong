@@ -125,10 +125,10 @@ public class CardUpdateActivity extends AppCompatActivity {
 
 
             viewModel.updateAccount(headers,id, name, balance, description, number);
-
             viewModel.getAccountUpdate().observe(this, new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
+                    System.out.println(integer);
                     if( integer == 1)
                     {
                         NoticeDialog dialog = new NoticeDialog();

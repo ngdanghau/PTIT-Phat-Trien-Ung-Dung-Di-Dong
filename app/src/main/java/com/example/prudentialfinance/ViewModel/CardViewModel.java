@@ -27,6 +27,7 @@ public class CardViewModel extends ViewModel {
         {
             accountUpdate = new MutableLiveData<>();
         }
+        updateAccount(headers, id, name, balance, description, accountnumber);
         return accountUpdate;
     }
 
@@ -75,7 +76,6 @@ public class CardViewModel extends ViewModel {
                     AccountCreate resource = response.body();
                     int result = resource.getResult();
                     accountCreation.setValue(result);
-
                 }
                 if(response.errorBody() != null) {
                     try {
@@ -126,6 +126,14 @@ public class CardViewModel extends ViewModel {
                     assert resource != null;
 
                     int result = resource.getResult();
+                    int account = resource.getAccount();
+                    String msg = resource.getMsg();
+                    String method = resource.getMethod();
+
+                    System.out.println("RESULT:"+result);
+                    System.out.println("ACCOUNT:"+account);
+                    System.out.println("MSG: "+msg);
+                    System.out.println("METHOD:"+method);
                     accountUpdate.setValue(result);
 
                 }
