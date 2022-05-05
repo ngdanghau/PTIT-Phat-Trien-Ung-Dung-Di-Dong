@@ -15,10 +15,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -33,13 +29,12 @@ import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.AvatarUpload;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 
 import java.io.File;
 import java.util.Map;
@@ -235,18 +230,12 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadImgToElement(String img, boolean isUpload){
-        Transformation transformation = new RoundedTransformationBuilder()
-                .borderColor(Color.BLACK)
-                .borderWidthDp(3)
-                .cornerRadiusDp(50)
-                .oval(false)
-                .build();
 
         Picasso
                 .get()
                 .load(img)
                 .fit()
-                .transform(transformation)
+                .transform(Helper.getRoundedTransformationBuilder())
                 .into(ivAvatar,  new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {

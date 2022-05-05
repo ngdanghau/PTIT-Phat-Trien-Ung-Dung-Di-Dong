@@ -1,5 +1,10 @@
 package com.example.prudentialfinance.Helpers;
 
+import android.graphics.Color;
+
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Transformation;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
@@ -45,5 +50,15 @@ public class Helper {
         }
 
         return ouput.toString();
+    }
+
+    public static Transformation getRoundedTransformationBuilder()
+    {
+        return new RoundedTransformationBuilder()
+                .borderColor(Color.BLACK)
+                .borderWidthDp(3)
+                .cornerRadiusDp(50)
+                .oval(false)
+                .build();
     }
 }
