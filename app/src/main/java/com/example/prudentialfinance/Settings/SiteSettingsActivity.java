@@ -46,8 +46,6 @@ public class SiteSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_site_settings);
 
-        getApplication();
-
         setComponent();
 
         setControl();
