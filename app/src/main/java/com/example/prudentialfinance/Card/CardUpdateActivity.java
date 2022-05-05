@@ -76,7 +76,6 @@ public class CardUpdateActivity extends AppCompatActivity {
         buttonGoBack = findViewById(R.id.cardUpdateButtonGoBack);
         buttonCreate = findViewById(R.id.cardUpdateButtonCreate);
 
-
         cardNumber = findViewById(R.id.cardUpdateCardNumber);
         cardBalance = findViewById(R.id.cardUpdateCardBalance);
         cardDescription = findViewById(R.id.cardUpdateCardDescription);
@@ -100,6 +99,7 @@ public class CardUpdateActivity extends AppCompatActivity {
      * */
     @SuppressLint("SetTextI18n")
     private void setEvent(Account account,  Map<String, String > headers) {
+        cardNumber.setFocusable(false);
         if( account == null)
             return;
         /*Step 1*/
@@ -111,8 +111,7 @@ public class CardUpdateActivity extends AppCompatActivity {
 
         /*Step 2*/
         buttonGoBack.setOnClickListener(view->{
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
+            finish();
         });
 
 
@@ -125,8 +124,9 @@ public class CardUpdateActivity extends AppCompatActivity {
             String number = cardNumber.getText().toString().trim();
 
 
+            viewModel.updateAccount(headers,id, name, balance, description, number);
 
-            viewModel.getAccountUpdate(headers, id, name, balance, description, number ).observe(this, new Observer<Integer>() {
+            viewModel.getAccountUpdate().observe(this, new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
                     if( integer == 1)
