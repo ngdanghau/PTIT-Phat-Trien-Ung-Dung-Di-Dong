@@ -2,6 +2,7 @@ package com.example.prudentialfinance.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Card.CardIntroduceActivity;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.CardRecycleViewAdapter;
@@ -131,6 +133,9 @@ public class CardFragment extends Fragment {
     private void setEvent()
     {
         buttonCreate.setOnClickListener(view->
-                Toast.makeText(getContext(), "Open new fragment", Toast.LENGTH_LONG).show());
+        {
+            Intent intent = new Intent(getContext(), CardIntroduceActivity.class);
+            startActivity(intent);
+        });
     }
 }

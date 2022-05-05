@@ -23,6 +23,15 @@
             android:name=".General.CategoriesActivity"
             android:exported="false" />
         <activity
+            android:name=".Card.CardUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Card.CardCreationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Card.CardIntroduceActivity"
+            android:exported="false" />
+        <activity
             android:name=".Settings.EmailSettingsActivity"
             android:exported="false" />
         <activity

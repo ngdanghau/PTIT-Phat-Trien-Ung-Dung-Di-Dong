@@ -90,6 +90,14 @@
     <string name="from">From</string>
     <string name="auth">Auth</string>
     <string name="username_email">Username</string>
+    <string name="begin_create_account">Bắt đầu tạo tài khoản</string>
+    <string name="enter_account_detail">Nhập thông tin tài khoản</string>
+    <string name="account_number">Số tài khoản</string>
+    <string name="balance">Số dư hiện tại</string>
+    <string name="bank">Tên Ngân hàng</string>
+    <string name="description">Mô tả chi tiết</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="update_account">Chỉnh sửa thông tin thẻ</string>
 
     <!--    RECOVERY -->
     <string name="recovery_title">Lấy lại mật khẩu</string>

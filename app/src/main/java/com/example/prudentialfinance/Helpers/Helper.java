@@ -15,6 +15,9 @@ public class Helper {
         return output;
     }
 
+    /*
+    * 123456 -> 123,456
+    * */
     public static String formatIntegerNumber(int input)
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");

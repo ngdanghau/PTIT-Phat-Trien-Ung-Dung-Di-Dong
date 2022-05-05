@@ -45,15 +45,11 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cardFragmentButtonCreate"
-            style="@style/button_style"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="70dp"
-            android:layout_marginBottom="28dp"
-            android:text="@string/create_card" />
+            android:text="@string/create_card"
+            style="@style/card_fragment_button_style" />
 
     </RelativeLayout>
 

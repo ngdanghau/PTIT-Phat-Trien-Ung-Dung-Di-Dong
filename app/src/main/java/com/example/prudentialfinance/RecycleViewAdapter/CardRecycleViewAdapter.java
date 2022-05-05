@@ -2,6 +2,9 @@ package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Card.CardUpdateActivity;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
@@ -57,7 +61,11 @@ public class CardRecycleViewAdapter extends RecyclerView.Adapter<CardRecycleView
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, elementBank, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, CardUpdateActivity.class);
+                intent.putExtra("account", element);
+                intent.putExtra("accountName", elementBank);
+                context.startActivity(intent);
             }
         });
     }
