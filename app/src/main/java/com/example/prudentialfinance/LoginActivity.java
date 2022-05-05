@@ -33,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username, password;
     private LoginViewModel viewModel;
     private String token;
-    private TextView loginTextViewCreateAccount;
+    private TextView loginTextViewCreateAccount, txt_forgotpassword;
+    GlobalVariable state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         loginTextViewCreateAccount = findViewById(R.id.loginTextViewCreateAccount);
         username = findViewById(R.id.loginTextViewUsername);
         password = findViewById(R.id.loginTextViewPassword);
-
+        txt_forgotpassword = findViewById(R.id.txt_forgotpassword);
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
     }
 
@@ -61,11 +62,8 @@ public class LoginActivity extends AppCompatActivity {
      *
      */
     private void setAuthorizedToken( String accessToken) {
-        token = "JWT " +  accessToken.trim();
-        GlobalVariable state = ((GlobalVariable) this.getApplication());
-
-
-        state.setAccessToken(token);
+        state = ((GlobalVariable) this.getApplication());
+        state.setAccessToken(accessToken.trim());
 
         SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(), this.MODE_PRIVATE);
         preferences.edit().putString("accessToken", accessToken.trim()).apply();
@@ -78,6 +76,11 @@ public class LoginActivity extends AppCompatActivity {
 
         alert.btnOK.setOnClickListener(view -> {
             alert.dismiss();
+        });
+
+        txt_forgotpassword.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this,RecoveryActivity.class);
+            startActivity(intent);
         });
 
         buttonSignIn.setOnClickListener(view->{
@@ -106,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                         if( result == 1 )
                         {
                             setAuthorizedToken( resource.getAccessToken() );
-
+                            state.setAuthUser(resource.getData());
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
 
@@ -116,8 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         else
                         {
                             setAuthorizedToken( "" );
-
-                            alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);;
+                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_close);;
                         }
                     }
                 }
@@ -125,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Login> call, Throwable t) {
                     loadingDialog.dismissDialog();
+                    alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);;
                 }
             });
         });

@@ -85,7 +85,6 @@ public class EmailSettingsActivity extends AppCompatActivity {
                 spnEncryption.setSelection(i);
                 break;
             }
-
         }
 
     }

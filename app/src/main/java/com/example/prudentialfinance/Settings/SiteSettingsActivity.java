@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -34,10 +38,15 @@ public class SiteSettingsActivity extends AppCompatActivity {
 
     AppCompatButton saveBtn;
     EditText siteName, siteSlogan, siteKeyword, siteDescription, logoMark, logoType, currencyField;
+    Spinner spnLanguage;
     GlobalVariable global;
 
     LoadingDialog loadingDialog;
     Alert alert;
+
+    ArrayAdapter<String> adapter;
+    List<String> list = new ArrayList<>();;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +77,14 @@ public class SiteSettingsActivity extends AppCompatActivity {
         logoType.setText(data.getLogotype());
 
         currencyField.setText(data.getCurrency());
+
+        for (int i = 0; i < list.size(); i++) {
+            String item = list.get(i);
+            if(item.equals(data.getLanguage())){
+                spnLanguage.setSelection(i);
+                break;
+            }
+        }
     }
 
     private void loadData(){
@@ -141,7 +158,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
         String logo_type = logoType.getText().toString().trim();
 
         String currency = currencyField.getText().toString().trim();
-        String language = "en-US";
+        String language = spnLanguage.getSelectedItem().toString();
         String action = "save";
 
         Call<SiteSettingsResponse> container = api.saveSiteSettings(headers,action,
@@ -192,6 +209,15 @@ public class SiteSettingsActivity extends AppCompatActivity {
         logoType = findViewById(R.id.logoType);
 
         currencyField = findViewById(R.id.currency);
+        spnLanguage = findViewById(R.id.spnLanguage);
+
+        list.add("en-US");
+        list.add("vi-VN");
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
+        spnLanguage.setAdapter(adapter);
 
 
 

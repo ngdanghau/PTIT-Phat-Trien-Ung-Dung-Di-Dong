@@ -4,6 +4,7 @@ import com.example.prudentialfinance.Container.AccountCreate;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.AvatarUpload;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.EmailSettingsResponse;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
@@ -13,6 +14,8 @@ import com.example.prudentialfinance.Container.SiteSettingsResponse;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -20,8 +23,10 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -41,6 +46,20 @@ public interface HTTPRequest {
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
 
+
+    //Recovery password
+    @FormUrlEncoded
+    @POST("api/recovery")
+    Call<Login> recovery(@Field("email") String email);
+
+    //RESET password
+    @FormUrlEncoded
+    @POST("api/reset")
+    Call<Login> process_reset(@Field("email") String email,@Field("code") String otp,@Field("action") String action);
+    @FormUrlEncoded
+    @POST("api/reset")
+    Call<Login> reset_pass(@Field("email") String email, @Field("hash") String hash,@Field("password") String password,@Field("password-confirm") String password_confirm,@Field("action") String action);
+
     /*Register*/
     @FormUrlEncoded
     @POST("api/signup")
@@ -58,7 +77,15 @@ public interface HTTPRequest {
     @FormUrlEncoded
     @POST("api/profile")
     Call<Login> updateProfile(@HeaderMap Map<String, String> headers,
-                              @Field("firstname") String firstname, @Field("lastname") String lastname);
+                              @Field("action") String action,
+                              @Field("firstname") String firstname,
+                              @Field("lastname") String lastname);
+
+    @Multipart
+    @POST("api/profile")
+    Call<AvatarUpload> uploadAvatar(@Header("Authorization") String authorization,
+                                    @Part("action") RequestBody action,
+                                    @Part MultipartBody.Part file);
 
 
     @FormUrlEncoded
@@ -92,14 +119,14 @@ public interface HTTPRequest {
     @FormUrlEncoded
     @POST("api/settings/smtp")
     Call<EmailSettingsResponse> saveEmailSettings(@HeaderMap Map<String, String> headers,
-                                                @Field("action") String action,
-                                                @Field("host") String host,
-                                                @Field("port") String port,
-                                                @Field("encryption") String encryption,
-                                                @Field("auth") Boolean auth,
-                                                @Field("username") String username,
-                                                @Field("password") String password,
-                                                @Field("from") String from);
+                                                  @Field("action") String action,
+                                                  @Field("host") String host,
+                                                  @Field("port") String port,
+                                                  @Field("encryption") String encryption,
+                                                  @Field("auth") Boolean auth,
+                                                  @Field("username") String username,
+                                                  @Field("password") String password,
+                                                  @Field("from") String from);
 
     /***************************ACCOUNT***************************/
     @Headers({"Content-Type: application/x-www-form-urlencoded"})

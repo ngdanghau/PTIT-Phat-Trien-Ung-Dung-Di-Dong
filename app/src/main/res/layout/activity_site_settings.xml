@@ -215,6 +215,15 @@
                     android:text="@string/language"
                     style="@style/text_view_label" />
 
+                <Spinner
+                    android:id="@+id/spnLanguage"
+                    android:textColor="@color/colorNormalText"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_height="60dp" />
 
 
             </LinearLayout>

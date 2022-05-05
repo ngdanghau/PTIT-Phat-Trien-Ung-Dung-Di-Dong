@@ -46,15 +46,16 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="50dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/profilePic"
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/ivAvatar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom|center_horizontal"
-            app:srcCompat="@drawable/someone" />
+            android:src="@drawable/cat"
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_camera"
+            android:id="@+id/ivEdit"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="bottom|right"
@@ -142,7 +143,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:gravity="center_vertical"
                     android:textSize="18sp"
                     android:paddingStart="20dp"

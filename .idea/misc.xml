@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.24074074074074073" />
         <entry key="../../Library/Android/sdk/platforms/android-32/data/res/layout/simple_list_item_single_choice.xml" value="0.2740628166160081" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/button_enabled.xml" value="0.1095" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/button_style_state.xml" value="0.134" />
@@ -36,7 +37,6 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_create_state.xml" value="0.109" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_creation_state.xml" value="0.109" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_home_state.xml" value="0.109" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_menu_state.xml" value="0.1215" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shortcut_transaction_state.xml" value="0.109" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shotcur_home_state.xml" value="0.109" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shotcut_card_state.xml" value="0.109" />
@@ -61,10 +61,9 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card.xml" value="0.16246154322878156" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card_element.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_dashboard.xml" value="0.129981884057971" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.18461539003270633" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_setting.xml" value="0.171875" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_settings_element_header.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1890625" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_disabled.xml" value="0.1535" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_enable.xml" value="0.1535" />
@@ -87,13 +86,19 @@
         <entry key="app/src/main/res/drawable/bg_alert_warning.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/bg_linear_layout.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/chevron_left.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/custom_button.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/custom_input.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/custom_input_disabled.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/home_fragment_header_style.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/ic_baseline_lock_open_24.xml" value="0.1975" />
+        <entry key="app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1975" />
+        <entry key="app/src/main/res/drawable/ic_baseline_stars_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_web_24.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.212" />
@@ -105,7 +110,9 @@
         <entry key="app/src/main/res/drawable/layout_custom_dialog.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/transparent_background.xml" value="0.2775" />
+        <entry key="app/src/main/res/layout/activity_categories.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_email_settings.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/activity_goals.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_introduce.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_launch_screen.xml" value="0.33967391304347827" />
@@ -121,10 +128,12 @@
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/fragment_account.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4615036231884058" />
+        <entry key="app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.25407608695652173" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_settings_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_settings_element_header.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/logout_btn_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/normal_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/slide_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/spinner_element.xml" value="0.2740628166160081" />

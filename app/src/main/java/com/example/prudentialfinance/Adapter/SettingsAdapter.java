@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.prudentialfinance.General.CategoriesActivity;
+import com.example.prudentialfinance.General.GoalsActivity;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.Settings.EmailSettingsActivity;
@@ -43,7 +45,7 @@ public class SettingsAdapter extends BaseAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -95,6 +97,12 @@ public class SettingsAdapter extends BaseAdapter {
                     break;
                 case "email_settings":
                     parent.getContext().startActivity(new Intent(parent.getContext(), EmailSettingsActivity.class));
+                    break;
+                case "categories":
+                    parent.getContext().startActivity(new Intent(parent.getContext(), CategoriesActivity.class));
+                    break;
+                case "goals":
+                    parent.getContext().startActivity(new Intent(parent.getContext(), GoalsActivity.class));
                     break;
             }
         });
