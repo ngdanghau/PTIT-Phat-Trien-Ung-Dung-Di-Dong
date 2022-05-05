@@ -245,6 +245,10 @@ Các activity là các màn hình chủ chốt và quan trọng của dự án n
 
 - Thêm màn hình tạo thẻ ATM
 
+- Kéo từ phải qua trái sẽ xóa thẻ ATM
+
+- Hiển thị thông báo mỗi khi đăng nhập ở thanh quick view của thiết bị di động
+
 ## [**Phase 3: xx-xx-2022 to xx-xx-2022**](#phase-3-xx-xx-2022-to-xx-xx-2022)
 
 

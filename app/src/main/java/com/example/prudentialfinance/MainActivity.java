@@ -11,6 +11,7 @@ import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Container.Login;
+import com.example.prudentialfinance.Helpers.Notification;
 import com.example.prudentialfinance.Model.GlobalVariable;
 
 import retrofit2.Call;
@@ -79,6 +80,12 @@ public class MainActivity extends AppCompatActivity {
                                     globalVariable.setAuthUser( resource.getData() );
                                     globalVariable.setAccessToken(accessToken);
                                     i = new Intent(MainActivity.this, HomeActivity.class);
+
+                                    String fullName =  resource.getData().getFirstname() + " " + resource.getData().getLastname();
+                                    Notification notification = new Notification();
+                                    notification.showNotification(MainActivity.this,
+                                            "Welcome back, " + fullName + " !",
+                                            "Have a nice day");
                                 }
                                 /*Second situation*/
                                 else{

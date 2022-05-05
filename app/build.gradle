@@ -52,4 +52,7 @@ dependencies {
 
     // circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // https://github.com/xabaras/RecyclerViewSwipeDecorator
+    implementation 'com.github.xabaras:RecyclerViewSwipeDecorator:1.3'
 }

@@ -1,6 +1,7 @@
 package com.example.prudentialfinance.Helpers;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
@@ -64,6 +65,7 @@ public class Alert {
         btnCancel = viewAlert.findViewById(R.id.btnCancel);
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void showAlert(String title, String msg, Integer ico){
         switch (ico){
             case R.drawable.ic_close:
@@ -82,7 +84,8 @@ public class Alert {
         alert.show();
     }
 
-    public void showAlert(Integer resid,  String msg, Integer ico){
+    @SuppressLint("NonConstantResourceId")
+    public void showAlert(Integer resid, String msg, Integer ico){
         String title = context.getResources().getString(resid);
         switch (ico){
             case R.drawable.ic_close:

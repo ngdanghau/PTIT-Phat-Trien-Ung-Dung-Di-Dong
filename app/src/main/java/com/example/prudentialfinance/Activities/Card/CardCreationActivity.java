@@ -74,8 +74,7 @@ public class CardCreationActivity extends AppCompatActivity {
      * */
     private void setEvent() {
         buttonGoBack.setOnClickListener(view->{
-            Intent intent = new Intent(CardCreationActivity.this, HomeActivity.class);
-            startActivity(intent);
+            finish();
         });
 
         buttonCreate.setOnClickListener(view->{
