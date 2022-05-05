@@ -2,42 +2,37 @@ package com.example.prudentialfinance.Fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Adapter.SettingsAdapter;
-import com.example.prudentialfinance.LoginActivity;
+import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.example.prudentialfinance.RecycleViewAdapter.SettingRecycleViewAdapter;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 
 public class SettingsFragment extends Fragment {
 
     ArrayList<Setting> data = new ArrayList<>();
-    SettingsAdapter settingsAdapter;
-    ListView lvSettings;
+    RecyclerView lvSettings;
     ImageView ivAvatar;
     TextView fullName, email;
     User authUser;
-
-    AppCompatButton logout;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -88,26 +83,26 @@ public class SettingsFragment extends Fragment {
         email = view.findViewById(R.id.email);
 
 
-        Transformation transformation = new RoundedTransformationBuilder()
-                .borderColor(Color.BLACK)
-                .borderWidthDp(3)
-                .cornerRadiusDp(50)
-                .oval(false)
-                .build();
+
 
         Picasso
                 .get()
                 .load(HTTPService.UPLOADS_URL + "/"+authUser.getAvatar())
                 .fit()
-                .transform(transformation)
+                .transform(Helper.getRoundedTransformationBuilder())
                 .into(ivAvatar);
 
         fullName.setText(authUser.getFirstname() + " " + authUser.getLastname());
         email.setText(authUser.getEmail());
 
 
-        settingsAdapter = new SettingsAdapter(getActivity().getApplicationContext(), data);
-        lvSettings.setAdapter(settingsAdapter);
+
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity().getApplicationContext());
+        lvSettings.setLayoutManager(manager);
+
+        SettingRecycleViewAdapter adapter = new SettingRecycleViewAdapter(getActivity().getApplicationContext(), data);
+        lvSettings.setAdapter(adapter);
+
 
         view.findViewById(R.id.logout).setOnClickListener(view1 -> {
             setAuthorizedToken();

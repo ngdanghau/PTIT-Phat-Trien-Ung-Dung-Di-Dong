@@ -5,13 +5,13 @@ import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
-import com.example.prudentialfinance.Container.AvatarUpload;
+import com.example.prudentialfinance.Container.Settings.AvatarUpload;
 import com.example.prudentialfinance.Container.CategoryGetAll;
-import com.example.prudentialfinance.Container.EmailSettingsResponse;
+import com.example.prudentialfinance.Container.Settings.EmailSettingsResponse;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
-import com.example.prudentialfinance.Container.SiteSettingsResponse;
+import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
 
 import java.util.Map;
 

@@ -3,17 +3,12 @@ package com.example.prudentialfinance.Helpers;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
-import com.example.prudentialfinance.LoginActivity;
 import com.example.prudentialfinance.R;
 
 public class Alert {
@@ -27,6 +22,15 @@ public class Alert {
 
     public Alert(Context context) {
         this.context = context;
+    }
+
+    public Alert(Context context, int type) {
+        this.context = context;
+        if(type == 1){
+            this.normal();
+        }else{
+            this.confirm();
+        }
     }
 
     public void normal(){

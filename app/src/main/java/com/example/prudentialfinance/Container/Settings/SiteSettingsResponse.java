@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.Container;
+package com.example.prudentialfinance.Container.Settings;
 
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;

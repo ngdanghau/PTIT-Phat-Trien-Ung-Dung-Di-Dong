@@ -23,43 +23,43 @@
             android:name=".General.CategoriesActivity"
             android:exported="false" />
         <activity
-            android:name=".Card.CardUpdateActivity"
+            android:name=".Activities.Card.CardUpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".Card.CardCreationActivity"
+            android:name=".Activities.Card.CardCreationActivity"
             android:exported="false" />
         <activity
-            android:name=".Card.CardIntroduceActivity"
+            android:name=".Activities.Card.CardIntroduceActivity"
             android:exported="false" />
         <activity
-            android:name=".Settings.EmailSettingsActivity"
+            android:name=".Activities.Settings.EmailSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".Settings.SiteSettingsActivity"
+            android:name=".Activities.Settings.SiteSettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".Settings.PasswordActivity"
+            android:name=".Activities.Settings.PasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".Settings.ProfileActivity"
+            android:name=".Activities.Settings.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Activities.Auth.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".Activities.Auth.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".RecoveryActivity"
+            android:name=".Activities.Auth.RecoveryActivity"
             android:exported="false" />
         <activity
             android:name=".DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.Auth.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".IntroduceActivity"

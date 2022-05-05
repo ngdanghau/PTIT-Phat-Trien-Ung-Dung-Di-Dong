@@ -1,9 +1,7 @@
-package com.example.prudentialfinance.Card;
+package com.example.prudentialfinance.Activities.Card;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,7 +10,6 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.HomeActivity;
@@ -20,7 +17,6 @@ import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.CardViewModel;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class CardCreationActivity extends AppCompatActivity {

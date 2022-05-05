@@ -2,28 +2,17 @@ package com.example.prudentialfinance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.CategoryGetAll;
-import com.example.prudentialfinance.Container.HomeLatestTransactions;
+import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Helpers.Notification;
 import com.example.prudentialfinance.Model.GlobalVariable;
-import com.example.prudentialfinance.Model.User;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;

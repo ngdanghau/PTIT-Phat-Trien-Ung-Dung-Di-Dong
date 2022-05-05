@@ -1,7 +1,6 @@
 package com.example.prudentialfinance;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.ViewPager;
 
@@ -12,12 +11,10 @@ import android.text.Html;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Adapter.SliderAdapter;
 import com.example.prudentialfinance.Model.GlobalVariable;
-
-import org.w3c.dom.Text;
 
 public class IntroduceActivity extends AppCompatActivity {
 
