@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.EmailSettingsResponse;
+import com.example.prudentialfinance.Container.Settings.EmailSettingsResponse;
 
 import java.util.Map;
 

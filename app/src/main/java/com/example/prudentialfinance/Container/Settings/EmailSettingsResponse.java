@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.Container;
+package com.example.prudentialfinance.Container.Settings;
 
 import com.example.prudentialfinance.Model.EmailSettings;
 import com.google.gson.annotations.Expose;
