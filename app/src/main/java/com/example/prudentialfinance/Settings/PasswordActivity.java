@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.API.HTTPRequest;
@@ -31,7 +30,6 @@ public class PasswordActivity extends AppCompatActivity {
 
     User AuthUser;
     ImageButton backBtn;
-    TextView tvEmail;
     EditText password, oldPassword, confirmPassword;
     AppCompatButton saveBtn;
 
@@ -56,22 +54,18 @@ public class PasswordActivity extends AppCompatActivity {
 
         state.setAccessToken(token);
 
-        SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(), this.MODE_PRIVATE);
+        SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(), MODE_PRIVATE);
         preferences.edit().putString("accessToken", accessToken.trim()).apply();
     }
 
     private void setEvent() {
-        backBtn.setOnClickListener(view -> {
-            finish();
-        });
+        backBtn.setOnClickListener(view -> finish());
 
         final LoadingDialog loadingDialog = new LoadingDialog(PasswordActivity.this);
         Alert alert = new Alert(PasswordActivity.this);
         alert.normal();
 
-        alert.btnOK.setOnClickListener(view -> {
-            alert.dismiss();
-        });
+        alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
 
         saveBtn.setOnClickListener(view -> {
@@ -112,7 +106,7 @@ public class PasswordActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Login> call, Throwable t) {
+                public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
                     loadingDialog.dismissDialog();
                     alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
                 }

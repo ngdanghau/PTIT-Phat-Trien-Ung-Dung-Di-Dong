@@ -93,14 +93,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         });
 
-        backBtn.setOnClickListener(view -> {
-            finish();
-        });
+        backBtn.setOnClickListener(view -> finish());
 
 
-        alert.btnOK.setOnClickListener(view -> {
-            alert.dismiss();
-        });
+        alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
 
         saveBtn.setOnClickListener(view -> {
@@ -137,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Login> call, Throwable t) {
+                public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
                     loadingDialog.dismissDialog();
                     alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
                 }
@@ -154,6 +150,7 @@ public class ProfileActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // There are no request codes
                         Intent data = result.getData();
+                        assert data != null;
                         selectedImage = data.getData();
 
                         loadImgToElement(selectedImage.toString(), true);
@@ -222,7 +219,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AvatarUpload> call, Throwable t) {
+            public void onFailure(@NonNull Call<AvatarUpload> call, @NonNull Throwable t) {
                 loadingDialog.dismissDialog();
                 alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
             }

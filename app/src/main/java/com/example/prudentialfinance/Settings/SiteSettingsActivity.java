@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.API.HTTPRequest;
@@ -17,10 +16,8 @@ import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.SiteSettingsResponse;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.LoginActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.SiteSettings;
-import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
     Alert alert;
 
     ArrayAdapter<String> adapter;
-    List<String> list = new ArrayList<>();;
+    List<String> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +87,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
     private void loadData(){
 
 
-        alert.btnOK.setOnClickListener(view -> {
-            alert.dismiss();
-        });
+        alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
@@ -124,7 +119,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SiteSettingsResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<SiteSettingsResponse> call, @NonNull Throwable t) {
                 loadingDialog.dismissDialog();
                 alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
             }
@@ -132,13 +127,9 @@ public class SiteSettingsActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        backBtn.setOnClickListener(view -> {
-            finish();
-        });
+        backBtn.setOnClickListener(view -> finish());
 
-        saveBtn.setOnClickListener(view -> {
-            updateData();
-        });
+        saveBtn.setOnClickListener(view -> updateData());
     }
 
     private void updateData(){
@@ -188,7 +179,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<SiteSettingsResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<SiteSettingsResponse> call, @NonNull Throwable t) {
                 loadingDialog.dismissDialog();
                 alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
             }
