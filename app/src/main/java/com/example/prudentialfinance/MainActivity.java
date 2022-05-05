@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run()
             {
-
                 if(accessToken != null){
                     Call<Login> container = api.profile("JWT " + accessToken);
                     container.enqueue(new Callback<Login>() {
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                                 Login resource = response.body();
                                 assert resource != null;
                                 int result = resource.getResult();
-                                Log.d(TAG, "Main Activity result: " + resource.getResult());
 
                                 Intent i;
 
@@ -110,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                }else{
+                }
+                else{
                     Intent i = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
                     startActivity(i);
                     finish();

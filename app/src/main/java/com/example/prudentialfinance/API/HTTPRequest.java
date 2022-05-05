@@ -28,6 +28,14 @@ import retrofit2.http.QueryMap;
 
 public interface HTTPRequest {
 
+    /**
+     * Attention: we should utilize String data type, even parameters are passed to
+     * function in API maybe as Integer, Double, Long, .. and so forth
+     *
+     * Using String data type helps us to reduce errors when Retrofit return result equals oh but
+     * doesn't return error message
+     * */
+
     /*Login*/
     @FormUrlEncoded
     @POST("api/login")
@@ -120,13 +128,17 @@ public interface HTTPRequest {
     /*edit*/
     @FormUrlEncoded
     @PUT("api/accounts/{id}")
-    Call<AccountEdit> accountEdit(@HeaderMap Map<String, String> headers,
-                                  @Path("id") String id,
+    Call<AccountEdit> accountUpdate(@HeaderMap Map<String, String> headers,
+                                  @Path("id") int id,
                                   @Field("name") String name,
-                                  @Field("balance") int balance,
+                                  @Field("balance") String balance,
                                   @Field("description") String description,
                                   @Field("accountnumber") String accountnumber);
 
+    @FormUrlEncoded
+    @PUT("api/accounts/{id}")
+    Call<AccountEdit> accountUpdate2(@HeaderMap Map<String, String> headers,
+                                    @QueryMap Map<String, String> parameters);
 
 
     /***************************HOME*********************************/

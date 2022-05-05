@@ -78,7 +78,7 @@
     <string name="site_slogan">Khẩu hiệu</string>
     <string name="site_keyword">Từ khoá</string>
     <string name="site_description">Mô tả</string>
-  
+
     <string name="list_of_card">Danh sách thẻ</string>
     <string name="five_million_vnd">5 000 000 VND</string>
     <string name="card_number">0312 0000 0000 7616</string>
@@ -91,6 +91,14 @@
     <string name="auth">Auth</string>
 
     <string name="username_email">Username</string>
+    <string name="begin_create_account">Bắt đầu tạo tài khoản</string>
+    <string name="enter_account_detail">Nhập thông tin tài khoản</string>
+    <string name="account_number">Số tài khoản</string>
+    <string name="balance">Số dư hiện tại</string>
+    <string name="bank">Tên Ngân hàng</string>
+    <string name="description">Mô tả chi tiết</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="update_account">Chỉnh sửa thông tin thẻ</string>
 
 
 </resources>
