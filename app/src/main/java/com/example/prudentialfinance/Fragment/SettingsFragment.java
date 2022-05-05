@@ -7,21 +7,22 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Adapter.SettingsAdapter;
 import com.example.prudentialfinance.LoginActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.RecycleViewAdapter.SettingRecycleViewAdapter;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -31,8 +32,7 @@ import java.util.ArrayList;
 public class SettingsFragment extends Fragment {
 
     ArrayList<Setting> data = new ArrayList<>();
-    SettingsAdapter settingsAdapter;
-    ListView lvSettings;
+    RecyclerView lvSettings;
     ImageView ivAvatar;
     TextView fullName, email;
     User authUser;
@@ -106,8 +106,13 @@ public class SettingsFragment extends Fragment {
         email.setText(authUser.getEmail());
 
 
-        settingsAdapter = new SettingsAdapter(getActivity().getApplicationContext(), data);
-        lvSettings.setAdapter(settingsAdapter);
+
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity().getApplicationContext());
+        lvSettings.setLayoutManager(manager);
+
+        SettingRecycleViewAdapter adapter = new SettingRecycleViewAdapter(getActivity().getApplicationContext(), data);
+        lvSettings.setAdapter(adapter);
+
 
         view.findViewById(R.id.logout).setOnClickListener(view1 -> {
             setAuthorizedToken();
