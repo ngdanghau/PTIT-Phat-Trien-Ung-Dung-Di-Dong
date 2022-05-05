@@ -22,7 +22,7 @@ public class CardViewModel extends ViewModel {
     private MutableLiveData<Integer> accountCreation;
     private MutableLiveData<Integer> accountUpdate;
 
-    public MutableLiveData<Integer> getAccountUpdate(Map<String, String> headers, int id, String name, String balance, String description, String accountnumber) {
+    public MutableLiveData<Integer> getAccountUpdate() {
         if( accountUpdate == null)
         {
             accountUpdate = new MutableLiveData<>();
@@ -98,7 +98,7 @@ public class CardViewModel extends ViewModel {
      * @author Phong-Kaster
      * send HTTP Request to update account
      * */
-    private void updateAccount(Map<String, String> headers, int id, String name, String balance, String description, String accountnumber) {
+    public void updateAccount(Map<String, String> headers, int id, String name, String balance, String description, String accountnumber) {
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
