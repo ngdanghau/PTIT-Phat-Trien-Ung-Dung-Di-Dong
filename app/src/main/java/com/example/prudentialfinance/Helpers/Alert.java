@@ -28,6 +28,15 @@ public class Alert {
         this.context = context;
     }
 
+    public Alert(Context context, int type) {
+        this.context = context;
+        if(type == 1){
+            this.normal();
+        }else{
+            this.confirm();
+        }
+    }
+
     public void normal(){
         viewAlert = View.inflate(context, R.layout.normal_alert, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -3,6 +3,7 @@ package com.example.prudentialfinance.Settings;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,8 @@ import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.EmailSettings;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.ViewModel.Settings.EmailSettingsViewModel;
+import com.example.prudentialfinance.ViewModel.Settings.SiteSettingsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +42,11 @@ public class EmailSettingsActivity extends AppCompatActivity {
     AppCompatButton saveBtn;
 
     GlobalVariable global;
+    EmailSettingsViewModel viewModel;
     LoadingDialog loadingDialog;
     Alert alert;
+
+    Map<String, String> headers;
 
     LinearLayout authSMTP;
     Switch swAuth;
@@ -54,18 +60,26 @@ public class EmailSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_settings);
 
-        getApplication();
-        global = (GlobalVariable) getApplication();
-        loadingDialog = new LoadingDialog(EmailSettingsActivity.this);
 
-        alert = new Alert(EmailSettingsActivity.this);
-        alert.normal();
+        setComponent();
 
         setControl();
 
-        loadData();
-
         setEvent();
+
+        loadData();
+    }
+
+    private void loadData() {
+        viewModel.getData(headers);
+    }
+
+    private void setComponent() {
+        global = (GlobalVariable) getApplication();
+        headers = ((GlobalVariable)getApplication()).getHeaders();
+        loadingDialog = new LoadingDialog(EmailSettingsActivity.this);
+        alert = new Alert(EmailSettingsActivity.this, 1);
+        viewModel = new ViewModelProvider(this).get(EmailSettingsViewModel.class);
     }
 
     private void setDataToControl(EmailSettings data){
@@ -89,59 +103,13 @@ public class EmailSettingsActivity extends AppCompatActivity {
 
     }
 
-    private void loadData(){
-
-
-
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
-
-        loadingDialog.startLoadingDialog();
-
-        Map<String, String > headers = global.getHeaders();
-
-        Call<EmailSettingsResponse> container = api.getEmailSettings(headers);
-        container.enqueue(new Callback<EmailSettingsResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<EmailSettingsResponse> call, @NonNull Response<EmailSettingsResponse> response) {
-                loadingDialog.dismissDialog();
-                if(response.isSuccessful())
-                {
-                    EmailSettingsResponse resource = response.body();
-                    assert resource != null;
-                    int result = resource.getResult();
-
-                    if( result == 1 )
-                    {
-                        setDataToControl(resource.getData());
-                    }
-                    else
-                    {
-                        alert.showAlert("Oops!",resource.getMsg(), R.drawable.ic_check);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<EmailSettingsResponse> call, Throwable t) {
-                loadingDialog.dismissDialog();
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
-            }
-        });
-    }
 
     private void setEvent() {
-        backBtn.setOnClickListener(view -> {
-            finish();
-        });
+        backBtn.setOnClickListener(view -> finish());
 
-        saveBtn.setOnClickListener(view -> {
-            updateData();
-        });
+        saveBtn.setOnClickListener(view -> updateData());
 
-        alert.btnOK.setOnClickListener(view -> {
-            alert.dismiss();
-        });
+        alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
         swAuth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -149,15 +117,33 @@ public class EmailSettingsActivity extends AppCompatActivity {
                 authSMTP.setVisibility(b ? View.VISIBLE : View.INVISIBLE);
             }
         });
+
+        viewModel.isLoading().observe(this, isLoading -> {
+            if(isLoading){
+                loadingDialog.startLoadingDialog();
+            }else{
+                loadingDialog.dismissDialog();
+            }
+        });
+
+        viewModel.getObject().observe(this, object -> {
+            if(object == null){
+                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                return;
+            }
+
+            if (object.getResult() == 1) {
+                setDataToControl(object.getData());
+                if(object.getMethod().equals("POST")){
+                    Toast.makeText(EmailSettingsActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
+            }
+        });
     }
 
     private void updateData(){
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
-
-        loadingDialog.startLoadingDialog();
-
-        Map<String, String > headers = global.getHeaders();
 
         String host = txtHost.getText().toString().trim();
         String port = txtPort.getText().toString().trim();
@@ -168,34 +154,7 @@ public class EmailSettingsActivity extends AppCompatActivity {
         String from = txtFrom.getText().toString().trim();
         String action = "save";
 
-        Call<EmailSettingsResponse> container = api.saveEmailSettings(headers, action,
-                host, port, encryption, auth, username, password, from);
-
-        container.enqueue(new Callback<EmailSettingsResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<EmailSettingsResponse> call, @NonNull Response<EmailSettingsResponse> response) {
-                loadingDialog.dismissDialog();
-                if(response.isSuccessful())
-                {
-                    EmailSettingsResponse resource = response.body();
-                    assert resource != null;
-                    int result = resource.getResult();
-
-                    if( result == 1 )
-                    {
-                        Toast.makeText(EmailSettingsActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
-                    }else{
-                        alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_close);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<EmailSettingsResponse> call, Throwable t) {
-                loadingDialog.dismissDialog();
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
-            }
-        });
+        viewModel.updateData(headers, action, host, port, encryption, auth, username, password, from);
     }
 
     private void setControl() {

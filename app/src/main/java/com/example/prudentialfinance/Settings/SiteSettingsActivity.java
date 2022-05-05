@@ -1,8 +1,8 @@
 package com.example.prudentialfinance.Settings;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -11,23 +11,18 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.prudentialfinance.API.HTTPRequest;
-import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.SiteSettingsResponse;
+
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.ViewModel.Settings.SiteSettingsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class SiteSettingsActivity extends AppCompatActivity {
 
@@ -38,11 +33,13 @@ public class SiteSettingsActivity extends AppCompatActivity {
     Spinner spnLanguage;
     GlobalVariable global;
 
+    SiteSettingsViewModel viewModel;
     LoadingDialog loadingDialog;
     Alert alert;
 
     ArrayAdapter<String> adapter;
     List<String> list = new ArrayList<>();
+    Map<String, String> headers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +47,29 @@ public class SiteSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_site_settings);
 
         getApplication();
-        global = (GlobalVariable) getApplication();
-        loadingDialog = new LoadingDialog(SiteSettingsActivity.this);
 
-        alert = new Alert(SiteSettingsActivity.this);
-        alert.normal();
+        setComponent();
 
         setControl();
 
-        loadData();
-
         setEvent();
+
+        loadData();
+    }
+
+    private void loadData() {
+        viewModel.getData(headers);
+    }
+
+    private void setComponent() {
+        global = (GlobalVariable) getApplication();
+        headers = ((GlobalVariable)getApplication()).getHeaders();
+        loadingDialog = new LoadingDialog(SiteSettingsActivity.this);
+        alert = new Alert(SiteSettingsActivity.this, 1);
+        viewModel = new ViewModelProvider(this).get(SiteSettingsViewModel.class);
     }
 
     private void setDataToControl(SiteSettings data){
-
         siteName.setText(data.getSite_name());
         siteSlogan.setText(data.getSite_slogan());
         siteKeyword.setText(data.getSite_keywords());
@@ -84,107 +89,52 @@ public class SiteSettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void loadData(){
-
-
-        alert.btnOK.setOnClickListener(view -> alert.dismiss());
-
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
-
-        loadingDialog.startLoadingDialog();
-
-        Map<String, String > headers = global.getHeaders();
-
-        Call<SiteSettingsResponse> container = api.getSiteSettings(headers);
-        container.enqueue(new Callback<SiteSettingsResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SiteSettingsResponse> call, @NonNull Response<SiteSettingsResponse> response) {
-                loadingDialog.dismissDialog();
-                if(response.isSuccessful())
-                {
-                    SiteSettingsResponse resource = response.body();
-                    assert resource != null;
-                    int result = resource.getResult();
-
-                    if( result == 1 )
-                    {
-                        setDataToControl(resource.getData());
-                    }
-                    else
-                    {
-                        alert.showAlert("Oops!",resource.getMsg(), R.drawable.ic_check);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SiteSettingsResponse> call, @NonNull Throwable t) {
-                loadingDialog.dismissDialog();
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
-            }
-        });
-    }
-
     private void setEvent() {
         backBtn.setOnClickListener(view -> finish());
 
-        saveBtn.setOnClickListener(view -> updateData());
-    }
+        saveBtn.setOnClickListener(view -> {
+            String site_name = siteName.getText().toString().trim();
+            String site_slogan = siteSlogan.getText().toString().trim();
+            String site_description = siteDescription.getText().toString().trim();
+            String site_keyword = siteKeyword.getText().toString().trim();
 
-    private void updateData(){
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
+            String logo_mark = logoMark.getText().toString().trim();
+            String logo_type = logoType.getText().toString().trim();
 
-        loadingDialog.startLoadingDialog();
+            String currency = currencyField.getText().toString().trim();
+            String language = spnLanguage.getSelectedItem().toString();
+            String action = "save";
 
-        Map<String, String > headers = global.getHeaders();
+            viewModel.updateData(headers, action, site_name, site_slogan, site_description, site_keyword, logo_type, logo_mark, language, currency);
+        });
 
-        String site_name = siteName.getText().toString().trim();
-        String site_slogan = siteSlogan.getText().toString().trim();
-        String site_description = siteDescription.getText().toString().trim();
-        String site_keyword = siteKeyword.getText().toString().trim();
+        alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
-        String logo_mark = logoMark.getText().toString().trim();
-        String logo_type = logoType.getText().toString().trim();
-
-        String currency = currencyField.getText().toString().trim();
-        String language = spnLanguage.getSelectedItem().toString();
-        String action = "save";
-
-        Call<SiteSettingsResponse> container = api.saveSiteSettings(headers,action,
-                site_name, site_slogan, site_description, site_keyword,
-                logo_type, logo_mark,
-                language, currency);
-
-        container.enqueue(new Callback<SiteSettingsResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SiteSettingsResponse> call, @NonNull Response<SiteSettingsResponse> response) {
+        viewModel.isLoading().observe(this, isLoading -> {
+            if(isLoading){
+                loadingDialog.startLoadingDialog();
+            }else{
                 loadingDialog.dismissDialog();
-                if(response.isSuccessful())
-                {
-                    SiteSettingsResponse resource = response.body();
-                    assert resource != null;
-                    int result = resource.getResult();
+            }
+        });
 
-                    if( result == 1 )
-                    {
-                        Toast.makeText(SiteSettingsActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        alert.showAlert("Oops!",resource.getMsg(), R.drawable.ic_check);
-                    }
-                }
+        viewModel.getObject().observe(this, object -> {
+            if(object == null){
+                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                return;
             }
 
-            @Override
-            public void onFailure(@NonNull Call<SiteSettingsResponse> call, @NonNull Throwable t) {
-                loadingDialog.dismissDialog();
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+            if (object.getResult() == 1) {
+                setDataToControl(object.getData());
+                if(object.getMethod().equals("POST")){
+                    Toast.makeText(SiteSettingsActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
             }
         });
     }
+
 
     private void setControl() {
         backBtn = findViewById(R.id.backBtn);
