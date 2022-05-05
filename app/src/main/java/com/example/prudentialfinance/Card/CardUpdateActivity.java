@@ -111,8 +111,7 @@ public class CardUpdateActivity extends AppCompatActivity {
 
         /*Step 2*/
         buttonGoBack.setOnClickListener(view->{
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
+            finish();
         });
 
 
@@ -125,10 +124,10 @@ public class CardUpdateActivity extends AppCompatActivity {
             String number = cardNumber.getText().toString().trim();
 
 
-
             viewModel.getAccountUpdate(headers, id, name, balance, description, number ).observe(this, new Observer<Integer>() {
                 @Override
                 public void onChanged(Integer integer) {
+                    System.out.println(integer);
                     if( integer == 1)
                     {
                         NoticeDialog dialog = new NoticeDialog();
