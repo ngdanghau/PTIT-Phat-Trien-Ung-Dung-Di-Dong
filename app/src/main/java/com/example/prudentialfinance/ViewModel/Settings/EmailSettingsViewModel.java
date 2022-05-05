@@ -47,14 +47,11 @@ public class EmailSettingsViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<EmailSettingsResponse> call, @NonNull Response<EmailSettingsResponse> response) {
                 isLoading.setValue(false);
-                if(response.isSuccessful())
-                {
-                    if (response.isSuccessful()) {
-                        EmailSettingsResponse resource = response.body();
-                        assert resource != null;
-                        object.setValue(resource);
-                        return;
-                    }
+                if (response.isSuccessful()) {
+                    EmailSettingsResponse resource = response.body();
+                    assert resource != null;
+                    object.setValue(resource);
+                    return;
                 }
                 object.setValue(null);
             }
@@ -80,14 +77,12 @@ public class EmailSettingsViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<EmailSettingsResponse> call, @NonNull Response<EmailSettingsResponse> response) {
                 isLoading.setValue(false);
-                if(response.isSuccessful())
-                {
-                    if (response.isSuccessful()) {
-                        EmailSettingsResponse resource = response.body();
-                        assert resource != null;
-                        object.setValue(resource);
-                        return;
-                    }
+
+                if (response.isSuccessful()) {
+                    EmailSettingsResponse resource = response.body();
+                    assert resource != null;
+                    object.setValue(resource);
+                    return;
                 }
                 object.setValue(null);
             }

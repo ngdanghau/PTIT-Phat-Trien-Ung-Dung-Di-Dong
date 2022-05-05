@@ -1,14 +1,13 @@
 package com.example.prudentialfinance.Settings;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -16,25 +15,17 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.prudentialfinance.API.HTTPRequest;
-import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.EmailSettingsResponse;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.EmailSettings;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Settings.EmailSettingsViewModel;
-import com.example.prudentialfinance.ViewModel.Settings.SiteSettingsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class EmailSettingsActivity extends AppCompatActivity {
@@ -49,12 +40,13 @@ public class EmailSettingsActivity extends AppCompatActivity {
     Map<String, String> headers;
 
     LinearLayout authSMTP;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch swAuth;
 
     EditText username_email, password_email, txtHost, txtFrom, txtPort;
     Spinner spnEncryption;
     ArrayAdapter<String> adapter;
-    List<String> list = new ArrayList<>();;
+    List<String> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,12 +103,7 @@ public class EmailSettingsActivity extends AppCompatActivity {
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
-        swAuth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                authSMTP.setVisibility(b ? View.VISIBLE : View.INVISIBLE);
-            }
-        });
+        swAuth.setOnCheckedChangeListener((compoundButton, b) -> authSMTP.setVisibility(b ? View.VISIBLE : View.INVISIBLE));
 
         viewModel.isLoading().observe(this, isLoading -> {
             if(isLoading){

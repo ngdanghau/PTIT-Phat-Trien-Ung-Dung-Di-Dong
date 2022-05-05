@@ -4,11 +4,11 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,28 +24,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.AvatarUpload;
-import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.ViewModel.Settings.ProfileViewModel;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.Map;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -57,33 +47,36 @@ public class ProfileActivity extends AppCompatActivity {
     EditText firstname, lastname;
     AppCompatButton saveBtn;
 
+    ProfileViewModel viewModel;
     GlobalVariable global;
-
     LoadingDialog loadingDialog;
     Alert alert;
-    Retrofit service = HTTPService.getInstance();
-    HTTPRequest api = service.create(HTTPRequest.class);
+    Map<String, String> headers;
+
     Uri selectedImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        getApplication();
-        global = (GlobalVariable) getApplication();
-        loadingDialog = new LoadingDialog(ProfileActivity.this);
-        alert = new Alert(ProfileActivity.this);
+        setComponent();
 
-        AuthUser = global.getAuthUser();
         setControl();
+
         setEvent();
 
     }
 
+    private void setComponent() {
+        global = (GlobalVariable) getApplication();
+        headers = ((GlobalVariable)getApplication()).getHeaders();
+        loadingDialog = new LoadingDialog(ProfileActivity.this);
+        alert = new Alert(ProfileActivity.this, 1);
+        viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        AuthUser = global.getAuthUser();
+    }
+
     private void setEvent() {
-        alert.normal();
-
-
         ivEdit.setOnClickListener(view -> {
             verifyStoragePermissions(this);
 
@@ -95,50 +88,53 @@ public class ProfileActivity extends AppCompatActivity {
 
         backBtn.setOnClickListener(view -> finish());
 
-
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
+        saveBtn.setOnClickListener(view -> updateData());
 
-        saveBtn.setOnClickListener(view -> {
-            String firstName = firstname.getText().toString().trim();
-            String lastName = lastname.getText().toString().trim();
-            String action = "save";
-
-
-            loadingDialog.startLoadingDialog();
-
-            Map<String, String > headers = global.getHeaders();
-
-            Call<Login> container = api.updateProfile(headers, action, firstName, lastName);
-            container.enqueue(new Callback<Login>() {
-                @Override
-                public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
-                    loadingDialog.dismissDialog();
-                    if(response.isSuccessful())
-                    {
-                        Login resource = response.body();
-                        assert resource != null;
-                        int result = resource.getResult();
-
-                        if( result == 1 )
-                        {
-                            global.setAuthUser(resource.getData());
-                            Toast.makeText(ProfileActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
-                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_close);
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
-                    loadingDialog.dismissDialog();
-                    alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
-                }
-            });
+        viewModel.isLoading().observe(this, isLoading -> {
+            if(isLoading){
+                loadingDialog.startLoadingDialog();
+            }else{
+                loadingDialog.dismissDialog();
+            }
         });
+
+        viewModel.getObject().observe(this, object -> {
+            if(object == null){
+                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                return;
+            }
+
+            if (object.getResult() == 1) {
+                global.getAuthUser().setAvatar(object.getImage());
+                Toast.makeText(ProfileActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+            } else {
+                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
+            }
+        });
+
+        viewModel.getObjectProfile().observe(this, object -> {
+            if(object == null){
+                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                return;
+            }
+
+            if (object.getResult() == 1) {
+                global.setAuthUser(object.getData());
+                Toast.makeText(ProfileActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+            } else {
+                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
+            }
+        });
+    }
+
+    private void updateData() {
+        String firstName = firstname.getText().toString().trim();
+        String lastName = lastname.getText().toString().trim();
+        String action = "save";
+
+        viewModel.updateData(headers, action, firstName, lastName);
     }
 
     // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
@@ -187,47 +183,13 @@ public class ProfileActivity extends AppCompatActivity {
         String picturePath = cursor.getString(columnIndex);
         cursor.close();
 
-        loadingDialog.startLoadingDialog();
-
         String token = global.getAccessToken();
-        File file = new File(picturePath);
 
-        RequestBody action = RequestBody.create(MediaType.parse("multipart/form-data"), "avatar");
-        RequestBody requestBodyFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part fileData = MultipartBody.Part.createFormData("file", file.getName(), requestBodyFile);
+        viewModel.uploadAvatar(token, picturePath);
 
-        Call<AvatarUpload> container = api.uploadAvatar(token, action, fileData);
-        container.enqueue(new Callback<AvatarUpload>() {
-            @Override
-            public void onResponse(@NonNull Call<AvatarUpload> call, @NonNull Response<AvatarUpload> response) {
-                loadingDialog.dismissDialog();
-                if(response.isSuccessful())
-                {
-                    AvatarUpload resource = response.body();
-                    assert resource != null;
-                    int result = resource.getResult();
-                    if( result == 1 )
-                    {
-                        global.getAuthUser().setAvatar(resource.getImage());
-                        Toast.makeText(ProfileActivity.this, resource.getMsg(), Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_close);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AvatarUpload> call, @NonNull Throwable t) {
-                loadingDialog.dismissDialog();
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
-            }
-        });
     }
 
     private void loadImgToElement(String img, boolean isUpload){
-
         Picasso
                 .get()
                 .load(img)

@@ -47,14 +47,11 @@ public class SiteSettingsViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<SiteSettingsResponse> call, @NonNull Response<SiteSettingsResponse> response) {
                 isLoading.setValue(false);
-                if(response.isSuccessful())
-                {
-                    if (response.isSuccessful()) {
-                        SiteSettingsResponse resource = response.body();
-                        assert resource != null;
-                        object.setValue(resource);
-                        return;
-                    }
+                if (response.isSuccessful()) {
+                    SiteSettingsResponse resource = response.body();
+                    assert resource != null;
+                    object.setValue(resource);
+                    return;
                 }
                 object.setValue(null);
             }
@@ -83,14 +80,11 @@ public class SiteSettingsViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<SiteSettingsResponse> call, @NonNull Response<SiteSettingsResponse> response) {
                 isLoading.setValue(false);
-                if(response.isSuccessful())
-                {
-                    if (response.isSuccessful()) {
-                        SiteSettingsResponse resource = response.body();
-                        assert resource != null;
-                        object.setValue(resource);
-                        return;
-                    }
+                if (response.isSuccessful()) {
+                    SiteSettingsResponse resource = response.body();
+                    assert resource != null;
+                    object.setValue(resource);
+                    return;
                 }
                 object.setValue(null);
             }
