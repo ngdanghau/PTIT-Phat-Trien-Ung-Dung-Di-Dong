@@ -116,13 +116,11 @@
     <string name="reset_password_confirm_newpassword">Nhập lại mật khẩu mới.</string>
 
 
-
-
     <string name="categories">Thể loại</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
     <string name="alertTitle">Oops!</string>
-
-
+    <string name="edit_category">Sửa thể loại</string>
+    <string name="add_category">Thêm thể loại</string>
 
 
 </resources>

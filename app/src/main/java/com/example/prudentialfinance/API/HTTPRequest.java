@@ -189,6 +189,9 @@ public interface HTTPRequest {
                                                 @Query("order[column]") String column,
                                                 @Query("order[dir]") String dir);
 
+    @DELETE("api/incomecategories/{id}")
+    Call<AccountDelete> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
     @GET("api/expensecategories")
     Call<CategoryGetAll> searchExpenseCategories(@HeaderMap Map<String, String> headers,
                                                  @Query("search") String search,
@@ -196,6 +199,9 @@ public interface HTTPRequest {
                                                  @Query("length") int length,
                                                  @Query("order[column]") String column,
                                                  @Query("order[dir]") String dir);
+
+    @DELETE("api/expensecategories/{id}")
+    Call<AccountDelete> removeExpenseCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
     /***************************REPORT***************************/
     @GET("/api/report/totalBalance")

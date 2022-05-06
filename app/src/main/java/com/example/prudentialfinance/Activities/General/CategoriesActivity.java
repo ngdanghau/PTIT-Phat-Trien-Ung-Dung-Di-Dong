@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.prudentialfinance.Activities.Card.CardCreationActivity;
+import com.example.prudentialfinance.Activities.Card.CardIntroduceActivity;
 import com.example.prudentialfinance.Adapter.CategoryAdapter;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesExpenseFragment;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesIncomeFragment;
@@ -70,7 +73,10 @@ public class CategoriesActivity extends AppCompatActivity {
 
 
         backBtn.setOnClickListener(view -> finish());
-        btnAdd.setOnClickListener(view -> finish());
+        btnAdd.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddCategoryActivity.class);
+            startActivity(intent);
+        });
 
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

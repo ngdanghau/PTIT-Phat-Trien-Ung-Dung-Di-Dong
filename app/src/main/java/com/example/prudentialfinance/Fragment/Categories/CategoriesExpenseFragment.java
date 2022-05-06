@@ -1,13 +1,16 @@
 package com.example.prudentialfinance.Fragment.Categories;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.graphics.Canvas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,10 +26,13 @@ import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.CategoryRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.Categories.CategoriesExpenseViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class CategoriesExpenseFragment extends Fragment {
 
@@ -43,7 +49,7 @@ public class CategoriesExpenseFragment extends Fragment {
     ArrayList<Category> data;
 
     SwipeRefreshLayout swipeRefreshLayout;
-
+    Category entry;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -58,8 +64,62 @@ public class CategoriesExpenseFragment extends Fragment {
         setEvent();
 
         loadData();
+
+        setSwipe();
         return view;
     }
+
+    private void setSwipe() {
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                // Take action for the swiped item
+                int position = viewHolder.getLayoutPosition();
+                entry = data.get(position);
+
+                data.remove(position);
+                adapter.notifyItemRemoved(position);
+
+
+                Snackbar.make(lvCategory,  entry.getName(), 10000)
+                        .addCallback(new Snackbar.Callback(){
+                            @Override
+                            public void onDismissed(Snackbar snackbar, int event) {
+                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                                    viewModel.deteteItem(headers, entry.getId());
+                                }
+                            }
+                        })
+                        .setAction("Khôi phục", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                data.add(position, entry);
+                                adapter.notifyItemInserted(position);
+                            }
+                        }).show();
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorRed))
+                        .addActionIcon(R.drawable.ic_baseline_close_24)
+                        .create()
+                        .decorate();
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(lvCategory);
+
+    }
+
 
     private void setControl(View view) {
         lvCategory = view.findViewById(R.id.lvCategory);

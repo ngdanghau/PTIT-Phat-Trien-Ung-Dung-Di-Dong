@@ -65,4 +65,11 @@ public class CategoriesExpenseViewModel  extends ViewModel {
             }
         });
     }
+
+    public void deteteItem(Map<String, String> headers, Integer id){
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        api.removeExpenseCategories(headers, id);
+    }
 }

@@ -27,6 +27,7 @@ import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.CategoryRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.Categories.CategoriesIncomeViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class CategoriesIncomeFragment extends Fragment {
     LinearLayoutManager manager;
 
     ArrayList<Category> data;
-
+    Category entry;
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -65,29 +66,49 @@ public class CategoriesIncomeFragment extends Fragment {
 
         loadData();
 
-        setSwipe(container);
+        setSwipe();
         return view;
     }
 
-    private void setSwipe(ViewGroup container) {
+    private void setSwipe() {
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
+                return true;
             }
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 // Take action for the swiped item
                 int position = viewHolder.getLayoutPosition();
-                Category entry = data.get(position);
-                System.out.println(entry.toString());
+                entry = data.get(position);
+
+                data.remove(position);
+                adapter.notifyItemRemoved(position);
+
+
+                Snackbar.make(lvCategory,  entry.getName(), 10000)
+                        .addCallback(new Snackbar.Callback(){
+                            @Override
+                            public void onDismissed(Snackbar snackbar, int event) {
+                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                                    viewModel.deteteItem(headers, entry.getId());
+                                }
+                            }
+                        })
+                        .setAction("Khôi phục", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                data.add(position, entry);
+                                adapter.notifyItemInserted(position);
+                            }
+                        }).show();
             }
 
             @Override
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                        .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+                        .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorRed))
                         .addActionIcon(R.drawable.ic_baseline_close_24)
                         .create()
                         .decorate();
