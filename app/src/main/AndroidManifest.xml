@@ -17,10 +17,10 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".General.GoalsActivity"
+            android:name=".Activities.General.GoalsActivity"
             android:exported="false" />
         <activity
-            android:name=".General.CategoriesActivity"
+            android:name=".Activities.General.CategoriesActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Card.CardUpdateActivity"

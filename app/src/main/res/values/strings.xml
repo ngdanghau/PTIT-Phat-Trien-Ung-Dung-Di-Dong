@@ -34,7 +34,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="transaction">Giao Dịch</string>
     <string name="income">Thu nhập</string>
-    <string name="expense">Chi phí</string>
+    <string name="expense">Chi tiêu</string>
     <string name="goal">Mục tiêu</string>
     <string name="income_example">$125.000</string>
     <string name="recent">Gần đây</string>
@@ -114,6 +114,13 @@
     <string name="reset_password_description">Hãy tạo mật khẩu mới và xác nhận mật khẩu mới để đăng nhập..</string>
     <string name="reset_password_newpassword">Nhập mật khẩu mới.</string>
     <string name="reset_password_confirm_newpassword">Nhập lại mật khẩu mới.</string>
+
+
+
+
+    <string name="categories">Thể loại</string>
+
+
 
 
 </resources>

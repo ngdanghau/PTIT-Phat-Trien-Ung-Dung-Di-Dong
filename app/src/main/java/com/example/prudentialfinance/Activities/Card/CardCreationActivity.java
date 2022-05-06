@@ -5,14 +5,12 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.Helpers.NoticeDialog;
-import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.CardViewModel;

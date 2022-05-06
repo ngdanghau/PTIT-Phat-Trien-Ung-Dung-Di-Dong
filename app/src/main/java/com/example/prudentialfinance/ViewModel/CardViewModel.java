@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.AccountCreate;
+import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 
 import org.json.JSONObject;
@@ -21,12 +22,26 @@ import retrofit2.Retrofit;
 public class CardViewModel extends ViewModel {
     private MutableLiveData<Integer> accountCreation;
     private MutableLiveData<Integer> accountUpdate;
+    private MutableLiveData<Integer> accountDelete;
+
+    public MutableLiveData<Integer> getAccountDelete() {
+        if( accountDelete == null)
+        {
+            accountDelete = new MutableLiveData<>();
+        }
+        return accountDelete;
+    }
+
+    public void setAccountDelete(MutableLiveData<Integer> accountDelete) {
+        this.accountDelete = accountDelete;
+    }
 
     public MutableLiveData<Integer> getAccountUpdate() {
         if( accountUpdate == null)
         {
             accountUpdate = new MutableLiveData<>();
         }
+
         return accountUpdate;
     }
 
@@ -57,6 +72,10 @@ public class CardViewModel extends ViewModel {
      * */
     public void createAccount(Map<String, String> headers, String name, int balance, String description, String accountnumber)
     {
+        if( accountCreation == null)
+        {
+            accountCreation = new MutableLiveData<>();
+        }
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
@@ -73,7 +92,12 @@ public class CardViewModel extends ViewModel {
                 if(response.isSuccessful())
                 {
                     AccountCreate resource = response.body();
-                    int result = resource.getResult();
+                    assert resource != null;
+                    int result = Math.max(resource.getResult(), 0);
+                    String msg = resource.getMsg();
+
+                    System.out.println(result);
+                    System.out.println(msg);
                     accountCreation.setValue(result);
                 }
                 if(response.errorBody() != null) {
@@ -125,14 +149,6 @@ public class CardViewModel extends ViewModel {
                     assert resource != null;
 
                     int result = resource.getResult();
-                    int account = resource.getAccount();
-                    String msg = resource.getMsg();
-                    String method = resource.getMethod();
-
-                    System.out.println("RESULT:"+result);
-                    System.out.println("ACCOUNT:"+account);
-                    System.out.println("MSG: "+msg);
-                    System.out.println("METHOD:"+method);
                     accountUpdate.setValue(result);
 
                 }
@@ -144,6 +160,58 @@ public class CardViewModel extends ViewModel {
 
             }
         });
+    }
+
+    /**
+     * @author Phong-Kaster
+     * send HTTP Request to update account
+     * */
+    public void deleteAccount(Map<String, String> headers, int id) {
+        if( accountDelete == null)
+        {
+            accountDelete = new MutableLiveData<>();
+        }
+
+        /*Step 1*/
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+
+        /*Step 2*/
+        Call<AccountDelete> container = api.accountDelete(headers, id);
+
+        /*Step 3*/
+        container.enqueue(new Callback<AccountDelete>() {
+            @Override
+            public void onResponse(@NonNull Call<AccountDelete> call, @NonNull Response<AccountDelete> response) {
+                if(response.errorBody() != null) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        System.out.println( jObjError );
+                    } catch (Exception e) {
+                        System.out.println( e.getMessage() );
+                    }
+                }
+                if(response.isSuccessful())
+                {
+                    AccountDelete resource = response.body();
+
+                    assert resource != null;
+
+                    int result = resource.getResult();
+                    String msg = resource.getMsg();
+                    System.out.println(result);
+                    System.out.println(msg);
+                    accountDelete.setValue(result);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccountDelete> call, Throwable t) {
+
+            }
+        });
+
 
     }
 }

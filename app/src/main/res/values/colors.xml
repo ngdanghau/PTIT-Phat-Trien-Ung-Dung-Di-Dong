@@ -34,5 +34,6 @@
     <color name="transparent">#00000000</color>
     <color name="colorWarning">#fb3</color>
     <color name="colorBlue">#33b5e5</color>
+    <color name="backgroundBlack">#FF000000</color>
 
 </resources>

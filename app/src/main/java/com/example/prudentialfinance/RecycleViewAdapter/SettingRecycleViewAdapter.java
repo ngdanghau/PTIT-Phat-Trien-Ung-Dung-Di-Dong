@@ -15,8 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prudentialfinance.General.CategoriesActivity;
-import com.example.prudentialfinance.General.GoalsActivity;
+import com.example.prudentialfinance.Activities.General.CategoriesActivity;
+import com.example.prudentialfinance.Activities.General.GoalsActivity;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.Activities.Settings.EmailSettingsActivity;
