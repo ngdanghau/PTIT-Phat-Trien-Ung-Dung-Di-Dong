@@ -5,7 +5,7 @@ import com.example.prudentialfinance.Model.Summary;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CategoryGetAll {
 
@@ -19,10 +19,27 @@ public class CategoryGetAll {
 
     @SerializedName("data")
     @Expose
-    private List<Category> data = null;
+    private ArrayList<Category> data;
+
     @SerializedName("method")
     @Expose
     private String method;
+
+    @SerializedName("msg")
+    @Expose
+    private String msg;
+
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public int getResult() {
         return result;
@@ -40,11 +57,11 @@ public class CategoryGetAll {
         this.summary = summary;
     }
 
-    public List<Category> getData() {
+    public ArrayList<Category> getData() {
         return data;
     }
 
-    public void setData(List<Category> data) {
+    public void setData(ArrayList<Category> data) {
         this.data = data;
     }
 
@@ -54,5 +71,16 @@ public class CategoryGetAll {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryGetAll{" +
+                "result=" + result +
+                ", summary=" + summary +
+                ", data=" + data +
+                ", method='" + method + '\'' +
+                ", msg='" + msg + '\'' +
+                '}';
     }
 }

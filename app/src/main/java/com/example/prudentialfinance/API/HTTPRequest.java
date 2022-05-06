@@ -182,8 +182,20 @@ public interface HTTPRequest {
 
     /***************************CATEGORY*********************************/
     @GET("api/incomecategories")
-    Call<CategoryGetAll> categoryGetAll(@HeaderMap Map<String, String> headers);
+    Call<CategoryGetAll> searchIncomeCategories(@HeaderMap Map<String, String> headers,
+                                                @Query("search") String search,
+                                                @Query("start") int start,
+                                                @Query("length") int length,
+                                                @Query("order[column]") String column,
+                                                @Query("order[dir]") String dir);
 
+    @GET("api/expensecategories")
+    Call<CategoryGetAll> searchExpenseCategories(@HeaderMap Map<String, String> headers,
+                                                 @Query("search") String search,
+                                                 @Query("start") int start,
+                                                 @Query("length") int length,
+                                                 @Query("order[column]") String column,
+                                                 @Query("order[dir]") String dir);
 
     /***************************REPORT***************************/
     @GET("/api/report/totalBalance")

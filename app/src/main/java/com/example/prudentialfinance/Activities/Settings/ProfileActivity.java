@@ -102,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         viewModel.getObject().observe(this, object -> {
             if(object == null){
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
@@ -110,13 +110,13 @@ public class ProfileActivity extends AppCompatActivity {
                 global.getAuthUser().setAvatar(object.getImage());
                 Toast.makeText(ProfileActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
             } else {
-                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
         });
 
         viewModel.getObjectProfile().observe(this, object -> {
             if(object == null){
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
@@ -124,7 +124,7 @@ public class ProfileActivity extends AppCompatActivity {
                 global.setAuthUser(object.getData());
                 Toast.makeText(ProfileActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
             } else {
-                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
         });
     }

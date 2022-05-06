@@ -61,4 +61,38 @@ public class Helper {
                 .oval(false)
                 .build();
     }
+
+    /**
+     * Truncate string
+     * @param  text  String
+     * @param  max_length  Max length of result
+     * @param  ellipsis ellipsis
+     * @param  trim trim
+     * @return string
+     */
+    public static String truncate_string(String text, int max_length, String ellipsis, boolean trim){
+        if (max_length < 1) {
+            max_length = 50;
+        }
+
+        if (trim) {
+            text = text.trim();
+        }
+
+        if(ellipsis.isEmpty()){
+            ellipsis = "...";
+        }
+
+        int string_length = text.length();
+        int ellipsis_length = ellipsis.length();
+        if(string_length > max_length){
+            if (ellipsis_length >= max_length) {
+                text = ellipsis.substring(0, max_length);
+            } else {
+                text = text.substring(0, max_length - ellipsis_length) + ellipsis;
+            }
+        }
+
+        return text;
+    }
 }

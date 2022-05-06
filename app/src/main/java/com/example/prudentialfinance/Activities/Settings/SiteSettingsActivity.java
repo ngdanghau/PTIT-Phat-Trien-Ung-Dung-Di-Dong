@@ -31,15 +31,16 @@ public class SiteSettingsActivity extends AppCompatActivity {
     AppCompatButton saveBtn;
     EditText siteName, siteSlogan, siteKeyword, siteDescription, logoMark, logoType, currencyField;
     Spinner spnLanguage;
-    GlobalVariable global;
 
+    GlobalVariable global;
     SiteSettingsViewModel viewModel;
     LoadingDialog loadingDialog;
     Alert alert;
+    Map<String, String> headers;
+
 
     ArrayAdapter<String> adapter;
     List<String> list = new ArrayList<>();
-    Map<String, String> headers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
 
         viewModel.getObject().observe(this, object -> {
             if(object == null){
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
@@ -128,7 +129,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
                     Toast.makeText(SiteSettingsActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
                 }
             } else {
-                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
         });
     }
