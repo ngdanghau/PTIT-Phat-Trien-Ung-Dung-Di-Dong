@@ -39,6 +39,7 @@ public class CategoriesExpenseFragment extends Fragment {
     CategoriesExpenseViewModel viewModel;
     LoadingDialog loadingDialog;
     Alert alert;
+    Alert alertConfirm;
     Map<String, String> headers;
     User authUser;
 
@@ -47,7 +48,7 @@ public class CategoriesExpenseFragment extends Fragment {
     LinearLayoutManager manager;
 
     ArrayList<Category> data;
-
+    int positionItem;
     SwipeRefreshLayout swipeRefreshLayout;
     Category entry;
 
@@ -72,7 +73,7 @@ public class CategoriesExpenseFragment extends Fragment {
     private void setSwipe() {
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return true;
             }
 
@@ -81,27 +82,12 @@ public class CategoriesExpenseFragment extends Fragment {
                 // Take action for the swiped item
                 int position = viewHolder.getLayoutPosition();
                 entry = data.get(position);
-
+                positionItem = position;
                 data.remove(position);
                 adapter.notifyItemRemoved(position);
 
+                alertConfirm.showAlert(getString(R.string.alertWarning), getString(R.string.alertConfirm), R.drawable.ic_info);
 
-                Snackbar.make(lvCategory,  entry.getName(), 10000)
-                        .addCallback(new Snackbar.Callback(){
-                            @Override
-                            public void onDismissed(Snackbar snackbar, int event) {
-                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                                    viewModel.deteteItem(headers, entry.getId());
-                                }
-                            }
-                        })
-                        .setAction("Khôi phục", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                data.add(position, entry);
-                                adapter.notifyItemInserted(position);
-                            }
-                        }).show();
             }
 
             @Override
@@ -159,6 +145,7 @@ public class CategoriesExpenseFragment extends Fragment {
 
         loadingDialog = new LoadingDialog(this.getActivity());
         alert = new Alert(this.getContext(), 1);
+        alertConfirm = new Alert(this.getContext(), 2);
         viewModel = new ViewModelProvider(this).get(CategoriesExpenseViewModel.class);
     }
 
@@ -166,6 +153,18 @@ public class CategoriesExpenseFragment extends Fragment {
     private void setEvent() {
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
+
+
+        alertConfirm.btnOK.setOnClickListener(view -> {
+            viewModel.deteteItem(headers, entry.getId());
+            alertConfirm.dismiss();
+        });
+
+        alertConfirm.btnCancel.setOnClickListener(view -> {
+            data.add(positionItem, entry);
+            adapter.notifyItemInserted(positionItem);
+            alertConfirm.dismiss();
+        });
 
         viewModel.isLoading().observe((LifecycleOwner) this, isLoading -> {
             if(isLoading){

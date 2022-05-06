@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
+import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 
 import java.util.Map;
@@ -71,6 +72,17 @@ public class CategoriesIncomeViewModel extends ViewModel {
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        api.removeIncomeCategories(headers, id);
+
+        Call<CategoryAdd> container = api.removeIncomeCategories(headers, id);
+        container.enqueue(new Callback<CategoryAdd>() {
+            @Override
+            public void onResponse(@NonNull Call<CategoryAdd> call, @NonNull Response<CategoryAdd> response) {
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CategoryAdd> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 }

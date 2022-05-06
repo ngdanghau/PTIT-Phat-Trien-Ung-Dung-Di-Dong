@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.CategoryAdd;
-import com.example.prudentialfinance.Container.CategoryGetAll;
+import com.example.prudentialfinance.Model.Category;
 
 import java.util.Map;
 
@@ -17,13 +17,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class CategoriesExpenseViewModel extends ViewModel {
-
-    private MutableLiveData<CategoryGetAll> object;
+public class AddCategoryViewModel extends ViewModel {
+    private MutableLiveData<CategoryAdd> object;
     private Retrofit service;
     private MutableLiveData<Boolean> isLoading;
-    private int start = 0;
-    private int length = 50;
 
     public LiveData<Boolean> isLoading() {
         if (isLoading == null) {
@@ -32,7 +29,7 @@ public class CategoriesExpenseViewModel extends ViewModel {
         return isLoading;
     }
 
-    public LiveData<CategoryGetAll> getObject()
+    public LiveData<CategoryAdd> getObject()
     {
         if (object == null) {
             object = new MutableLiveData<>();
@@ -40,18 +37,24 @@ public class CategoriesExpenseViewModel extends ViewModel {
         return object;
     }
 
-    public void getData(Map<String, String> headers,  String query){
+    public void saveData(Map<String, String> headers, Category data){
         isLoading.setValue(true);
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        Call<CategoryGetAll> container = api.searchExpenseCategories(headers, query, start, length, "id", "decs");
-        container.enqueue(new Callback<CategoryGetAll>() {
+        Call<CategoryAdd> container;
+        System.out.println(data.toString());
+        if(data.getType() == 1){
+            container = api.addNewIncomeCategory(headers, data.getName(), data.getDescription(), data.getColor());
+        }else{
+            container = api.addNewExpenseCategory(headers, data.getName(), data.getDescription(), data.getColor());
+        }
+        container.enqueue(new Callback<CategoryAdd>() {
             @Override
-            public void onResponse(@NonNull Call<CategoryGetAll> call, @NonNull Response<CategoryGetAll> response) {
+            public void onResponse(@NonNull Call<CategoryAdd> call, @NonNull Response<CategoryAdd> response) {
                 isLoading.setValue(false);
                 if (response.isSuccessful()) {
-                    CategoryGetAll resource = response.body();
+                    CategoryAdd resource = response.body();
                     assert resource != null;
                     object.setValue(resource);
                     return;
@@ -60,26 +63,41 @@ public class CategoriesExpenseViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<CategoryGetAll> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<CategoryAdd> call, @NonNull Throwable t) {
                 isLoading.setValue(false);
                 object.setValue(null);
             }
         });
     }
 
-    public void deteteItem(Map<String, String> headers, Integer id){
+    public void updateData(Map<String, String> headers, Category data){
+        isLoading.setValue(true);
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        Call<CategoryAdd> container = api.removeExpenseCategories(headers, id);
+        Call<CategoryAdd> container;
+        if(data.getType() == 1){
+            container = api.editIncomeCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor());
+        }else{
+            container = api.editExpenseCategory(headers, data.getId(), data.getName(), data.getDescription(), data.getColor());
+        }
         container.enqueue(new Callback<CategoryAdd>() {
             @Override
             public void onResponse(@NonNull Call<CategoryAdd> call, @NonNull Response<CategoryAdd> response) {
+                isLoading.setValue(false);
+                if (response.isSuccessful()) {
+                    CategoryAdd resource = response.body();
+                    assert resource != null;
+                    object.setValue(resource);
+                    return;
+                }
+                object.setValue(null);
             }
 
             @Override
             public void onFailure(@NonNull Call<CategoryAdd> call, @NonNull Throwable t) {
-
+                isLoading.setValue(false);
+                object.setValue(null);
             }
         });
     }

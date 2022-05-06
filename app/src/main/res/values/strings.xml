@@ -119,8 +119,17 @@
     <string name="categories">Thể loại</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
     <string name="alertTitle">Oops!</string>
+    <string name="alertConfirm">Bạn có chắc không? Dữ liệu đã xoá không thể khôi phục!</string>
+    <string name="alertWarning">Warning!</string>
+
     <string name="edit_category">Sửa thể loại</string>
     <string name="add_category">Thêm thể loại</string>
+
+    <string name="category_name">Tên thể loại</string>
+    <string name="category_desc">Mô tả</string>
+    <string name="category_color">Màu sắc</string>
+    <string name="cancel">Huỷ</string>
+    <string name="colorPicker">Chọn màu sắc</string>
 
 
 </resources>

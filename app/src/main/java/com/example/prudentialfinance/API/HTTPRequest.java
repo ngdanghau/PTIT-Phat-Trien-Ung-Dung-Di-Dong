@@ -5,6 +5,7 @@ import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Container.Settings.AvatarUpload;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.Settings.EmailSettingsResponse;
@@ -190,7 +191,26 @@ public interface HTTPRequest {
                                                 @Query("order[dir]") String dir);
 
     @DELETE("api/incomecategories/{id}")
-    Call<AccountDelete> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+    Call<CategoryAdd> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/incomecategories")
+    Call<CategoryAdd> addNewIncomeCategory(@HeaderMap Map<String, String> headers,
+                                           @Field("name") String name,
+                                           @Field("description") String description,
+                                           @Field("color") String color);
+
+    @FormUrlEncoded
+    @PUT("api/incomecategories/{id}")
+    Call<CategoryAdd> editIncomeCategory(@HeaderMap Map<String, String> headers,
+                                         @Path("id") int id,
+                                         @Field("name") String name,
+                                         @Field("description") String description,
+                                         @Field("color") String color);
+
+
+
+
 
     @GET("api/expensecategories")
     Call<CategoryGetAll> searchExpenseCategories(@HeaderMap Map<String, String> headers,
@@ -199,13 +219,31 @@ public interface HTTPRequest {
                                                  @Query("length") int length,
                                                  @Query("order[column]") String column,
                                                  @Query("order[dir]") String dir);
-
     @DELETE("api/expensecategories/{id}")
-    Call<AccountDelete> removeExpenseCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+    Call<CategoryAdd> removeExpenseCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/expensecategories")
+    Call<CategoryAdd> addNewExpenseCategory(@HeaderMap Map<String, String> headers,
+                                            @Field("name") String name,
+                                            @Field("description") String description,
+                                            @Field("color") String color);
+
+    @FormUrlEncoded
+    @PUT("api/expensecategories/{id}")
+    Call<CategoryAdd> editExpenseCategory(@HeaderMap Map<String, String> headers,
+                                          @Path("id") int id,
+                                          @Field("name") String name,
+                                          @Field("description") String description,
+                                          @Field("color") String color);
+
+
+
 
     /***************************REPORT***************************/
     @GET("/api/report/totalBalance")
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
+
 
 }

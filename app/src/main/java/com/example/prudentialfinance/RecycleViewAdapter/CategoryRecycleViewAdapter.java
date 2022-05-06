@@ -2,6 +2,7 @@ package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Activities.General.AddCategoryActivity;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.R;
@@ -54,7 +56,13 @@ public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRec
 
         Context parentContext = holder.parent.getContext();
         holder.cat_layout.setOnClickListener(view1 -> {
-            System.out.println(entry.getName());
+            Intent intent = new Intent(parentContext, AddCategoryActivity.class);
+            intent.putExtra("category_id", entry.getId());
+            intent.putExtra("category_name", entry.getName());
+            intent.putExtra("category_desc", entry.getDescription());
+            intent.putExtra("category_type", entry.getType());
+            intent.putExtra("category_color", entry.getColor());
+            parentContext.startActivity(intent);
         });
     }
 

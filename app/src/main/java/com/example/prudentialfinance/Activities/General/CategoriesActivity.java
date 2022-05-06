@@ -6,6 +6,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -14,6 +15,7 @@ import com.example.prudentialfinance.Activities.Card.CardIntroduceActivity;
 import com.example.prudentialfinance.Adapter.CategoryAdapter;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesExpenseFragment;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesIncomeFragment;
+import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
@@ -75,6 +77,11 @@ public class CategoriesActivity extends AppCompatActivity {
         backBtn.setOnClickListener(view -> finish());
         btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddCategoryActivity.class);
+            intent.putExtra("category_id", 0);
+            intent.putExtra("category_name", "");
+            intent.putExtra("category_desc", "");
+            intent.putExtra("category_type", viewType+1);
+            intent.putExtra("category_color", "#FF0000");
             startActivity(intent);
         });
 
