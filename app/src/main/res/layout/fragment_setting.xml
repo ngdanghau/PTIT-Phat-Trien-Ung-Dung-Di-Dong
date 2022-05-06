@@ -30,7 +30,7 @@
                 android:text="@string/setting"
                 android:textStyle="bold"
                 android:textSize="22sp"
-                android:textColor="@color/colorTheme"/>
+                android:textColor="@color/colorButtomNavigationMenuPressed"/>
 
             <ImageButton
                 android:layout_weight="0.01"

@@ -24,7 +24,7 @@
         android:text="@string/setting"
         android:gravity="center_vertical"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/colorTheme"
+        android:textColor="@color/colorButtomNavigationMenuPressed"
         android:layout_weight="0.98"/>
 
     <ImageButton
