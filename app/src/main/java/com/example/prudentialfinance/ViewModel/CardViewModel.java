@@ -32,9 +32,6 @@ public class CardViewModel extends ViewModel {
         return accountDelete;
     }
 
-    public void setAccountDelete(MutableLiveData<Integer> accountDelete) {
-        this.accountDelete = accountDelete;
-    }
 
     public MutableLiveData<Integer> getAccountUpdate() {
         if( accountUpdate == null)
@@ -46,25 +43,15 @@ public class CardViewModel extends ViewModel {
     }
 
 
-
-    public void setAccountUpdate(MutableLiveData<Integer> accountUpdate) {
-        this.accountUpdate = accountUpdate;
-    }
-
-    public MutableLiveData<Integer> getAccountCreation(Map<String, String> headers, String name, int balance, String description, String accountnumber) {
+    public MutableLiveData<Integer> getAccountCreation() {
 
         if( accountCreation == null)
         {
             accountCreation = new MutableLiveData<>();
-            createAccount(headers, name, balance, description, accountnumber);
         }
-
         return accountCreation;
     }
 
-    public void setAccountCreation(MutableLiveData<Integer> accountCreation) {
-        this.accountCreation = accountCreation;
-    }
 
     /**
      * @author Phong-Kaster
@@ -72,10 +59,6 @@ public class CardViewModel extends ViewModel {
      * */
     public void createAccount(Map<String, String> headers, String name, int balance, String description, String accountnumber)
     {
-        if( accountCreation == null)
-        {
-            accountCreation = new MutableLiveData<>();
-        }
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
@@ -167,10 +150,7 @@ public class CardViewModel extends ViewModel {
      * send HTTP Request to update account
      * */
     public void deleteAccount(Map<String, String> headers, int id) {
-        if( accountDelete == null)
-        {
-            accountDelete = new MutableLiveData<>();
-        }
+
 
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();

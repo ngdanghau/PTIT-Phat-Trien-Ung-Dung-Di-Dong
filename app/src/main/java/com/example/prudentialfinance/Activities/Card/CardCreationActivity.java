@@ -81,23 +81,23 @@ public class CardCreationActivity extends AppCompatActivity {
             String bank = cardBank.getText().toString();
             String description = cardDescription.getText().toString();
 
+            viewModel.createAccount(headers, bank, balance, description, number);
+        });
 
-            viewModel.getAccountCreation(headers, bank, balance,description,number ).observe(this, new Observer<Integer>() {
-                @Override
-                public void onChanged(Integer integer) {
-                    if( integer == 1)
-                    {
-                        NoticeDialog dialog = new NoticeDialog();
-                        dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_successfully);
-                    }
-                    else
-                    {
-                        NoticeDialog dialog = new NoticeDialog();
-                        dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_failed);
-                    }
+        viewModel.getAccountCreation().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if( integer == 1)
+                {
+                    NoticeDialog dialog = new NoticeDialog();
+                    dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_successfully);
                 }
-            });
-
+                else
+                {
+                    NoticeDialog dialog = new NoticeDialog();
+                    dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_failed);
+                }
+            }
         });
     }
 
