@@ -47,13 +47,7 @@ public class AddCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_category);
 
         Intent intent = getIntent();
-        category = new Category(
-                intent.getExtras().getInt("category_id"),
-                intent.getExtras().getString("category_name"),
-                intent.getExtras().getInt("category_type"),
-                intent.getExtras().getString("category_color"),
-                intent.getExtras().getString("category_desc")
-        );
+        category = intent.getParcelableExtra("category");
 
         setComponent();
 
@@ -107,9 +101,7 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
 
             if (object.getResult() == 1) {
-//                data.clear();
-//                data.addAll(object.getData());
-//                adapter.notifyDataSetChanged();
+                finish();
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }

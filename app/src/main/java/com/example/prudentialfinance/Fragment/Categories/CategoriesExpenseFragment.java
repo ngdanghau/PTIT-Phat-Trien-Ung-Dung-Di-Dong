@@ -1,7 +1,6 @@
 package com.example.prudentialfinance.Fragment.Categories;
 
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.graphics.Canvas;
@@ -26,7 +25,6 @@ import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.CategoryRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.Categories.CategoriesExpenseViewModel;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -166,7 +164,7 @@ public class CategoriesExpenseFragment extends Fragment {
             alertConfirm.dismiss();
         });
 
-        viewModel.isLoading().observe((LifecycleOwner) this, isLoading -> {
+        viewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if(isLoading){
                 loadingDialog.startLoadingDialog();
             }else{
@@ -174,7 +172,7 @@ public class CategoriesExpenseFragment extends Fragment {
             }
         });
 
-        viewModel.getObject().observe((LifecycleOwner) this, object -> {
+        viewModel.getObject().observe(getViewLifecycleOwner(), object -> {
             if(object == null){
                 alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;

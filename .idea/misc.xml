@@ -115,6 +115,7 @@
         <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/transparent_background.xml" value="0.2775" />
         <entry key="app/src/main/res/layout/activity_add_category.xml" value="0.34103260869565216" />
+        <entry key="app/src/main/res/layout/activity_add_user.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/activity_card_creation.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/activity_card_creation_successfully.xml" value="0.25407608695652173" />
         <entry key="app/src/main/res/layout/activity_card_introduce.xml" value="0.2740628166160081" />

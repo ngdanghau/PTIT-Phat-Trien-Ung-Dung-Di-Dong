@@ -258,6 +258,27 @@ public interface HTTPRequest {
     @PATCH("api/users/{id}")
     Call<UserAdd> restoreUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
+    @FormUrlEncoded
+    @POST("api/users/new")
+    Call<UserAdd> addUser(@HeaderMap Map<String, String> headers,
+                          @Field("firstname") String firstname,
+                          @Field("lastname") String lastname,
+                          @Field("account_type") String account_type,
+                          @Field("is_active") boolean is_active
+    );
+
+    @FormUrlEncoded
+    @PUT("api/users/{id}")
+    Call<UserAdd> updateUser(@HeaderMap Map<String, String> headers,
+                             @Path("id") int id,
+                             @Field("firstname") String firstname,
+                             @Field("lastname") String lastname,
+                             @Field("account_type") String account_type,
+                             @Field("is_active") boolean is_active
+    );
+
+
+
     /***************************REPORT***************************/
     @GET("/api/report/totalBalance")
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,

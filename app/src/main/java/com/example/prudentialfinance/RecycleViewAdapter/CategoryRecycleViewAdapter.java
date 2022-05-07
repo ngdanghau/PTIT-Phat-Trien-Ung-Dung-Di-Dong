@@ -57,11 +57,7 @@ public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRec
         Context parentContext = holder.parent.getContext();
         holder.cat_layout.setOnClickListener(view1 -> {
             Intent intent = new Intent(parentContext, AddCategoryActivity.class);
-            intent.putExtra("category_id", entry.getId());
-            intent.putExtra("category_name", entry.getName());
-            intent.putExtra("category_desc", entry.getDescription());
-            intent.putExtra("category_type", entry.getType());
-            intent.putExtra("category_color", entry.getColor());
+            intent.putExtra("category", entry);
             parentContext.startActivity(intent);
         });
     }

@@ -77,11 +77,8 @@ public class CategoriesActivity extends AppCompatActivity {
         backBtn.setOnClickListener(view -> finish());
         btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddCategoryActivity.class);
-            intent.putExtra("category_id", 0);
-            intent.putExtra("category_name", "");
-            intent.putExtra("category_desc", "");
-            intent.putExtra("category_type", viewType+1);
-            intent.putExtra("category_color", "#FF0000");
+            intent.putExtra("category", new Category(0, "", viewType+1, "#FF0000", ""));
+
             startActivity(intent);
         });
 

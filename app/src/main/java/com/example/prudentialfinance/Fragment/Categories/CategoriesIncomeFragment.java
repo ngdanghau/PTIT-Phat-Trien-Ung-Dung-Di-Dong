@@ -1,7 +1,6 @@
 package com.example.prudentialfinance.Fragment.Categories;
 
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -168,7 +167,7 @@ public class CategoriesIncomeFragment extends Fragment {
 
 
 
-        viewModel.isLoading().observe((LifecycleOwner) this, isLoading -> {
+        viewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if(isLoading){
                 loadingDialog.startLoadingDialog();
             }else{
@@ -176,7 +175,7 @@ public class CategoriesIncomeFragment extends Fragment {
             }
         });
 
-        viewModel.getObject().observe((LifecycleOwner) this, object -> {
+        viewModel.getObject().observe(getViewLifecycleOwner(), object -> {
             if(object == null){
                 alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;

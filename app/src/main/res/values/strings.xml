@@ -132,6 +132,10 @@
     <string name="colorPicker">Chọn màu sắc</string>
 
     <string name="user_management">Quản lý người dùng</string>
+    <string name="add_user">Thêm người dùng</string>
+    <string name="edit_user">Sửa người dùng</string>
+    <string name="account_type">Loại tài khoản</string>
+    <string name="active">Kích hoạt tài khoản</string>
 
 
 </resources>

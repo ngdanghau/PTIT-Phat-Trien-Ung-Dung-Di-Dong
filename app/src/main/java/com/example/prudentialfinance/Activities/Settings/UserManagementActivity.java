@@ -2,6 +2,7 @@ package com.example.prudentialfinance.Activities.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -9,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.example.prudentialfinance.Activities.General.AddCategoryActivity;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -45,7 +48,11 @@ public class UserManagementActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     User entry;
 
-    ImageButton btnBack;
+    private SearchView searchView;
+    ImageButton btnBack, addBtn;
+    private View closeButton;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,9 +125,34 @@ public class UserManagementActivity extends AppCompatActivity {
 
     private void setEvent() {
         btnBack.setOnClickListener(view -> finish());
+        addBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddUserActivity.class);
+            intent.putExtra("user", new User("member", "", "", "","",0,true, ""));
+            startActivity(intent);
+        });
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                viewModel.getData(headers, query);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
+
+        closeButton.setOnClickListener(v -> {
+            viewModel.getData(headers, "");
+            searchView.setQuery("", false);
+        });
 
         viewModel.isLoading().observe(this, isLoading -> {
             if(isLoading){
@@ -179,7 +211,13 @@ public class UserManagementActivity extends AppCompatActivity {
 
     private void setControl() {
         btnBack = findViewById(R.id.backBtn);
+        addBtn = findViewById(R.id.addBtn);
         lvUsers = findViewById(R.id.lvUsers);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
+        closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+
     }
 }

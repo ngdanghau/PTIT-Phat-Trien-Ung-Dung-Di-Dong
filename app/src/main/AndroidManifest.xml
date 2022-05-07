@@ -17,6 +17,9 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Settings.AddUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Settings.UserManagementActivity"
             android:exported="false" />
         <activity

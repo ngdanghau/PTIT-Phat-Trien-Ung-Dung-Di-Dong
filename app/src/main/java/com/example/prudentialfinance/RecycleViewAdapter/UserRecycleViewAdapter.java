@@ -2,6 +2,7 @@ package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.API.HTTPService;
+import com.example.prudentialfinance.Activities.Settings.AddUserActivity;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
@@ -56,6 +58,7 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
             }
 
             if(entry.getAccount_type().equals("admin")){
+                holder.user_admin.setVisibility(View.VISIBLE);
                 holder.user_admin.setImageResource(R.drawable.ic_baseline_admin_panel_settings_24);
             }else{
                 holder.user_admin.setVisibility(View.INVISIBLE);
@@ -73,7 +76,9 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
 
             Context parentContext = holder.parent.getContext();
             holder.user_layout.setOnClickListener(view1 -> {
-
+                Intent intent = new Intent(parentContext, AddUserActivity.class);
+                intent.putExtra("user", entry);
+                parentContext.startActivity(intent);
             });
     }
 
