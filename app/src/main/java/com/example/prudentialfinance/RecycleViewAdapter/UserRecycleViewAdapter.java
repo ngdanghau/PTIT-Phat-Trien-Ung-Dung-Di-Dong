@@ -50,9 +50,15 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
             holder.user_name.setText(entry.getFirstname() + " " + entry.getLastname());
             holder.user_email.setText(entry.getEmail());
             if(entry.getIs_active()){
-                holder.user_active.setImageResource(R.drawable.ic_baseline_admin_panel_settings_24);
+                holder.user_active.setImageResource(R.drawable.ic_baseline_check_circle_outline_24);
             }else{
                 holder.user_active.setImageResource(R.drawable.ic_baseline_close_24);
+            }
+
+            if(entry.getAccount_type().equals("admin")){
+                holder.user_admin.setImageResource(R.drawable.ic_baseline_admin_panel_settings_24);
+            }else{
+                holder.user_admin.setVisibility(View.INVISIBLE);
             }
 
             Picasso
@@ -78,7 +84,7 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        private ImageView user_avatar, user_active;
+        private ImageView user_avatar, user_active, user_admin;
         private TextView user_name, user_email;
         private LinearLayout user_layout;
         private ViewGroup parent;
@@ -92,6 +98,7 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
         private void setControl(View itemView)
         {
             user_avatar = itemView.findViewById(R.id.user_avatar);
+            user_admin = itemView.findViewById(R.id.user_admin);
             user_active = itemView.findViewById(R.id.user_active);
             user_name = itemView.findViewById(R.id.user_name);
             user_email = itemView.findViewById(R.id.user_email);
