@@ -62,6 +62,16 @@ public class Helper {
                 .build();
     }
 
+    public static Transformation getRoundedTransformationBuilder1()
+    {
+        return new RoundedTransformationBuilder()
+                .borderColor(Color.BLACK)
+                .borderWidthDp(1)
+                .cornerRadiusDp(50)
+                .oval(false)
+                .build();
+    }
+
     /**
      * Truncate string
      * @param  text  String

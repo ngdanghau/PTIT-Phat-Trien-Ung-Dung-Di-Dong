@@ -13,6 +13,8 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Container.Users.UserAdd;
+import com.example.prudentialfinance.Container.Users.UserGetAll;
 
 import java.util.Map;
 
@@ -27,6 +29,7 @@ import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -238,7 +241,22 @@ public interface HTTPRequest {
                                           @Field("color") String color);
 
 
+    /**
+     * User management
+     */
 
+    @GET("api/users")
+    Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
+                                             @Query("search") String search,
+                                             @Query("start") int start,
+                                             @Query("length") int length,
+                                             @Query("order[column]") String column,
+                                             @Query("order[dir]") String dir);
+    @DELETE("api/users/{id}")
+    Call<UserAdd> removeUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @PATCH("api/users/{id}")
+    Call<UserAdd> restoreUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
     /***************************REPORT***************************/
     @GET("/api/report/totalBalance")
