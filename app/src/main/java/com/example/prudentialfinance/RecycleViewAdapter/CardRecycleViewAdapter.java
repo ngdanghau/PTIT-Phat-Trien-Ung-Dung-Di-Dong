@@ -46,7 +46,7 @@ public class CardRecycleViewAdapter extends RecyclerView.Adapter<CardRecycleView
         /*Step 1*/
         Account element = accounts.get(position);
         String elementNumber = Helper.formatCardNumber(element.getAccountnumber());
-        String elementBalance = Helper.formatIntegerNumber(element.getBalance());
+        String elementBalance = Helper.formatNumber(element.getBalance());
         String elementBank = element.getName();
         String elementDescription = element.getDescription();
 

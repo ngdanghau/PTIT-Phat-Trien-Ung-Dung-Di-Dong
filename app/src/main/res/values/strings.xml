@@ -146,5 +146,14 @@
     <string name="turn_on_dark_mode">Bật chế độ ban đêm</string>
     <string name="turn_off_dark_mode">Tắt chế độ dark mode</string>
 
+    <string name="month">Tháng</string>
+    <string name="year">Năm</string>
+    <string name="week">Tuần</string>
+
+    <string name="amount_value">x5</string>
+    <string name="money_value">1,000,000đ</string>
+
+    <string name="date_value">Chủ Nhật, Th5 8</string>
+
 
 </resources>

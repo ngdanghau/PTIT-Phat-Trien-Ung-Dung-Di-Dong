@@ -6,6 +6,9 @@ import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
 import com.example.prudentialfinance.Container.CategoryAdd;
+import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
+import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
+import com.example.prudentialfinance.Container.Report.TransactionByCategoryResponse;
 import com.example.prudentialfinance.Container.Settings.AvatarUpload;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.Settings.EmailSettingsResponse;
@@ -284,6 +287,30 @@ public interface HTTPRequest {
     @GET("api/report/totalBalance")
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
+
+    @GET("/api/home/incomevsexpense")
+    Call<IncomeVsExpenseResponse> incomeExpenseByDate(@HeaderMap Map<String, String> headers,
+                                                      @Query("type") String type,
+                                                      @Query("date") String date);
+
+    @GET("/api/home/category/income")
+    Call<CategoryReportResponse> incomeByDate(@HeaderMap Map<String, String> headers,
+                                              @Query("date") String date);
+
+    @GET("/api/home/category/expense")
+    Call<CategoryReportResponse> expenseByDate(@HeaderMap Map<String, String> headers,
+                                               @Query("date") String date);
+
+    @GET("/api/report/transactions")
+    Call<TransactionByCategoryResponse> getTransactionByCategory(@HeaderMap Map<String, String> headers,
+                                                                 @Query("search") String search,
+                                                                 @Query("start") int start,
+                                                                 @Query("length") int length,
+                                                                 @Query("order[column]") String column,
+                                                                 @Query("order[dir]") String dir,
+                                                                 @Query("fromdate") String fromdate,
+                                                                 @Query("todate") String todate,
+                                                                 @Query("category_id") int category_id);
 
 
     /***************************TRANSACTIONS***************************/

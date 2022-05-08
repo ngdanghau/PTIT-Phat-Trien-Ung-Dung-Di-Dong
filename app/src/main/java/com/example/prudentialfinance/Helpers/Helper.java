@@ -5,8 +5,11 @@ import android.graphics.Color;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Transformation;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Helper {
 
@@ -20,16 +23,35 @@ public class Helper {
         return output;
     }
 
+    /**
+     * https://stackoverflow.com/questions/8573250/android-how-can-i-convert-string-to-date
+     * @param input
+     * @param pattern
+     * @return
+     */
+    public static Date convertStringToDate(String input, String pattern){
+        if(pattern.isEmpty()) pattern = "yyyy-MM-dd";
+        try{
+            // here set the pattern as you date in string was containing like date/month/year
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+            Date d = sdf.parse("20/12/2011");
+            return d;
+        }catch(ParseException ex){
+            // handle parsing exception if date string was different from the pattern applying into the SimpleDateFormat contructor
+            return new Date();
+        }
+    }
+
     /*
     * 123456 -> 123,456
     * */
-    public static String formatIntegerNumber(int input)
+    public static String formatNumber(int input)
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(input);
     }
 
-    public static String formatDoubleNumber(Double input)
+    public static String formatNumber(Double input)
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(input);

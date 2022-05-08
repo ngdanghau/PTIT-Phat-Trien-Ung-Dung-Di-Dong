@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Activities.BudgetsActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
 import com.example.prudentialfinance.Activities.General.GoalsActivity;
 import com.example.prudentialfinance.Activities.Settings.DarkModeActivity;
@@ -102,6 +103,9 @@ public class SettingRecycleViewAdapter extends RecyclerView.Adapter<SettingRecyc
                         break;
                     case "user_management":
                         parentContext.startActivity(new Intent(parentContext, UserManagementActivity.class));
+                        break;
+                    case "budgets":
+                        parentContext.startActivity(new Intent(parentContext, BudgetsActivity.class));
                         break;
                 }
             });

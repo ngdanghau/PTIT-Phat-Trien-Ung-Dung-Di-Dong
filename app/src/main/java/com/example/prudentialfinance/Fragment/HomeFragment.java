@@ -143,7 +143,7 @@ public class HomeFragment extends Fragment {
 
         /*Step 3*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {
-            String value = Helper.formatDoubleNumber(aDouble);
+            String value = Helper.formatNumber(aDouble);
             remaining.setText( value  );
         });
     }
