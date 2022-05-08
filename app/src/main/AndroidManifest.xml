@@ -20,6 +20,9 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Settings.DarkModeActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.BudgetsActivity"
             android:exported="false" />
         <activity
@@ -75,9 +78,6 @@
             android:exported="false" />
         <activity
             android:name=".Activities.Auth.RecoveryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Auth.LoginActivity"
