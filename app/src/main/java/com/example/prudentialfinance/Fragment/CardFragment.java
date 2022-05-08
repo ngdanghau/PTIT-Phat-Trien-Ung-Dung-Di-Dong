@@ -7,9 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,8 +33,7 @@ import java.util.Map;
  */
 public class CardFragment extends Fragment {
 
-    private AppCompatButton buttonCreate;
-    private ImageButton buttonGoBack;
+    private AppCompatImageButton buttonCreate;
     private RecyclerView recycleView;
     private CardFragmentViewModel viewModel;
 
@@ -71,6 +69,7 @@ public class CardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_card, container, false);
 
         // Retrieve bundle's arguments
+        assert this.getArguments() != null;
         String accessToken = this.getArguments().getString("accessToken");
         String contentType = this.getArguments().getString("contentType");
 
@@ -108,14 +107,14 @@ public class CardFragment extends Fragment {
         Context context = view.getContext();
         /*Step 1*/
         viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(CardFragmentViewModel.class);
-
+        viewModel.instanciate(headers);
         /*Step 2*/
-        viewModel.getAccounts(headers).observe((LifecycleOwner) context, accounts -> setRecycleView(view, headers));
+        viewModel.getAccounts().observe((LifecycleOwner) context, accounts -> setRecycleView(view));
     }
 
-    private void setRecycleView(View view, Map<String, String> headers) {
+    private void setRecycleView(View view) {
         /*Step 0*/
-        List<Account> accounts = viewModel.getAccounts(headers).getValue();
+        List<Account> accounts = viewModel.getAccounts().getValue();
         Context context = view.getContext();
 
         /*Step 1*/

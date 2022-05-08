@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/shortcutTransaction"
-        android:title="@string/transaction"
+        android:title="@string/menu"
         app:labelVisibilityMode="unlabeled"
         android:icon="@drawable/shortcut_transaction_state"/>
 

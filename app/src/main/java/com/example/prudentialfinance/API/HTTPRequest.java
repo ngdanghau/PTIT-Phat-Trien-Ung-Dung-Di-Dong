@@ -12,6 +12,7 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Container.TransactionGetTotal;
 
 import java.util.Map;
 
@@ -190,4 +191,11 @@ public interface HTTPRequest {
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
 
+
+    /***************************TRANSACTIONS***************************/
+    @GET("/api/transactions/income/total")
+    Call<TransactionGetTotal> transactionIncomeTotal(@HeaderMap Map<String, String> headers);
+
+    @GET("/api/transactions/expense/total")
+    Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
 }
