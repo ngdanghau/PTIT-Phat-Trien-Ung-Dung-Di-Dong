@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.General;
+package com.example.prudentialfinance.Activities.General;
 
 import androidx.appcompat.app.AppCompatActivity;
 

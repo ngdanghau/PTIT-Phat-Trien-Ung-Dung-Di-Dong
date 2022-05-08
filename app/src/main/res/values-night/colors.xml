@@ -31,5 +31,7 @@
 
     <!--Hau's color-->
     <color name="colorTransparentWhite">#cccccc</color>
-    <color name="backgroundInput">#2D313D</color>
+    <color name="backgroundInput">#515155</color>
+    <color name="backgroundWhite">#515155</color>
+    <color name="backgroundBlack">#FFFFFFFF</color>
 </resources>

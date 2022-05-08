@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
+import com.example.prudentialfinance.Fragment.ReportFragment;
 import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
@@ -46,6 +47,9 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.shortcutCard:
                     fragment = new CardFragment();
+                    break;
+                case R.id.shortcutReport:
+                    fragment = new ReportFragment();
                     break;
                 case R.id.shortcutSettings:
                     fragment = new SettingsFragment();

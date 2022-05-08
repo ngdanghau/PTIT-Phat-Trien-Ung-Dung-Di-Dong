@@ -15,8 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prudentialfinance.General.CategoriesActivity;
-import com.example.prudentialfinance.General.GoalsActivity;
+import com.example.prudentialfinance.Activities.General.CategoriesActivity;
+import com.example.prudentialfinance.Activities.General.GoalsActivity;
+import com.example.prudentialfinance.Activities.Settings.UserManagementActivity;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.Activities.Settings.EmailSettingsActivity;
@@ -91,6 +92,9 @@ public class SettingRecycleViewAdapter extends RecyclerView.Adapter<SettingRecyc
                         break;
                     case "goals":
                         parentContext.startActivity(new Intent(parentContext, GoalsActivity.class));
+                        break;
+                    case "user_management":
+                        parentContext.startActivity(new Intent(parentContext, UserManagementActivity.class));
                         break;
                 }
             });

@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                         else
                         {
                             setAuthorizedToken( "" );
-                            alert.showAlert("Oops!", resource.getMsg(), R.drawable.ic_close);;
+                            alert.showAlert(getResources().getString(R.string.alertTitle), resource.getMsg(), R.drawable.ic_close);;
                         }
                     }
                 }
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<Login> call, Throwable t) {
                     loadingDialog.dismissDialog();
-                    alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);;
+                    alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);;
                 }
             });
         });

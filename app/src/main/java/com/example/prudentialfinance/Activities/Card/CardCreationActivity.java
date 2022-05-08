@@ -5,14 +5,12 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.Helpers.NoticeDialog;
-import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.CardViewModel;
@@ -83,23 +81,23 @@ public class CardCreationActivity extends AppCompatActivity {
             String bank = cardBank.getText().toString();
             String description = cardDescription.getText().toString();
 
+            viewModel.createAccount(headers, bank, balance, description, number);
+        });
 
-            viewModel.getAccountCreation(headers, bank, balance,description,number ).observe(this, new Observer<Integer>() {
-                @Override
-                public void onChanged(Integer integer) {
-                    if( integer == 1)
-                    {
-                        NoticeDialog dialog = new NoticeDialog();
-                        dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_successfully);
-                    }
-                    else
-                    {
-                        NoticeDialog dialog = new NoticeDialog();
-                        dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_failed);
-                    }
+        viewModel.getAccountCreation().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if( integer == 1)
+                {
+                    NoticeDialog dialog = new NoticeDialog();
+                    dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_successfully);
                 }
-            });
-
+                else
+                {
+                    NoticeDialog dialog = new NoticeDialog();
+                    dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_failed);
+                }
+            }
         });
     }
 

@@ -1,9 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".General.CategoriesActivity">
+    android:orientation="vertical"
+    tools:context=".Activities.General.CategoriesActivity"
+    android:padding="20dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:weightSum="1">
+
+        <ImageButton
+            android:layout_weight="0.01"
+            android:id="@+id/backBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/back_btn_background"
+            android:src="@drawable/chevron_left"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:layout_weight="0.98"
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabInlineLabel="true"
+            app:tabIndicatorGravity="stretch"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorColor="@color/backgroundBlack"
+            app:tabIndicatorFullWidth="true"
+            app:tabSelectedTextColor="@color/backgroundBlack"
+            app:tabIndicator="@drawable/indicator"
+            app:tabTextColor="@color/colorSupportText"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/income" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expense" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <ImageButton
+            android:layout_marginLeft="20dp"
+            android:layout_weight="0.01"
+            android:id="@+id/btnAdd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/back_btn_background"
+            android:src="@drawable/ic_add"/>
+
+    </LinearLayout>
+
+
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        app:queryBackground="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/custom_input"
+        app:queryHint="Search here..."
+        app:iconifiedByDefault="false"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

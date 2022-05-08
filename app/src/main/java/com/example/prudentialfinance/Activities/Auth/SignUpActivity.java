@@ -89,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
         viewModel.getObject().observe(this, object -> {
             if(object == null){
                 setAuthorizedToken("");
-                alert.showAlert("Oops!", "Oops! Something went wrong. Please try again later!", R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
@@ -102,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             } else {
                 setAuthorizedToken("");
-                alert.showAlert("Oops!", object.getMsg(), R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
         });
     }
