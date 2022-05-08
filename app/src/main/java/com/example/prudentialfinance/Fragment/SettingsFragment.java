@@ -1,24 +1,23 @@
 package com.example.prudentialfinance.Fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Activities.Auth.LoginActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.Model.User;
@@ -27,7 +26,6 @@ import com.example.prudentialfinance.RecycleViewAdapter.SettingRecycleViewAdapte
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SettingsFragment extends Fragment {
 
@@ -50,20 +48,19 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setAuthorizedToken( ) {
-        GlobalVariable state = ((GlobalVariable) requireActivity().getApplication());
+        GlobalVariable state = ((GlobalVariable) getActivity().getApplication());
         state.setAccessToken("");
         state.setAuthUser(null);
 
-        SharedPreferences preferences = state.getSharedPreferences(state.getAppName(), Context.MODE_PRIVATE);
+        SharedPreferences preferences = state.getSharedPreferences(state.getAppName(), state.MODE_PRIVATE);
         preferences.edit().putString("accessToken", "").apply();
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        data.add(new Setting("dark_mode","Chế độ ban đêm", R.drawable.ic_baseline_dark_mode_24));
         data.add(new Setting("personal_information", "Thông tin cá nhân", R.drawable.ic_baseline_person_24));
         data.add(new Setting("change_password", "Đổi mật khẩu", R.drawable.ic_baseline_lock_open_24));
 
@@ -103,7 +100,7 @@ public class SettingsFragment extends Fragment {
 
 
 
-        LinearLayoutManager manager = new LinearLayoutManager(requireActivity().getApplicationContext());
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity().getApplicationContext());
         lvSettings.setLayoutManager(manager);
 
         SettingRecycleViewAdapter adapter = new SettingRecycleViewAdapter(getActivity().getApplicationContext(), data);
@@ -112,7 +109,7 @@ public class SettingsFragment extends Fragment {
 
         view.findViewById(R.id.logout).setOnClickListener(view1 -> {
             setAuthorizedToken();
-            Intent intent = new Intent(requireActivity().getApplicationContext(), LoginActivity.class);
+            Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             getActivity().onBackPressed();

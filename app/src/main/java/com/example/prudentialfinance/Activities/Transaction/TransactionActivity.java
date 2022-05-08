@@ -11,8 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +21,6 @@ import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
-import com.example.prudentialfinance.ViewModel.TransactionViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -36,28 +33,17 @@ public class TransactionActivity extends AppCompatActivity {
 
     private RecyclerView recycleView;
     private HomeFragmentViewModel viewModel;
-
     private ImageButton buttonGoBack, buttonCreate;
-    private TransactionViewModel transactionViewModel;
-
-
-    private static Map<String, String > headers = null;
-    private static LiveData<Integer> transactionCreate = null;
-    private static LiveData<Integer> transactionRemoval = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
-        headers = ((GlobalVariable)getApplication()).getHeaders();
+        Map<String, String > headers = ((GlobalVariable)getApplication()).getHeaders();
 
         setControl();
         setViewModel(headers);
-
-        transactionCreate = transactionViewModel.getTransactionCreation();
-        transactionRemoval = transactionViewModel.getTransactionRemoval();
-
         setEvent();
     }
 
@@ -85,11 +71,9 @@ public class TransactionActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider( this).get(HomeFragmentViewModel.class);
         viewModel.instanciate(headers);
 
-        transactionViewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
-
         /*Step 2*/
         viewModel.getTransactions().observe( this, transactionDetails -> {
-            System.out.println("transaction activity - setViewModel: "+ transactionDetails.size());
+            System.out.println(transactionDetails.size());
             setRecycleView();
         });
     }
@@ -113,10 +97,6 @@ public class TransactionActivity extends AppCompatActivity {
         swipeToDelete(latestTransactions, recycleView, adapter);
     }
 
-    /**
-     * @author Phong-Kaster
-     * set event for each component
-     * */
     private void setEvent()
     {
         buttonGoBack.setOnClickListener(view-> finish());
@@ -146,26 +126,15 @@ public class TransactionActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 //Remove swiped item from list and notify the RecyclerView
-
-                /*declare local variables*/
                 int position = viewHolder.getLayoutPosition();
                 TransactionDetail eradicatedTransaction = transactions.get(position);
                 transactions.remove(eradicatedTransaction);
-
-                /*notify to adapter & remove the transaction on SERVER*/
                 adapter.notifyItemRemoved(position);
-                removeTransaction(eradicatedTransaction);
-
 
                 Snackbar.make(recycleView, eradicatedTransaction.getName(), Snackbar.LENGTH_SHORT)
                         .setAction("Khôi phục", view ->{
-                            /*restore the transaction in recycle view*/
                             transactions.add(position, eradicatedTransaction);
                             adapter.notifyItemInserted(position);
-
-                            /*restore the transaction on Server*/
-                            createTransaction(eradicatedTransaction);
-
                         }).show();
             }
 
@@ -187,57 +156,5 @@ public class TransactionActivity extends AppCompatActivity {
         /*Step 2*/
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recycleView);
-    }
-
-    /**
-     * @author Phong-Kaster
-     * remove a transaction
-     * */
-    private void removeTransaction(TransactionDetail transaction)
-    {
-        String id = transaction.getId().toString();
-
-        transactionViewModel.eradicateTransaction(headers, id);
-
-        transactionRemoval.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                System.out.println("transaction activity removal: "+integer);
-            }
-        });
-    }
-
-    /**
-     * @author Phong-Kaster
-     * create | retore a transaction
-     */
-    private void createTransaction(TransactionDetail transaction)
-    {
-        String categoryId = transaction.getCategory().getId().toString();
-        String accountId = String.valueOf(transaction.getAccount().getId());
-        String name = transaction.getName();
-        String amount = transaction.getAmount().toString();
-        String reference = transaction.getReference();
-        String transactionDate = transaction.getTransactiondate();
-        String type = transaction.getType().toString();
-        String description = transaction.getDescription();
-
-
-        transactionViewModel.createTransaction(headers,
-                categoryId,
-                accountId,
-                name,
-                amount,
-                reference,
-                transactionDate,
-                type,
-                description);
-
-        transactionCreate.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                System.out.println("transaction activity create | restore: " +integer);
-            }
-        });
     }
 }
