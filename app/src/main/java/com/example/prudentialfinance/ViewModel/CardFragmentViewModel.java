@@ -23,13 +23,18 @@ public class CardFragmentViewModel extends ViewModel {
 
     private MutableLiveData<List<Account>> accounts;
 
+    public void instanciate(Map<String, String> headers)
+    {
+        /*Step 1*/
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        /*Step 2*/
+        retrieveAccounts( headers, api);
+    }
+
     /**GETTER AND SETTER**/
-    public MutableLiveData<List<Account>> getAccounts(Map<String, String> headers) {
-        if( accounts == null)
-        {
-            accounts = new MutableLiveData<>();
-            retrieveAccounts(headers);
-        }
+    public MutableLiveData<List<Account>> getAccounts() {
         return accounts;
     }
 
@@ -38,10 +43,12 @@ public class CardFragmentViewModel extends ViewModel {
     }
 
     /**FUNCTIONS**/
-    private void retrieveAccounts(Map<String, String> headers) {
+    private void retrieveAccounts(Map<String, String> headers, HTTPRequest api) {
         /*Step 1*/
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
+        if( accounts == null)
+        {
+            accounts = new MutableLiveData<>();
+        }
 
 
         /*Step 2*/

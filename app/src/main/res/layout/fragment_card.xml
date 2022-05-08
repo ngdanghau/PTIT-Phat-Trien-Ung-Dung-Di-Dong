@@ -11,16 +11,16 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:id="@+id/cardFragmentTitleAndButtonBack"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_marginStart="130dp"
                 android:id="@+id/cardFragmentTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="130dp"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/list_of_card"
@@ -30,12 +30,12 @@
                 tools:ignore="RtlSymmetry" />
 
             <ImageButton
-                android:layout_marginStart="70dp"
                 android:id="@+id/cardFragmentButtonCreate"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginStart="70dp"
                 android:background="@drawable/back_btn_background"
-                android:src="@drawable/ic_baseline_add_circle_24"/>
+                android:src="@drawable/ic_baseline_add_circle_24" />
 
         </LinearLayout>
 

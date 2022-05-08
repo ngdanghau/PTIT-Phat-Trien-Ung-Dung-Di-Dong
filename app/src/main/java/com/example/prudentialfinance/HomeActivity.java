@@ -2,6 +2,7 @@ package com.example.prudentialfinance;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -23,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
     private ActivityHomeBinding binding;
     private Fragment fragment = null;
-
+    private int fragmentLayout;
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
      * @author Phong-Kaster
      * activate a fragment right away
      * */
-    private void enableFragment(Fragment fragment)
+    public void enableFragment(Fragment fragment)
     {
         /*Step 1*/
         FragmentManager manager = getSupportFragmentManager();
