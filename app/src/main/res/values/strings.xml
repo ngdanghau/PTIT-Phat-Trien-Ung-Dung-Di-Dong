@@ -142,6 +142,9 @@
     <string name="reportIncome">Báo cáo thu nhập</string>
     <string name="reportExpense">Báo cáo chi tiêu</string>
     <string name="report">Báo cáo</string>
+    <string name="turn_on_off_dark_mode">Bật/tắt chế độ ban đêm</string>
+    <string name="turn_on_dark_mode">Bật chế độ ban đêm</string>
+    <string name="turn_off_dark_mode">Tắt chế độ dark mode</string>
 
     <string name="month">Tháng</string>
     <string name="year">Năm</string>

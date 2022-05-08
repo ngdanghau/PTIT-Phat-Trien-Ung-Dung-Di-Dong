@@ -170,27 +170,12 @@ public class HomeFragment extends Fragment {
      * listening event for every component.
      * */
     private void setEvent() {
-        /**
-         * DO NOT REMOVE THIS BLOCK OF CODE BELOW
-         * IT REPRESENTS FOR TESTING DARK-MODE FOR EACH SCREEN
-         * */
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            requireContext().setTheme(R.style.Theme_PrudentialFinance_Dark);
-        } else {
-            requireContext().setTheme(R.style.Theme_PrudentialFinance);
-        }
+
 
         buttonTransaction.setOnClickListener(view -> {
             Toast.makeText(getContext(), "Transaction", Toast.LENGTH_SHORT).show();
 
-            if( AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES )
-            {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-            else
-            {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
+
 
         });
 
