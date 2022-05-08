@@ -48,9 +48,9 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.shortcutCard:
                     fragment = new CardFragment();
                     break;
-                case R.id.shortcutReport:
-                    fragment = new ReportFragment();
-                    break;
+//                case R.id.shortcutReport:
+//                    fragment = new ReportFragment();
+//                    break;
                 case R.id.shortcutSettings:
                     fragment = new SettingsFragment();
                     break;

@@ -78,6 +78,8 @@ public class CardFragment extends Fragment {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", accessToken);
         headers.put("Content-Type", contentType);
+
+
         setControl(view);
         setViewModel(view, headers);
         setEvent();
@@ -109,10 +111,10 @@ public class CardFragment extends Fragment {
         viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(CardFragmentViewModel.class);
         viewModel.instanciate(headers);
         /*Step 2*/
-        viewModel.getAccounts().observe((LifecycleOwner) context, accounts -> setRecycleView(view));
+        viewModel.getAccounts().observe((LifecycleOwner) context, accounts -> setRecycleView(view, headers));
     }
 
-    private void setRecycleView(View view) {
+    private void setRecycleView(View view, Map<String, String > headers) {
         /*Step 0*/
         List<Account> accounts = viewModel.getAccounts().getValue();
         Context context = view.getContext();
