@@ -15,6 +15,7 @@ import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionGetTotal;
+import com.example.prudentialfinance.Container.TransactionRemove;
 import com.example.prudentialfinance.Container.Users.UserAdd;
 import com.example.prudentialfinance.Container.Users.UserGetAll;
 
@@ -182,7 +183,8 @@ public interface HTTPRequest {
 
     /***************************HOME*********************************/
     @GET("api/home/latestall")
-    Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers);
+    Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers,
+                                                        @QueryMap Map<String, String> parameters);
 
 
 
@@ -243,10 +245,7 @@ public interface HTTPRequest {
                                           @Field("color") String color);
 
 
-    /**
-     * User management
-     */
-
+    /***************************USER***************************/
     @GET("api/users")
     Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
                                              @Query("search") String search,
@@ -282,20 +281,20 @@ public interface HTTPRequest {
 
 
     /***************************REPORT***************************/
-    @GET("/api/report/totalBalance")
+    @GET("api/report/totalBalance")
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
 
 
     /***************************TRANSACTIONS***************************/
-    @GET("/api/transactions/income/total")
+    @GET("api/transactions/income/total")
     Call<TransactionGetTotal> transactionIncomeTotal(@HeaderMap Map<String, String> headers);
 
-    @GET("/api/transactions/expense/total")
+    @GET("api/transactions/expense/total")
     Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
 
     @FormUrlEncoded
-    @POST("/api/transaction/income")
+    @POST("api/transactions/income")
     Call<TransactionCreate> transactionCreate(@HeaderMap Map<String, String> headers,
                                               @Field("category_id") String categoryId,
                                               @Field("account_id") String accountId,
@@ -305,4 +304,8 @@ public interface HTTPRequest {
                                               @Field("transactiondate") String transactionDate,
                                               @Field("type") String type,
                                               @Field("description") String description);
+
+    @DELETE("api/transactions/{id}")
+    Call<TransactionRemove> transactionRemove(@HeaderMap Map<String, String> headers,
+                                              @Path("id") String id);
 }
