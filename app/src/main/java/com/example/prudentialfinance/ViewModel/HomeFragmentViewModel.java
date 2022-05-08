@@ -15,7 +15,6 @@ import com.example.prudentialfinance.ContainerModel.TransactionTotal;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,16 +77,7 @@ public class HomeFragmentViewModel extends ViewModel {
             transactions = new MutableLiveData<>();
         }
         /*Step 2*/
-
-        Map<String, String> options = new HashMap<>();
-        options.put("start", "0");
-        options.put("length", "10");
-        options.put("draw", "1");
-        options.put("order[column]","");
-        options.put("order[dir]","desc");
-        options.put("search","");
-
-        Call<HomeLatestTransactions> container = api.homeLatestTransactions(headers, options);
+        Call<HomeLatestTransactions> container = api.homeLatestTransactions(headers);
 
 
         /*Step 3*/

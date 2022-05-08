@@ -121,19 +121,4 @@ public class TransactionDetail {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    @Override
-    public String toString() {
-        return "TransactionDetail{" +
-                "amount=" + amount +
-                ", description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                ", reference='" + reference + '\'' +
-                ", transactiondate='" + transactiondate + '\'' +
-                ", id=" + id +
-                ", type=" + type +
-                ", account=" + account +
-                ", category=" + category +
-                '}';
-    }
 }
