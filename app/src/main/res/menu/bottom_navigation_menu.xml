@@ -17,18 +17,12 @@
         android:id="@+id/shortcutCreate"
         android:title=""/>
 
+  
     <item
-        android:id="@+id/shortcutTransaction"
-        android:title="@string/menu"
-        app:labelVisibilityMode="unlabeled"
-        android:icon="@drawable/shortcut_transaction_state"/>
-  
-  
-<!--       <item
         android:id="@+id/shortcutReport"
         android:title="@string/report"
         app:labelVisibilityMode="unlabeled"
-        android:icon="@drawable/shortcut_transaction_state"/> -->
+        android:icon="@drawable/shortcut_transaction_state"/>
 
     <item
         android:id="@+id/shortcutSettings"

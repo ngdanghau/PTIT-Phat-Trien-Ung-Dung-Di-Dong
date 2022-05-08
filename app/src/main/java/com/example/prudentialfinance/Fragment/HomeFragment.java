@@ -37,25 +37,24 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
-
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
 
-     private static final String TAG = "HomeFragment";
-     private ImageButton buttonTransaction;
+    private static final String TAG = "HomeFragment";
+    private ImageButton buttonTransaction;
 
-     private ImageButton buttonIncomeStatistics;
-     private ImageButton buttonExpenseStatistics;
+    private ImageButton buttonIncomeStatistics;
+    private ImageButton buttonExpenseStatistics;
 
-     private ImageButton buttonButtonGoal;
-     private RecyclerView recycleView;
+    private ImageButton buttonButtonGoal;
+    private RecyclerView recycleView;
 
-     private HomeFragmentViewModel viewModel;
-     private TextView name, remaining, totalIncome, totalExpense, seeAll;
-     private CircleImageView avatar;
+    private HomeFragmentViewModel viewModel;
+    private TextView name, remaining, totalIncome, totalExpense, seeAll;
+    private CircleImageView avatar;
 
-     private User AuthUser;
+    private User AuthUser;
 
     public HomeFragment() {
         // Required empty public constructor
