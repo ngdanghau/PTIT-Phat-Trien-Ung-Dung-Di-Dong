@@ -40,6 +40,45 @@ public class User implements Parcelable {
     @Expose
     private String date;
 
+    public User(String account_type, String email, String firstname, String lastname, String avatar, Integer id, Boolean is_active, String date) {
+        this.account_type = account_type;
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.avatar = avatar;
+        this.id = id;
+        this.is_active = is_active;
+        this.date = date;
+    }
+
+    protected User(Parcel in) {
+        account_type = in.readString();
+        email = in.readString();
+        firstname = in.readString();
+        lastname = in.readString();
+        avatar = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        byte tmpIs_active = in.readByte();
+        is_active = tmpIs_active == 0 ? null : tmpIs_active == 1;
+        date = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
     public String getAccount_type() {
         return account_type;
     }
@@ -125,6 +164,18 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
+        parcel.writeString(account_type);
+        parcel.writeString(email);
+        parcel.writeString(firstname);
+        parcel.writeString(lastname);
+        parcel.writeString(avatar);
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        parcel.writeByte((byte) (is_active == null ? 0 : is_active ? 1 : 2));
+        parcel.writeString(date);
     }
 }

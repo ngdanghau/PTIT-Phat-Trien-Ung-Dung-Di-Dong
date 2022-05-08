@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.ReportFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingBottom="25dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_marginLeft="40dp"
+            android:layout_weight="0.99"
+            android:id="@+id/topTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/reportIncome"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/colorButtomNavigationMenuPressed"/>
+
+        <ImageButton
+            android:layout_weight="0.01"
+            android:id="@+id/btnMenu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/back_btn_background"
+            android:src="@drawable/ic_baseline_more_horiz_24"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>

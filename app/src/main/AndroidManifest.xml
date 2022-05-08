@@ -23,10 +23,19 @@
             android:name=".Activities.Transaction.TransactionActivity"
             android:exported="false" />
         <activity
-            android:name=".General.GoalsActivity"
+            android:name=".Activities.Settings.AddUserActivity"
             android:exported="false" />
         <activity
-            android:name=".General.CategoriesActivity"
+            android:name=".Activities.Settings.UserManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.General.AddCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.General.GoalsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.General.CategoriesActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Card.CardUpdateActivity"

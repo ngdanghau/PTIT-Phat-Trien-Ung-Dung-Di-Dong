@@ -34,7 +34,7 @@
     <string name="dashboard">Dashboard</string>
     <string name="transaction">Giao Dịch</string>
     <string name="income">Thu nhập</string>
-    <string name="expense">Chi phí</string>
+    <string name="expense">Chi tiêu</string>
     <string name="goal">Mục tiêu</string>
     <string name="income_example">$125.000</string>
     <string name="recent">Gần đây</string>
@@ -116,6 +116,32 @@
     <string name="reset_password_confirm_newpassword">Nhập lại mật khẩu mới.</string>
     <string name="recent_transactions">Giao dịch gần đây</string>
     <string name="menu">Menu</string>
+
+
+    <string name="categories">Thể loại</string>
+    <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
+    <string name="alertTitle">Oops!</string>
+    <string name="alertConfirm">Bạn có chắc không? Dữ liệu đã xoá không thể khôi phục!</string>
+    <string name="alertWarning">Warning!</string>
+
+    <string name="edit_category">Sửa thể loại</string>
+    <string name="add_category">Thêm thể loại</string>
+
+    <string name="category_name">Tên thể loại</string>
+    <string name="category_desc">Mô tả</string>
+    <string name="category_color">Màu sắc</string>
+    <string name="cancel">Huỷ</string>
+    <string name="colorPicker">Chọn màu sắc</string>
+
+    <string name="user_management">Quản lý người dùng</string>
+    <string name="add_user">Thêm người dùng</string>
+    <string name="edit_user">Sửa người dùng</string>
+    <string name="account_type">Loại tài khoản</string>
+    <string name="active">Kích hoạt tài khoản</string>
+
+    <string name="reportIncome">Báo cáo thu nhập</string>
+    <string name="reportExpense">Báo cáo chi tiêu</string>
+    <string name="report">Báo cáo</string>
 
 
 </resources>

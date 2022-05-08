@@ -5,6 +5,7 @@ import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Container.Settings.AvatarUpload;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.Settings.EmailSettingsResponse;
@@ -14,6 +15,8 @@ import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionGetTotal;
+import com.example.prudentialfinance.Container.Users.UserAdd;
+import com.example.prudentialfinance.Container.Users.UserGetAll;
 
 import java.util.Map;
 
@@ -28,6 +31,7 @@ import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -184,7 +188,97 @@ public interface HTTPRequest {
 
     /***************************CATEGORY*********************************/
     @GET("api/incomecategories")
-    Call<CategoryGetAll> categoryGetAll(@HeaderMap Map<String, String> headers);
+    Call<CategoryGetAll> searchIncomeCategories(@HeaderMap Map<String, String> headers,
+                                                @Query("search") String search,
+                                                @Query("start") int start,
+                                                @Query("length") int length,
+                                                @Query("order[column]") String column,
+                                                @Query("order[dir]") String dir);
+
+    @DELETE("api/incomecategories/{id}")
+    Call<CategoryAdd> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/incomecategories")
+    Call<CategoryAdd> addNewIncomeCategory(@HeaderMap Map<String, String> headers,
+                                           @Field("name") String name,
+                                           @Field("description") String description,
+                                           @Field("color") String color);
+
+    @FormUrlEncoded
+    @PUT("api/incomecategories/{id}")
+    Call<CategoryAdd> editIncomeCategory(@HeaderMap Map<String, String> headers,
+                                         @Path("id") int id,
+                                         @Field("name") String name,
+                                         @Field("description") String description,
+                                         @Field("color") String color);
+
+
+
+
+
+    @GET("api/expensecategories")
+    Call<CategoryGetAll> searchExpenseCategories(@HeaderMap Map<String, String> headers,
+                                                 @Query("search") String search,
+                                                 @Query("start") int start,
+                                                 @Query("length") int length,
+                                                 @Query("order[column]") String column,
+                                                 @Query("order[dir]") String dir);
+    @DELETE("api/expensecategories/{id}")
+    Call<CategoryAdd> removeExpenseCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/expensecategories")
+    Call<CategoryAdd> addNewExpenseCategory(@HeaderMap Map<String, String> headers,
+                                            @Field("name") String name,
+                                            @Field("description") String description,
+                                            @Field("color") String color);
+
+    @FormUrlEncoded
+    @PUT("api/expensecategories/{id}")
+    Call<CategoryAdd> editExpenseCategory(@HeaderMap Map<String, String> headers,
+                                          @Path("id") int id,
+                                          @Field("name") String name,
+                                          @Field("description") String description,
+                                          @Field("color") String color);
+
+
+    /**
+     * User management
+     */
+
+    @GET("api/users")
+    Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
+                                             @Query("search") String search,
+                                             @Query("start") int start,
+                                             @Query("length") int length,
+                                             @Query("order[column]") String column,
+                                             @Query("order[dir]") String dir);
+    @DELETE("api/users/{id}")
+    Call<UserAdd> removeUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @PATCH("api/users/{id}")
+    Call<UserAdd> restoreUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/users/new")
+    Call<UserAdd> addUser(@HeaderMap Map<String, String> headers,
+                          @Field("firstname") String firstname,
+                          @Field("lastname") String lastname,
+                          @Field("account_type") String account_type,
+                          @Field("is_active") boolean is_active
+    );
+
+    @FormUrlEncoded
+    @PUT("api/users/{id}")
+    Call<UserAdd> updateUser(@HeaderMap Map<String, String> headers,
+                             @Path("id") int id,
+                             @Field("firstname") String firstname,
+                             @Field("lastname") String lastname,
+                             @Field("account_type") String account_type,
+                             @Field("is_active") boolean is_active
+    );
+
 
 
     /***************************REPORT***************************/
