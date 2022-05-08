@@ -12,6 +12,7 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionGetTotal;
 
 import java.util.Map;
@@ -198,4 +199,16 @@ public interface HTTPRequest {
 
     @GET("/api/transactions/expense/total")
     Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
+
+    @FormUrlEncoded
+    @POST("/api/transaction/income")
+    Call<TransactionCreate> transactionCreate(@HeaderMap Map<String, String> headers,
+                                              @Field("category_id") String categoryId,
+                                              @Field("account_id") String accountId,
+                                              @Field("name") String name,
+                                              @Field("amount") String amount,
+                                              @Field("reference") String reference,
+                                              @Field("transactiondate") String transactionDate,
+                                              @Field("type") String type,
+                                              @Field("description") String description);
 }
