@@ -80,9 +80,6 @@
             android:name=".Activities.Auth.RecoveryActivity"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activities.Auth.LoginActivity"
             android:exported="false" />
         <activity
