@@ -21,7 +21,7 @@ import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
-import com.example.prudentialfinance.ViewModel.LoginViewModel;
+import com.example.prudentialfinance.ViewModel.Auth.LoginViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;

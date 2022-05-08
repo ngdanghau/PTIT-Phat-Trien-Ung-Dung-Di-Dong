@@ -23,13 +23,13 @@ public class Helper {
     /*
     * 123456 -> 123,456
     * */
-    public static String formatIntegerNumber(int input)
+    public static String formatNumber(int input)
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(input);
     }
 
-    public static String formatDoubleNumber(Double input)
+    public static String formatNumber(Double input)
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(input);

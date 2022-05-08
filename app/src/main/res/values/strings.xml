@@ -143,5 +143,14 @@
     <string name="reportExpense">Báo cáo chi tiêu</string>
     <string name="report">Báo cáo</string>
 
+    <string name="month">Tháng</string>
+    <string name="year">Năm</string>
+    <string name="week">Tuần</string>
+
+    <string name="amount_value">x5</string>
+    <string name="money_value">1,000,000đ</string>
+
+    <string name="date_value">Chủ Nhật, Th5 8</string>
+
 
 </resources>

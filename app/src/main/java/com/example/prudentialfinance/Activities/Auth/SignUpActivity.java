@@ -16,7 +16,7 @@ import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
-import com.example.prudentialfinance.ViewModel.SignUpViewModel;
+import com.example.prudentialfinance.ViewModel.Auth.SignUpViewModel;
 
 
 public class SignUpActivity extends AppCompatActivity {
