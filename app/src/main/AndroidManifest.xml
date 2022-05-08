@@ -20,6 +20,7 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Settings.DarkModeActivity"
             android:name=".Activities.BudgetsActivity"
             android:exported="false" />
         <activity
