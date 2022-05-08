@@ -137,5 +137,9 @@
     <string name="account_type">Loại tài khoản</string>
     <string name="active">Kích hoạt tài khoản</string>
 
+    <string name="reportIncome">Báo cáo thu nhập</string>
+    <string name="reportExpense">Báo cáo chi tiêu</string>
+    <string name="report">Báo cáo</string>
+
 
 </resources>

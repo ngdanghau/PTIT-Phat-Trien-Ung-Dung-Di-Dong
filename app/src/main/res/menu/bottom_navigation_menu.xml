@@ -18,8 +18,8 @@
         android:title=""/>
 
     <item
-        android:id="@+id/shortcutTransaction"
-        android:title="@string/transaction"
+        android:id="@+id/shortcutReport"
+        android:title="@string/report"
         app:labelVisibilityMode="unlabeled"
         android:icon="@drawable/shortcut_transaction_state"/>
 

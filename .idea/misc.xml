@@ -102,16 +102,19 @@
         <entry key="app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_stars_24.xml" value="0.1975" />
+        <entry key="app/src/main/res/drawable/ic_baseline_view_list.xml" value="0.231" />
         <entry key="app/src/main/res/drawable/ic_baseline_web_24.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_info.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/ic_outline_format_list_bulleted.xml" value="0.231" />
         <entry key="app/src/main/res/drawable/icon_account.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/icon_bg_transparent.xml" value="0.1845" />
         <entry key="app/src/main/res/drawable/icon_home.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/indicator.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/layout_custom_dialog.xml" value="0.2305" />
+        <entry key="app/src/main/res/drawable/shortcut_transaction_state.xml" value="0.231" />
         <entry key="app/src/main/res/drawable/spinner_bg.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/transparent_background.xml" value="0.2775" />
         <entry key="app/src/main/res/layout/activity_add_category.xml" value="0.34103260869565216" />
@@ -147,6 +150,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4615036231884058" />
         <entry key="app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.25407608695652173" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/fragment_report.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_settings_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/fragment_settings_element_header.xml" value="0.2740628166160081" />
@@ -157,6 +161,7 @@
         <entry key="app/src/main/res/layout/spinner_element_selected.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/user_management_element.xml" value="0.5484601449275363" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.47314814814814815" />
+        <entry key="app/src/main/res/menu/category_menu.xml" value="0.5635416666666667" />
       </map>
     </option>
   </component>
