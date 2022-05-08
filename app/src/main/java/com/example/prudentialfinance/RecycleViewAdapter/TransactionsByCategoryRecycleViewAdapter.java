@@ -17,7 +17,10 @@ import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.R;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapter<TransactionsByCategoryRecycleViewAdapter.ViewHolder> {
     private ArrayList<TransactionDetail> objects;
@@ -45,7 +48,9 @@ public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapt
         TransactionDetail entry = objects.get(position);
 
         holder.transaction_amount.setText(Helper.formatNumber(entry.getAmount()));
-        holder.transaction_date.setText(entry.getTransactiondate());
+        Date transaction_date = Helper.convertStringToDate(entry.getTransactiondate(), "yyyy-MM-dd");
+
+        holder.transaction_date.setText(DateFormat.getDateInstance(DateFormat.DEFAULT, new Locale("vi", "VN")).format(transaction_date));
 
         Context parentContext = holder.parent.getContext();
         holder.transaction_layout.setOnClickListener(view1 -> {
