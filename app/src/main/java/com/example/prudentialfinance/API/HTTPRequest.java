@@ -200,6 +200,9 @@ public interface HTTPRequest {
                                                 @Query("order[column]") String column,
                                                 @Query("order[dir]") String dir);
 
+    @GET("api/incomecategories")
+    Call<CategoryGetAll> retrieveCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters);
+
     @DELETE("api/incomecategories/{id}")
     Call<CategoryAdd> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
 

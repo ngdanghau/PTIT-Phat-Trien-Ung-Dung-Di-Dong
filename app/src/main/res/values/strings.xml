@@ -154,6 +154,13 @@
     <string name="money_value">1,000,000đ</string>
 
     <string name="date_value">Chủ Nhật, Th5 8</string>
+    <string name="create_transaction">Thêm giao dịch</string>
+    <string name="prudential_bank_credit_card">Credit Card</string>
+    <string name="amount">Nhập số tiền</string>
+    <string name="name">Nhập tên hoạt động</string>
+    <string name="reference">Nội dung tham chiếu</string>
+    <string name="date">Ngày</string>
+    <string name="task_destroyer">Pháo chống tăng</string>
 
 
 </resources>
