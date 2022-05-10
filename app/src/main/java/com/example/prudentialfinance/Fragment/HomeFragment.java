@@ -91,6 +91,12 @@ public class HomeFragment extends Fragment {
         setViewModel(view, headers);
         setEvent();
         setScreen();
+
+        viewModel.getTransactions().observe((LifecycleOwner) this, transactionDetails -> {
+            setRecycleView(this);
+        });
+
+
         return view;
     }
 
@@ -136,10 +142,9 @@ public class HomeFragment extends Fragment {
         viewModel.instanciate(headers);
 
         /*Step 2*/
-        viewModel.getTransactions().observe((LifecycleOwner) context, transactionDetails -> {
-            System.out.println(transactionDetails.size());
-            setRecycleView(context);
-        });
+//        viewModel.getTransactions().observe((LifecycleOwner) context, transactionDetails -> {
+//            setRecycleView(context);
+//        });
 
         /*Step 3*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {
@@ -151,17 +156,17 @@ public class HomeFragment extends Fragment {
 
     /**
      * @author Phong-Kaster
-     * @param context is the current context of the fragment */
-    private void setRecycleView(Context context) {
+     * @param fragment is the current context of the fragment  */
+    private void setRecycleView(HomeFragment fragment) {
 
         List<TransactionDetail> latestTransactions = viewModel.getTransactions().getValue();
         /*Step 1*/
-        TransactionRecycleViewAdapter adapter = new TransactionRecycleViewAdapter(context, latestTransactions);
+        TransactionRecycleViewAdapter adapter = new TransactionRecycleViewAdapter(fragment.getContext(), latestTransactions);
         recycleView.setAdapter(adapter);
 
 
         /*Step 2*/
-        LinearLayoutManager manager = new LinearLayoutManager(context);
+        LinearLayoutManager manager = new LinearLayoutManager(fragment.getContext());
         recycleView.setLayoutManager(manager);
     }
 

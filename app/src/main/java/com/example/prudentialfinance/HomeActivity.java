@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
+import com.example.prudentialfinance.Fragment.MenuFragment;
 import com.example.prudentialfinance.Fragment.ReportFragment;
 import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -59,6 +60,11 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         });
 
+
+        binding.fab.setOnClickListener(view->{
+            Fragment fragment = new MenuFragment();
+            enableFragment(fragment);
+        });
     }
 
     /**
