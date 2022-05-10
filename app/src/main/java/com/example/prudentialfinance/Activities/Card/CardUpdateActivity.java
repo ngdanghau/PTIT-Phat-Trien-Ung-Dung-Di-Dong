@@ -2,6 +2,7 @@ package com.example.prudentialfinance.Activities.Card;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +24,8 @@ public class CardUpdateActivity extends AppCompatActivity {
 
     private ImageButton buttonGoBack;
     private AppCompatButton buttonCreate;
+    private ImageButton buttonRemove;
+
     private EditText cardNumber, cardBalance, cardBank, cardDescription;
     private CardViewModel viewModel;
     private Map<String, String > headers = null;
@@ -50,7 +53,32 @@ public class CardUpdateActivity extends AppCompatActivity {
         setViewModel();
         setEvent(account, headers);
 
+        viewModel.getAccountRemoval().observe(CardUpdateActivity.this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if( s.length() > 0)
+                {
+                    NoticeDialog dialog = new NoticeDialog();
+                    dialog.showDialogWithContent(CardUpdateActivity.this, s.trim());
+                }
+            }
+        });
 
+        viewModel.getAccountUpdate().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if( integer == 1)
+                {
+                    NoticeDialog dialog = new NoticeDialog();
+                    dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
+                }
+                else
+                {
+                    NoticeDialog dialog = new NoticeDialog();
+                    dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_failed);
+                }
+            }
+        });
     }
 
 
@@ -61,6 +89,8 @@ public class CardUpdateActivity extends AppCompatActivity {
     private void setControl() {
         buttonGoBack = findViewById(R.id.cardUpdateButtonGoBack);
         buttonCreate = findViewById(R.id.cardUpdateButtonCreate);
+        buttonRemove = findViewById(R.id.cardUpdateButtonRemove);
+
 
         cardNumber = findViewById(R.id.cardUpdateCardNumber);
         cardBalance = findViewById(R.id.cardUpdateCardBalance);
@@ -111,23 +141,16 @@ public class CardUpdateActivity extends AppCompatActivity {
 
 
             viewModel.updateAccount(headers,id, name, balance, description, number);
-            viewModel.getAccountUpdate().observe(this, new Observer<Integer>() {
-                @Override
-                public void onChanged(Integer integer) {
-                    System.out.println(integer);
-                    if( integer == 1)
-                    {
-                        NoticeDialog dialog = new NoticeDialog();
-                        dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
-                    }
-                    else
-                    {
-                        NoticeDialog dialog = new NoticeDialog();
-                        dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_failed);
-                    }
-                }
-            });
 
+        });
+
+        /*Step 4*/
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int id = account.getId();
+                viewModel.deleteAccount(headers, id);
+            }
         });
     }
 }

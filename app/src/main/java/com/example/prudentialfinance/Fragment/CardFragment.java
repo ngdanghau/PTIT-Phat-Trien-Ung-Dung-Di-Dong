@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -120,9 +122,6 @@ public class CardFragment extends Fragment {
         /*Step 2*/
         LinearLayoutManager manager = new LinearLayoutManager(context);
         recycleView.setLayoutManager(manager);
-
-        /*Step 3*/
-        setItemTouchHelper( recycleView, adapter, accounts, headers);
     }
 
     private void setEvent()
@@ -141,71 +140,84 @@ public class CardFragment extends Fragment {
      * CardRecycleViewAdapter adapter
      * List<Account> accounts, Map<String, String> headers
      * */
-    @SuppressLint("NotifyDataSetChanged")
-    private void setItemTouchHelper(RecyclerView recyclerView, CardRecycleViewAdapter adapter, List<Account> accounts, Map<String, String> headers)
-    {
-        /*Step 1*/
-        ItemTouchHelper.SimpleCallback itemTouchHelperCallback =
-                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-
-                    @Override
-                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                        /*Step 1: remember card position*/
-                        int position = viewHolder.getLayoutPosition();
-
-
-                        /*Step 2: store deleted account temporary*/
-                        Account deletedAccount = accounts.get(position);
-
-
-                        /*Step 3: delete card in accounts(arraylist)*/
-                        accounts.remove(position);
-                        adapter.notifyItemRemoved(position);
-                        cardViewModel.deleteAccount(headers, deletedAccount.getId());
-
-
-                        /*Step 4: popup notice and button restore*/
-                        Snackbar.make(recyclerView,  deletedAccount.getName(), Snackbar.LENGTH_LONG)
-                                .setAction("Khôi phục", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        /*Create in array list*/
-                                        accounts.add(position, deletedAccount);
-                                        /*Create in database*/
-                                        cardViewModel.createAccount(headers,
-                                                deletedAccount.getName(),
-                                                deletedAccount.getBalance(),
-                                                deletedAccount.getDescription(),
-                                                deletedAccount.getAccountnumber());
-                                    }
-                                }).show();
-                    }
-
-                    /*this code belows from RecyclerViewSwipeDecorator to override onChildDraw of SimpleCallback*/
-                    @Override
-                    public void onChildDraw (@NonNull Canvas c,
-                                             @NonNull RecyclerView recyclerView,
-                                             @NonNull RecyclerView.ViewHolder viewHolder,
-                                             float dX, float dY,
-                                             int actionState, boolean isCurrentlyActive)
-                    {
-                        new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                                .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorRed))
-                                .addActionIcon(R.drawable.ic_baseline_delete_forever_24)
-                                .create()
-                                .decorate();
-
-                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                    }
-                };
-
-        /*Step 2*/
-        ItemTouchHelper touchHelper = new ItemTouchHelper(itemTouchHelperCallback);
-        touchHelper.attachToRecyclerView(recycleView);
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    private void setItemTouchHelper(RecyclerView recyclerView, CardRecycleViewAdapter adapter, List<Account> accounts, Map<String, String> headers)
+//    {
+//        /*Step 1*/
+//        ItemTouchHelper.SimpleCallback itemTouchHelperCallback =
+//                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//                    @Override
+//                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                        Toast.makeText(requireContext(), "This account can not be delete and onMove !", Toast.LENGTH_SHORT).show();
+//                        return false;
+//                    }
+//
+//
+//                    @Override
+//                    public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//                        /*Step 1: remember card position*/
+//                        int position = viewHolder.getLayoutPosition();
+//
+//
+//                        /*Step 2: store deleted account temporary*/
+//                        Account deletedAccount = accounts.get(position);
+//
+//
+//                        /*Step 3: delete card in accounts(arraylist)*/
+//                        accounts.remove(position);
+//                        adapter.notifyItemRemoved(position);
+//                        cardViewModel.deleteAccount(headers, deletedAccount.getId());
+//
+//                        cardViewModel.getAccountRemoval().observe((LifecycleOwner) requireContext(), new Observer<Integer>() {
+//                            @Override
+//                            public void onChanged(Integer integer) {
+//                                if(integer == 0)
+//                                {
+//                                    Toast.makeText(requireContext(), "This account can not be delete !", Toast.LENGTH_SHORT).show();
+//                                }
+//                                else
+//                                {
+//                                    /*Step 4: popup notice and button restore*/
+//                                    Snackbar.make(recyclerView,  deletedAccount.getName(), Snackbar.LENGTH_LONG)
+//                                            .setAction("Khôi phục", new View.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(View view) {
+//                                                    /*Create in array list*/
+//                                                    accounts.add(position, deletedAccount);
+//                                                    /*Create in database*/
+//                                                    cardViewModel.createAccount(headers,
+//                                                            deletedAccount.getName(),
+//                                                            deletedAccount.getBalance(),
+//                                                            deletedAccount.getDescription(),
+//                                                            deletedAccount.getAccountnumber());
+//                                                }
+//                                            }).show();
+//                                }
+//                            }
+//                        });
+//                    }
+//
+//
+//                    /*this code belows from RecyclerViewSwipeDecorator to override onChildDraw of SimpleCallback*/
+//                    @Override
+//                    public void onChildDraw (@NonNull Canvas c,
+//                                             @NonNull RecyclerView recyclerView,
+//                                             @NonNull RecyclerView.ViewHolder viewHolder,
+//                                             float dX, float dY,
+//                                             int actionState, boolean isCurrentlyActive)
+//                    {
+//                        new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+//                                .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorRed))
+//                                .addActionIcon(R.drawable.ic_baseline_delete_forever_24)
+//                                .create()
+//                                .decorate();
+//
+//                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+//                    }
+//                };
+//
+//        /*Step 2*/
+//        ItemTouchHelper touchHelper = new ItemTouchHelper(itemTouchHelperCallback);
+//        touchHelper.attachToRecyclerView(recycleView);
+//    }
 }

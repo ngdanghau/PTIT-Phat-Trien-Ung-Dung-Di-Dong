@@ -44,6 +44,10 @@ public class Helper {
 
     public static String convertStringToValidDate(String input)
     {
+        if( input.length() == 0)
+        {
+            return "2022-05-10";
+        }
         String day = input.substring(0,2);
         String month = input.substring(3,5);
         String year = input.substring(6,10);

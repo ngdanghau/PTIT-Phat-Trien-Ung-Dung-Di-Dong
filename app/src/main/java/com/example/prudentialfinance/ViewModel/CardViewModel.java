@@ -22,14 +22,14 @@ import retrofit2.Retrofit;
 public class CardViewModel extends ViewModel {
     private MutableLiveData<Integer> accountCreation;
     private MutableLiveData<Integer> accountUpdate;
-    private MutableLiveData<Integer> accountDelete;
+    private MutableLiveData<String> accountRemoval;
 
-    public MutableLiveData<Integer> getAccountDelete() {
-        if( accountDelete == null)
+    public MutableLiveData<String> getAccountRemoval() {
+        if( accountRemoval == null)
         {
-            accountDelete = new MutableLiveData<>();
+            accountRemoval = new MutableLiveData<>();
         }
-        return accountDelete;
+        return accountRemoval;
     }
 
 
@@ -150,7 +150,10 @@ public class CardViewModel extends ViewModel {
      * send HTTP Request to update account
      * */
     public void deleteAccount(Map<String, String> headers, int id) {
-
+        if( accountRemoval == null)
+        {
+            accountRemoval = new MutableLiveData<>();
+        }
 
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
@@ -182,7 +185,7 @@ public class CardViewModel extends ViewModel {
                     String msg = resource.getMsg();
                     System.out.println(result);
                     System.out.println(msg);
-                    accountDelete.setValue(result);
+                    accountRemoval.setValue(msg);
                 }
             }
 
