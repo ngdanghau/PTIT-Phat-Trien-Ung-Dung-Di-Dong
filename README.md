@@ -255,6 +255,8 @@ Các activity là các màn hình chủ chốt và quan trọng của dự án n
 
 - Tạo mới bằng nút tắt thông minh
 
+- Thêm menu tùy chọn đến các chức năng
+
 ## [**Phase 3: xx-xx-2022 to xx-xx-2022**](#phase-3-xx-xx-2022-to-xx-xx-2022)
 
 

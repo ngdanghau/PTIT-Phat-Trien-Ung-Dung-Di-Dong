@@ -8,6 +8,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.prudentialfinance.Adapter.AccountAdapter;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -41,9 +43,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
     private Spinner accountSpinner;
     private AppCompatSpinner categorySpinner;
     private AppCompatButton buttonSave;
-
-    private Adapter adapter;
-    private Adapter categoryAdapter;
+    private ImageButton buttonGoBack;
 
     private AccountViewModel viewModel;
     private CategoryViewModel categoryViewModel;
@@ -51,7 +51,6 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
     private LiveData<ArrayList<Account>> accounts;
     private LiveData<ArrayList<Category>> categories;
-    private LiveData<Integer> transactionCreation;
 
     private EditText transactionName, transactionAmount, transactionReference,
              transactionDescription, transactionDate;
@@ -89,9 +88,14 @@ public class TransactionCreationActivity extends AppCompatActivity{
         /*Step 3*/
         accounts = viewModel.getAccounts();
         categories = categoryViewModel.getCategories();
-        transactionCreation = transactionViewModel.getTransactionCreation();
+        LiveData<Integer> transactionCreation = transactionViewModel.getTransactionCreation();
         setEvent();
 
+        /*Step 4*/
+        transactionCreation.observe(this, integer -> {
+            NoticeDialog dialog = new NoticeDialog();
+            dialog.showDialog(TransactionCreationActivity.this, R.layout.activity_card_creation_successfully);
+        });
     }
 
 
@@ -107,7 +111,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
         transactionDate = findViewById(R.id.transactionCreationDate);
         transactionDescription = findViewById(R.id.transactionCreationDescription);
 
-        buttonSave = findViewById(R.id.transactionButtonSave);
+        buttonSave = findViewById(R.id.transactionCreationButtonSave);
+        buttonGoBack = findViewById(R.id.transactionCreationButtonGoBack);
     }
 
     private void setViewModel(Map<String, String> headers) {
@@ -139,6 +144,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
         categories.observe(this, this::initializeCategorySpinner);
 
 
+        /*listen button save*/
         buttonSave.setOnClickListener(view->{
             /*Step 1*/
             /*categoryId & account Id is save from 2 functions: initializeAccountSpinner & initializeCategorySpinner*/
@@ -155,6 +161,12 @@ public class TransactionCreationActivity extends AppCompatActivity{
             // kiem tra du lieu dau vao.....
             // #code...
 
+            boolean flag = verifyInput(categoryId, accountId, name, amount, reference, date, type, description);
+            if(!flag)
+            {
+                return;
+            }
+
 
             transactionViewModel.createTransaction(headers,
                     categoryId,
@@ -165,14 +177,10 @@ public class TransactionCreationActivity extends AppCompatActivity{
                     date,
                     type,
                     description);
-
-            transactionCreation.observe(this, new Observer<Integer>() {
-                @Override
-                public void onChanged(Integer integer) {
-                    Toast.makeText(TransactionCreationActivity.this, "Tạo mới giao dịch thành công !", Toast.LENGTH_SHORT).show();
-                }
-            });
         });
+
+        /*listen button goback*/
+        buttonGoBack.setOnClickListener(view->finish());
     }
 
     /**
@@ -181,7 +189,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
      * */
     private void initializeAccountSpinner(ArrayList<Account> accounts)
     {
-        adapter = new AccountAdapter(this, accounts);
+        Adapter adapter = new AccountAdapter(this, accounts);
         accountSpinner.setAdapter((SpinnerAdapter) adapter);
         accountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -214,7 +222,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
             categoriesName.add(e.getName());
         }
 
-        categoryAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,categoriesName);
+        Adapter categoryAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, categoriesName);
         categorySpinner.setAdapter((SpinnerAdapter) categoryAdapter);
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -257,5 +265,32 @@ public class TransactionCreationActivity extends AppCompatActivity{
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH))
                 .show());
+    }
+
+    private boolean verifyInput(String categoryId, String accountId, String name, String amount, String reference, String date, String type, String description)
+    {
+        NoticeDialog notice = new NoticeDialog();
+
+        String[] input = new String[8];
+        input[0] = categoryId;
+        input[1] = accountId;
+        input[2] = name;
+        input[3] = amount;
+        input[4] = reference;
+        input[5] = date;
+        input[6] = type;
+        input[7] = description;
+
+       for(String e: input)
+       {
+           if( e.trim().length() == 0)
+           {
+               notice.showDialogWithContent(this, "Thiếu trường dữ liệu " + e.trim().toString() );
+               return false;
+           }
+       }
+
+
+        return true;
     }
 }
