@@ -78,7 +78,9 @@ public class TransactionViewModel extends ViewModel {
 
                     assert resource != null;
                     int result = resource.getResult();
-
+                    String msg = resource.getMsg();
+                    System.out.println("Transaction View Model - createTransaction - result: " + result);
+                    System.out.println("Transaction View Model - createTransaction - msg: " + msg);
                     transactionCreation.setValue(result);
                 }
                 if(response.errorBody() != null) {

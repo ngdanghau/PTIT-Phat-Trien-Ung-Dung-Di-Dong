@@ -2,6 +2,7 @@ package com.example.prudentialfinance.Activities.Transaction;
 
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
@@ -42,7 +43,7 @@ public class TransactionActivity extends AppCompatActivity {
 
 
     private static Map<String, String > headers = null;
-    private static LiveData<Integer> transactionCreate = null;
+    private static LiveData<Integer> transactionCreation = null;
     private static LiveData<Integer> transactionRemoval = null;
 
     @Override
@@ -55,7 +56,7 @@ public class TransactionActivity extends AppCompatActivity {
         setControl();
         setViewModel(headers);
 
-        transactionCreate = transactionViewModel.getTransactionCreation();
+        transactionCreation = transactionViewModel.getTransactionCreation();
         transactionRemoval = transactionViewModel.getTransactionRemoval();
 
         setEvent();
@@ -89,7 +90,6 @@ public class TransactionActivity extends AppCompatActivity {
 
         /*Step 2*/
         viewModel.getTransactions().observe( this, transactionDetails -> {
-            System.out.println("transaction activity - setViewModel: "+ transactionDetails.size());
             setRecycleView();
         });
     }
@@ -121,7 +121,10 @@ public class TransactionActivity extends AppCompatActivity {
     {
         buttonGoBack.setOnClickListener(view-> finish());
 
-        buttonCreate.setOnClickListener(view -> Toast.makeText(this, "Open transaction create activity", Toast.LENGTH_SHORT).show());
+        buttonCreate.setOnClickListener(view -> {
+            Intent intent = new Intent(TransactionActivity.this, TransactionCreationActivity.class);
+            startActivity(intent);
+        });
     }
 
     /**
@@ -202,7 +205,6 @@ public class TransactionActivity extends AppCompatActivity {
         transactionRemoval.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                System.out.println("transaction activity removal: "+integer);
             }
         });
     }
@@ -233,7 +235,7 @@ public class TransactionActivity extends AppCompatActivity {
                 type,
                 description);
 
-        transactionCreate.observe(this, new Observer<Integer>() {
+        transactionCreation.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 System.out.println("transaction activity create | restore: " +integer);

@@ -1,11 +1,13 @@
 package com.example.prudentialfinance.Model;
 
+import android.widget.Adapter;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Account implements Serializable {
+public class Account implements Serializable{
 
     @SerializedName("id")
     @Expose
