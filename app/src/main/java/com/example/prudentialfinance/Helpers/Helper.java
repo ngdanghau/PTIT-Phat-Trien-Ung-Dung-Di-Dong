@@ -34,12 +34,21 @@ public class Helper {
         try{
             // here set the pattern as you date in string was containing like date/month/year
             SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-            Date d = sdf.parse("20/12/2011");
+            Date d = sdf.parse(input);
             return d;
         }catch(ParseException ex){
             // handle parsing exception if date string was different from the pattern applying into the SimpleDateFormat contructor
             return new Date();
         }
+    }
+
+    public static String convertStringToValidDate(String input)
+    {
+        String day = input.substring(0,2);
+        String month = input.substring(3,5);
+        String year = input.substring(6,10);
+
+        return year + "-" + month + "-" +day;
     }
 
     /*

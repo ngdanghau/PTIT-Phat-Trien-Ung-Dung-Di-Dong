@@ -1,7 +1,6 @@
 package com.example.prudentialfinance.ViewModel;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -9,9 +8,7 @@ import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
-import com.example.prudentialfinance.Container.TransactionGetTotal;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
-import com.example.prudentialfinance.ContainerModel.TransactionTotal;
 
 import org.json.JSONObject;
 
@@ -27,8 +24,6 @@ import retrofit2.Retrofit;
 public class HomeFragmentViewModel extends ViewModel {
     private MutableLiveData<List<TransactionDetail>> transactions;
     private MutableLiveData<Double> totalBalance;
-    private MutableLiveData<Integer> totalIncome;
-    private MutableLiveData<Integer> totalExpense;
 
 
     public void instanciate(Map<String, String> headers)
@@ -50,19 +45,6 @@ public class HomeFragmentViewModel extends ViewModel {
         return totalBalance;
     }
 
-    public MutableLiveData<Integer> getTotalIncome() {
-        return totalIncome;
-    }
-
-    public MutableLiveData<Integer> getTotalExpense() {
-        return totalExpense;
-    }
-
-
-
-    public void setTransactions(MutableLiveData<List<TransactionDetail>> transactions) {
-        this.transactions = transactions;
-    }
 
     /**
      * @author Phong-Kaster
