@@ -116,6 +116,12 @@
     <string name="reset_password_confirm_newpassword">Nhập lại mật khẩu mới.</string>
 
 
+    <!--    GOALS-->
+    <string name="goal_name">Mục tiêu</string>
+    <string name="goal_deadline">15/11/2000</string>
+    <string name="Deleted">Đã xóa</string>
+
+
     <string name="categories">Thể loại</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
     <string name="alertTitle">Oops!</string>
