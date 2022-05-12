@@ -26,21 +26,21 @@
             android:src="@drawable/chevron_left"/>
 
         <com.google.android.material.tabs.TabLayout
-            android:layout_weight="0.98"
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            app:tabMode="fixed"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0.98"
             app:tabGravity="fill"
-            app:tabInlineLabel="true"
-            app:tabIndicatorGravity="stretch"
+            app:tabIndicator="@drawable/indicator"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorColor="@color/backgroundBlack"
             app:tabIndicatorFullWidth="true"
+            app:tabIndicatorGravity="stretch"
+            app:tabInlineLabel="true"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@color/backgroundBlack"
-            app:tabIndicator="@drawable/indicator"
-            app:tabTextColor="@color/colorSupportText"
-            android:layout_marginBottom="10dp">
+            app:tabTextColor="@color/colorSupportText">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
