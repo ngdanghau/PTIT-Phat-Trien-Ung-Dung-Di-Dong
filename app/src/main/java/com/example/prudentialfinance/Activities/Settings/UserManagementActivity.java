@@ -1,5 +1,7 @@
 package com.example.prudentialfinance.Activities.Settings;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -16,7 +18,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.prudentialfinance.Activities.General.AddCategoryActivity;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -119,7 +120,7 @@ public class UserManagementActivity extends AppCompatActivity {
         manager = new LinearLayoutManager(getApplicationContext());
         lvUsers.setLayoutManager(manager);
 
-        adapter = new UserRecycleViewAdapter(getApplicationContext(), data);
+        adapter = new UserRecycleViewAdapter(getApplicationContext(), data, updateUserActivity);
         lvUsers.setAdapter(adapter);
     }
 
@@ -128,7 +129,7 @@ public class UserManagementActivity extends AppCompatActivity {
         addBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddUserActivity.class);
             intent.putExtra("user", new User("member", "", "", "","",0,true, ""));
-            startActivity(intent);
+            updateUserActivity.launch(intent);
         });
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
@@ -218,6 +219,37 @@ public class UserManagementActivity extends AppCompatActivity {
         searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
         closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
-
     }
+
+    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+    ActivityResultLauncher<Intent> updateUserActivity = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == 78) {
+                    // There are no request codes
+                    Intent dataItent = result.getData();
+                    assert dataItent != null;
+                    User dataFromActivity = dataItent.getParcelableExtra("user_entry");
+
+                    boolean isAdd = true;
+                    for (User item: data) {
+                        if(item.getId().equals(dataFromActivity.getId())){
+                            item.setIs_active(dataFromActivity.getIs_active());
+                            item.setLastname(dataFromActivity.getLastname());
+                            item.setAccount_type(dataFromActivity.getAccount_type());
+                            item.setFirstname(dataFromActivity.getFirstname());
+                            item.setAvatar(dataFromActivity.getAvatar());
+                            item.setDate(dataFromActivity.getDate());
+                            item.setEmail(dataFromActivity.getEmail());
+                            isAdd = false;
+                            break;
+                        }
+                    }
+
+                    if(isAdd){
+                        data.add(0, entry);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            });
 }

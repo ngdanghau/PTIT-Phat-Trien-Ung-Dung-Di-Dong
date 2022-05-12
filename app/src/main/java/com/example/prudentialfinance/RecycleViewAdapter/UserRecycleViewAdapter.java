@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,11 +28,12 @@ import java.util.ArrayList;
 public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleViewAdapter.ViewHolder> {
     private ArrayList<User> objects;
     private Context context;
+    private ActivityResultLauncher<Intent> updateUserActivity;
 
-
-    public UserRecycleViewAdapter(Context context, ArrayList<User> objects) {
+    public UserRecycleViewAdapter(Context context, ArrayList<User> objects, ActivityResultLauncher<Intent> updateUserActivity) {
             this.objects = objects;
             this.context = context;
+            this.updateUserActivity = updateUserActivity;
     }
 
     @NonNull
@@ -78,7 +80,7 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
             holder.user_layout.setOnClickListener(view1 -> {
                 Intent intent = new Intent(parentContext, AddUserActivity.class);
                 intent.putExtra("user", entry);
-                parentContext.startActivity(intent);
+                updateUserActivity.launch(intent);
             });
     }
 
