@@ -99,4 +99,22 @@
         <item name="android:paddingStart">40dp</item>
         <item name="android:paddingEnd">40dp</item>
     </style>
+
+    <style name="transaction_information_text_view_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorNormalText</item>
+    </style>
+
+    <style name="transaction_information_text_view_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">20sp</item>
+        <item name="android:paddingBottom">10sp</item>
+        <item name="android:textColor">@color/colorTheme</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Activities.Transaction.TransactionActivity">
 
@@ -46,8 +47,32 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20sp"
-        />
+        android:layout_height="20sp" />
+
+    <TextView
+        android:id="@+id/transactionNotice"
+        android:layout_marginTop="20sp"
+        android:layout_gravity="center"
+        android:text="@string/you_don_have_any_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20sp" />
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_gravity="center"
+        android:id="@+id/searchView"
+        app:queryBackground="@color/transparent"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_input"
+        app:queryHint="Search here..."
+        app:iconifiedByDefault="false"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionRecycleView"

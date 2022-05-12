@@ -159,8 +159,23 @@
     <string name="amount">Nhập số tiền</string>
     <string name="name">Nhập tên hoạt động</string>
     <string name="reference">Nội dung tham chiếu</string>
-    <string name="date">Ngày</string>
+    <string name="date">Ngày:</string>
     <string name="task_destroyer">Pháo chống tăng</string>
+    <string name="category">Thể loại</string>
+    <string name="statement">Tạo sao kê</string>
+    <string name="detail">Chi tiết hoạt động</string>
+    <string name="transaction_name">Tên giao dịch:</string>
+    <string name="cost">Chi phí:</string>
+    <string name="account_name">Tên tài khoản:</string>
+    <string name="category_name_2">Tên thể loại:</string>
+    <string name="reference_2">Nội dung tham chiếu:</string>
+    <string name="edit">Chỉnh sửa</string>
+    <string name="transaction_menu_content">Thêm hoạt động thu nhập, chi tiêu hoặc tạo sao kê</string>
+    <string name="create_income_transaction">Tạo hoạt động thu nhập</string>
+    <string name="create_expense_transaction">Tạo hoạt động chi tiêu</string>
+    <string name="create_statement">Tạo sao kê</string>
+    <string name="you_don_have_any_transaction">Bạn chưa có giao dịch nào !</string>
+    <string name="you_don_have_any_ATM">Bạn chưa có thẻ ATM nào</string>
 
 
 </resources>

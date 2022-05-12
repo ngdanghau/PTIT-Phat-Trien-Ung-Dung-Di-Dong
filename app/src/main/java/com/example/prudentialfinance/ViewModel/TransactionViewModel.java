@@ -23,7 +23,16 @@ public class TransactionViewModel extends ViewModel {
     private final MutableLiveData<Integer> transactionCreation = new MutableLiveData<>();
     private final MutableLiveData<Integer> transactionUpdate = new MutableLiveData<>();
     private final MutableLiveData<Integer> transactionRemoval = new MutableLiveData<>();
+    private final MutableLiveData<String> transactionMessage = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> animation = new MutableLiveData<>();
 
+    public MutableLiveData<Boolean> getAnimation() {
+        return animation;
+    }
+
+    public MutableLiveData<String> getTransactionMessage() {
+        return transactionMessage;
+    }
 
     public MutableLiveData<Integer> getTransactionCreation() {
         return transactionCreation;
@@ -51,6 +60,7 @@ public class TransactionViewModel extends ViewModel {
                                   String type,
                                   String description)
     {
+        animation.setValue(true);
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
@@ -75,13 +85,18 @@ public class TransactionViewModel extends ViewModel {
                 if( response.isSuccessful())
                 {
                     TransactionCreate resource = response.body();
-
+                    animation.setValue(false);
                     assert resource != null;
                     int result = resource.getResult();
                     String msg = resource.getMsg();
+                    int id = resource.getTransaction();
+                    String method = resource.getMethod();
                     System.out.println("Transaction View Model - createTransaction - result: " + result);
                     System.out.println("Transaction View Model - createTransaction - msg: " + msg);
-                    transactionCreation.setValue(result);
+                    System.out.println("Transaction View Model - createTransaction - id: " + id);
+                    System.out.println("Transaction View Model - createTransaction - method: " + method);
+                    transactionMessage.setValue(msg);
+                    transactionCreation.setValue(id);
                 }
                 if(response.errorBody() != null) {
                     try {
@@ -111,6 +126,7 @@ public class TransactionViewModel extends ViewModel {
      * */
     public void eradicateTransaction(Map<String ,String> headers, String id)
     {
+        animation.setValue(true);
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
@@ -126,6 +142,7 @@ public class TransactionViewModel extends ViewModel {
                                    @NonNull Response<TransactionRemove> response) {
                 if(response.isSuccessful())
                 {
+                    animation.setValue(false);
                     TransactionRemove resource = response.body();
 
                     assert resource != null;

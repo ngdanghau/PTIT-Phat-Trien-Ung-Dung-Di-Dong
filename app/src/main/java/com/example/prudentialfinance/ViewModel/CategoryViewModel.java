@@ -6,16 +6,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.CategoryGetAll;
-import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -30,20 +27,30 @@ public class CategoryViewModel extends ViewModel {
         return categories;
     }
 
-    public void instanciate(Map<String, String> headers)
+    /***
+     * @author Phong-Kaster
+     * headers is the header of HTTP Request
+     * type is string number, it tells api which income or expense categories will be retrieved
+     * */
+    public void instanciate(Map<String, String> headers, String type)
     {
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
         /*Step 2*/
-        retrieveCategories(headers, api);
+        retrieveCategories(headers, api, type);
     }
 
-    private void retrieveCategories(Map<String, String> headers, HTTPRequest api) {
+    private void retrieveCategories(Map<String, String> headers, HTTPRequest api, String type) {
         if( categories == null)
         {
             categories = new MutableLiveData<>();
+        }
+
+        if( type.length() < 0)
+        {
+            type = "1";
         }
 
         Map<String, String> options = new HashMap<>();
@@ -53,8 +60,11 @@ public class CategoryViewModel extends ViewModel {
         options.put("order[column]","");
         options.put("order[dir]","desc");
 
+        Call<CategoryGetAll> container = type.equals("1") ?
+                api.retrieveInflowCategories(headers, options) :
+                api.retrieveOutflowCategories(headers,options);
 
-        Call<CategoryGetAll> container = api.retrieveCategories(headers,options);
+
 
         container.enqueue(new Callback<CategoryGetAll>() {
             @Override
