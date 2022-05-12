@@ -26,7 +26,7 @@
 - [**Post Script**](#post-script)
 - [**Timeline**](#timeline)
   - [**Phase 1: 28-04-2022 to 03-05-2022**](#phase-1-28-04-2022-to-03-05-2022)
-  - [**Phase 2: 03-05-2022 to xx-xx-2022**](#phase-2-03-05-2022-to-xx-xx-2022)
+  - [**Phase 2: 03-05-2022 to 10-05-2022**](#phase-2-03-05-2022-to-10-05-2022)
   - [**Phase 3: xx-xx-2022 to xx-xx-2022**](#phase-3-xx-xx-2022-to-xx-xx-2022)
 - [**Our Team**](#our-team)
 - [**Made with 💘 and JAVA <img src="https://www.vectorlogo.zone/logos/java/java-horizontal.svg" width="60">**](#made-with--and-java-)
@@ -239,7 +239,7 @@ Các activity là các màn hình chủ chốt và quan trọng của dự án n
 
 - Dựng màn hình chính
 
-## [**Phase 2: 03-05-2022 to xx-xx-2022**](#phase-2-xx-xx-2022-to-xx-xx-2022)
+## [**Phase 2: 03-05-2022 to 10-05-2022**](#phase-2-03-05-2022-to-10-05-2022)
 
 - Tạo thanh điều hướng bằng BottomAppBar kết hợp BottomNavigationView
 
@@ -248,6 +248,14 @@ Các activity là các màn hình chủ chốt và quan trọng của dự án n
 - Kéo từ phải qua trái sẽ xóa thẻ ATM
 
 - Hiển thị thông báo mỗi khi đăng nhập ở thanh quick view của thiết bị di động
+
+- Cử chỉ vuốt trái | phải để xóa trong danh sách 
+
+- Chế độ ban đêm
+
+- Tạo mới bằng nút tắt thông minh
+
+- Thêm menu tùy chọn đến các chức năng
 
 ## [**Phase 3: xx-xx-2022 to xx-xx-2022**](#phase-3-xx-xx-2022-to-xx-xx-2022)
 

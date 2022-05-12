@@ -1,7 +1,6 @@
 package com.example.prudentialfinance.ViewModel;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,6 +12,7 @@ import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,34 +23,28 @@ import retrofit2.Retrofit;
 
 public class HomeFragmentViewModel extends ViewModel {
     private MutableLiveData<List<TransactionDetail>> transactions;
-    private MutableLiveData<Double> totalBalace;
+    private MutableLiveData<Double> totalBalance;
 
-    public MutableLiveData<Double> getTotalBalace(Map<String, String> headers, String date) {
-        if( totalBalace == null)
-        {
-            totalBalace = new MutableLiveData<Double>();
-            retrieveTotalBalance(headers, date);
-        }
-        return totalBalace;
+
+    public void instanciate(Map<String, String> headers)
+    {
+        /*Step 1*/
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        /*Step 2*/
+        retrieveDetailTransactions(headers, api);
+        retrieveTotalBalance(headers, api);
     }
 
-    public void setTotalBalace(MutableLiveData<Double> totalBalace) {
-        this.totalBalace = totalBalace;
-    }
-
-    public LiveData<List<TransactionDetail>> getTransactions(Map<String, String> headers) {
-        if( transactions == null )
-        {
-            transactions = new MutableLiveData<>();
-            retrieveDetailTransactions(headers);
-        }
+    public MutableLiveData<List<TransactionDetail>> getTransactions() {
         return transactions;
     }
 
-
-    public void setTransactions(MutableLiveData<List<TransactionDetail>> transactions) {
-        this.transactions = transactions;
+    public MutableLiveData<Double> getTotalBalance() {
+        return totalBalance;
     }
+
 
     /**
      * @author Phong-Kaster
@@ -59,15 +53,23 @@ public class HomeFragmentViewModel extends ViewModel {
      *
      * @param headers headers is used to attach to HTTP Request headers
      * */
-    public void retrieveDetailTransactions(Map<String, String> headers)
+    public void retrieveDetailTransactions(Map<String, String> headers, HTTPRequest api)
     {
-        /*Step 1*/
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
-
-
+        if( transactions == null)
+        {
+            transactions = new MutableLiveData<>();
+        }
         /*Step 2*/
-        Call<HomeLatestTransactions> container = api.homeLatestTransactions(headers);
+
+        Map<String, String> options = new HashMap<>();
+        options.put("start", "0");
+        options.put("length", "10");
+        options.put("draw", "1");
+        options.put("order[column]","");
+        options.put("order[dir]","desc");
+        options.put("search","");
+
+        Call<HomeLatestTransactions> container = api.homeLatestTransactions(headers, options);
 
 
         /*Step 3*/
@@ -80,8 +82,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
                     assert resource != null;
                     List<TransactionDetail> array = resource.getData();
-
-                    transactions.setValue(array);
+                    transactions.postValue(array);
                 }
                 if(response.errorBody() != null) {
                     try {
@@ -100,6 +101,8 @@ public class HomeFragmentViewModel extends ViewModel {
         });
     }
 
+
+
     /**
      * @author Phong-Kaster
      *
@@ -107,14 +110,14 @@ public class HomeFragmentViewModel extends ViewModel {
      *
      * @param headers headers is used to attach to HTTP Request headers
      * */
-    public void retrieveTotalBalance(Map<String, String> headers,String date)
+    public void retrieveTotalBalance(Map<String, String> headers, HTTPRequest api)
     {
-        /*Step 1*/
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
-
+        if( totalBalance == null)
+        {
+            totalBalance = new MutableLiveData<>();
+        }
         /*Step 2*/
-        Call<ReportTotalBalance> container = api.reportTotalBalace(headers, date);
+        Call<ReportTotalBalance> container = api.reportTotalBalace(headers, "month");
 
         /*Step 3*/
         container.enqueue(new Callback<ReportTotalBalance>() {
@@ -124,7 +127,7 @@ public class HomeFragmentViewModel extends ViewModel {
                 {
                     ReportTotalBalance resource = response.body();
                     assert resource != null;
-                    totalBalace.setValue(resource.getWeek());
+                    totalBalance.setValue(resource.getMonth());
                 }
                 if(response.errorBody() != null) {
                     try {

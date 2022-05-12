@@ -6,6 +6,10 @@ import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
 import com.example.prudentialfinance.Container.GoalGetAll;
+import com.example.prudentialfinance.Container.CategoryAdd;
+import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
+import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
+import com.example.prudentialfinance.Container.Report.TransactionByCategoryResponse;
 import com.example.prudentialfinance.Container.Settings.AvatarUpload;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 import com.example.prudentialfinance.Container.Settings.EmailSettingsResponse;
@@ -14,6 +18,11 @@ import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
 import com.example.prudentialfinance.Model.Goal;
+import com.example.prudentialfinance.Container.TransactionCreate;
+import com.example.prudentialfinance.Container.TransactionGetTotal;
+import com.example.prudentialfinance.Container.TransactionRemove;
+import com.example.prudentialfinance.Container.Users.UserAdd;
+import com.example.prudentialfinance.Container.Users.UserGetAll;
 
 import java.util.Map;
 
@@ -28,6 +37,7 @@ import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -178,7 +188,8 @@ public interface HTTPRequest {
 
     /***************************HOME*********************************/
     @GET("api/home/latestall")
-    Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers);
+    Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers,
+                                                        @QueryMap Map<String, String> parameters);
 
 
 
@@ -209,8 +220,30 @@ public interface HTTPRequest {
                                                 @Query("order[column]") String column,
                                                 @Query("order[dir]") String dir);
 
+    @GET("api/incomecategories")
+    Call<CategoryGetAll> retrieveCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters);
+
     @DELETE("api/incomecategories/{id}")
-    Call<AccountDelete> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+    Call<CategoryAdd> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/incomecategories")
+    Call<CategoryAdd> addNewIncomeCategory(@HeaderMap Map<String, String> headers,
+                                           @Field("name") String name,
+                                           @Field("description") String description,
+                                           @Field("color") String color);
+
+    @FormUrlEncoded
+    @PUT("api/incomecategories/{id}")
+    Call<CategoryAdd> editIncomeCategory(@HeaderMap Map<String, String> headers,
+                                         @Path("id") int id,
+                                         @Field("name") String name,
+                                         @Field("description") String description,
+                                         @Field("color") String color);
+
+
+
+
 
     @GET("api/expensecategories")
     Call<CategoryGetAll> searchExpenseCategories(@HeaderMap Map<String, String> headers,
@@ -219,13 +252,110 @@ public interface HTTPRequest {
                                                  @Query("length") int length,
                                                  @Query("order[column]") String column,
                                                  @Query("order[dir]") String dir);
-
     @DELETE("api/expensecategories/{id}")
-    Call<AccountDelete> removeExpenseCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+    Call<CategoryAdd> removeExpenseCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/expensecategories")
+    Call<CategoryAdd> addNewExpenseCategory(@HeaderMap Map<String, String> headers,
+                                            @Field("name") String name,
+                                            @Field("description") String description,
+                                            @Field("color") String color);
+
+    @FormUrlEncoded
+    @PUT("api/expensecategories/{id}")
+    Call<CategoryAdd> editExpenseCategory(@HeaderMap Map<String, String> headers,
+                                          @Path("id") int id,
+                                          @Field("name") String name,
+                                          @Field("description") String description,
+                                          @Field("color") String color);
+
+
+    /***************************USER***************************/
+    @GET("api/users")
+    Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
+                                             @Query("search") String search,
+                                             @Query("start") int start,
+                                             @Query("length") int length,
+                                             @Query("order[column]") String column,
+                                             @Query("order[dir]") String dir);
+    @DELETE("api/users/{id}")
+    Call<UserAdd> removeUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @PATCH("api/users/{id}")
+    Call<UserAdd> restoreUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/users/new")
+    Call<UserAdd> addUser(@HeaderMap Map<String, String> headers,
+                          @Field("firstname") String firstname,
+                          @Field("lastname") String lastname,
+                          @Field("account_type") String account_type,
+                          @Field("is_active") boolean is_active
+    );
+
+    @FormUrlEncoded
+    @PUT("api/users/{id}")
+    Call<UserAdd> updateUser(@HeaderMap Map<String, String> headers,
+                             @Path("id") int id,
+                             @Field("firstname") String firstname,
+                             @Field("lastname") String lastname,
+                             @Field("account_type") String account_type,
+                             @Field("is_active") boolean is_active
+    );
+
+
 
     /***************************REPORT***************************/
-    @GET("/api/report/totalBalance")
+    @GET("api/report/totalBalance")
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
 
+    @GET("/api/home/incomevsexpense")
+    Call<IncomeVsExpenseResponse> incomeExpenseByDate(@HeaderMap Map<String, String> headers,
+                                                      @Query("type") String type,
+                                                      @Query("date") String date);
+
+    @GET("/api/home/category/income")
+    Call<CategoryReportResponse> incomeByDate(@HeaderMap Map<String, String> headers,
+                                              @Query("date") String date);
+
+    @GET("/api/home/category/expense")
+    Call<CategoryReportResponse> expenseByDate(@HeaderMap Map<String, String> headers,
+                                               @Query("date") String date);
+
+    @GET("/api/report/transactions")
+    Call<TransactionByCategoryResponse> getTransactionByCategory(@HeaderMap Map<String, String> headers,
+                                                                 @Query("search") String search,
+                                                                 @Query("start") int start,
+                                                                 @Query("length") int length,
+                                                                 @Query("order[column]") String column,
+                                                                 @Query("order[dir]") String dir,
+                                                                 @Query("fromdate") String fromdate,
+                                                                 @Query("todate") String todate,
+                                                                 @Query("category_id") int category_id);
+
+
+    /***************************TRANSACTIONS***************************/
+    @GET("api/transactions/income/total")
+    Call<TransactionGetTotal> transactionIncomeTotal(@HeaderMap Map<String, String> headers);
+
+    @GET("api/transactions/expense/total")
+    Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
+
+    @FormUrlEncoded
+    @POST("api/transactions/income")
+    Call<TransactionCreate> transactionCreate(@HeaderMap Map<String, String> headers,
+                                              @Field("category_id") String categoryId,
+                                              @Field("account_id") String accountId,
+                                              @Field("name") String name,
+                                              @Field("amount") String amount,
+                                              @Field("reference") String reference,
+                                              @Field("transactiondate") String transactionDate,
+                                              @Field("type") String type,
+                                              @Field("description") String description);
+
+    @DELETE("api/transactions/{id}")
+    Call<TransactionRemove> transactionRemove(@HeaderMap Map<String, String> headers,
+                                              @Path("id") String id);
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
+import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Container.CategoryGetAll;
 
 import java.util.Map;
@@ -16,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class CategoriesExpenseViewModel  extends ViewModel {
+public class CategoriesExpenseViewModel extends ViewModel {
 
     private MutableLiveData<CategoryGetAll> object;
     private Retrofit service;
@@ -70,6 +71,16 @@ public class CategoriesExpenseViewModel  extends ViewModel {
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        api.removeExpenseCategories(headers, id);
+        Call<CategoryAdd> container = api.removeExpenseCategories(headers, id);
+        container.enqueue(new Callback<CategoryAdd>() {
+            @Override
+            public void onResponse(@NonNull Call<CategoryAdd> call, @NonNull Response<CategoryAdd> response) {
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<CategoryAdd> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 }

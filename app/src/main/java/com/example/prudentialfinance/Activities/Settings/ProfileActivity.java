@@ -100,6 +100,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+
+
         viewModel.getObject().observe(this, object -> {
             if(object == null){
                 alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
@@ -186,7 +188,6 @@ public class ProfileActivity extends AppCompatActivity {
         String token = global.getAccessToken();
 
         viewModel.uploadAvatar(token, picturePath);
-
     }
 
     private void loadImgToElement(String img, boolean isUpload){
@@ -194,6 +195,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .get()
                 .load(img)
                 .fit()
+                .placeholder(R.drawable.someone)
+                .error(R.drawable.someone)
                 .transform(Helper.getRoundedTransformationBuilder())
                 .into(ivAvatar,  new com.squareup.picasso.Callback() {
                     @Override

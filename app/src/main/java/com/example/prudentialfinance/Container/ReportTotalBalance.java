@@ -7,9 +7,9 @@ public class ReportTotalBalance {
     @SerializedName("result")
     @Expose
     private Integer result;
-    @SerializedName("week")
+    @SerializedName("month")
     @Expose
-    private Double week;
+    private Double month;
     @SerializedName("method")
     @Expose
     private String method;
@@ -22,12 +22,12 @@ public class ReportTotalBalance {
         this.result = result;
     }
 
-    public Double getWeek() {
-        return week;
+    public Double getMonth() {
+        return month;
     }
 
-    public void setWeek(Double week) {
-        this.week = week;
+    public void setMonth(Double month) {
+        this.month = month;
     }
 
     public String getMethod() {

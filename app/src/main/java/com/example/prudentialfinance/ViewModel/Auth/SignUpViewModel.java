@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.ViewModel;
+package com.example.prudentialfinance.ViewModel.Auth;
 
 
 import androidx.annotation.NonNull;

@@ -114,6 +114,8 @@
     <string name="reset_password_description">Hãy tạo mật khẩu mới và xác nhận mật khẩu mới để đăng nhập..</string>
     <string name="reset_password_newpassword">Nhập mật khẩu mới.</string>
     <string name="reset_password_confirm_newpassword">Nhập lại mật khẩu mới.</string>
+    <string name="recent_transactions">Giao dịch gần đây</string>
+    <string name="menu">Menu</string>
 
 
     <!--    GOALS-->
@@ -125,8 +127,46 @@
     <string name="categories">Thể loại</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
     <string name="alertTitle">Oops!</string>
+    <string name="alertConfirm">Bạn có chắc không? Dữ liệu đã xoá không thể khôi phục!</string>
+    <string name="alertWarning">Warning!</string>
+
     <string name="edit_category">Sửa thể loại</string>
     <string name="add_category">Thêm thể loại</string>
+
+    <string name="category_name">Tên thể loại</string>
+    <string name="category_desc">Mô tả</string>
+    <string name="category_color">Màu sắc</string>
+    <string name="cancel">Huỷ</string>
+    <string name="colorPicker">Chọn màu sắc</string>
+
+    <string name="user_management">Quản lý người dùng</string>
+    <string name="add_user">Thêm người dùng</string>
+    <string name="edit_user">Sửa người dùng</string>
+    <string name="account_type">Loại tài khoản</string>
+    <string name="active">Kích hoạt tài khoản</string>
+
+    <string name="reportIncome">Báo cáo thu nhập</string>
+    <string name="reportExpense">Báo cáo chi tiêu</string>
+    <string name="report">Báo cáo</string>
+    <string name="turn_on_off_dark_mode">Bật/tắt chế độ ban đêm</string>
+    <string name="turn_on_dark_mode">Bật chế độ ban đêm</string>
+    <string name="turn_off_dark_mode">Tắt chế độ dark mode</string>
+
+    <string name="month">Tháng</string>
+    <string name="year">Năm</string>
+    <string name="week">Tuần</string>
+
+    <string name="amount_value">x5</string>
+    <string name="money_value">1,000,000đ</string>
+
+    <string name="date_value">Chủ Nhật, Th5 8</string>
+    <string name="create_transaction">Thêm giao dịch</string>
+    <string name="prudential_bank_credit_card">Credit Card</string>
+    <string name="amount">Nhập số tiền</string>
+    <string name="name">Nhập tên hoạt động</string>
+    <string name="reference">Nội dung tham chiếu</string>
+    <string name="date">Ngày</string>
+    <string name="task_destroyer">Pháo chống tăng</string>
 
 
 </resources>

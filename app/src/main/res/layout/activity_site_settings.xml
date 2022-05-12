@@ -223,7 +223,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/spinner_bg"
-                    android:layout_height="60dp" />
+                    android:layout_height="50dp" />
 
 
             </LinearLayout>

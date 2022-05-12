@@ -1,5 +1,7 @@
 package com.example.prudentialfinance.RecycleViewAdapter;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +15,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Activities.BudgetsActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
 import com.example.prudentialfinance.Activities.General.GoalActivity;
+import com.example.prudentialfinance.Activities.Settings.DarkModeActivity;
+import com.example.prudentialfinance.Activities.Settings.UserManagementActivity;
 import com.example.prudentialfinance.Model.Setting;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.Activities.Settings.EmailSettingsActivity;
@@ -74,6 +80,9 @@ public class SettingRecycleViewAdapter extends RecyclerView.Adapter<SettingRecyc
             Context parentContext = holder.parent.getContext();
             holder.elementSettingLayout.setOnClickListener(view1 -> {
                 switch (entry.getId()) {
+                    case "dark_mode":
+                        parentContext.startActivity(new Intent(parentContext, DarkModeActivity.class));
+                        break;
                     case "personal_information":
                         parentContext.startActivity(new Intent(parentContext, ProfileActivity.class));
                         break;
@@ -92,10 +101,17 @@ public class SettingRecycleViewAdapter extends RecyclerView.Adapter<SettingRecyc
                     case "goals":
                         parentContext.startActivity(new Intent(parentContext, GoalActivity.class));
                         break;
+                    case "user_management":
+                        parentContext.startActivity(new Intent(parentContext, UserManagementActivity.class));
+                        break;
+                    case "budgets":
+                        parentContext.startActivity(new Intent(parentContext, BudgetsActivity.class));
+                        break;
                 }
             });
         }
     }
+
 
     @Override
     public int getItemCount() {
