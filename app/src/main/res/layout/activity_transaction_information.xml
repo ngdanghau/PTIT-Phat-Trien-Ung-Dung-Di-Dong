@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.Transaction.TransactionInformationActivity">
+
+    <TextView
+        android:id="@+id/transactionInforTitle"
+        style="@style/text_view_color_theme_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="38dp"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="@string/detail"
+        android:textSize="24sp"
+        tools:ignore="RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/transactionInforAvatar"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_below="@+id/transactionInforTitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="27dp"
+        android:src="@drawable/pop_up" />
+
+    <ScrollView
+        android:paddingTop="20sp"
+        android:layout_below="@+id/transactionInforAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/transactionInforNameTitle"
+                style="@style/transaction_information_text_view_title"
+                android:text="@string/transaction_name"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/transactionInforNameContent"
+                style="@style/transaction_information_text_view_content"
+                android:layout_toEndOf="@id/transactionInforNameTitle"
+                android:text="@string/introduce1" />
+
+            <TextView
+                android:id="@+id/transactionInforDateTitle"
+                android:layout_below="@id/transactionInforNameTitle"
+                style="@style/transaction_information_text_view_title"
+                android:text="@string/date"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/transactionInforDateContent"
+                style="@style/transaction_information_text_view_content"
+                android:layout_below="@+id/transactionInforNameContent"
+                android:layout_toEndOf="@id/transactionInforDateTitle"
+                android:text="@string/date_value"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/transactionInforAmountTitle"
+                android:layout_below="@+id/transactionInforDateTitle"
+                style="@style/transaction_information_text_view_title"
+                android:text="@string/cost" />
+
+            <TextView
+                android:id="@+id/transactionInforAmountContent"
+                android:layout_toEndOf="@+id/transactionInforAmountTitle"
+                android:layout_below="@id/transactionInforDateContent"
+                android:text="@string/income_example"
+                style="@style/transaction_information_text_view_content"/>
+
+            <TextView
+                android:id="@+id/transactionInforAccountTitle"
+                android:layout_below="@id/transactionInforAmountTitle"
+                android:text="@string/account_name"
+                style="@style/transaction_information_text_view_title"/>
+
+            <TextView
+                android:id="@+id/transactionInforAccountContent"
+                android:text="@string/app_name"
+                android:layout_below="@id/transactionInforAmountContent"
+                android:layout_toEndOf="@id/transactionInforAccountTitle"
+                style="@style/transaction_information_text_view_content" />
+
+            <TextView
+                android:id="@+id/transactionInforCategoryTitle"
+                android:layout_below="@id/transactionInforAccountTitle"
+                style="@style/transaction_information_text_view_title"
+                android:text="@string/category_name_2" />
+
+            <TextView
+                android:id="@+id/transactionInforCategoryContent"
+                style="@style/transaction_information_text_view_content"
+                android:layout_below="@id/transactionInforAccountContent"
+                android:layout_toEndOf="@id/transactionInforCategoryTitle"
+                android:text="@string/task_destroyer" />
+
+            <TextView
+                android:id="@+id/transactionInforReferenceTitle"
+                android:layout_below="@id/transactionInforCategoryTitle"
+                style="@style/transaction_information_text_view_title"
+                android:text="@string/reference_2" />
+
+            <TextView
+                android:id="@+id/transactionInforReferenceContent"
+                style="@style/transaction_information_text_view_content"
+                android:layout_below="@id/transactionInforCategoryContent"
+                android:layout_toEndOf="@id/transactionInforReferenceTitle"
+                android:text="@string/app_name" />
+
+            <TextView
+                android:id="@+id/transactionInforDescription"
+                style="@style/transaction_information_text_view_title"
+                android:layout_below="@id/transactionInforReferenceTitle"
+                android:text="@string/description" />
+
+            <TextView
+                android:id="@+id/transactionInforDescriptionContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/transactionInforDescription"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:text="@string/introduce2"
+                android:textColor="@color/colorNormalText"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/transactionInforButtonEdit"
+        style="@style/card_fragment_button_style"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="49dp"
+        android:text="@string/edit" />
+
+
+</RelativeLayout>

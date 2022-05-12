@@ -4,7 +4,9 @@ import static com.example.prudentialfinance.Helpers.Helper.convertStringToDate;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +16,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Activities.Transaction.TransactionInformationActivity;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.R;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,13 @@ public class TransactionRecycleViewAdapter extends RecyclerView.Adapter<Transact
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setObjects(List<TransactionDetail> objects) {
+        this.objects.clear();
+        this.objects.addAll(objects);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public TransactionRecycleViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,10 +56,9 @@ public class TransactionRecycleViewAdapter extends RecyclerView.Adapter<Transact
                 .from(parent.getContext())
                 .inflate(R.layout.fragment_home_transaction_element, parent, false);
 
-        ViewHolder holder = new ViewHolder(view);
-
-        return holder;
+        return new ViewHolder(view);
     }
+
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -79,16 +90,19 @@ public class TransactionRecycleViewAdapter extends RecyclerView.Adapter<Transact
         {
             holder.amount.setTextColor(context.getColor(R.color.colorRed));
         }
-
-
         holder.date.setText(transactionDate);
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, transactionName, Toast.LENGTH_SHORT).show();
-            }
-        });
 
+
+        /*Step 4*/
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("detail", detail);
+        bundle.putParcelable("account", detail.getAccount());
+
+        holder.parentLayout.setOnClickListener(view ->{
+            Intent intent = new Intent(context, TransactionInformationActivity.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -96,7 +110,7 @@ public class TransactionRecycleViewAdapter extends RecyclerView.Adapter<Transact
         return objects.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder
     {
         TextView name;
         TextView category;

@@ -8,27 +8,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.prudentialfinance.Activities.BudgetsActivity;
+import com.example.prudentialfinance.Activities.General.CategoriesActivity;
+import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Transaction.TransactionActivity;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,32 +45,48 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
-    private static final String TAG = "HomeFragment";
     private ImageButton buttonTransaction;
+    private LoadingDialog loadingDialog;
 
-    private ImageButton buttonIncomeStatistics;
-    private ImageButton buttonExpenseStatistics;
+    private ImageButton buttonCategory;
+    private ImageButton buttonBudget;
 
     private ImageButton buttonButtonGoal;
     private RecyclerView recycleView;
 
     private HomeFragmentViewModel viewModel;
-    private TextView name, remaining, totalIncome, totalExpense, seeAll;
+    private TextView name, remaining, seeAll;
     private CircleImageView avatar;
 
-    private User AuthUser;
+    private RelativeLayout transactionsContainer;
+    private TextView notice;
 
+    private User AuthUser;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private TransactionRecycleViewAdapter adapter;
+
+
+
+    private List<TransactionDetail> objects = new ArrayList<>();
     public HomeFragment() {
         // Required empty public constructor
     }
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+
+
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,25 +112,64 @@ public class HomeFragment extends Fragment {
         setViewModel(view, headers);
         setEvent();
         setScreen();
+        setRecycleView(HomeFragment.this);
 
-        viewModel.getTransactions().observe((LifecycleOwner) this, transactionDetails -> {
-            setRecycleView(this);
+        viewModel.getAnimation().observe(getViewLifecycleOwner(), aBoolean -> {
+            if( aBoolean )
+            {
+                loadingDialog.startLoadingDialog();
+            }
+            else
+            {
+                loadingDialog.dismissDialog();
+            }
         });
 
 
+
+        viewModel.getTransactions().observe(getViewLifecycleOwner(), transactionDetails -> {
+            if( transactionDetails.size() > 0)
+            {
+                objects.clear();
+                objects.addAll(transactionDetails);
+                adapter.notifyDataSetChanged();
+
+
+                notice.setVisibility(View.GONE);
+                transactionsContainer.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                notice.setVisibility(View.VISIBLE);
+                transactionsContainer.setVisibility(View.GONE);
+            }
+        });
+
+
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            viewModel.instanciate(headers);
+            objects.clear();
+            adapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
         return view;
     }
-
 
     /**
      * @author Phong-Kaster
      * set up button and recycle view to listen event
      * */
     private void setControl(View view) {
-        buttonTransaction       = view.findViewById(R.id.fragmentHomeButtonTransactions);
-        buttonIncomeStatistics  = view.findViewById(R.id.fragmentHomeButtonIncomeStatistics);
 
-        buttonExpenseStatistics = view.findViewById(R.id.fragmentHomeButtonExpenseStatistics);
+        loadingDialog = new LoadingDialog(getActivity());
+        swipeRefreshLayout = view.findViewById(R.id.homeFragmentSwipeRefreshLayout);
+
+        buttonTransaction       = view.findViewById(R.id.fragmentHomeButtonTransactions);
+        buttonCategory  = view.findViewById(R.id.fragmentHomeButtonCategory);
+
+        buttonBudget = view.findViewById(R.id.fragmentHomeButtonBudget);
         buttonButtonGoal        = view.findViewById(R.id.fragmentHomeButtonGoal);
 
         recycleView  = view.findViewById(R.id.fragmentHomeRecentTransactions);
@@ -119,6 +179,9 @@ public class HomeFragment extends Fragment {
         remaining = view.findViewById(R.id.fragmentHomeAuthRemaining);
 
         seeAll = view.findViewById(R.id.homeFragmentSeeAll);
+        notice = view.findViewById(R.id.homeFragmentNotice);
+
+        transactionsContainer = view.findViewById(R.id.homeFragmentTransactionLayout);
     }
 
     /**
@@ -142,14 +205,9 @@ public class HomeFragment extends Fragment {
         viewModel.instanciate(headers);
 
         /*Step 2*/
-//        viewModel.getTransactions().observe((LifecycleOwner) context, transactionDetails -> {
-//            setRecycleView(context);
-//        });
-
-        /*Step 3*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {
             String value = Helper.formatNumber(aDouble);
-            remaining.setText( value  );
+            remaining.setText( value + " VND" );
         });
     }
 
@@ -158,10 +216,8 @@ public class HomeFragment extends Fragment {
      * @author Phong-Kaster
      * @param fragment is the current context of the fragment  */
     private void setRecycleView(HomeFragment fragment) {
-
-        List<TransactionDetail> latestTransactions = viewModel.getTransactions().getValue();
         /*Step 1*/
-        TransactionRecycleViewAdapter adapter = new TransactionRecycleViewAdapter(fragment.getContext(), latestTransactions);
+        adapter = new TransactionRecycleViewAdapter(fragment.getContext(), objects);
         recycleView.setAdapter(adapter);
 
 
@@ -176,15 +232,25 @@ public class HomeFragment extends Fragment {
      * */
     private void setEvent() {
 
-
-        buttonTransaction.setOnClickListener(view -> {
-            Toast.makeText(getContext(), "Transaction", Toast.LENGTH_SHORT).show();
-
-
-
+        buttonTransaction.setOnClickListener(view ->{
+            Intent intent = new Intent(getActivity(), TransactionActivity.class);
+            startActivity(intent);
         });
 
-        buttonIncomeStatistics.setOnClickListener(view -> Toast.makeText(getContext(), "Income Statistics", Toast.LENGTH_LONG).show());
+        buttonCategory.setOnClickListener(view ->{
+            Intent intent = new Intent(getActivity(), CategoriesActivity.class);
+            startActivity(intent);
+        });
+
+        buttonButtonGoal.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), GoalActivity.class);
+            startActivity(intent);
+        });
+
+        buttonBudget.setOnClickListener(view->{
+            Intent intent = new Intent(getActivity(), BudgetsActivity.class);
+            startActivity(intent);
+        });
 
         avatar.setOnClickListener(view -> {
             SettingsFragment fragment = new SettingsFragment();
@@ -195,6 +261,8 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), TransactionActivity.class);
             startActivity(intent);
         });
+
+
     }
 
     /**

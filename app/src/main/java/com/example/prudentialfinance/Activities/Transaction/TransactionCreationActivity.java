@@ -17,18 +17,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.prudentialfinance.Adapter.AccountAdapter;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Helpers.NoticeDialog;
+import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.AccountViewModel;
 import com.example.prudentialfinance.ViewModel.CategoryViewModel;
+import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.ViewModel.TransactionViewModel;
 
 import java.text.SimpleDateFormat;
@@ -49,6 +51,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
     private CategoryViewModel categoryViewModel;
     private TransactionViewModel transactionViewModel;
 
+    private LoadingDialog loadingDialog;
+
     private LiveData<ArrayList<Account>> accounts;
     private LiveData<ArrayList<Category>> categories;
 
@@ -67,6 +71,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
     private String type;
     private String description;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +80,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
         /*this command belows prevent keyboard from popping up automatically*/
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-
+        type = getIntent().getStringExtra("type").length() > 0 ? getIntent().getStringExtra("type").trim() : "1";
 
         /*Step 1*/
         headers = ((GlobalVariable)getApplication()).getHeaders();
@@ -85,21 +90,45 @@ public class TransactionCreationActivity extends AppCompatActivity{
         setControl();
         setViewModel(headers);
 
+
         /*Step 3*/
         accounts = viewModel.getAccounts();
         categories = categoryViewModel.getCategories();
         LiveData<Integer> transactionCreation = transactionViewModel.getTransactionCreation();
         setEvent();
 
+
         /*Step 4*/
         transactionCreation.observe(this, integer -> {
-            NoticeDialog dialog = new NoticeDialog();
-            dialog.showDialog(TransactionCreationActivity.this, R.layout.activity_card_creation_successfully);
+            if( integer > 0)
+            {
+                NoticeDialog dialog = new NoticeDialog();
+                dialog.showDialog(TransactionCreationActivity.this, R.layout.activity_card_creation_successfully);
+            }
+            else
+            {
+                NoticeDialog dialog = new NoticeDialog();
+                dialog.showDialogWithContent(this, transactionViewModel.getTransactionMessage().getValue() );
+            }
+        });
+
+        transactionViewModel.getAnimation().observe(this, aBoolean -> {
+            if( aBoolean )
+            {
+                loadingDialog.startLoadingDialog();
+            }
+            else
+            {
+                loadingDialog.dismissDialog();
+            }
         });
     }
 
 
     private void setControl() {
+
+        loadingDialog = new LoadingDialog(TransactionCreationActivity.this);
+
         accountSpinner = findViewById(R.id.transactionCreationAccountSpinner);
         categorySpinner = findViewById(R.id.transactionCreationCategorySpinner);
 
@@ -122,10 +151,14 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
         /*Step 2*/
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-        categoryViewModel.instanciate(headers);
+        categoryViewModel.instanciate(headers, type);
 
         /*Step 3*/
         transactionViewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
+
+        /*Step 4*/
+        HomeFragmentViewModel homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        homeFragmentViewModel.instanciate(headers);
     }
 
     /**
@@ -156,17 +189,6 @@ public class TransactionCreationActivity extends AppCompatActivity{
             date = Helper.convertStringToValidDate( input);
 
             description = transactionDescription.getText().toString();
-            type = "1";
-
-            // kiem tra du lieu dau vao.....
-            // #code...
-
-            boolean flag = verifyInput(categoryId, accountId, name, amount, reference, date, type, description);
-            if(!flag)
-            {
-                return;
-            }
-
 
             transactionViewModel.createTransaction(headers,
                     categoryId,
@@ -180,7 +202,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
         });
 
         /*listen button goback*/
-        buttonGoBack.setOnClickListener(view->finish());
+        buttonGoBack.setOnClickListener(view-> finish());
     }
 
     /**
@@ -189,8 +211,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
      * */
     private void initializeAccountSpinner(ArrayList<Account> accounts)
     {
-        Adapter adapter = new AccountAdapter(this, accounts);
-        accountSpinner.setAdapter((SpinnerAdapter) adapter);
+        SpinnerAdapter adapter = new AccountAdapter(this, accounts);
+        accountSpinner.setAdapter(adapter);
         accountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -222,15 +244,14 @@ public class TransactionCreationActivity extends AppCompatActivity{
             categoriesName.add(e.getName());
         }
 
-        Adapter categoryAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, categoriesName);
-        categorySpinner.setAdapter((SpinnerAdapter) categoryAdapter);
+        SpinnerAdapter categoryAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, categoriesName);
+        categorySpinner.setAdapter(categoryAdapter);
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 /*get category id which is selected from category spinner*/
                 categoryId = categories.get(i).getId().toString();
-                Toast.makeText(TransactionCreationActivity.this,categories.get(i).getName(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -265,32 +286,5 @@ public class TransactionCreationActivity extends AppCompatActivity{
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH))
                 .show());
-    }
-
-    private boolean verifyInput(String categoryId, String accountId, String name, String amount, String reference, String date, String type, String description)
-    {
-        NoticeDialog notice = new NoticeDialog();
-
-        String[] input = new String[8];
-        input[0] = categoryId;
-        input[1] = accountId;
-        input[2] = name;
-        input[3] = amount;
-        input[4] = reference;
-        input[5] = date;
-        input[6] = type;
-        input[7] = description;
-
-       for(String e: input)
-       {
-           if( e.trim().length() == 0)
-           {
-               notice.showDialogWithContent(this, "Thiếu trường dữ liệu " + e.trim().toString() );
-               return false;
-           }
-       }
-
-
-        return true;
     }
 }

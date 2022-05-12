@@ -1,11 +1,16 @@
 package com.example.prudentialfinance.ContainerModel;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TransactionDetail {
+import java.io.Serializable;
+
+public class TransactionDetail implements Parcelable {
     @SerializedName("amount")
     @Expose
     private Integer amount;
@@ -50,13 +55,45 @@ public class TransactionDetail {
     @Expose
     private Category category;
 
+    protected TransactionDetail(Parcel in) {
+        if (in.readByte() == 0) {
+            amount = null;
+        } else {
+            amount = in.readInt();
+        }
+        description = in.readString();
+        name = in.readString();
+        reference = in.readString();
+        transactiondate = in.readString();
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            type = null;
+        } else {
+            type = in.readInt();
+        }
+        category = in.readParcelable(Category.class.getClassLoader());
+    }
+
+    public static final Creator<TransactionDetail> CREATOR = new Creator<TransactionDetail>() {
+        @Override
+        public TransactionDetail createFromParcel(Parcel in) {
+            return new TransactionDetail(in);
+        }
+
+        @Override
+        public TransactionDetail[] newArray(int size) {
+            return new TransactionDetail[size];
+        }
+    };
+
     public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
 
     public String getDescription() {
         return description;
@@ -78,17 +115,11 @@ public class TransactionDetail {
         return reference;
     }
 
-    public void setReference(String reference) {
-        this.reference = reference;
-    }
 
     public String getTransactiondate() {
         return transactiondate;
     }
 
-    public void setTransactiondate(String transactiondate) {
-        this.transactiondate = transactiondate;
-    }
 
     public Integer getId() {
         return id;
@@ -123,17 +154,34 @@ public class TransactionDetail {
     }
 
     @Override
-    public String toString() {
-        return "TransactionDetail{" +
-                "amount=" + amount +
-                ", description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                ", reference='" + reference + '\'' +
-                ", transactiondate='" + transactiondate + '\'' +
-                ", id=" + id +
-                ", type=" + type +
-                ", account=" + account +
-                ", category=" + category +
-                '}';
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        if (amount == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(amount);
+        }
+        parcel.writeString(description);
+        parcel.writeString(name);
+        parcel.writeString(reference);
+        parcel.writeString(transactiondate);
+        if (id == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(id);
+        }
+        if (type == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(type);
+        }
+        parcel.writeParcelable(category, i);
     }
 }

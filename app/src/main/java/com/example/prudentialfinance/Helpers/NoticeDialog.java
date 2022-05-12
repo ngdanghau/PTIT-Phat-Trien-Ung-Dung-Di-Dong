@@ -23,6 +23,7 @@ public class NoticeDialog {
 
         buttonDismiss.setOnClickListener(view->{
             dialog.dismiss();
+            activity.finish();
         });
         dialog.show();
     }
@@ -40,6 +41,7 @@ public class NoticeDialog {
 
         buttonDismiss.setOnClickListener(view->{
             dialog.dismiss();
+            activity.finish();
         });
         dialog.show();
     }

@@ -77,15 +77,7 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         /*Step 1 - add menu into array list*/
-        menus.add( new Menu("income_transaction", "Thêm thu nhập", R.drawable.ic_baseline_arrow_circle_right_24));
-        menus.add(new Menu("expense_transaction", "Thêm chi tiêu",R.drawable.ic_baseline_arrow_circle_left_24));
-        menus.add(new Menu("category", "Thêm danh mục", R.drawable.ic_baseline_category_24));
-
-        menus.add( new Menu("income_transaction", "Thêm thu nhập", R.drawable.ic_baseline_arrow_circle_right_24));
-        menus.add(new Menu("expense_transaction", "Thêm chi tiêu",R.drawable.ic_baseline_arrow_circle_left_24));
-        menus.add(new Menu("category", "Thêm danh mục", R.drawable.ic_baseline_category_24));
-
-        menus.add( new Menu("income_transaction", "Thêm thu nhập", R.drawable.ic_baseline_arrow_circle_right_24));
+        menus.add(new Menu("income_transaction", "Thêm thu nhập", R.drawable.ic_baseline_arrow_circle_right_24));
         menus.add(new Menu("expense_transaction", "Thêm chi tiêu",R.drawable.ic_baseline_arrow_circle_left_24));
         menus.add(new Menu("category", "Thêm danh mục", R.drawable.ic_baseline_category_24));
 

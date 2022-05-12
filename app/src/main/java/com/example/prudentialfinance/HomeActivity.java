@@ -2,7 +2,6 @@ package com.example.prudentialfinance;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -18,6 +17,7 @@ import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
@@ -25,11 +25,20 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
     private ActivityHomeBinding binding;
     private Fragment fragment = null;
-    private int fragmentLayout;
+
+    public static WeakReference<HomeActivity> weakActivity;
+
+    public static HomeActivity getmInstanceActivity() {
+        return weakActivity.get();
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*instantiate weak activity*/
+        weakActivity = new WeakReference<>(HomeActivity.this);
 
         /*bind data from home activity*/
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
@@ -98,8 +107,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         /*Step 4*/
-        transaction.replace(R.id.frameLayout, fragment);
+        transaction.replace(R.id.frameLayout, fragment, "myFragment");
         transaction.commit();
     }
-
 }

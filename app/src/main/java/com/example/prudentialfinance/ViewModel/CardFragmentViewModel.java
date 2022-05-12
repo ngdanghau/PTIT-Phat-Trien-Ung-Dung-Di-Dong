@@ -21,7 +21,10 @@ import retrofit2.Retrofit;
 
 public class CardFragmentViewModel extends ViewModel {
 
-    private MutableLiveData<List<Account>> accounts;
+    private final MutableLiveData<List<Account>> accounts = new MutableLiveData<>();
+    private final  MutableLiveData<Boolean> animation = new MutableLiveData<>();
+
+
 
     public void instanciate(Map<String, String> headers)
     {
@@ -38,18 +41,14 @@ public class CardFragmentViewModel extends ViewModel {
         return accounts;
     }
 
-    public void setAccounts(MutableLiveData<List<Account>> accounts) {
-        this.accounts = accounts;
+    public MutableLiveData<Boolean> getAnimation() {
+        return animation;
     }
 
     /**FUNCTIONS**/
     private void retrieveAccounts(Map<String, String> headers, HTTPRequest api) {
         /*Step 1*/
-        if( accounts == null)
-        {
-            accounts = new MutableLiveData<>();
-        }
-
+        animation.setValue(true);
 
         /*Step 2*/
         Call<AccountGetAll> container = api.accountGetAll2(headers);
@@ -61,6 +60,7 @@ public class CardFragmentViewModel extends ViewModel {
             public void onResponse(@NonNull Call<AccountGetAll> call, @NonNull Response<AccountGetAll> response) {
                 if(response.isSuccessful())
                 {
+                    animation.setValue(false);
                     AccountGetAll resource = response.body();
 
                     assert resource != null;

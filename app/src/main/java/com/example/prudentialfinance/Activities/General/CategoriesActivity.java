@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.prudentialfinance.Activities.Card.CardCreationActivity;
 import com.example.prudentialfinance.Activities.Card.CardIntroduceActivity;
@@ -50,6 +51,11 @@ public class CategoriesActivity extends AppCompatActivity {
         setControl();
 
         setEvent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void setEvent() {

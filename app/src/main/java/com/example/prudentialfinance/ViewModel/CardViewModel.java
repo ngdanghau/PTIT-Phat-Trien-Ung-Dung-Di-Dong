@@ -20,35 +20,27 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CardViewModel extends ViewModel {
-    private MutableLiveData<Integer> accountCreation;
-    private MutableLiveData<Integer> accountUpdate;
-    private MutableLiveData<String> accountRemoval;
+    private final MutableLiveData<Integer> accountCreation = new MutableLiveData<>();
+    private final MutableLiveData<Integer> accountUpdate = new MutableLiveData<>();
+    private final MutableLiveData<String> accountRemoval = new MutableLiveData<>();
+
+    private final MutableLiveData<Boolean> animation = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> getAnimation() {
+        return animation;
+    }
 
     public MutableLiveData<String> getAccountRemoval() {
-        if( accountRemoval == null)
-        {
-            accountRemoval = new MutableLiveData<>();
-        }
         return accountRemoval;
     }
 
 
     public MutableLiveData<Integer> getAccountUpdate() {
-        if( accountUpdate == null)
-        {
-            accountUpdate = new MutableLiveData<>();
-        }
-
         return accountUpdate;
     }
 
 
     public MutableLiveData<Integer> getAccountCreation() {
-
-        if( accountCreation == null)
-        {
-            accountCreation = new MutableLiveData<>();
-        }
         return accountCreation;
     }
 
@@ -59,6 +51,7 @@ public class CardViewModel extends ViewModel {
      * */
     public void createAccount(Map<String, String> headers, String name, int balance, String description, String accountnumber)
     {
+        animation.setValue(true);
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
@@ -74,6 +67,7 @@ public class CardViewModel extends ViewModel {
             public void onResponse(@NonNull Call<AccountCreate> call,@NonNull Response<AccountCreate> response) {
                 if(response.isSuccessful())
                 {
+                    animation.setValue(false);
                     AccountCreate resource = response.body();
                     assert resource != null;
                     int result = Math.max(resource.getResult(), 0);
@@ -106,6 +100,7 @@ public class CardViewModel extends ViewModel {
      * */
     public void updateAccount(Map<String, String> headers, int id, String name, String balance, String description, String accountnumber) {
         /*Step 1*/
+        animation.setValue(true);
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
@@ -116,7 +111,7 @@ public class CardViewModel extends ViewModel {
         /*Step 3*/
         container.enqueue(new Callback<AccountEdit>() {
             @Override
-            public void onResponse(Call<AccountEdit> call, Response<AccountEdit> response) {
+            public void onResponse(@NonNull Call<AccountEdit> call, @NonNull Response<AccountEdit> response) {
                 if(response.errorBody() != null) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -127,6 +122,7 @@ public class CardViewModel extends ViewModel {
                 }
                 if(response.isSuccessful())
                 {
+                    animation.setValue(false);
                     AccountEdit resource = response.body();
 
                     assert resource != null;
@@ -139,7 +135,7 @@ public class CardViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<AccountEdit> call, Throwable t) {
+            public void onFailure(@NonNull Call<AccountEdit> call, @NonNull Throwable t) {
 
             }
         });
@@ -150,11 +146,7 @@ public class CardViewModel extends ViewModel {
      * send HTTP Request to update account
      * */
     public void deleteAccount(Map<String, String> headers, int id) {
-        if( accountRemoval == null)
-        {
-            accountRemoval = new MutableLiveData<>();
-        }
-
+        animation.setValue(true);
         /*Step 1*/
         Retrofit service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
@@ -177,20 +169,21 @@ public class CardViewModel extends ViewModel {
                 }
                 if(response.isSuccessful())
                 {
+                    animation.setValue(false);
                     AccountDelete resource = response.body();
 
                     assert resource != null;
 
                     int result = resource.getResult();
                     String msg = resource.getMsg();
-                    System.out.println(result);
-                    System.out.println(msg);
+                    System.out.println("Card View Model - remove account - result: " + result);
+                    System.out.println("Card View Model - remove account - msg: " + msg);
                     accountRemoval.setValue(msg);
                 }
             }
 
             @Override
-            public void onFailure(Call<AccountDelete> call, Throwable t) {
+            public void onFailure(@NonNull Call<AccountDelete> call, @NonNull Throwable t) {
 
             }
         });

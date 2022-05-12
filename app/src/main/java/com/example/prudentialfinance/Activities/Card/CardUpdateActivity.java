@@ -2,7 +2,6 @@ package com.example.prudentialfinance.Activities.Card;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -12,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -28,7 +28,8 @@ public class CardUpdateActivity extends AppCompatActivity {
 
     private EditText cardNumber, cardBalance, cardBank, cardDescription;
     private CardViewModel viewModel;
-    private Map<String, String > headers = null;
+
+    LoadingDialog loadingDialog;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -36,47 +37,50 @@ public class CardUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_update);
 
-
-
         /*this command belows prevent keyboard from popping up automatically*/
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         /*get headers from global variable*/
-        headers = ((GlobalVariable)getApplication()).getHeaders();
+        Map<String, String> headers = ((GlobalVariable) getApplication()).getHeaders();
 
 
         /*get account from recycle view*/
-        Account account = (Account) getIntent().getSerializableExtra("account");
+        Account account = (Account) getIntent().getParcelableExtra("account");
 
 
         setControl();
         setViewModel();
         setEvent(account, headers);
 
-        viewModel.getAccountRemoval().observe(CardUpdateActivity.this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if( s.length() > 0)
-                {
-                    NoticeDialog dialog = new NoticeDialog();
-                    dialog.showDialogWithContent(CardUpdateActivity.this, s.trim());
-                }
+        viewModel.getAccountRemoval().observe(CardUpdateActivity.this, s -> {
+            if( s.length() > 0)
+            {
+                NoticeDialog dialog = new NoticeDialog();
+                dialog.showDialogWithContent(CardUpdateActivity.this, s.trim());
             }
         });
 
-        viewModel.getAccountUpdate().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if( integer == 1)
-                {
-                    NoticeDialog dialog = new NoticeDialog();
-                    dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
-                }
-                else
-                {
-                    NoticeDialog dialog = new NoticeDialog();
-                    dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_failed);
-                }
+        viewModel.getAccountUpdate().observe(this, integer -> {
+            if( integer == 1)
+            {
+                NoticeDialog dialog = new NoticeDialog();
+                dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
+            }
+            else
+            {
+                NoticeDialog dialog = new NoticeDialog();
+                dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_failed);
+            }
+        });
+
+        viewModel.getAnimation().observe(this, aBoolean -> {
+            if( aBoolean )
+            {
+                loadingDialog.startLoadingDialog();
+            }
+            else
+            {
+                loadingDialog.dismissDialog();
             }
         });
     }
@@ -96,6 +100,8 @@ public class CardUpdateActivity extends AppCompatActivity {
         cardBalance = findViewById(R.id.cardUpdateCardBalance);
         cardDescription = findViewById(R.id.cardUpdateCardDescription);
         cardBank = findViewById(R.id.cardUpdateCardBank);
+
+        loadingDialog = new LoadingDialog(CardUpdateActivity.this);
     }
 
     private void setViewModel() {
@@ -126,9 +132,7 @@ public class CardUpdateActivity extends AppCompatActivity {
 
 
         /*Step 2*/
-        buttonGoBack.setOnClickListener(view->{
-            finish();
-        });
+        buttonGoBack.setOnClickListener(view-> finish());
 
 
         /*Step 3*/
@@ -145,12 +149,9 @@ public class CardUpdateActivity extends AppCompatActivity {
         });
 
         /*Step 4*/
-        buttonRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int id = account.getId();
-                viewModel.deleteAccount(headers, id);
-            }
+        buttonRemove.setOnClickListener(view -> {
+            int id = account.getId();
+            viewModel.deleteAccount(headers, id);
         });
     }
 }

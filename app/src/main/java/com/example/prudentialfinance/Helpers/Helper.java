@@ -1,5 +1,6 @@
 package com.example.prudentialfinance.Helpers;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -46,7 +47,10 @@ public class Helper {
     {
         if( input.length() == 0)
         {
-            return "2022-05-10";
+            Date date = new Date();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat forrmatter =
+                    new SimpleDateFormat("yyyy-MM-dd");
+            return forrmatter.format(date);
         }
         String day = input.substring(0,2);
         String month = input.substring(3,5);

@@ -1,25 +1,27 @@
 package com.example.prudentialfinance.Activities.Transaction;
 
 import android.annotation.SuppressLint;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
+import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
@@ -36,21 +38,31 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class TransactionActivity extends AppCompatActivity {
 
     private RecyclerView recycleView;
-    private HomeFragmentViewModel viewModel;
+    private HomeFragmentViewModel homeFragmentviewModel;
 
     private ImageButton buttonGoBack, buttonCreate;
     private TransactionViewModel transactionViewModel;
+    private LoadingDialog loadingDialog;
 
+    private TextView notice;
 
     private static Map<String, String > headers = null;
     private static LiveData<Integer> transactionCreation = null;
     private static LiveData<Integer> transactionRemoval = null;
+
+    private SearchView searchView;
+    private List<TransactionDetail> objects = new ArrayList<>();
+    private TransactionRecycleViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
+        /*this command belows prevent keyboard from popping up automatically*/
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        /*get header from global variable*/
         headers = ((GlobalVariable)getApplication()).getHeaders();
 
         setControl();
@@ -60,14 +72,23 @@ public class TransactionActivity extends AppCompatActivity {
         transactionRemoval = transactionViewModel.getTransactionRemoval();
 
         setEvent();
+        setRecycleView();
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 
     private void setControl() {
         recycleView = findViewById(R.id.transactionRecycleView);
         buttonGoBack = findViewById(R.id.transactionButtonGoBack);
         buttonCreate = findViewById(R.id.transactionButtonCreate);
+        searchView = findViewById(R.id.searchView);
+        loadingDialog = new LoadingDialog(TransactionActivity.this);
+        notice = findViewById(R.id.transactionNotice);
     }
 
     /**
@@ -83,14 +104,42 @@ public class TransactionActivity extends AppCompatActivity {
     @SuppressLint({"NotifyDataSetChanged", "FragmentLiveDataObserve"})
     private void setViewModel(Map<String, String> headers) {
         /*Step 1*/
-        viewModel = new ViewModelProvider( this).get(HomeFragmentViewModel.class);
-        viewModel.instanciate(headers);
+        homeFragmentviewModel = new ViewModelProvider( this).get(HomeFragmentViewModel.class);
+        homeFragmentviewModel.instanciate(headers);
 
         transactionViewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
 
         /*Step 2*/
-        viewModel.getTransactions().observe( this, transactionDetails -> {
-            setRecycleView();
+        homeFragmentviewModel.getTransactions().observe(this, transactionDetails -> {
+            if( transactionDetails.size() > 0 )
+            {
+                objects.clear();
+                objects.addAll(transactionDetails);
+                adapter.notifyDataSetChanged();
+
+                notice.setVisibility(View.GONE);
+                searchView.setVisibility(View.VISIBLE);
+                recycleView.setVisibility(View.VISIBLE);
+
+            }
+            else
+            {
+                notice.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.GONE);
+                recycleView.setVisibility(View.GONE);
+            }
+        });
+
+        /*Step 3*/
+        homeFragmentviewModel.getAnimation().observe(this, aBoolean -> {
+            if( aBoolean )
+            {
+                loadingDialog.startLoadingDialog();
+            }
+            else
+            {
+                loadingDialog.dismissDialog();
+            }
         });
     }
 
@@ -98,10 +147,8 @@ public class TransactionActivity extends AppCompatActivity {
      * @author Phong-Kaster
      * */
     private void setRecycleView() {
-
-        List<TransactionDetail> latestTransactions = viewModel.getTransactions().getValue();
         /*Step 1*/
-        TransactionRecycleViewAdapter adapter = new TransactionRecycleViewAdapter(this, latestTransactions);
+        adapter = new TransactionRecycleViewAdapter(this, objects);
         recycleView.setAdapter(adapter);
 
 
@@ -110,20 +157,44 @@ public class TransactionActivity extends AppCompatActivity {
         recycleView.setLayoutManager(manager);
 
         /*Step 3*/
-        swipeToDelete(latestTransactions, recycleView, adapter);
+        swipeToDelete(recycleView, adapter, objects);
     }
 
     /**
      * @author Phong-Kaster
      * set event for each component
      * */
+    @SuppressLint({"RestrictedApi", "NonConstantResourceId"})
     private void setEvent()
     {
         buttonGoBack.setOnClickListener(view-> finish());
 
+
         buttonCreate.setOnClickListener(view -> {
-            Intent intent = new Intent(TransactionActivity.this, TransactionCreationActivity.class);
+            Intent intent = new Intent(TransactionActivity.this, TransactionMenuActivity.class);
             startActivity(intent);
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                objects.clear();
+                homeFragmentviewModel.retrieveWithQuery(headers,query);
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if( newText.equals(""))
+                {
+                    objects.clear();
+                    homeFragmentviewModel.retrieveWithQuery(headers,"");
+                    searchView.clearFocus();
+                }
+
+                return false;
+            }
         });
     }
 
@@ -131,7 +202,7 @@ public class TransactionActivity extends AppCompatActivity {
      * @author Phong-Kaster
      * Swipe from right to left to eradicate a transaction
      * */
-    private void swipeToDelete(List<TransactionDetail> transactions, RecyclerView recycleView, TransactionRecycleViewAdapter adapter )
+    private void swipeToDelete(RecyclerView recycleView, TransactionRecycleViewAdapter adapter, List<TransactionDetail> transactions)
     {
         /*Step 1*/
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
@@ -153,11 +224,13 @@ public class TransactionActivity extends AppCompatActivity {
                 /*declare local variables*/
                 int position = viewHolder.getLayoutPosition();
                 TransactionDetail eradicatedTransaction = transactions.get(position);
-                transactions.remove(eradicatedTransaction);
+
+                transactions.remove(position);
 
                 /*notify to adapter & remove the transaction on SERVER*/
                 adapter.notifyItemRemoved(position);
                 removeTransaction(eradicatedTransaction);
+                homeFragmentviewModel.setTransactions(transactions);
 
 
                 Snackbar.make(recycleView, eradicatedTransaction.getName(), Snackbar.LENGTH_SHORT)
@@ -166,10 +239,13 @@ public class TransactionActivity extends AppCompatActivity {
                             transactions.add(position, eradicatedTransaction);
                             adapter.notifyItemInserted(position);
 
+                            homeFragmentviewModel.setTransactions(transactions);
                             /*restore the transaction on Server*/
                             createTransaction(eradicatedTransaction);
 
                         }).show();
+
+
             }
 
             public void onChildDraw (@NonNull Canvas c,
@@ -188,8 +264,8 @@ public class TransactionActivity extends AppCompatActivity {
         };
 
         /*Step 2*/
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recycleView);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        touchHelper.attachToRecyclerView(recycleView);
     }
 
     /**
@@ -202,11 +278,7 @@ public class TransactionActivity extends AppCompatActivity {
 
         transactionViewModel.eradicateTransaction(headers, id);
 
-        transactionRemoval.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-            }
-        });
+        transactionRemoval.observe(this, integer -> System.out.println("transaction activity remove: " +integer));
     }
 
     /**
@@ -235,11 +307,6 @@ public class TransactionActivity extends AppCompatActivity {
                 type,
                 description);
 
-        transactionCreation.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                System.out.println("transaction activity create | restore: " +integer);
-            }
-        });
+        transactionCreation.observe(this, integer -> System.out.println("transaction activity create | restore: " +integer));
     }
 }
