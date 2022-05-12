@@ -22,12 +22,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.prudentialfinance.Activities.BudgetsActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
-import com.example.prudentialfinance.Activities.General.GoalsActivity;
+import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Transaction.TransactionActivity;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
@@ -244,7 +243,7 @@ public class HomeFragment extends Fragment {
         });
 
         buttonButtonGoal.setOnClickListener(view->{
-            Intent intent = new Intent(getActivity(), GoalsActivity.class);
+            Intent intent = new Intent(getActivity(), GoalActivity.class);
             startActivity(intent);
         });
 
