@@ -3,6 +3,7 @@ package com.example.prudentialfinance.RecycleViewAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class CardRecycleViewAdapter extends RecyclerView.Adapter<CardRecycleView
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, CardUpdateActivity.class);
-                intent.putExtra("account", element);
+                intent.putExtra("account", (Parcelable) element);
                 intent.putExtra("accountName", elementBank);
                 context.startActivity(intent);
             }

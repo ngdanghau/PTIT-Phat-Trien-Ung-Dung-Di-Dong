@@ -22,9 +22,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class HomeFragmentViewModel extends ViewModel {
-    private MutableLiveData<List<TransactionDetail>> transactions;
-    private MutableLiveData<Double> totalBalance;
+    private  MutableLiveData<List<TransactionDetail>> transactions = new MutableLiveData<>();
+    private final MutableLiveData<Double> totalBalance = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> animation = new MutableLiveData<>();
 
+    public void setTransactions(List<TransactionDetail> transactions) {
+        MutableLiveData<List<TransactionDetail>> dataSet = new MutableLiveData<>();
+        dataSet.setValue(transactions);
+        this.transactions = dataSet;
+    }
 
     public void instanciate(Map<String, String> headers)
     {
@@ -33,8 +39,22 @@ public class HomeFragmentViewModel extends ViewModel {
         HTTPRequest api = service.create(HTTPRequest.class);
 
         /*Step 2*/
-        retrieveDetailTransactions(headers, api);
+        retrieveTransactions(headers, api);
         retrieveTotalBalance(headers, api);
+    }
+
+    public void retrieveWithQuery(Map<String, String> headers, String query)
+    {
+        /*Step 1*/
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        /*Step 2*/
+        retrieveTransactionsWithQuery(headers, api, query);
+    }
+
+    public MutableLiveData<Boolean> getAnimation() {
+        return animation;
     }
 
     public MutableLiveData<List<TransactionDetail>> getTransactions() {
@@ -53,12 +73,9 @@ public class HomeFragmentViewModel extends ViewModel {
      *
      * @param headers headers is used to attach to HTTP Request headers
      * */
-    public void retrieveDetailTransactions(Map<String, String> headers, HTTPRequest api)
+    public void retrieveTransactions(Map<String, String> headers, HTTPRequest api)
     {
-        if( transactions == null)
-        {
-            transactions = new MutableLiveData<>();
-        }
+        animation.setValue(true);
         /*Step 2*/
 
         Map<String, String> options = new HashMap<>();
@@ -78,6 +95,7 @@ public class HomeFragmentViewModel extends ViewModel {
             public void onResponse(@NonNull Call<HomeLatestTransactions> call, @NonNull Response<HomeLatestTransactions> response) {
                 if(response.isSuccessful())
                 {
+                    animation.setValue(false);
                     HomeLatestTransactions resource = response.body();
 
                     assert resource != null;
@@ -99,9 +117,64 @@ public class HomeFragmentViewModel extends ViewModel {
 
             }
         });
+
+        animation.setValue(false);
     }
 
 
+    public void retrieveTransactionsWithQuery(Map<String, String> headers, HTTPRequest api, String search)
+    {
+        animation.setValue(true);
+        /*Step 2*/
+
+        Map<String, String> options = new HashMap<>();
+        options.put("start", "0");
+        options.put("length", "10");
+        options.put("draw", "1");
+        options.put("order[column]","");
+        options.put("order[dir]","desc");
+        options.put("search",search);
+
+        Call<HomeLatestTransactions> container = api.homeLatestTransactions(headers, options);
+
+        /*Step 3*/
+        container.enqueue(new Callback<HomeLatestTransactions>() {
+            @Override
+            public void onResponse(@NonNull Call<HomeLatestTransactions> call, @NonNull Response<HomeLatestTransactions> response) {
+                if(response.isSuccessful())
+                {
+                    animation.setValue(false);
+                    HomeLatestTransactions resource = response.body();
+
+                    assert resource != null;
+//                    System.out.println("homefragment view model - retrieveDetailTransactionsWithQuery - summary: " + resource.getSummary().getTotalCount());
+//
+//
+                    List<TransactionDetail> array = resource.getData();
+//
+//                    for(TransactionDetail e: array)
+//                    {
+//                        System.out.println(e.getName());
+//                    }
+                    transactions.postValue(array);
+                    return;
+                }
+                if(response.errorBody() != null) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        System.out.println( jObjError );
+                    } catch (Exception e) {
+                        System.out.println( e.getMessage() );
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<HomeLatestTransactions> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
 
     /**
      * @author Phong-Kaster
@@ -112,10 +185,7 @@ public class HomeFragmentViewModel extends ViewModel {
      * */
     public void retrieveTotalBalance(Map<String, String> headers, HTTPRequest api)
     {
-        if( totalBalance == null)
-        {
-            totalBalance = new MutableLiveData<>();
-        }
+        animation.setValue(true);
         /*Step 2*/
         Call<ReportTotalBalance> container = api.reportTotalBalace(headers, "month");
 
@@ -125,6 +195,7 @@ public class HomeFragmentViewModel extends ViewModel {
             public void onResponse(@NonNull Call<ReportTotalBalance> call, @NonNull Response<ReportTotalBalance> response) {
                 if(response.isSuccessful())
                 {
+                    animation.setValue(false);
                     ReportTotalBalance resource = response.body();
                     assert resource != null;
                     totalBalance.setValue(resource.getMonth());

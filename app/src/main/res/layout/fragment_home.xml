@@ -155,32 +155,32 @@
 
         <!-- Button Income Statistics -->
         <ImageButton
-            android:id="@+id/fragmentHomeButtonIncomeStatistics"
+            android:id="@+id/fragmentHomeButtonCategory"
             style="@style/dashboard_image_button_style"
             android:layout_toEndOf="@+id/fragmentHomeButtonTransactions"
-            android:src="@drawable/icon_inflow"
+            android:src="@drawable/ic_baseline_category_24"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/fragmentHomeTitleIncomeStatistics"
+            android:id="@+id/fragmentHomeTitleCategory"
             style="@style/dashboard_text_view_style"
             android:layout_below="@+id/fragmentHomeButtonTransactions"
             android:layout_toEndOf="@+id/fragmentHomeTitleTransactions"
-            android:text="@string/income" />
+            android:text="@string/category" />
 
         <!-- Button Expense Statistics -->
         <ImageButton
-            android:id="@+id/fragmentHomeButtonExpenseStatistics"
+            android:id="@+id/fragmentHomeButtonBudget"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/fragmentHomeButtonIncomeStatistics"
+            android:layout_toEndOf="@+id/fragmentHomeButtonCategory"
             android:src="@drawable/icon_outflow"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/fragmentHomeTitleExpenseStatistics"
             style="@style/dashboard_text_view_style"
-            android:layout_below="@+id/fragmentHomeButtonIncomeStatistics"
-            android:layout_toEndOf="@id/fragmentHomeTitleIncomeStatistics"
+            android:layout_below="@+id/fragmentHomeButtonCategory"
+            android:layout_toEndOf="@id/fragmentHomeTitleCategory"
             android:text="@string/expense" />
 
 
@@ -188,7 +188,7 @@
         <ImageButton
             android:id="@+id/fragmentHomeButtonGoal"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/fragmentHomeButtonExpenseStatistics"
+            android:layout_toEndOf="@+id/fragmentHomeButtonBudget"
             android:src="@drawable/icon_goal"
             tools:ignore="ContentDescription" />
 
@@ -196,13 +196,22 @@
             android:id="@+id/dashboardTitleGoal"
             style="@style/dashboard_text_view_style"
             android:layout_below="@+id/fragmentHomeButtonGoal"
-            android:layout_toEndOf="@+id/fragmentHomeButtonExpenseStatistics"
+            android:layout_toEndOf="@+id/fragmentHomeButtonBudget"
             android:text="@string/goal" />
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/homeFragmentNotice"
+        android:layout_marginTop="20sp"
+        android:layout_gravity="center"
+        android:text="@string/you_don_have_any_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <!-- RECENT TRANSACTIONS -->
     <RelativeLayout
+        android:id="@+id/homeFragmentTransactionLayout"
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -222,6 +231,8 @@
             android:textColor="@color/colorSupportText"
             android:textSize="12dp" />
 
+
+
         <TextView
             android:id="@+id/homeFragmentSeeAll"
             android:layout_width="86dp"
@@ -235,11 +246,20 @@
             android:textSize="12dp"
             android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragmentHomeRecentTransactions"
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_below="@+id/homeFragmentSeeAll"
+            android:id="@+id/homeFragmentSwipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/recentImage" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragmentHomeRecentTransactions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/recentImage" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </RelativeLayout>
     </LinearLayout>

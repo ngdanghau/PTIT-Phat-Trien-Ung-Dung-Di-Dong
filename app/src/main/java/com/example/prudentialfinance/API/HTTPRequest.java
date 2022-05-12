@@ -191,7 +191,13 @@ public interface HTTPRequest {
     Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers,
                                                         @QueryMap Map<String, String> parameters);
 
-
+    @GET("api/home/latestall")
+    Call<HomeLatestTransactions> homeLatestTransactions2(@HeaderMap Map<String, String> headers,
+                                                        @Query("search") String search,
+                                                        @Query("start") int start,
+                                                        @Query("length") int length,
+                                                        @Query("order[column]") String column,
+                                                        @Query("order[dir]") String dir);
 
 
     //GOAL--------------------------------------------------------------------------------------
@@ -221,7 +227,10 @@ public interface HTTPRequest {
                                                 @Query("order[dir]") String dir);
 
     @GET("api/incomecategories")
-    Call<CategoryGetAll> retrieveCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters);
+    Call<CategoryGetAll> retrieveInflowCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters);
+
+    @GET("api/expensecategories")
+    Call<CategoryGetAll> retrieveOutflowCategories(@HeaderMap Map<String, String> headers, @QueryMap Map<String, String> parameters);
 
     @DELETE("api/incomecategories/{id}")
     Call<CategoryAdd> removeIncomeCategories(@HeaderMap Map<String, String> headers, @Path("id") int id);
