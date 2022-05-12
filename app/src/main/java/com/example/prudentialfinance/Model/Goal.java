@@ -3,7 +3,9 @@ package com.example.prudentialfinance.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Goal {
+import java.io.Serializable;
+
+public class Goal implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
@@ -14,11 +16,11 @@ public class Goal {
 
     @SerializedName("balance")
     @Expose
-    private int balance;
+    private long balance;
 
     @SerializedName("amount")
     @Expose
-    private int amount;
+    private long amount;
 
     public int getId() {
         return id;
@@ -27,7 +29,7 @@ public class Goal {
 
     @SerializedName("deposit")
     @Expose
-    private int deposit;
+    private long deposit;
 
     @SerializedName("deadline")
     @Expose
@@ -36,6 +38,20 @@ public class Goal {
     @SerializedName("status")
     @Expose
     private int status;
+
+    public Goal(int id) {
+        this.id = id;
+    }
+
+    public Goal(int id, String name, long balance, long amount, long deposit, String deadline, int status) {
+        this.id = id;
+        this.name = name;
+        this.balance = balance;
+        this.amount = amount;
+        this.deposit = deposit;
+        this.deadline = deadline;
+        this.status = status;
+    }
 
     @Override
     public String toString() {
@@ -50,7 +66,9 @@ public class Goal {
                 '}';
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -60,27 +78,27 @@ public class Goal {
         this.name = name;
     }
 
-    public int getBalance() {
+    public long getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 
-    public int getDeposit() {
+    public long getDeposit() {
         return deposit;
     }
 
-    public void setDeposit(int deposit) {
+    public void setDeposit(long deposit) {
         this.deposit = deposit;
     }
 
@@ -99,10 +117,4 @@ public class Goal {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-
 }
