@@ -286,8 +286,9 @@ public interface HTTPRequest {
     Call<UserAdd> restoreUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
     @FormUrlEncoded
-    @POST("api/users/new")
+    @POST("api/users")
     Call<UserAdd> addUser(@HeaderMap Map<String, String> headers,
+                          @Field("email") String email,
                           @Field("firstname") String firstname,
                           @Field("lastname") String lastname,
                           @Field("account_type") String account_type,
