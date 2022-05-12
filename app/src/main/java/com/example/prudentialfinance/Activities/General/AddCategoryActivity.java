@@ -10,9 +10,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.prudentialfinance.Activities.Settings.ProfileActivity;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.Category;
@@ -20,7 +18,6 @@ import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Categories.AddCategoryViewModel;
-import com.example.prudentialfinance.ViewModel.Settings.ProfileViewModel;
 import com.skydoves.colorpickerview.ColorPickerDialog;
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
@@ -101,6 +98,10 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
 
             if (object.getResult() == 1) {
+                category.setId(object.getCategory());
+                Intent intent = new Intent();
+                intent.putExtra("category_entry", category);
+                setResult(78, intent);
                 finish();
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);

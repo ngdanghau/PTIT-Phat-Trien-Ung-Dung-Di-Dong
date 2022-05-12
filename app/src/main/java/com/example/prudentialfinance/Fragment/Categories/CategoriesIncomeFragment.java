@@ -1,9 +1,12 @@
 package com.example.prudentialfinance.Fragment.Categories;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 
@@ -93,7 +96,7 @@ public class CategoriesIncomeFragment extends Fragment {
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                         .addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorRed))
-                        .addActionIcon(R.drawable.ic_baseline_close_24)
+                        .addActionIcon(R.drawable.ic_close)
                         .create()
                         .decorate();
 
@@ -123,7 +126,7 @@ public class CategoriesIncomeFragment extends Fragment {
         manager = new LinearLayoutManager(getActivity().getApplicationContext());
         lvCategory.setLayoutManager(manager);
 
-        adapter = new CategoryRecycleViewAdapter(getActivity().getApplicationContext(), data);
+        adapter = new CategoryRecycleViewAdapter(getActivity().getApplicationContext(), data, editCategoryActivity);
         lvCategory.setAdapter(adapter);
 
     }
@@ -196,4 +199,36 @@ public class CategoriesIncomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
     }
+
+    public void addData(Category entry){
+        boolean isAdd = true;
+        for (Category item: data) {
+            if(item.getId().equals(entry.getId())){
+                item.setType(entry.getType());
+                item.setDescription(entry.getDescription());
+                item.setName(entry.getName());
+                item.setColor(entry.getColor());
+                isAdd = false;
+                break;
+            }
+        }
+
+        if(isAdd){
+            data.add(0, entry);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+    ActivityResultLauncher<Intent> editCategoryActivity = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == 78) {
+                    // There are no request codes
+                    Intent data = result.getData();
+                    assert data != null;
+                    Category dataFromActivity = data.getParcelableExtra("category_entry");
+                    addData(dataFromActivity);
+                }
+            });
 }

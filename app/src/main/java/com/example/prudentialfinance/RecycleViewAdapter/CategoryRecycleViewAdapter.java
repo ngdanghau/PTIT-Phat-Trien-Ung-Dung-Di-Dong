@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,12 +28,13 @@ import java.util.ArrayList;
 public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRecycleViewAdapter.ViewHolder> {
     private ArrayList<Category> objects;
     private Context context;
+    ActivityResultLauncher<Intent> editCategoryActivity;
 
 
-    public CategoryRecycleViewAdapter(Context context, ArrayList<Category> objects) {
+    public CategoryRecycleViewAdapter(Context context, ArrayList<Category> objects, ActivityResultLauncher<Intent> editCategoryActivity) {
         this.objects = objects;
         this.context = context;
-
+        this.editCategoryActivity = editCategoryActivity;
     }
 
     @NonNull
@@ -58,7 +60,7 @@ public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRec
         holder.cat_layout.setOnClickListener(view1 -> {
             Intent intent = new Intent(parentContext, AddCategoryActivity.class);
             intent.putExtra("category", entry);
-            parentContext.startActivity(intent);
+            editCategoryActivity.launch(intent);
         });
     }
 
