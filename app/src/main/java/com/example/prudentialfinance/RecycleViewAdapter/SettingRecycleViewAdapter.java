@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.Activities.BudgetsActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
-import com.example.prudentialfinance.Activities.General.GoalsActivity;
+import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Settings.DarkModeActivity;
 import com.example.prudentialfinance.Activities.Settings.UserManagementActivity;
 import com.example.prudentialfinance.Model.Setting;
@@ -99,7 +99,7 @@ public class SettingRecycleViewAdapter extends RecyclerView.Adapter<SettingRecyc
                         parentContext.startActivity(new Intent(parentContext, CategoriesActivity.class));
                         break;
                     case "goals":
-                        parentContext.startActivity(new Intent(parentContext, GoalsActivity.class));
+                        parentContext.startActivity(new Intent(parentContext, GoalActivity.class));
                         break;
                     case "user_management":
                         parentContext.startActivity(new Intent(parentContext, UserManagementActivity.class));

@@ -41,10 +41,13 @@
             android:name=".Activities.Settings.UserManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.General.AddCategoryActivity"
+            android:name=".Activities.General.AddGoalActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.General.GoalsActivity"
+            android:name=".Activities.General.GoalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.General.AddCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.General.CategoriesActivity"

@@ -5,6 +5,7 @@ import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
 import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
@@ -16,6 +17,7 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionGetTotal;
 import com.example.prudentialfinance.Container.TransactionRemove;
@@ -188,6 +190,24 @@ public interface HTTPRequest {
     @GET("api/home/latestall")
     Call<HomeLatestTransactions> homeLatestTransactions(@HeaderMap Map<String, String> headers,
                                                         @QueryMap Map<String, String> parameters);
+
+
+
+
+    //GOAL--------------------------------------------------------------------------------------
+    @GET("api/goals")
+    Call<GoalGetAll> getGoals(@HeaderMap Map<String, String> headers,
+                              @Query("search") String search,
+                              @Query("start") int start,
+                              @Query("length") int length,
+                              @Query("order[column]") String column,
+                              @Query("order[dir]") String dir,
+                              @Query("status") int status ,
+                              @Query("dateFrom") String dateFrom,
+                              @Query("dateTo") String dateTo);
+
+    @DELETE("api/incomecategories/{id}")
+    Call<AccountDelete> removeGoal(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
 
 
