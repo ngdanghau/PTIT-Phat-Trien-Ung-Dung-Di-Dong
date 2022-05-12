@@ -2,6 +2,7 @@ package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -13,11 +14,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Activities.General.AddGoalActivity;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.R;
@@ -28,10 +31,12 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
 
     private Context context;
     private ArrayList<Goal> objects;
+    ActivityResultLauncher<Intent> addGoalActivity;
 
-    public GoalRecycleViewAdapter(Context content, ArrayList<Goal> objects) {
+    public GoalRecycleViewAdapter(Context content, ArrayList<Goal> objects, ActivityResultLauncher<Intent> addGoalActivity) {
         this.context = context;
         this.objects = objects;
+        this.addGoalActivity = addGoalActivity;
     }
 
     @NonNull
@@ -54,7 +59,9 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
         holder.goal_deadline.setText(Helper.truncate_string(entry.getDeadline(), 70, "...", true));
         Context parentContext = holder.parent.getContext();
         holder.goal_layout.setOnClickListener(view -> {
-            System.out.println(entry.getName());
+            Intent intent = new Intent (parentContext, AddGoalActivity.class);
+            intent.putExtra("goal", entry);
+            addGoalActivity.launch(intent);
         });
     }
 

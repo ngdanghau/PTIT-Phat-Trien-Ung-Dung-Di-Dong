@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.ViewModel;
+package com.example.prudentialfinance.ViewModel.Goal;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
+import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
 
 import java.util.Map;
@@ -44,7 +45,7 @@ public class GoalViewModel extends ViewModel {
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        Call<GoalGetAll> container = api.getGoals(headers, query, start, length, "id", "decs",1,"","");
+        Call<GoalGetAll> container = api.getGoals(headers, query, start, length, "id", "desc",0,"","");
         container.enqueue(new Callback<GoalGetAll>() {
             @Override
             public void onResponse(@NonNull Call<GoalGetAll> call, @NonNull Response<GoalGetAll> response) {
@@ -72,7 +73,29 @@ public class GoalViewModel extends ViewModel {
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        api.removeIncomeCategories(headers, id);
+
+        Call<GoalAdd> container = api.removeGoal(headers, id);
+        container.enqueue(new Callback<GoalAdd>() {
+            @Override
+            public void onResponse(@NonNull Call<GoalAdd> call, @NonNull Response<GoalAdd> response) {
+                isLoading.setValue(false);
+                System.out.println(response.toString());
+                if (response.isSuccessful()) {
+                    GoalAdd resource = response.body();
+                    assert resource != null;
+                    System.out.println(resource.toString());
+                    return;
+                }
+                object.setValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GoalAdd> call, @NonNull Throwable t) {
+                t.printStackTrace();
+                isLoading.setValue(false);
+                object.setValue(null);
+            }
+        });
     }
 
 }

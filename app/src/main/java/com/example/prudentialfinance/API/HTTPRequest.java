@@ -5,6 +5,7 @@ import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
@@ -206,10 +207,25 @@ public interface HTTPRequest {
                               @Query("dateFrom") String dateFrom,
                               @Query("dateTo") String dateTo);
 
-    @DELETE("api/incomecategories/{id}")
-    Call<AccountDelete> removeGoal(@HeaderMap Map<String, String> headers, @Path("id") int id);
+    @DELETE("api/goals/{id}")
+    Call<GoalAdd> removeGoal(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
+    @FormUrlEncoded
+    @POST("api/goals")
+    Call<GoalAdd> addNewGoal(@HeaderMap Map<String, String> headers,
+                             @Field("name") String name,
+                             @Field("balance") long balance,
+                             @Field("amount") long amount,
+                             @Field("deadline") String deadline);
 
+    @FormUrlEncoded
+    @PUT("api/goals/{id}")
+    Call<GoalAdd> editGoal(@HeaderMap Map<String, String> headers,
+                           @Path("id") int id,
+                           @Field("name") String name,
+                           @Field("balance") long balance,
+                           @Field("amount") long amount,
+                           @Field("deadline") String deadline);
 
     /***************************CATEGORY*********************************/
     @GET("api/incomecategories")
