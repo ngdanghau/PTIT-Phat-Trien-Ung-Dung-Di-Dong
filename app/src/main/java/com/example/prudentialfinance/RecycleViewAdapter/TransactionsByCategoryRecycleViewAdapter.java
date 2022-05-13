@@ -56,7 +56,9 @@ public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapt
         holder.transaction_amount.setText(Helper.formatNumber(entry.getAmount()) + " " + appInfo.getCurrency());
         Date transaction_date = Helper.convertStringToDate(entry.getTransactiondate(), "yyyy-MM-dd");
 
-        holder.transaction_date.setText(DateFormat.getDateInstance(DateFormat.DEFAULT, new Locale("vi", "VN")).format(transaction_date));
+        String[] locales = appInfo.getLanguage().split("-");
+        if(locales.length != 2) locales = new String[]{ "en", "US"};
+        holder.transaction_date.setText(DateFormat.getDateInstance(DateFormat.DEFAULT, new Locale(locales[0], locales[1])).format(transaction_date));
 
         holder.transaction_layout.setOnClickListener(view1 -> {
             Bundle bundle = new Bundle();
