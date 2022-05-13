@@ -21,6 +21,7 @@ import com.example.prudentialfinance.Container.Report.CategoryReport;
 import com.example.prudentialfinance.Container.Report.DateRange;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.CategoryReportRecycleViewAdapter;
@@ -45,6 +46,7 @@ public class ReportFragment extends Fragment{
     Alert alert;
     Map<String, String> headers;
     User authUser;
+    SiteSettings appInfo;
 
     RecyclerView lvCategory;
     CategoryReportRecycleViewAdapter adapter;
@@ -82,6 +84,7 @@ public class ReportFragment extends Fragment{
     private void setComponent() {
         assert this.getArguments() != null;
         authUser = this.getArguments().getParcelable("authUser");
+        appInfo = this.getArguments().getParcelable("appInfo");
         String accessToken = this.getArguments().getString("accessToken");
         String contentType = this.getArguments().getString("contentType");
 
@@ -176,7 +179,7 @@ public class ReportFragment extends Fragment{
         btnMenu = view.findViewById(R.id.btnMenu);
         topTitle = view.findViewById(R.id.topTitle);
         rGroup = view.findViewById(R.id.rGroup);
-        checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
+        checkedRadioButton = rGroup.findViewById(rGroup.getCheckedRadioButtonId());
 
         popupMenu = new PopupMenu(getContext(), btnMenu);
         popupMenu.getMenuInflater().inflate(R.menu.category_menu, popupMenu.getMenu());
@@ -196,7 +199,7 @@ public class ReportFragment extends Fragment{
         manager = new LinearLayoutManager(getActivity().getApplicationContext());
         lvCategory.setLayoutManager(manager);
 
-        adapter = new CategoryReportRecycleViewAdapter(getActivity().getApplicationContext(), data, dateRange);
+        adapter = new CategoryReportRecycleViewAdapter(getActivity().getApplicationContext(), data, dateRange, appInfo);
         lvCategory.setAdapter(adapter);
     }
 }
