@@ -305,6 +305,11 @@ public interface HTTPRequest {
                                           @Field("color") String color);
 
 
+    @GET("/api/home/incomevsexpense")
+    Call<IncomeVsExpenseResponse> getReportGroupByDate(@HeaderMap Map<String, String> headers,
+                                                 @Query("type") String type,
+                                                 @Query("date") String date);
+
     /***************************USER***************************/
     @GET("api/users")
     Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
@@ -346,11 +351,6 @@ public interface HTTPRequest {
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
 
-    @GET("/api/home/incomevsexpense")
-    Call<IncomeVsExpenseResponse> incomeExpenseByDate(@HeaderMap Map<String, String> headers,
-                                                      @Query("type") String type,
-                                                      @Query("date") String date);
-
     @GET("/api/home/category/income")
     Call<CategoryReportResponse> incomeByDate(@HeaderMap Map<String, String> headers,
                                               @Query("date") String date);
@@ -372,10 +372,10 @@ public interface HTTPRequest {
 
 
     /***************************TRANSACTIONS***************************/
-    @GET("api/transactions/income/total")
+    @GET("/api/transactions/income/gettotal")
     Call<TransactionGetTotal> transactionIncomeTotal(@HeaderMap Map<String, String> headers);
 
-    @GET("api/transactions/expense/total")
+    @GET("/api/transactions/expense/gettotal")
     Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
 
     @FormUrlEncoded

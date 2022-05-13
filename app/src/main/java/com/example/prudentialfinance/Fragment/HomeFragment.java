@@ -28,6 +28,7 @@ import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.HomeActivity;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
@@ -62,6 +63,7 @@ public class HomeFragment extends Fragment {
     private TextView notice;
 
     private User AuthUser;
+    private SiteSettings appInfo;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TransactionRecycleViewAdapter adapter;
 
@@ -97,6 +99,7 @@ public class HomeFragment extends Fragment {
         /*get parameters from home activity sends to this fragment*/
         assert this.getArguments() != null;
         AuthUser = this.getArguments().getParcelable("AuthUser");
+        appInfo = this.getArguments().getParcelable("appInfo");
         String accessToken = this.getArguments().getString("accessToken");
         String contentType = this.getArguments().getString("contentType");
 
@@ -175,7 +178,6 @@ public class HomeFragment extends Fragment {
         recycleView  = view.findViewById(R.id.fragmentHomeRecentTransactions);
         name = view.findViewById(R.id.fragmentHomeAuthName);
 
-        avatar = view.findViewById(R.id.fragmentHomeAuthAvatar);
         remaining = view.findViewById(R.id.fragmentHomeAuthRemaining);
 
         seeAll = view.findViewById(R.id.homeFragmentSeeAll);
@@ -207,7 +209,7 @@ public class HomeFragment extends Fragment {
         /*Step 2*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {
             String value = Helper.formatNumber(aDouble);
-            remaining.setText( value + " VND" );
+            remaining.setText( value + " " + appInfo.getCurrency() );
         });
     }
 
@@ -252,11 +254,6 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-        avatar.setOnClickListener(view -> {
-            SettingsFragment fragment = new SettingsFragment();
-            ((HomeActivity)requireActivity()).enableFragment(fragment);
-        });
-
         seeAll.setOnClickListener(view ->{
             Intent intent = new Intent(getActivity(), TransactionActivity.class);
             startActivity(intent);
@@ -271,7 +268,7 @@ public class HomeFragment extends Fragment {
      * */
     private void setScreen()
     {
-        String fullName = "Xin chào, "+ AuthUser.getFirstname() + " " + AuthUser.getLastname();
+        String fullName = AuthUser.getFirstname() + " " + AuthUser.getLastname();
         name.setText(fullName);
     }
 }

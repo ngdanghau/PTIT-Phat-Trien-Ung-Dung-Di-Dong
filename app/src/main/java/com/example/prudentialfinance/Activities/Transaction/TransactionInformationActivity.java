@@ -9,7 +9,6 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.NoticeDialog;
-import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
 
@@ -22,7 +21,7 @@ public class TransactionInformationActivity extends AppCompatActivity {
     private NoticeDialog noticeDialog;
 
     private TextView name,date, amount, account, category, reference, description;
-    private AppCompatButton buttonEdit;
+    private AppCompatButton buttonEdit, buttonGoBack;
     public static WeakReference<TransactionInformationActivity> weakActivity;
 
     public static TransactionInformationActivity getmInstanceActivity() {
@@ -68,6 +67,7 @@ public class TransactionInformationActivity extends AppCompatActivity {
 
         description = findViewById(R.id.transactionInforDescriptionContent);
         buttonEdit = findViewById(R.id.transactionInforButtonEdit);
+        buttonGoBack = findViewById(R.id.transactionInforButtonGoBack);
     }
 
     private void setContent()
@@ -112,6 +112,10 @@ public class TransactionInformationActivity extends AppCompatActivity {
             Intent intent = new Intent(TransactionInformationActivity.this, TransactionUpdateActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+        });
+
+        buttonGoBack.setOnClickListener(view->{
+            finish();
         });
     }
 

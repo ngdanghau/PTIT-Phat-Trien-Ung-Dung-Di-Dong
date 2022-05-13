@@ -43,7 +43,7 @@ public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRec
         View view = LayoutInflater
                     .from(parent.getContext())
                     .inflate(R.layout.activity_category_element, parent, false);
-        return new ViewHolder(view, parent);
+        return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -56,9 +56,8 @@ public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRec
         holder.cat_name.setText(Helper.truncate_string(entry.getName(), 70, "...", true));
         holder.cat_desc.setText(Helper.truncate_string(entry.getDescription(), 70, "...", true));
 
-        Context parentContext = holder.parent.getContext();
         holder.cat_layout.setOnClickListener(view1 -> {
-            Intent intent = new Intent(parentContext, AddCategoryActivity.class);
+            Intent intent = new Intent(context, AddCategoryActivity.class);
             intent.putExtra("category", entry);
             editCategoryActivity.launch(intent);
         });
@@ -74,12 +73,10 @@ public class CategoryRecycleViewAdapter extends RecyclerView.Adapter<CategoryRec
         private ImageButton cat_color;
         private TextView cat_name, cat_desc;
         private LinearLayout cat_layout;
-        private ViewGroup parent;
 
-        public ViewHolder(@NonNull View itemView, ViewGroup parent) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             setControl(itemView);
-            this.parent = parent;
         }
 
         private void setControl(View itemView)

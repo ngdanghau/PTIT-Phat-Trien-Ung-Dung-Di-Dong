@@ -86,7 +86,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginStart">35dp</item>
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:layout_marginBottom">28dp</item>
     </style>
@@ -117,5 +117,15 @@
         <item name="android:paddingBottom">10sp</item>
         <item name="android:textColor">@color/colorTheme</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="transaction_information_button_style">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:textColor">@drawable/button_text_color_style_state</item>
+        <item name="android:background">@drawable/button_style_state</item>
+        <item name="android:layout_marginStart">55dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>

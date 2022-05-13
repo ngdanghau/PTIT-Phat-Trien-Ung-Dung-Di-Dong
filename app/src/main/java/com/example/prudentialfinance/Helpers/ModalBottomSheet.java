@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
+import com.example.prudentialfinance.Activities.Transaction.TransactionStatementActivity;
 import com.example.prudentialfinance.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -74,7 +75,8 @@ public class ModalBottomSheet extends BottomSheetDialogFragment {
         });
 
         statement.setOnClickListener(view -> {
-            Toast.makeText(getContext(),"Tạo sao kê nhưng mà chưa có", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), TransactionStatementActivity.class);
+            startActivity(intent);
         });
     }
 }

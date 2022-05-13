@@ -58,6 +58,7 @@ public class CardUpdateActivity extends AppCompatActivity {
             {
                 NoticeDialog dialog = new NoticeDialog();
                 dialog.showDialogWithContent(CardUpdateActivity.this, s.trim());
+                finish();
             }
         });
 

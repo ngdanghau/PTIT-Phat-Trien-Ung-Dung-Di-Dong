@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -86,7 +87,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                     .setPreferenceName("MyColorPickerDialog")
                     .setPositiveButton(getString(R.string.confirm),
                             (ColorEnvelopeListener) (envelope, fromUser) -> {
-                                category.setColor(envelope.getHexCode().replace("D0", "#"));
+                                category.setColor(Helper.getRealColor(envelope.getHexCode()));
                                 cat_color.getBackground().setColorFilter(envelope.getColor(), PorterDuff.Mode.SRC);
                             })
                     .setNegativeButton(getString(R.string.cancel),

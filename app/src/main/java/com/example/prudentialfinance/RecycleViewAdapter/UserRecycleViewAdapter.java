@@ -42,7 +42,7 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
             View view = LayoutInflater
             .from(parent.getContext())
             .inflate(R.layout.user_management_element, parent, false);
-            return new ViewHolder(view, parent);
+            return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -76,9 +76,8 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
                 .into(holder.user_avatar);
 
 
-            Context parentContext = holder.parent.getContext();
             holder.user_layout.setOnClickListener(view1 -> {
-                Intent intent = new Intent(parentContext, AddUserActivity.class);
+                Intent intent = new Intent(context, AddUserActivity.class);
                 intent.putExtra("user", entry);
                 updateUserActivity.launch(intent);
             });
@@ -94,12 +93,10 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
         private ImageView user_avatar, user_active, user_admin;
         private TextView user_name, user_email;
         private LinearLayout user_layout;
-        private ViewGroup parent;
 
-        public ViewHolder(@NonNull View itemView, ViewGroup parent) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             setControl(itemView);
-            this.parent = parent;
         }
 
         private void setControl(View itemView)

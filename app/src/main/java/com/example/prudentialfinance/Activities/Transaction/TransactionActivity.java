@@ -219,7 +219,7 @@ public class TransactionActivity extends AppCompatActivity implements ModalBotto
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                //Remove swiped item from list and notify the RecyclerView'';l;lkkjkjkjjhghffds444444444444444444444423w
+                //Remove swiped item from list and notify the RecyclerView
 
                 /*declare local variables*/
                 int position = viewHolder.getLayoutPosition();

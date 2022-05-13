@@ -33,6 +33,7 @@
 
     <ScrollView
         android:paddingTop="20sp"
+        android:id="@+id/transactionInforContent"
         android:layout_below="@+id/transactionInforAvatar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -142,13 +143,22 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/transactionInforButtonEdit"
-        style="@style/card_fragment_button_style"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="52dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="49dp"
-        android:text="@string/edit" />
 
+        android:layout_below="@id/transactionInforContent"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="102dp"
+        android:text="@string/edit"
+        style="@style/transaction_information_button_style" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/transactionInforButtonGoBack"
+
+        style="@style/transaction_information_button_style"
+        android:layout_marginTop="10dp"
+
+        android:layout_below="@id/transactionInforButtonEdit"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="603dp"
+        android:text="@string/go_back" />
 
 </RelativeLayout>
