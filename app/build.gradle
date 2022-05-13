@@ -61,4 +61,6 @@ dependencies {
     implementation "com.github.skydoves:colorpickerview:2.2.4"
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 
+    // https://mvnrepository.com/artifact/com.itextpdf/itext7-core
+    implementation 'com.itextpdf:itext7-core:7.1.14'
 }

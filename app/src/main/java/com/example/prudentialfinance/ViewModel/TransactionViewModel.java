@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
+import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionRemove;
 import com.example.prudentialfinance.Container.TransactionUpdate;
+import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -26,6 +30,7 @@ public class TransactionViewModel extends ViewModel {
     private final MutableLiveData<Integer> transactionRemoval = new MutableLiveData<>();
     private final MutableLiveData<String> transactionMessage = new MutableLiveData<>();
     private final MutableLiveData<Boolean> animation = new MutableLiveData<>();
+    private final MutableLiveData<HomeLatestTransactions> transactionCreationStatement = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> getAnimation() {
         return animation;
@@ -45,6 +50,10 @@ public class TransactionViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getTransactionRemoval() {
         return transactionRemoval;
+    }
+
+    public MutableLiveData<HomeLatestTransactions> getTransactionCreationStatement() {
+        return transactionCreationStatement;
     }
 
     /**
@@ -225,6 +234,52 @@ public class TransactionViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<TransactionUpdate> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    /**
+     * @author Phong-Kaster
+     * create statement
+     * */
+    public void createStatement(Map<String, String> headers, Map<String, String> body)
+    {
+        /*Step 1*/
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+        animation.setValue(true);
+
+        /*Step 2*/
+        Call<HomeLatestTransactions> container = api.homeLatestTransactions(headers, body);
+
+        /*Step 3*/
+        container.enqueue(new Callback<HomeLatestTransactions>() {
+            @Override
+            public void onResponse(@NonNull Call<HomeLatestTransactions> call, @NonNull Response<HomeLatestTransactions> response) {
+                if(response.isSuccessful())
+                {
+                    animation.setValue(false);
+                    HomeLatestTransactions resource = response.body();
+
+                    System.out.println("transaction view model - result" + resource.getResult());
+                    System.out.println("transaction view model - total count" + resource.getSummary().getTotalCount());
+
+                    transactionCreationStatement.postValue(resource);
+                    return;
+                }
+                if(response.errorBody() != null) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        System.out.println( jObjError );
+                    } catch (Exception e) {
+                        System.out.println( e.getMessage() );
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<HomeLatestTransactions> call, @NonNull Throwable t) {
 
             }
         });
