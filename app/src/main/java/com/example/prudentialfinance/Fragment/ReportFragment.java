@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,25 @@ import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.chart.common.listener.Event;
+import com.anychart.chart.common.listener.ListenersInterface;
+import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Column;
+import com.anychart.data.Mapping;
+import com.anychart.data.Set;
+import com.anychart.enums.Anchor;
+import com.anychart.enums.HoverMode;
+import com.anychart.enums.Position;
+import com.anychart.enums.TooltipPositionMode;
 import com.example.prudentialfinance.Container.Report.CategoryReport;
 import com.example.prudentialfinance.Container.Report.DateRange;
+import com.example.prudentialfinance.Container.Report.DateReport;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.SiteSettings;
@@ -29,7 +46,9 @@ import com.example.prudentialfinance.ViewModel.Report.ReportViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class ReportFragment extends Fragment{
 
@@ -57,6 +76,12 @@ public class ReportFragment extends Fragment{
     String typeCategory;
     String typeDate;
     DateRange dateRange;
+
+
+    //chart
+    AnyChartView anyChartView;
+    Cartesian cartesian;
+    Column column;
 
     public ReportFragment() {
     }
@@ -117,6 +142,7 @@ public class ReportFragment extends Fragment{
                     break;
             }
             viewModel.getData(headers, typeCategory, typeDate);
+            viewModel.getDataChart(headers, typeCategory, typeDate);
             return true;
         });
 
@@ -165,12 +191,16 @@ public class ReportFragment extends Fragment{
                         break;
                 }
                 viewModel.getData(headers, typeCategory, typeDate);
+                viewModel.getDataChart(headers, typeCategory, typeDate);
             }
         });
+
+
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             data.clear();
             viewModel.getData(headers, typeCategory, typeDate);
+            viewModel.getDataChart(headers, typeCategory, typeDate);
             swipeRefreshLayout.setRefreshing(false);
         });
     }
@@ -187,6 +217,9 @@ public class ReportFragment extends Fragment{
         lvCategory = view.findViewById(R.id.lvCategory);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
+        anyChartView = view.findViewById(R.id.any_chart_view);
+        anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
+
     }
 
     private void loadData() {
@@ -195,11 +228,59 @@ public class ReportFragment extends Fragment{
         typeDate = "week";
         data = new ArrayList<>();
         viewModel.getData(headers, typeCategory, typeDate);
+        viewModel.getDataChart(headers, typeCategory, typeDate);
 
         manager = new LinearLayoutManager(getActivity().getApplicationContext());
         lvCategory.setLayoutManager(manager);
 
         adapter = new CategoryReportRecycleViewAdapter(getActivity().getApplicationContext(), data, dateRange, appInfo);
         lvCategory.setAdapter(adapter);
+
+        loadDataChart();
+    }
+
+    private void loadDataChart(){
+        List<DataEntry> seriesData = new ArrayList<>();
+        seriesData.add(new ValueDataEntry("", 0));
+
+        cartesian = AnyChart.column();
+        column = cartesian.column(seriesData);
+
+        column.tooltip()
+                .titleFormat("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0d)
+                .offsetY(5d)
+                .format("số tiền: {%Value} " + appInfo.getCurrency());
+
+        cartesian.animation(true);
+        cartesian.yScale().minimum(0d);
+
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+        anyChartView.setChart(cartesian);
+
+        viewModel.getObjectChart().observe(getViewLifecycleOwner(), object -> {
+            if(object == null || object.getResult() != 1) {
+                return;
+            }
+
+            List<DataEntry> list = new ArrayList<>();
+            if(object.getIncome() != null){
+                for (DateReport item : object.getIncome()) {
+                    list.add(new ValueDataEntry(item.getName(), item.getValue()));
+                }
+                column.data(list);
+            }
+
+            if(object.getExpense() != null){
+                for (DateReport item : object.getExpense()) {
+                    list.add(new ValueDataEntry(item.getName(), item.getValue()));
+                }
+                column.data(list);
+            }
+        });
+
     }
 }

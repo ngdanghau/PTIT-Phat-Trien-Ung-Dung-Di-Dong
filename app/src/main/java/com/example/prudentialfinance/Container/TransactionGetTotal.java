@@ -1,7 +1,5 @@
 package com.example.prudentialfinance.Container;
 
-import android.support.media.ExifInterface;
-
 import com.example.prudentialfinance.ContainerModel.TransactionTotal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

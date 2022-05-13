@@ -297,6 +297,11 @@ public interface HTTPRequest {
                                           @Field("color") String color);
 
 
+    @GET("/api/home/incomevsexpense")
+    Call<IncomeVsExpenseResponse> getReportGroupByDate(@HeaderMap Map<String, String> headers,
+                                                 @Query("type") String type,
+                                                 @Query("date") String date);
+
     /***************************USER***************************/
     @GET("api/users")
     Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
@@ -337,11 +342,6 @@ public interface HTTPRequest {
     @GET("api/report/totalBalance")
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
-
-    @GET("/api/home/incomevsexpense")
-    Call<IncomeVsExpenseResponse> incomeExpenseByDate(@HeaderMap Map<String, String> headers,
-                                                      @Query("type") String type,
-                                                      @Query("date") String date);
 
     @GET("/api/home/category/income")
     Call<CategoryReportResponse> incomeByDate(@HeaderMap Map<String, String> headers,

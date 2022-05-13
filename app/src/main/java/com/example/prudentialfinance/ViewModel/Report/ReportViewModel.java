@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
+import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
 
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import retrofit2.Retrofit;
 public class ReportViewModel extends ViewModel {
 
     private MutableLiveData<CategoryReportResponse> object;
+    private MutableLiveData<IncomeVsExpenseResponse> objectChart;
     private Retrofit service;
     private MutableLiveData<Boolean> isLoading;
 
@@ -35,6 +37,14 @@ public class ReportViewModel extends ViewModel {
             object = new MutableLiveData<>();
         }
         return object;
+    }
+
+    public LiveData<IncomeVsExpenseResponse> getObjectChart()
+    {
+        if (objectChart == null) {
+            objectChart = new MutableLiveData<>();
+        }
+        return objectChart;
     }
 
     public void getData(Map<String, String> headers, String type, String date){
@@ -64,6 +74,30 @@ public class ReportViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<CategoryReportResponse> call, @NonNull Throwable t) {
                 isLoading.setValue(false);
+                object.setValue(null);
+            }
+        });
+    }
+
+    public void getDataChart(Map<String, String> headers, String type, String date){
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        Call<IncomeVsExpenseResponse> container = api.getReportGroupByDate(headers, type, date);
+        container.enqueue(new Callback<IncomeVsExpenseResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<IncomeVsExpenseResponse> call, @NonNull Response<IncomeVsExpenseResponse> response) {
+                if (response.isSuccessful()) {
+                    IncomeVsExpenseResponse resource = response.body();
+                    assert resource != null;
+                    objectChart.setValue(resource);
+                    return;
+                }
+                objectChart.setValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<IncomeVsExpenseResponse> call, @NonNull Throwable t) {
                 object.setValue(null);
             }
         });

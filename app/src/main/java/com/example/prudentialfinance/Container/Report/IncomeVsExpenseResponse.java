@@ -77,4 +77,16 @@ public class IncomeVsExpenseResponse {
     public void setMethod(String method) {
         this.method = method;
     }
+
+    @Override
+    public String toString() {
+        return "IncomeVsExpenseResponse{" +
+                "result=" + result +
+                ", msg='" + msg + '\'' +
+                ", income=" + income +
+                ", expense=" + expense +
+                ", date=" + date +
+                ", method='" + method + '\'' +
+                '}';
+    }
 }
