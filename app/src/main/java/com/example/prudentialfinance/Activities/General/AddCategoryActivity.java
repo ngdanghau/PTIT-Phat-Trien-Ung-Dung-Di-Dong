@@ -68,7 +68,11 @@ public class AddCategoryActivity extends AppCompatActivity {
         cat_color.getBackground().setColorFilter(Color.parseColor(category.getColor()), PorterDuff.Mode.SRC);
 
         if(category.getId() == 0 ){
-            topTitle.setText(getString(R.string.add_category));
+            String sub = "Thu nhập";
+            if(category.getType() == 2){
+                 sub = "Chi tiêu";
+            }
+            topTitle.setText(getString(R.string.add_category) + " " + sub);
         }else{
             topTitle.setText(getString(R.string.edit_category));
         }
