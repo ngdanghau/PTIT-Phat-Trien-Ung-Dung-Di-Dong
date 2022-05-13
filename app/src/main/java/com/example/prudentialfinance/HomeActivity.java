@@ -2,6 +2,9 @@ package com.example.prudentialfinance;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -14,8 +17,10 @@ import com.example.prudentialfinance.Fragment.MenuFragment;
 import com.example.prudentialfinance.Fragment.ReportFragment;
 import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -26,19 +31,16 @@ public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private Fragment fragment = null;
 
-    public static WeakReference<HomeActivity> weakActivity;
-
-    public static HomeActivity getmInstanceActivity() {
-        return weakActivity.get();
-    }
+    FloatingActionButton fab, budgetFab, categoryFab, goalFab;
+    Animation rotateOpen, rotateClose, fromBottom, toBottom;
+    private boolean isOpen = false;
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*instantiate weak activity*/
-        weakActivity = new WeakReference<>(HomeActivity.this);
+        setControl();
 
         /*bind data from home activity*/
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
@@ -71,9 +73,54 @@ public class HomeActivity extends AppCompatActivity {
 
 
         binding.fab.setOnClickListener(view->{
-            Fragment fragment = new MenuFragment();
-            enableFragment(fragment);
+            setVisibility();
+            setAnimation();
+            isOpen = !isOpen;
         });
+
+        binding.budgetFab.setOnClickListener(view -> {
+            System.out.println("budgetFab");
+        });
+        binding.categoryFab.setOnClickListener(view -> {
+            System.out.println("categoryFab");
+        });
+        binding.goalFab.setOnClickListener(view -> {
+            System.out.println("goalFab");
+        });
+
+    }
+
+    private void setVisibility() {
+        if(isOpen){
+            binding.budgetFab.setVisibility(View.INVISIBLE);
+            binding.categoryFab.setVisibility(View.INVISIBLE);
+            binding.goalFab.setVisibility(View.INVISIBLE);
+        }else{
+            binding.budgetFab.setVisibility(View.VISIBLE);
+            binding.categoryFab.setVisibility(View.VISIBLE);
+            binding.goalFab.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setAnimation() {
+        if(isOpen){
+            binding.budgetFab.startAnimation(toBottom);
+            binding.categoryFab.startAnimation(toBottom);
+            binding.goalFab.startAnimation(toBottom);
+            binding.fab.startAnimation(rotateClose);
+        }else{
+            binding.budgetFab.startAnimation(fromBottom);
+            binding.categoryFab.startAnimation(fromBottom);
+            binding.goalFab.startAnimation(fromBottom);
+            binding.fab.startAnimation(rotateOpen);
+        }
+    }
+
+    private void setControl() {
+        rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open);
+        rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close);
+        fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom);
+        toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom);
     }
 
     /**
@@ -93,6 +140,7 @@ public class HomeActivity extends AppCompatActivity {
         String contentType = headers.get("Content-Type");
 
         User AuthUser = ((GlobalVariable)getApplication()).getAuthUser();
+        SiteSettings appInfo = ((GlobalVariable)getApplication()).getAppInfo();
 
 
         /*Step 3*/
@@ -100,9 +148,8 @@ public class HomeActivity extends AppCompatActivity {
 
         bundle.putString("accessToken", accessToken);
         bundle.putString("contentType", contentType);
-        if(AuthUser != null){
-            bundle.putParcelable("AuthUser", AuthUser);
-        }
+        bundle.putParcelable("AuthUser", AuthUser);
+        bundle.putParcelable("appInfo", appInfo);
         fragment.setArguments(bundle);
 
 
