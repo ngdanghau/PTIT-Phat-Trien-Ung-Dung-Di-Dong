@@ -1,6 +1,9 @@
 package com.example.prudentialfinance.Model;
 
-public class SiteSettings {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SiteSettings implements Parcelable {
     private String site_name;
     private String site_description;
     private String site_keywords;
@@ -24,6 +27,29 @@ public class SiteSettings {
         this.language = language;
     }
 
+
+    protected SiteSettings(Parcel in) {
+        site_name = in.readString();
+        site_description = in.readString();
+        site_keywords = in.readString();
+        currency = in.readString();
+        logomark = in.readString();
+        logotype = in.readString();
+        site_slogan = in.readString();
+        language = in.readString();
+    }
+
+    public static final Creator<SiteSettings> CREATOR = new Creator<SiteSettings>() {
+        @Override
+        public SiteSettings createFromParcel(Parcel in) {
+            return new SiteSettings(in);
+        }
+
+        @Override
+        public SiteSettings[] newArray(int size) {
+            return new SiteSettings[size];
+        }
+    };
 
     public String getSite_name() {
         return site_name;
@@ -101,5 +127,22 @@ public class SiteSettings {
                 ", site_slogan='" + site_slogan + '\'' +
                 ", language='" + language + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(site_name);
+        parcel.writeString(site_description);
+        parcel.writeString(site_keywords);
+        parcel.writeString(currency);
+        parcel.writeString(logomark);
+        parcel.writeString(logotype);
+        parcel.writeString(site_slogan);
+        parcel.writeString(language);
     }
 }
