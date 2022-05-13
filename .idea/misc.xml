@@ -91,12 +91,12 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/spinner_account_element.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/spinner_category_element.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1890625" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/transaction_menu.xml" value="0.1" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_add_category.xml" value="0.3482789855072464" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_add_goal.xml" value="0.33" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_goal.xml" value="0.17831813576494426" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_goal_element.xml" value="0.16296296296296298" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/layout/activity_transaction_creation.xml" value="0.3482789855072464" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/transaction_menu.xml" value="0.1" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_disabled.xml" value="0.1535" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_enable.xml" value="0.1535" />
         <entry key="..\:/Users/phong/AndroidStudioProjects/PrudentialFinance/app/src/main/res/drawable/button_enabled.xml" value="0.1535" />
@@ -131,6 +131,7 @@
         <entry key="app/src/main/res/drawable/custom_input_disabled.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/home_fragment_header_style.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/ic_baseline_archive_24.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.231" />
         <entry key="app/src/main/res/drawable/ic_baseline_confirmation_number_24.xml" value="0.2005" />
@@ -150,6 +151,7 @@
         <entry key="app/src/main/res/drawable/ic_outline_format_list_bulleted.xml" value="0.231" />
         <entry key="app/src/main/res/drawable/icon_account.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/icon_bg_transparent.xml" value="0.1845" />
+        <entry key="app/src/main/res/drawable/icon_goal.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/icon_home.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/indicator.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/layout_custom_dialog.xml" value="0.2305" />
@@ -167,7 +169,7 @@
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_email_settings.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_goals.xml" value="0.2740628166160081" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_introduce.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_launch_screen.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
