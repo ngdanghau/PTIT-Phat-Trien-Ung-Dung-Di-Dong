@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.CategoryValueDataEntry;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.chart.common.listener.Event;
@@ -37,6 +38,7 @@ import com.example.prudentialfinance.Container.Report.CategoryReport;
 import com.example.prudentialfinance.Container.Report.DateRange;
 import com.example.prudentialfinance.Container.Report.DateReport;
 import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
@@ -56,7 +58,7 @@ public class ReportFragment extends Fragment{
     PopupMenu popupMenu;
     View view;
     ViewGroup container;
-    TextView topTitle;
+    TextView topTitle, total_money, title_total;
     RadioGroup rGroup;
     RadioButton checkedRadioButton;
 
@@ -141,8 +143,22 @@ public class ReportFragment extends Fragment{
                     topTitle.setText(getString(R.string.reportExpense));
                     break;
             }
+
+            switch (typeDate){
+                case "week":
+                    title_total.setText(getString(R.string.total_money_income_week));
+                    break;
+                case "month":
+                    title_total.setText(getString(R.string.total_money_income_month));
+                    break;
+                case "year":
+                    title_total.setText(getString(R.string.total_money_income_year));
+                    break;
+            }
+
             viewModel.getData(headers, typeCategory, typeDate);
             viewModel.getDataChart(headers, typeCategory, typeDate);
+            viewModel.getTotal(headers, typeCategory);
             return true;
         });
 
@@ -176,7 +192,7 @@ public class ReportFragment extends Fragment{
         });
 
         rGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-            RadioButton checked = (RadioButton) radioGroup.findViewById(i);
+            RadioButton checked = radioGroup.findViewById(i);
             boolean isChecked = checked.isChecked();
             if(isChecked){
                 switch (checked.getId()){
@@ -192,6 +208,7 @@ public class ReportFragment extends Fragment{
                 }
                 viewModel.getData(headers, typeCategory, typeDate);
                 viewModel.getDataChart(headers, typeCategory, typeDate);
+                viewModel.getTotal(headers, typeCategory);
             }
         });
 
@@ -201,13 +218,35 @@ public class ReportFragment extends Fragment{
             data.clear();
             viewModel.getData(headers, typeCategory, typeDate);
             viewModel.getDataChart(headers, typeCategory, typeDate);
+            viewModel.getTotal(headers, typeCategory);
             swipeRefreshLayout.setRefreshing(false);
+        });
+
+
+        viewModel.getObjectReport().observe(getViewLifecycleOwner(), object -> {
+            if(object == null || object.getResult() != 1){
+                return;
+            }
+            switch (typeDate){
+                case "week":
+                    total_money.setText(Helper.formatNumber(object.getData().getWeek()) + " " + appInfo.getCurrency());
+                    break;
+                case "month":
+                    total_money.setText(Helper.formatNumber(object.getData().getMonth()) + " " + appInfo.getCurrency());
+                    break;
+                case "year":
+                    total_money.setText(Helper.formatNumber(object.getData().getYear()) + " " + appInfo.getCurrency());
+                    break;
+            }
+
         });
     }
 
     private void setControl() {
         btnMenu = view.findViewById(R.id.btnMenu);
         topTitle = view.findViewById(R.id.topTitle);
+        title_total = view.findViewById(R.id.title_total);
+        total_money = view.findViewById(R.id.total_money);
         rGroup = view.findViewById(R.id.rGroup);
         checkedRadioButton = rGroup.findViewById(rGroup.getCheckedRadioButtonId());
 
@@ -219,7 +258,6 @@ public class ReportFragment extends Fragment{
 
         anyChartView = view.findViewById(R.id.any_chart_view);
         anyChartView.setProgressBar(view.findViewById(R.id.progress_bar));
-
     }
 
     private void loadData() {
@@ -229,6 +267,7 @@ public class ReportFragment extends Fragment{
         data = new ArrayList<>();
         viewModel.getData(headers, typeCategory, typeDate);
         viewModel.getDataChart(headers, typeCategory, typeDate);
+        viewModel.getTotal(headers, typeCategory);
 
         manager = new LinearLayoutManager(getActivity().getApplicationContext());
         lvCategory.setLayoutManager(manager);
@@ -241,7 +280,7 @@ public class ReportFragment extends Fragment{
 
     private void loadDataChart(){
         List<DataEntry> seriesData = new ArrayList<>();
-        seriesData.add(new ValueDataEntry("", 0));
+        seriesData.add(new CategoryValueDataEntry("", "", 0));
 
         cartesian = AnyChart.column();
         column = cartesian.column(seriesData);
@@ -261,6 +300,13 @@ public class ReportFragment extends Fragment{
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
         anyChartView.setChart(cartesian);
 
+        cartesian.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value", "category"}) {
+            @Override
+            public void onClick(Event event) {
+                System.out.println(event.getData().get("x") + "-" + event.getData().get("value") + "-" + event.getData().get("category"));
+            }
+        });
+
         viewModel.getObjectChart().observe(getViewLifecycleOwner(), object -> {
             if(object == null || object.getResult() != 1) {
                 return;
@@ -269,14 +315,14 @@ public class ReportFragment extends Fragment{
             List<DataEntry> list = new ArrayList<>();
             if(object.getIncome() != null){
                 for (DateReport item : object.getIncome()) {
-                    list.add(new ValueDataEntry(item.getName(), item.getValue()));
+                    list.add(new CategoryValueDataEntry(item.getName(), item.getDate(), item.getValue()));
                 }
                 column.data(list);
             }
 
             if(object.getExpense() != null){
                 for (DateReport item : object.getExpense()) {
-                    list.add(new ValueDataEntry(item.getName(), item.getValue()));
+                    list.add(new CategoryValueDataEntry(item.getName(), item.getDate(), item.getValue()));
                 }
                 column.data(list);
             }

@@ -9,6 +9,9 @@ import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
 import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
+import com.example.prudentialfinance.Container.TransactionGetTotal;
+
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -21,6 +24,7 @@ public class ReportViewModel extends ViewModel {
 
     private MutableLiveData<CategoryReportResponse> object;
     private MutableLiveData<IncomeVsExpenseResponse> objectChart;
+    private MutableLiveData<TransactionGetTotal> objectReport;
     private Retrofit service;
     private MutableLiveData<Boolean> isLoading;
 
@@ -45,6 +49,14 @@ public class ReportViewModel extends ViewModel {
             objectChart = new MutableLiveData<>();
         }
         return objectChart;
+    }
+
+    public LiveData<TransactionGetTotal> getObjectReport()
+    {
+        if (objectReport == null) {
+            objectReport = new MutableLiveData<>();
+        }
+        return objectReport;
     }
 
     public void getData(Map<String, String> headers, String type, String date){
@@ -98,9 +110,38 @@ public class ReportViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<IncomeVsExpenseResponse> call, @NonNull Throwable t) {
-                object.setValue(null);
+                objectChart.setValue(null);
             }
         });
     }
 
+    public void getTotal(Map<String, String> headers, String typeCategory){
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        Call<TransactionGetTotal> container;
+
+        if(typeCategory.equals("income")){
+            container = api.transactionIncomeTotal(headers);
+        }else {
+            container = api.transactionExpenseTotal(headers);
+        }
+        container.enqueue(new Callback<TransactionGetTotal>() {
+            @Override
+            public void onResponse(@NonNull Call<TransactionGetTotal> call, @NonNull Response<TransactionGetTotal> response) {
+                if (response.isSuccessful()) {
+                    TransactionGetTotal resource = response.body();
+                    assert resource != null;
+                    objectReport.setValue(resource);
+                    return;
+                }
+                objectReport.setValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TransactionGetTotal> call, @NonNull Throwable t) {
+                objectReport.setValue(null);
+            }
+        });
+    }
 }

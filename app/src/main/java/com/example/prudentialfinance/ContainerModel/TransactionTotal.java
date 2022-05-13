@@ -6,61 +6,72 @@ import com.google.gson.annotations.SerializedName;
 public class TransactionTotal {
     @SerializedName("totalbalance")
     @Expose
-    private int totalBalance ;
+    private double totalBalance;
 
     @SerializedName("month")
     @Expose
-    private int month;
+    private double month;
 
     @SerializedName("week")
     @Expose
-    private int week;
+    private double week;
 
     @SerializedName("day")
     @Expose
-    private int day;
+    private double day;
 
     @SerializedName("year")
     @Expose
-    private int year;
+    private double year;
 
-    public int getTotalBalance() {
+    public double getTotalBalance() {
         return totalBalance;
     }
 
-    public void setTotalBalance(int totalBalance) {
+    public void setTotalBalance(double totalBalance) {
         this.totalBalance = totalBalance;
     }
 
-    public int getMonth() {
+    public double getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
+    public void setMonth(double month) {
         this.month = month;
     }
 
-    public int getWeek() {
+    public double getWeek() {
         return week;
     }
 
-    public void setWeek(int week) {
+    public void setWeek(double week) {
         this.week = week;
     }
 
-    public int getDay() {
+    public double getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    public void setDay(double day) {
         this.day = day;
     }
 
-    public int getYear() {
+    public double getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(double year) {
         this.year = year;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionTotal{" +
+                "totalBalance=" + totalBalance +
+                ", month=" + month +
+                ", week=" + week +
+                ", day=" + day +
+                ", year=" + year +
+                '}';
     }
 }

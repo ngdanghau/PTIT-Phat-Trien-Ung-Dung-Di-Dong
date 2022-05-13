@@ -30,7 +30,7 @@
     <string name="create_new_account">Tạo một tài khoản</string>
     <string name="welcome_back">Xin chào, Nguyễn Thành Phong</string>
     <string name="total_remaining">Tổng số dư</string>
-    <string name="total_remaining_value">$21.129.949</string>
+    <string name="total_remaining_value">0</string>
     <string name="dashboard">Dashboard</string>
     <string name="transaction">Giao Dịch</string>
     <string name="income">Thu nhập</string>
@@ -190,5 +190,13 @@
     <string name="you_don_have_any_ATM">Bạn chưa có thẻ ATM nào</string>
     <string name="edit_transaction">Chỉnh sửa hoạt động</string>
 
+    <string name="total_money_income_week">Tổng tiền kiếm được trong tuần</string>
+    <string name="total_money_expense_week">Tổng tiền đã chi trong tuần</string>
+
+    <string name="total_money_income_month">Tổng tiền kiếm được trong tháng</string>
+    <string name="total_money_expense_month">Tổng tiền đã chi trong tháng</string>
+
+    <string name="total_money_income_year">Tổng tiền kiếm được trong năm</string>
+    <string name="total_money_expense_year">Tổng tiền đã chi trong năm</string>
 
 </resources>

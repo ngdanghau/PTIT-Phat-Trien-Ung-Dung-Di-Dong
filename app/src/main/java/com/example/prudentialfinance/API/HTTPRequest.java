@@ -364,10 +364,10 @@ public interface HTTPRequest {
 
 
     /***************************TRANSACTIONS***************************/
-    @GET("api/transactions/income/total")
+    @GET("/api/transactions/income/gettotal")
     Call<TransactionGetTotal> transactionIncomeTotal(@HeaderMap Map<String, String> headers);
 
-    @GET("api/transactions/expense/total")
+    @GET("/api/transactions/expense/gettotal")
     Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
 
     @FormUrlEncoded
