@@ -89,4 +89,17 @@ public class Login {
     public void setMethod(String method) {
         this.method = method;
     }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                "result=" + result +
+                ", msg='" + msg + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                ", data=" + data +
+                ", method='" + method + '\'' +
+                ", email='" + email + '\'' +
+                ", hash='" + hash + '\'' +
+                '}';
+    }
 }

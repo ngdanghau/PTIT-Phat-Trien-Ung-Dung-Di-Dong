@@ -42,7 +42,7 @@ public class AddUserViewModel extends ViewModel {
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        Call<UserAdd> container = api.addUser(headers, data.getFirstname(), data.getLastname(), data.getAccount_type(), data.getIs_active());
+        Call<UserAdd> container = api.addUser(headers, data.getEmail(), data.getFirstname(), data.getLastname(), data.getAccount_type(), data.getIs_active());
 
         container.enqueue(new Callback<UserAdd>() {
             @Override

@@ -5,6 +5,8 @@ import com.example.prudentialfinance.Container.AccountDelete;
 import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Container.AccountGetAll;
 import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.GoalAdd;
+import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
 import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
@@ -16,6 +18,7 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionGetTotal;
 import com.example.prudentialfinance.Container.TransactionRemove;
@@ -198,6 +201,39 @@ public interface HTTPRequest {
                                                         @Query("order[column]") String column,
                                                         @Query("order[dir]") String dir);
 
+
+    //GOAL--------------------------------------------------------------------------------------
+    @GET("api/goals")
+    Call<GoalGetAll> getGoals(@HeaderMap Map<String, String> headers,
+                              @Query("search") String search,
+                              @Query("start") int start,
+                              @Query("length") int length,
+                              @Query("order[column]") String column,
+                              @Query("order[dir]") String dir,
+                              @Query("status") int status ,
+                              @Query("dateFrom") String dateFrom,
+                              @Query("dateTo") String dateTo);
+
+    @DELETE("api/goals/{id}")
+    Call<GoalAdd> removeGoal(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("api/goals")
+    Call<GoalAdd> addNewGoal(@HeaderMap Map<String, String> headers,
+                             @Field("name") String name,
+                             @Field("balance") long balance,
+                             @Field("amount") long amount,
+                             @Field("deadline") String deadline);
+
+    @FormUrlEncoded
+    @PUT("api/goals/{id}")
+    Call<GoalAdd> editGoal(@HeaderMap Map<String, String> headers,
+                           @Path("id") int id,
+                           @Field("name") String name,
+                           @Field("balance") long balance,
+                           @Field("amount") long amount,
+                           @Field("deadline") String deadline);
+
     /***************************CATEGORY*********************************/
     @GET("api/incomecategories")
     Call<CategoryGetAll> searchIncomeCategories(@HeaderMap Map<String, String> headers,
@@ -261,6 +297,11 @@ public interface HTTPRequest {
                                           @Field("color") String color);
 
 
+    @GET("/api/home/incomevsexpense")
+    Call<IncomeVsExpenseResponse> getReportGroupByDate(@HeaderMap Map<String, String> headers,
+                                                 @Query("type") String type,
+                                                 @Query("date") String date);
+
     /***************************USER***************************/
     @GET("api/users")
     Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
@@ -276,8 +317,9 @@ public interface HTTPRequest {
     Call<UserAdd> restoreUser(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
     @FormUrlEncoded
-    @POST("api/users/new")
+    @POST("api/users")
     Call<UserAdd> addUser(@HeaderMap Map<String, String> headers,
+                          @Field("email") String email,
                           @Field("firstname") String firstname,
                           @Field("lastname") String lastname,
                           @Field("account_type") String account_type,
@@ -301,11 +343,6 @@ public interface HTTPRequest {
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
 
-    @GET("/api/home/incomevsexpense")
-    Call<IncomeVsExpenseResponse> incomeExpenseByDate(@HeaderMap Map<String, String> headers,
-                                                      @Query("type") String type,
-                                                      @Query("date") String date);
-
     @GET("/api/home/category/income")
     Call<CategoryReportResponse> incomeByDate(@HeaderMap Map<String, String> headers,
                                               @Query("date") String date);
@@ -327,10 +364,10 @@ public interface HTTPRequest {
 
 
     /***************************TRANSACTIONS***************************/
-    @GET("api/transactions/income/total")
+    @GET("/api/transactions/income/gettotal")
     Call<TransactionGetTotal> transactionIncomeTotal(@HeaderMap Map<String, String> headers);
 
-    @GET("api/transactions/expense/total")
+    @GET("/api/transactions/expense/gettotal")
     Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
 
     @FormUrlEncoded

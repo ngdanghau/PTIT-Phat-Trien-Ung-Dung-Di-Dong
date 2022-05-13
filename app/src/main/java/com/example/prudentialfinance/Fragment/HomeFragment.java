@@ -22,13 +22,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.prudentialfinance.Activities.BudgetsActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
-import com.example.prudentialfinance.Activities.General.GoalsActivity;
+import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Transaction.TransactionActivity;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.HomeActivity;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment {
     private TextView notice;
 
     private User AuthUser;
+    private SiteSettings appInfo;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TransactionRecycleViewAdapter adapter;
 
@@ -98,6 +99,7 @@ public class HomeFragment extends Fragment {
         /*get parameters from home activity sends to this fragment*/
         assert this.getArguments() != null;
         AuthUser = this.getArguments().getParcelable("AuthUser");
+        appInfo = this.getArguments().getParcelable("appInfo");
         String accessToken = this.getArguments().getString("accessToken");
         String contentType = this.getArguments().getString("contentType");
 
@@ -176,7 +178,6 @@ public class HomeFragment extends Fragment {
         recycleView  = view.findViewById(R.id.fragmentHomeRecentTransactions);
         name = view.findViewById(R.id.fragmentHomeAuthName);
 
-        avatar = view.findViewById(R.id.fragmentHomeAuthAvatar);
         remaining = view.findViewById(R.id.fragmentHomeAuthRemaining);
 
         seeAll = view.findViewById(R.id.homeFragmentSeeAll);
@@ -208,7 +209,7 @@ public class HomeFragment extends Fragment {
         /*Step 2*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {
             String value = Helper.formatNumber(aDouble);
-            remaining.setText( value + " VND" );
+            remaining.setText( value + " " + appInfo.getCurrency() );
         });
     }
 
@@ -244,18 +245,13 @@ public class HomeFragment extends Fragment {
         });
 
         buttonButtonGoal.setOnClickListener(view->{
-            Intent intent = new Intent(getActivity(), GoalsActivity.class);
+            Intent intent = new Intent(getActivity(), GoalActivity.class);
             startActivity(intent);
         });
 
         buttonBudget.setOnClickListener(view->{
             Intent intent = new Intent(getActivity(), BudgetsActivity.class);
             startActivity(intent);
-        });
-
-        avatar.setOnClickListener(view -> {
-            SettingsFragment fragment = new SettingsFragment();
-            ((HomeActivity)requireActivity()).enableFragment(fragment);
         });
 
         seeAll.setOnClickListener(view ->{
@@ -272,7 +268,7 @@ public class HomeFragment extends Fragment {
      * */
     private void setScreen()
     {
-        String fullName = "Xin chào, "+ AuthUser.getFirstname() + " " + AuthUser.getLastname();
+        String fullName = AuthUser.getFirstname() + " " + AuthUser.getLastname();
         name.setText(fullName);
     }
 }

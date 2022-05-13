@@ -1,7 +1,5 @@
 package com.example.prudentialfinance.Container;
 
-import android.support.media.ExifInterface;
-
 import com.example.prudentialfinance.ContainerModel.TransactionTotal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -41,5 +39,14 @@ public class TransactionGetTotal {
 
     public void setMethod(String method) {
         this.method = method;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionGetTotal{" +
+                "result=" + result +
+                ", data=" + data +
+                ", method='" + method + '\'' +
+                '}';
     }
 }

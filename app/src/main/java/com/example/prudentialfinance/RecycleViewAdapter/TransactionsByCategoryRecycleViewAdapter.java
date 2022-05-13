@@ -2,7 +2,9 @@ package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Activities.Transaction.TransactionInformationActivity;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.R;
 
 import java.text.DateFormat;
@@ -25,11 +29,13 @@ import java.util.Locale;
 public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapter<TransactionsByCategoryRecycleViewAdapter.ViewHolder> {
     private ArrayList<TransactionDetail> objects;
     private Context context;
+    private SiteSettings appInfo;
 
 
-    public TransactionsByCategoryRecycleViewAdapter(Context context, ArrayList<TransactionDetail> objects) {
+    public TransactionsByCategoryRecycleViewAdapter(Context context, ArrayList<TransactionDetail> objects, SiteSettings appInfo) {
         this.objects = objects;
         this.context = context;
+        this.appInfo = appInfo;
     }
 
     @NonNull
@@ -38,7 +44,7 @@ public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapt
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.activity_transactions_by_category_element, parent, false);
-        return new TransactionsByCategoryRecycleViewAdapter.ViewHolder(view, parent);
+        return new TransactionsByCategoryRecycleViewAdapter.ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -47,14 +53,21 @@ public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapt
     public void onBindViewHolder(@NonNull TransactionsByCategoryRecycleViewAdapter.ViewHolder holder, int position) {
         TransactionDetail entry = objects.get(position);
 
-        holder.transaction_amount.setText(Helper.formatNumber(entry.getAmount()));
+        holder.transaction_amount.setText(Helper.formatNumber(entry.getAmount()) + " " + appInfo.getCurrency());
         Date transaction_date = Helper.convertStringToDate(entry.getTransactiondate(), "yyyy-MM-dd");
 
-        holder.transaction_date.setText(DateFormat.getDateInstance(DateFormat.DEFAULT, new Locale("vi", "VN")).format(transaction_date));
+        String[] locales = appInfo.getLanguage().split("-");
+        if(locales.length != 2) locales = new String[]{ "en", "US"};
+        holder.transaction_date.setText(DateFormat.getDateInstance(DateFormat.DEFAULT, new Locale(locales[0], locales[1])).format(transaction_date));
 
-        Context parentContext = holder.parent.getContext();
         holder.transaction_layout.setOnClickListener(view1 -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("detail", entry);
+            bundle.putParcelable("account", entry.getAccount());
 
+            Intent intent = new Intent(context, TransactionInformationActivity.class);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
     }
 
@@ -67,12 +80,10 @@ public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapt
     {
         private TextView transaction_date, transaction_amount;
         private LinearLayout transaction_layout;
-        private ViewGroup parent;
 
-        public ViewHolder(@NonNull View itemView, ViewGroup parent) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             setControl(itemView);
-            this.parent = parent;
         }
 
         private void setControl(View itemView)

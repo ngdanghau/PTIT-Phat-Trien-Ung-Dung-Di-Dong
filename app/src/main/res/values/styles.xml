@@ -98,6 +98,7 @@
         <item name="android:button">@null</item>
         <item name="android:paddingStart">40dp</item>
         <item name="android:paddingEnd">40dp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="transaction_information_text_view_content">

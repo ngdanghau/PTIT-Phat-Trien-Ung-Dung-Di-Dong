@@ -69,7 +69,7 @@ public class SettingsFragment extends Fragment {
 
         data.add(new Setting("header", "", 0));
         data.add(new Setting("categories", "Thể loại", R.drawable.ic_baseline_category_24));
-        data.add(new Setting("goals", "Mục tiêu", R.drawable.ic_baseline_stars_24));
+        data.add(new Setting("goals", "Mục tiêu", R.drawable.icon_goal));
         data.add(new Setting("budgets", "Ngân sách chi tiêu", R.drawable.ic_baseline_archive_24));
 
 

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,11 +28,12 @@ import java.util.ArrayList;
 public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleViewAdapter.ViewHolder> {
     private ArrayList<User> objects;
     private Context context;
+    private ActivityResultLauncher<Intent> updateUserActivity;
 
-
-    public UserRecycleViewAdapter(Context context, ArrayList<User> objects) {
+    public UserRecycleViewAdapter(Context context, ArrayList<User> objects, ActivityResultLauncher<Intent> updateUserActivity) {
             this.objects = objects;
             this.context = context;
+            this.updateUserActivity = updateUserActivity;
     }
 
     @NonNull
@@ -40,7 +42,7 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
             View view = LayoutInflater
             .from(parent.getContext())
             .inflate(R.layout.user_management_element, parent, false);
-            return new ViewHolder(view, parent);
+            return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -74,11 +76,10 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
                 .into(holder.user_avatar);
 
 
-            Context parentContext = holder.parent.getContext();
             holder.user_layout.setOnClickListener(view1 -> {
-                Intent intent = new Intent(parentContext, AddUserActivity.class);
+                Intent intent = new Intent(context, AddUserActivity.class);
                 intent.putExtra("user", entry);
-                parentContext.startActivity(intent);
+                updateUserActivity.launch(intent);
             });
     }
 
@@ -92,12 +93,10 @@ public class UserRecycleViewAdapter extends RecyclerView.Adapter<UserRecycleView
         private ImageView user_avatar, user_active, user_admin;
         private TextView user_name, user_email;
         private LinearLayout user_layout;
-        private ViewGroup parent;
 
-        public ViewHolder(@NonNull View itemView, ViewGroup parent) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             setControl(itemView);
-            this.parent = parent;
         }
 
         private void setControl(View itemView)

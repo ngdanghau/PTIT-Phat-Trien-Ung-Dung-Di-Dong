@@ -34,4 +34,5 @@
     <color name="backgroundInput">#515155</color>
     <color name="backgroundWhite">#515155</color>
     <color name="backgroundBlack">#FFFFFFFF</color>
+    <color name="backgroundIcon">#d7d9e0</color>
 </resources>

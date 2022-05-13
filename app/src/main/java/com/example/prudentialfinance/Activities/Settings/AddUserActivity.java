@@ -102,6 +102,10 @@ public class AddUserActivity extends AppCompatActivity {
             }
 
             if (object.getResult() == 1) {
+                user.setId(object.getUser());
+                Intent intent = new Intent();
+                intent.putExtra("user_entry", user);
+                setResult(78, intent);
                 finish();
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
@@ -113,6 +117,7 @@ public class AddUserActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(view -> {
 
             user.setFirstname(txtFirstname.getText().toString().trim());
+            user.setEmail(txtEmail.getText().toString().trim());
             user.setLastname(txtLastname.getText().toString().trim());
             user.setAccount_type(spnAccountType.getSelectedItem().toString().toLowerCase().trim());
             user.setIs_active(swActive.isChecked());

@@ -10,17 +10,15 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.prudentialfinance.Activities.Settings.ProfileActivity;
 import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Categories.AddCategoryViewModel;
-import com.example.prudentialfinance.ViewModel.Settings.ProfileViewModel;
 import com.skydoves.colorpickerview.ColorPickerDialog;
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 
@@ -71,7 +69,11 @@ public class AddCategoryActivity extends AppCompatActivity {
         cat_color.getBackground().setColorFilter(Color.parseColor(category.getColor()), PorterDuff.Mode.SRC);
 
         if(category.getId() == 0 ){
-            topTitle.setText(getString(R.string.add_category));
+            String sub = "Thu nhập";
+            if(category.getType() == 2){
+                 sub = "Chi tiêu";
+            }
+            topTitle.setText(getString(R.string.add_category) + " " + sub);
         }else{
             topTitle.setText(getString(R.string.edit_category));
         }
@@ -85,7 +87,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                     .setPreferenceName("MyColorPickerDialog")
                     .setPositiveButton(getString(R.string.confirm),
                             (ColorEnvelopeListener) (envelope, fromUser) -> {
-                                category.setColor(envelope.getHexCode().replace("D0", "#"));
+                                category.setColor(Helper.getRealColor(envelope.getHexCode()));
                                 cat_color.getBackground().setColorFilter(envelope.getColor(), PorterDuff.Mode.SRC);
                             })
                     .setNegativeButton(getString(R.string.cancel),
@@ -101,6 +103,10 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
 
             if (object.getResult() == 1) {
+                category.setId(object.getCategory());
+                Intent intent = new Intent();
+                intent.putExtra("category_entry", category);
+                setResult(78, intent);
                 finish();
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
