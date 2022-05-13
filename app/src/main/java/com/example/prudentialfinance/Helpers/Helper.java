@@ -95,6 +95,12 @@ public class Helper {
         return formatter.format(input);
     }
 
+    public static String formatNumberForListener(int input)
+    {
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        return formatter.format(input)+"-"+input;
+    }
+
     public static String formatNumber(Double input)
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");

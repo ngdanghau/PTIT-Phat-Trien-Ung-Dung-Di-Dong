@@ -3,6 +3,7 @@ package com.example.prudentialfinance.Activities.General;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
@@ -13,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
@@ -40,7 +43,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class GoalActivity extends AppCompatActivity {
 
     GoalViewModel viewModel;
-    ImageButton Btn_back,Btn_add;
+    ImageButton Btn_back,Btn_add,Btn_more;
     LoadingDialog loadingDialog;
     Alert alert;
     Map<String, String > headers;
@@ -68,12 +71,12 @@ public class GoalActivity extends AppCompatActivity {
     private void setControl(){
         Btn_back = findViewById(R.id.Btn_back);
         Btn_add = findViewById(R.id.Btn_AddGoal);
+        Btn_more = findViewById(R.id.Btn_more);
         rViewGoal = findViewById(R.id.rv_Goals);
         swipeRefreshLayout = findViewById(R.id.refreshLayoutGoal);
     }
     @SuppressLint("NotifyDataSetChanged")
     private void setEvent(){
-
 
         Btn_back.setOnClickListener(view -> finish());
 
@@ -110,17 +113,46 @@ public class GoalActivity extends AppCompatActivity {
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             data.clear();
-            viewModel.getData(headers, "");
+            viewModel.getData(headers, "",0);
             swipeRefreshLayout.setRefreshing(false);
         });
 
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setTitle("Lọc");
+        String[] types = {"Chưa hoàn thành", "Hoàn thành","Quá hạn"};
+        b.setItems(types, new DialogInterface.OnClickListener() {
 
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                switch(which){
+                    case 0:
+                        data.clear();
+                        viewModel.getData(headers, "",1);
+                        break;
+                    case 1:
+                        data.clear();
+                        viewModel.getData(headers, "",2);
+                        break;
+                    case 2:
+                        data.clear();
+                        viewModel.getData(headers, "",3);
+                        break;
+                }
+            }
+
+        });
+
+        Btn_more.setOnClickListener(view -> {
+              b.show();
+    });
     }
 
 
     private void loadData() {
         data = new ArrayList<>();
-        viewModel.getData(headers, "");
+        viewModel.getData(headers, "",0);
 
         manager = new LinearLayoutManager(this.getApplicationContext());
         rViewGoal.setLayoutManager(manager);
@@ -209,8 +241,19 @@ public class GoalActivity extends AppCompatActivity {
 
                     System.out.println(dataFromActivity.toString());
                     addData(dataFromActivity);
+                }else  if (result.getResultCode() == 79) {
+                    // There are no request codes
+                    Intent data = result.getData();
+                    assert data != null;
+                    int id = (int) data.getSerializableExtra("id");
+                    int deposit = (int) data.getSerializableExtra("deposit");
+
+                    System.out.println("DEPOSIT : ID= "+id);
+                    deposit(id,deposit);
                 }
             });
+
+
 
     public void addData(Goal entry){
         boolean isAdd = true;
@@ -231,4 +274,13 @@ public class GoalActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+
+    public void deposit(int id,int deposit){
+        for (Goal item: data) {
+            if(item.getId()==id){
+               item.setDeposit(item.getDeposit()+deposit);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 }
