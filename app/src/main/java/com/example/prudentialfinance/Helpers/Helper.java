@@ -171,4 +171,21 @@ public class Helper {
 
         return text;
     }
+
+    /**
+     * Convert hexColor #12345678 of ColorPicker to real HexColor #123456
+     * @param  hexColor String
+     * @return string
+     */
+    public static String getRealColor(String hexColor){
+        String prefix = "#";
+        if (hexColor.length() == 6) {
+            return prefix + hexColor;
+        } else if (hexColor.length() > 6) {
+            return prefix + hexColor.substring(hexColor.length() - 6);
+        } else {
+            // whatever is appropriate in this case
+            throw new IllegalArgumentException("word has fewer than 6 characters!");
+        }
+    }
 }
