@@ -11,13 +11,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.example.prudentialfinance.Activities.Card.CardCreationActivity;
-import com.example.prudentialfinance.Activities.Card.CardIntroduceActivity;
 import com.example.prudentialfinance.Adapter.CategoryAdapter;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesExpenseFragment;
 import com.example.prudentialfinance.Fragment.Categories.CategoriesIncomeFragment;

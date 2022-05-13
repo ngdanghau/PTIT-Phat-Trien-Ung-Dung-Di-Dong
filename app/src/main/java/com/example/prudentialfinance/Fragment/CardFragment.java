@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -19,12 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.prudentialfinance.Activities.Card.CardIntroduceActivity;
+import com.example.prudentialfinance.Activities.Card.CardCreationActivity;
+import com.example.prudentialfinance.Helpers.CardModalBottomSheet;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.CardRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.CardFragmentViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +37,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements CardModalBottomSheet.ModalBottomSheetListener {
 
     private LoadingDialog loadingDialog;
     private AppCompatImageButton buttonCreate;
@@ -113,6 +115,7 @@ public class CardFragment extends Fragment {
             viewModel.instanciate(headers);
             objects.clear();
             adapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
         });
 
 
@@ -167,9 +170,22 @@ public class CardFragment extends Fragment {
     private void setEvent()
     {
         buttonCreate.setOnClickListener(view->
-        {
-            Intent intent = new Intent(getContext(), CardIntroduceActivity.class);
+                showCardModalBottomView());
+    }
+
+    private void showCardModalBottomView()
+    {
+        @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.activity_card_introduce, null);
+
+        Button button = view.findViewById(R.id.cardButtonCreate);
+        button.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), CardCreationActivity.class);
             startActivity(intent);
         });
+
+        BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
+        dialog.setContentView(view);
+        dialog.show();
     }
+
 }

@@ -20,7 +20,7 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activities.Transaction.TransactionMenuActivity"
+            android:name=".Activities.Transaction.TransactionUpdateActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Transaction.TransactionInformationActivity"
@@ -63,9 +63,6 @@
             android:exported="false" />
         <activity
             android:name=".Activities.Card.CardCreationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.Card.CardIntroduceActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Settings.EmailSettingsActivity"
