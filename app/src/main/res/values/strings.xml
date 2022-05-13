@@ -128,7 +128,13 @@
     <string name="goal_balance_tv">Số dư hiện có</string>
     <string name="goal_deadline_tv">Ngày hết hạn</string>
     <string name="goal_add">Thêm mục tiêu</string>
-
+    <string name="goal_balance">Đã có : 1.000đ</string>
+    <string name="goal_amount">10.000đ</string>
+    <string name="goal_detail">Chi tiết mục tiêu</string>
+    <string name="goal_edit">Sửa mục tiêu</string>
+    <string name="goal_deposit">Thêm tiền cho mục tiêu</string>
+    <string name="goal_export">Xuất file pdf</string>
+    <string name="goal_deposit_tv">Tiền cộng dồn</string>
 
 
     <string name="categories">Thể loại</string>

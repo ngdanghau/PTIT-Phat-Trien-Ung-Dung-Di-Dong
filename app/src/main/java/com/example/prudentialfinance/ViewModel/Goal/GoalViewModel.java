@@ -40,12 +40,12 @@ public class GoalViewModel extends ViewModel {
     }
 
 
-    public void getData(Map<String, String> headers, String query){
+    public void getData(Map<String, String> headers, String query,int status){
         isLoading.setValue(true);
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        Call<GoalGetAll> container = api.getGoals(headers, query, start, length, "id", "desc",0,"","");
+        Call<GoalGetAll> container = api.getGoals(headers, query, start, length, "id", "desc",status,"","");
         container.enqueue(new Callback<GoalGetAll>() {
             @Override
             public void onResponse(@NonNull Call<GoalGetAll> call, @NonNull Response<GoalGetAll> response) {

@@ -226,6 +226,14 @@ public interface HTTPRequest {
                              @Field("deadline") String deadline);
 
     @FormUrlEncoded
+    @POST("api/goals/{id}")
+    Call<GoalAdd> depositGoal(@HeaderMap Map<String, String> headers,
+                              @Path("id") int id,
+                             @Field("deposit") int deposit,
+                             @Field("action") String action
+                             );
+
+    @FormUrlEncoded
     @PUT("api/goals/{id}")
     Call<GoalAdd> editGoal(@HeaderMap Map<String, String> headers,
                            @Path("id") int id,
