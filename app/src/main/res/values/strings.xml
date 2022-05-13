@@ -188,6 +188,7 @@
     <string name="create_statement">Tạo sao kê</string>
     <string name="you_don_have_any_transaction">Bạn chưa có giao dịch nào !</string>
     <string name="you_don_have_any_ATM">Bạn chưa có thẻ ATM nào</string>
+    <string name="edit_transaction">Chỉnh sửa hoạt động</string>
 
 
 </resources>

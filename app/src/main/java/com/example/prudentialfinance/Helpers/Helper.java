@@ -43,6 +43,11 @@ public class Helper {
         }
     }
 
+    /**
+     * @author Phong-Kaster
+     * convert application date to server-date date
+     * For example 12-05-2022 -> 2022-05-12
+     * */
     public static String convertStringToValidDate(String input)
     {
         if( input.length() == 0)
@@ -57,6 +62,28 @@ public class Helper {
         String year = input.substring(6,10);
 
         return year + "-" + month + "-" +day;
+    }
+
+
+    /**
+     * @author Phong-Kaster
+     * convert server-side date to application date
+     * for example 2022-05-12 -> 12-05-2022
+     * */
+    public static String revertStringToReadableDate(String input)
+    {
+        if( input.length() == 0)
+        {
+            Date date = new Date();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat forrmatter =
+                    new SimpleDateFormat("yyyy-MM-dd");
+            return forrmatter.format(date);
+        }
+        String day = input.substring(8,10);
+        String month = input.substring(5,7);
+        String year = input.substring(0,4);
+
+        return day + "-" + month + "-" + year;
     }
 
     /*

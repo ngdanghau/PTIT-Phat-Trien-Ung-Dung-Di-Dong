@@ -60,6 +60,8 @@ public class AccountViewModel extends ViewModel {
 
                     assert resource != null;
                     ArrayList<Account> array = resource.getData();
+
+                    int result = resource.getResult();
                     accounts.postValue(array);
                 }
                 if(response.errorBody() != null) {
