@@ -1,32 +1,21 @@
 package com.example.prudentialfinance;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.prudentialfinance.API.HTTPRequest;
-import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Activities.Auth.LoginActivity;
-import com.example.prudentialfinance.Container.Login;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Notification;
 import com.example.prudentialfinance.Model.GlobalVariable;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import com.example.prudentialfinance.ViewModel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    private String account_type;
-    private String email;
-    private String firstname;
-    private int id;
-    private boolean is_active;
-    private String date;
+    private MainViewModel viewModel;
+    private Intent intent;
     /**
      * Activities Order Thread
      * 1. Main Activity
@@ -38,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
         GlobalVariable globalVariable = ((GlobalVariable) this.getApplication());
 
 
@@ -45,74 +36,52 @@ public class MainActivity extends AppCompatActivity {
         String accessToken  = preferences.getString("accessToken",null);
         Boolean isFirstOpen  = preferences.getBoolean("isFirstOpen",true);
 
-        Retrofit service = HTTPService.getInstance();
-        HTTPRequest api = service.create(HTTPRequest.class);
+        viewModel.getObjectLogin().observe(this, object -> {
+            if(object != null && object.getResult() == 1){
+                globalVariable.setAuthUser( object.getData() );
+                globalVariable.setAccessToken(accessToken);
+                intent = new Intent(MainActivity.this, HomeActivity.class);
+
+                String fullName =  object.getData().getFirstname() + " " + object.getData().getLastname();
+                Notification notification = new Notification();
+                notification.showNotification(MainActivity.this,
+                        "Welcome back, " + fullName + " !",
+                        "Have a nice day");
+            }else{
+                intent = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
+                preferences.edit().putString("accessToken", "").apply();
+            }
+            openActivity();
+        });
 
 
 
+        viewModel.getObjectAppInfo().observe(this, object -> {
+            if(object == null){
+                Alert alert = new Alert(this, 1);
+                alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
+                return;
+            }
+            if(object.getResult() == 1){
+                // set app info into global variable
+                globalVariable.setAppInfo(object.getData());
 
-//        /**
-//         * retrieve user's profile and relative dat. The result could happen 2 situations
-//         * First situation: had access token and go into dashboard directly
-//         * Second situation: this is first time open application and having 2 intro screen
-//         * */
-        Thread welcomeThread = new Thread()
-        {
-            @Override
-            public void run()
-            {
-                if(accessToken != null){
-                    Call<Login> container = api.profile("JWT " + accessToken);
-                    container.enqueue(new Callback<Login>() {
-                        @Override
-                        public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
-                            if(response.isSuccessful())
-                            {
-                                Login resource = response.body();
-                                assert resource != null;
-                                int result = resource.getResult();
-
-                                Intent i;
-
-                                /*First situation*/
-                                if( result == 1 )
-                                {
-                                    globalVariable.setAuthUser( resource.getData() );
-                                    globalVariable.setAccessToken(accessToken);
-                                    i = new Intent(MainActivity.this, HomeActivity.class);
-
-                                    String fullName =  resource.getData().getFirstname() + " " + resource.getData().getLastname();
-                                    Notification notification = new Notification();
-                                    notification.showNotification(MainActivity.this,
-                                            "Welcome back, " + fullName + " !",
-                                            "Have a nice day");
-                                }
-                                /*Second situation*/
-                                else{
-                                    i = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
-                                    preferences.edit().putString("accessToken", "").apply();
-                                }
-
-
-                                startActivity(i);
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Login> call, Throwable t) {
-
-                        }
-                    });
+                // check token is saved in local
+                if(accessToken != null && !accessToken.isEmpty()){
+                    viewModel.getInfoUser("JWT " + accessToken);
                 }
                 else{
-                    Intent i = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
-                    startActivity(i);
-                    finish();
+                    intent = new Intent(MainActivity.this, isFirstOpen ? IntroduceActivity.class : LoginActivity.class);
+                    openActivity();
                 }
-
             }
-        };
-        welcomeThread.start();
+        });
+
+        viewModel.getInfoSettings();
+    }
+
+    private void openActivity(){
+        startActivity(intent);
+        finish();
     }
 }
