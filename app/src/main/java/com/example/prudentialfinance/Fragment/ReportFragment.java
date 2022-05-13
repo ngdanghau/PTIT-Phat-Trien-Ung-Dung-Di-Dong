@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +16,15 @@ import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.CategoryValueDataEntry;
 import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.chart.common.listener.Event;
 import com.anychart.chart.common.listener.ListenersInterface;
 import com.anychart.charts.Cartesian;
 import com.anychart.core.cartesian.series.Column;
-import com.anychart.data.Mapping;
-import com.anychart.data.Set;
 import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
@@ -50,11 +45,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class ReportFragment extends Fragment{
 
-    ImageButton btnMenu;
+    ImageButton btnMenu, exportBtn;
     PopupMenu popupMenu;
     View view;
     ViewGroup container;
@@ -132,6 +126,10 @@ public class ReportFragment extends Fragment{
             popupMenu.show();
         });
 
+        exportBtn.setOnClickListener(view -> {
+            System.out.println("export");
+        });
+
         popupMenu.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.incomeMenu:
@@ -198,12 +196,15 @@ public class ReportFragment extends Fragment{
                 switch (checked.getId()){
                     case R.id.btnWeek:
                         typeDate = "week";
+                        title_total.setText(getString(R.string.total_money_income_week));
                         break;
                     case R.id.btnMonth:
                         typeDate = "month";
+                        title_total.setText(getString(R.string.total_money_income_month));
                         break;
                     case R.id.btnYear:
                         typeDate = "year";
+                        title_total.setText(getString(R.string.total_money_income_year));
                         break;
                 }
                 viewModel.getData(headers, typeCategory, typeDate);
@@ -244,6 +245,7 @@ public class ReportFragment extends Fragment{
 
     private void setControl() {
         btnMenu = view.findViewById(R.id.btnMenu);
+        exportBtn = view.findViewById(R.id.exportBtn);
         topTitle = view.findViewById(R.id.topTitle);
         title_total = view.findViewById(R.id.title_total);
         total_money = view.findViewById(R.id.total_money);

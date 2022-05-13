@@ -16,9 +16,17 @@
         android:layout_marginBottom="10dp"
         android:weightSum="1">
 
+        <ImageButton
+            android:layout_weight="0.01"
+            android:id="@+id/exportBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/back_btn_background"
+            android:src="@drawable/ic_baseline_arrow_downward_24"/>
+
         <TextView
             android:layout_marginLeft="40dp"
-            android:layout_weight="0.99"
+            android:layout_weight="0.98"
             android:id="@+id/topTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
