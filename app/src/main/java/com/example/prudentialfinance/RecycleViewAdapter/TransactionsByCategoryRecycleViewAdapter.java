@@ -2,7 +2,9 @@ package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prudentialfinance.Activities.Transaction.TransactionInformationActivity;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.R;
@@ -54,7 +57,13 @@ public class TransactionsByCategoryRecycleViewAdapter extends RecyclerView.Adapt
 
         Context parentContext = holder.parent.getContext();
         holder.transaction_layout.setOnClickListener(view1 -> {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("detail", entry);
+            bundle.putParcelable("account", entry.getAccount());
 
+            Intent intent = new Intent(context, TransactionInformationActivity.class);
+            intent.putExtras(bundle);
+            parentContext.startActivity(intent);
         });
     }
 
