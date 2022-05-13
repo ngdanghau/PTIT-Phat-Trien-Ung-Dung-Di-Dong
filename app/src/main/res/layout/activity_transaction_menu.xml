@@ -2,17 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".Activities.Transaction.TransactionMenuActivity">
 
     <ImageView
-        android:paddingTop="100dp"
+        android:layout_width="130dp"
+        android:layout_height="135dp"
         android:layout_gravity="center"
-        android:src="@drawable/transaction_menu_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:src="@drawable/transaction_menu_photo" />
 
     <Space
         android:layout_width="match_parent"
@@ -21,7 +20,7 @@
         style="@style/text_view_color_theme_style"
         android:layout_marginStart="40sp"
         android:layout_marginEnd="40sp"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textAlignment="center"
         android:text="@string/transaction_menu_content"
         android:layout_width="wrap_content"
@@ -29,7 +28,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="24sp"/>
+        android:layout_height="20sp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_gravity="center"
@@ -40,7 +39,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="24sp"/>
+        android:layout_height="20sp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_gravity="center"
@@ -50,7 +49,7 @@
         style="@style/button_style"/>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="24sp"/>
+        android:layout_height="20sp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_gravity="center"
@@ -59,4 +58,7 @@
         android:id="@+id/transactionMenuButtonCreateStatement"
         style="@style/button_style"/>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20sp"/>
 </LinearLayout>

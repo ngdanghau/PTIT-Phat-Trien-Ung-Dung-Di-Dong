@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
@@ -60,16 +61,17 @@ public class CardUpdateActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getAccountUpdate().observe(this, integer -> {
-            if( integer == 1)
+        viewModel.getAccountUpdateResource().observe(this, accountEdit -> {
+            int result = accountEdit.getResult();
+            if( result == 1)
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
+                NoticeDialog noticeDialog = new NoticeDialog();
+                noticeDialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
             }
             else
             {
                 NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_failed);
+                dialog.showDialogWithContent(CardUpdateActivity.this, accountEdit.getMsg() );
             }
         });
 

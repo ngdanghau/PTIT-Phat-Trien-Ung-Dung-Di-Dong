@@ -8,6 +8,7 @@ import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionRemove;
+import com.example.prudentialfinance.Container.TransactionUpdate;
 
 import org.json.JSONObject;
 
@@ -86,15 +87,13 @@ public class TransactionViewModel extends ViewModel {
                 {
                     TransactionCreate resource = response.body();
                     animation.setValue(false);
+
+
                     assert resource != null;
-                    int result = resource.getResult();
                     String msg = resource.getMsg();
                     int id = resource.getTransaction();
-                    String method = resource.getMethod();
-                    System.out.println("Transaction View Model - createTransaction - result: " + result);
-                    System.out.println("Transaction View Model - createTransaction - msg: " + msg);
-                    System.out.println("Transaction View Model - createTransaction - id: " + id);
-                    System.out.println("Transaction View Model - createTransaction - method: " + method);
+
+
                     transactionMessage.setValue(msg);
                     transactionCreation.setValue(id);
                 }
@@ -163,6 +162,69 @@ public class TransactionViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<TransactionRemove> call,
                                   @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    public void updateTransaction(Map<String ,String> headers,
+                                  int id,
+                                  String categoryId,
+                                  String accountId,
+                                  String name,
+                                  String amount,
+                                  String reference,
+                                  String transactionDate,
+                                  String type,
+                                  String description)
+    {
+        animation.setValue(true);
+        /*Step 1*/
+        Retrofit service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+
+        /*Step 2*/
+        Call<TransactionUpdate> container = api.transactionUpdate(headers, id,
+                categoryId,
+                accountId,
+                name,
+                amount,
+                reference,
+                transactionDate,
+                type,
+                description);
+
+
+        /*Step 3*/
+        container.enqueue(new Callback<TransactionUpdate>() {
+            @Override
+            public void onResponse(@NonNull Call<TransactionUpdate> call,
+                                   @NonNull Response<TransactionUpdate> response) {
+                if(response.isSuccessful())
+                {
+                    animation.setValue(false);
+                    TransactionUpdate resource = response.body();
+
+                    assert resource != null;
+                    int result = resource.getResult();
+                    String msg = resource.getMsg();
+                    transactionMessage.setValue(msg);
+                    transactionUpdate.setValue(result);
+                }
+                if(response.errorBody() != null) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        System.out.println("Transaction View Model - update transaction");
+                        System.out.println( jObjError );
+                    } catch (Exception e) {
+                        System.out.println( e.getMessage() );
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<TransactionUpdate> call, @NonNull Throwable t) {
 
             }
         });

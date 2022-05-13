@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Activities.Card.CardIntroduceActivity">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:isScrollContainer="true"
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_marginTop="20dp"
-        android:src="@drawable/card_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="266dp"
+        android:layout_height="364dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/card_content" />
 
-    <Space android:layout_height="20dp"
+    <Space android:layout_height="5dp"
         android:layout_width="match_parent"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/cardIntroduceButtonCreate"
+        android:id="@+id/cardButtonCreate"
         android:text="@string/begin_create_account"
         style="@style/card_fragment_button_style" />
 
-    <Space android:layout_height="20dp"
+    <Space android:layout_height="5dp"
         android:layout_width="match_parent"/>
 
 </LinearLayout>

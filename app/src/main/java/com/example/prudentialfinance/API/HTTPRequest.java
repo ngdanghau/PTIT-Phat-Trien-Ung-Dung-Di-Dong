@@ -19,6 +19,7 @@ import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionGetTotal;
 import com.example.prudentialfinance.Container.TransactionRemove;
+import com.example.prudentialfinance.Container.TransactionUpdate;
 import com.example.prudentialfinance.Container.Users.UserAdd;
 import com.example.prudentialfinance.Container.Users.UserGetAll;
 
@@ -160,7 +161,7 @@ public interface HTTPRequest {
     @POST("api/accounts")
     Call<AccountCreate> accountCreate(@HeaderMap Map<String, String> headers,
                                       @Field("name") String name,
-                                      @Field("balance") int balance,
+                                      @Field("balance") String balance,
                                       @Field("description") String description,
                                       @Field("accountnumber") String accountnumber);
 
@@ -347,4 +348,17 @@ public interface HTTPRequest {
     @DELETE("api/transactions/{id}")
     Call<TransactionRemove> transactionRemove(@HeaderMap Map<String, String> headers,
                                               @Path("id") String id);
+
+    @FormUrlEncoded
+    @PUT("api/transactions/{id}")
+    Call<TransactionUpdate> transactionUpdate(@HeaderMap Map<String, String> headers,
+                                              @Path("id") int id,
+                                              @Field("category_id") String categoryId,
+                                              @Field("account_id") String accountId,
+                                              @Field("name") String name,
+                                              @Field("amount") String amount,
+                                              @Field("reference") String reference,
+                                              @Field("transactiondate") String transactionDate,
+                                              @Field("type") String type,
+                                              @Field("description") String description);
 }
