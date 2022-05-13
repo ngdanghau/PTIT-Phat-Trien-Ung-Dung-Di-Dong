@@ -20,6 +20,9 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Transaction.TransactionStatementActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Transaction.TransactionUpdateActivity"
             android:exported="false" />
         <activity

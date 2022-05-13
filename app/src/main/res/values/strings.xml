@@ -177,6 +177,13 @@
     <string name="you_don_have_any_transaction">Bạn chưa có giao dịch nào !</string>
     <string name="you_don_have_any_ATM">Bạn chưa có thẻ ATM nào</string>
     <string name="edit_transaction">Chỉnh sửa hoạt động</string>
+    <string name="number_of_transactions">Số lượng giao dịch trả về</string>
+    <string name="sort">Sắp theo theo chiều</string>
+    <string name="sort_by_column">Sắp xếp theo cột</string>
+    <string name="sort_by_category">Sắp xếp theo thể loại</string>
+    <string name="fromDate">Từ ngày</string>
+    <string name="toDate">Tới ngày</string>
+    <string name="go_back">Trở về</string>
 
 
 </resources>
