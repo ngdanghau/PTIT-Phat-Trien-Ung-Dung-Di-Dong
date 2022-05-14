@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.prudentialfinance.Adapter.AccountAdapter;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Helpers.NoticeDialog;
@@ -42,7 +43,6 @@ public class TransactionUpdateActivity extends AppCompatActivity {
 
     private TransactionDetail transaction;
     private Account atm;
-    private NoticeDialog noticeDialog;
     private LoadingDialog loadingDialog;
 
 
@@ -73,6 +73,8 @@ public class TransactionUpdateActivity extends AppCompatActivity {
     private String type;
     private String description;
 
+    private Alert alert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +90,7 @@ public class TransactionUpdateActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if( bundle == null)
         {
-            noticeDialog.showDialogWithContent(this,"Đã xảy ra sự cố, vui lòng thử lại");
+            alert.showAlert("Thất bại", "Đã xảy ra sự cố", R.drawable.ic_close);
             return;
         }
 
@@ -111,14 +113,12 @@ public class TransactionUpdateActivity extends AppCompatActivity {
         transactionUpdate.observe(this, integer -> {
             if( integer > 0)
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialog(TransactionUpdateActivity.this, R.layout.activity_card_creation_successfully);
+                alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
                 refreshPreviousActivity();
             }
             else
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialogWithContent(this, transactionViewModel.getTransactionMessage().getValue() );
+                alert.showAlert("Thất bại", transactionViewModel.getTransactionMessage().getValue(), R.drawable.ic_close);
             }
         });
 
@@ -148,6 +148,8 @@ public class TransactionUpdateActivity extends AppCompatActivity {
         buttonGoBack = findViewById(R.id.transactionUpdateButtonGoBack);
         buttonSave = findViewById(R.id.transactionUpdateButtonSave);
         loadingDialog = new LoadingDialog(TransactionUpdateActivity.this);
+
+        alert = new Alert(this, 1);
     }
 
     private void setViewModel(Map<String, String> headers) {
@@ -224,6 +226,8 @@ public class TransactionUpdateActivity extends AppCompatActivity {
 
 
         });
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
     /**

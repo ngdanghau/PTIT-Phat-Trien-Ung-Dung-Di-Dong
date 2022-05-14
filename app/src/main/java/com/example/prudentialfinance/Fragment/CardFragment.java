@@ -108,8 +108,7 @@ public class CardFragment extends Fragment implements CardModalBottomSheet.Modal
         setEvent();
         setRecycleView(view);
 
-
-
+        
         viewModel.getAnimation().observe((LifecycleOwner)requireContext(), aBoolean -> {
             if( aBoolean )
             {
@@ -120,6 +119,7 @@ public class CardFragment extends Fragment implements CardModalBottomSheet.Modal
                 loadingDialog.dismissDialog();
             }
         });
+
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             viewModel.instanciate(headers);

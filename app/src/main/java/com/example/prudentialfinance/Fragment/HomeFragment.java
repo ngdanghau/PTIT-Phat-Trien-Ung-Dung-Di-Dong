@@ -117,16 +117,20 @@ public class HomeFragment extends Fragment {
         setScreen();
         setRecycleView(HomeFragment.this);
 
-        viewModel.getAnimation().observe(getViewLifecycleOwner(), aBoolean -> {
-            if( aBoolean )
-            {
-                loadingDialog.startLoadingDialog();
-            }
-            else
-            {
-                loadingDialog.dismissDialog();
-            }
-        });
+        if( objects.size() > 0)
+        {
+            viewModel.getAnimation().observe(getViewLifecycleOwner(), aBoolean -> {
+                if( aBoolean )
+                {
+                    loadingDialog.startLoadingDialog();
+                }
+                else
+                {
+                    loadingDialog.dismissDialog();
+                }
+            });
+        }
+
 
 
 

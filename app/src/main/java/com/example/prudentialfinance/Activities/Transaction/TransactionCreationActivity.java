@@ -19,9 +19,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.prudentialfinance.Adapter.AccountAdapter;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -71,6 +71,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
     private String type;
     private String description;
 
+    private Alert alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +103,11 @@ public class TransactionCreationActivity extends AppCompatActivity{
         transactionCreation.observe(this, integer -> {
             if( integer > 0)
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialog(TransactionCreationActivity.this, R.layout.activity_card_creation_successfully);
+                alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
             }
             else
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialogWithContent(this, transactionViewModel.getTransactionMessage().getValue() );
+                alert.showAlert("Thất bại", transactionViewModel.getTransactionMessage().getValue(), R.drawable.ic_close);
             }
         });
 
@@ -142,6 +141,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
         buttonSave = findViewById(R.id.transactionCreationButtonSave);
         buttonGoBack = findViewById(R.id.transactionCreationButtonGoBack);
+
+        alert = new Alert(TransactionCreationActivity.this, 1);
     }
 
     private void setViewModel(Map<String, String> headers) {
@@ -203,6 +204,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
         /*listen button goback*/
         buttonGoBack.setOnClickListener(view-> finish());
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
     /**
@@ -216,7 +219,6 @@ public class TransactionCreationActivity extends AppCompatActivity{
         accountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(TransactionCreationActivity.this,accounts.get(i).getName(), Toast.LENGTH_SHORT).show();
                 /*get account id which is selected from account spinner*/
                 accountId = String.valueOf(accounts.get(i).getId());
             }
