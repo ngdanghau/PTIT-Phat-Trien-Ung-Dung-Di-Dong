@@ -62,6 +62,10 @@ public interface HTTPRequest {
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("api/login/google")
+    Call<Login> loginGoogle(@Field("id_token") String id_token);
+
 
     //Recovery password
     @FormUrlEncoded

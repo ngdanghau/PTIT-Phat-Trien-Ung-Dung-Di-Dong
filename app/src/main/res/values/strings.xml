@@ -213,4 +213,9 @@
     <string name="total_money_income_year">Tổng tiền kiếm được trong năm</string>
     <string name="total_money_expense_year">Tổng tiền đã chi trong năm</string>
 
+
+    <!--    Config google services-->
+    <string name="server_client_id">538016634184-aqf25ouan4v2bscstec48atnh05ibv13.apps.googleusercontent.com</string>
+
+
 </resources>
