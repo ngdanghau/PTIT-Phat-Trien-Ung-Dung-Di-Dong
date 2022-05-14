@@ -23,7 +23,6 @@ import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;

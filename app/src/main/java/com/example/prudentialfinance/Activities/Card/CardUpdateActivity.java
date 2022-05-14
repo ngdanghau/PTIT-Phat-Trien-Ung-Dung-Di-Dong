@@ -8,13 +8,10 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.prudentialfinance.Container.AccountEdit;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
@@ -48,7 +45,7 @@ public class CardUpdateActivity extends AppCompatActivity {
 
 
         /*get account from recycle view*/
-        Account account = (Account) getIntent().getParcelableExtra("account");
+        Account account = getIntent().getParcelableExtra("account");
 
 
         setControl();
@@ -58,7 +55,7 @@ public class CardUpdateActivity extends AppCompatActivity {
         viewModel.getAccountRemoval().observe(CardUpdateActivity.this, s -> {
             if( s.length() > 0)
             {
-                alert.showAlert("Thông báo", s.trim(), R.drawable.ic_info);
+                alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
             }
         });
 
@@ -70,7 +67,7 @@ public class CardUpdateActivity extends AppCompatActivity {
             }
             else
             {
-                alert.showAlert("Thất bại", accountEdit.getMsg(), R.drawable.ic_close);
+                alert.showAlert(getString(R.string.alertTitle), accountEdit.getMsg(), R.drawable.ic_close);
             }
         });
 

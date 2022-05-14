@@ -12,13 +12,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.TransactionViewModel;
 
-import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +29,7 @@ public class TransactionPreviewStatementActivity extends AppCompatActivity {
     private TableLayout table;
     private String dateFrom, dateTo, keyword, quantity, column, nature;
     private User AuthUser;
+    private Alert alert;
 
     private ImageButton buttonGoBack;
 
@@ -73,6 +73,8 @@ public class TransactionPreviewStatementActivity extends AppCompatActivity {
 
         table = findViewById(R.id.transactionTable);
         buttonGoBack = findViewById(R.id.transactionPreviewButtonGoBack);
+
+        alert = new Alert(this, 1);
 
     }
 
@@ -122,8 +124,7 @@ public class TransactionPreviewStatementActivity extends AppCompatActivity {
             }
             else
             {
-                NoticeDialog noticeDialog = new NoticeDialog();
-                noticeDialog.showDialogWithContent(this, "Đã xảy ra sự cố vui lòng thử lại");
+                alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
             }
         });
     }
