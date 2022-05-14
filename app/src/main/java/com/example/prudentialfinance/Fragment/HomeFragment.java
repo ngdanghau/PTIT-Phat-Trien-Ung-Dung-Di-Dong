@@ -197,14 +197,14 @@ public class HomeFragment extends Fragment {
      * Step 3: observe data if some data changes on server then
      * the data in this fragment is also updated automatically
      * */
-    @SuppressLint({"NotifyDataSetChanged", "FragmentLiveDataObserve"})
+    @SuppressLint({"NotifyDataSetChanged", "FragmentLiveDataObserve", "SetTextI18n"})
     private void setViewModel(View view, Map<String, String> headers) {
 
         Context context = view.getContext();
 
         /*Step 1*/
         viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(HomeFragmentViewModel.class);
-        viewModel.instanciate(headers);
+//        viewModel.instanciate(headers);
 
         /*Step 2*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {

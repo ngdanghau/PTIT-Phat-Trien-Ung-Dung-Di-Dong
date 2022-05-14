@@ -10,24 +10,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
-import com.example.prudentialfinance.Fragment.MenuFragment;
 import com.example.prudentialfinance.Fragment.ReportFragment;
 import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
+import com.example.prudentialfinance.ViewModel.CardFragmentViewModel;
+import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String TAG = "HomeActivity";
     private ActivityHomeBinding binding;
     private Fragment fragment = null;
 
@@ -35,10 +35,19 @@ public class HomeActivity extends AppCompatActivity {
     Animation rotateOpen, rotateClose, fromBottom, toBottom;
     private boolean isOpen = false;
 
+    private CardFragmentViewModel cardFragmentViewModel = null;
+    private HomeFragmentViewModel homeFragmentViewModel = null;
+    private Map<String, String> headers;
+
+
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        cardFragmentViewModel = new ViewModelProvider(this).get(CardFragmentViewModel.class);
+        homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        headers = ((GlobalVariable)getApplication()).getHeaders();
 
         setControl();
 
@@ -78,15 +87,9 @@ public class HomeActivity extends AppCompatActivity {
             isOpen = !isOpen;
         });
 
-        binding.budgetFab.setOnClickListener(view -> {
-            System.out.println("budgetFab");
-        });
-        binding.categoryFab.setOnClickListener(view -> {
-            System.out.println("categoryFab");
-        });
-        binding.goalFab.setOnClickListener(view -> {
-            System.out.println("goalFab");
-        });
+        binding.budgetFab.setOnClickListener(view -> System.out.println("budgetFab"));
+        binding.categoryFab.setOnClickListener(view -> System.out.println("categoryFab"));
+        binding.goalFab.setOnClickListener(view -> System.out.println("goalFab"));
 
     }
 
@@ -156,5 +159,16 @@ public class HomeActivity extends AppCompatActivity {
         /*Step 4*/
         transaction.replace(R.id.frameLayout, fragment, "myFragment");
         transaction.commit();
+    }
+
+    /**
+     * Every single time user navigates to the another Activity and return HomeActivity
+     * The application will request to retrieve latest data.
+     * */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cardFragmentViewModel.instanciate(headers);
+        homeFragmentViewModel.instanciate(headers);
     }
 }

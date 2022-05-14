@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
@@ -49,6 +50,8 @@ public class CardFragment extends Fragment implements CardModalBottomSheet.Modal
 
     private TextView notice;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private HashMap<String, String> headers = null;
+
     public CardFragment() {
         // Required empty public constructor
     }
@@ -56,6 +59,28 @@ public class CardFragment extends Fragment implements CardModalBottomSheet.Modal
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getAccounts().observe((LifecycleOwner) requireContext(), accounts -> {
+            if( accounts.size() > 0)
+            {
+                objects.clear();
+                objects.addAll(accounts);
+                adapter.notifyDataSetChanged();
+
+                notice.setVisibility(View.GONE);
+                recycleView.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                notice.setVisibility(View.VISIBLE);
+                recycleView.setVisibility(View.GONE);
+            }
+        });
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -83,22 +108,7 @@ public class CardFragment extends Fragment implements CardModalBottomSheet.Modal
         setEvent();
         setRecycleView(view);
 
-        viewModel.getAccounts().observe((LifecycleOwner) requireContext(), accounts -> {
-            if( accounts.size() > 0)
-            {
-                objects.clear();
-                objects.addAll(accounts);
-                adapter.notifyDataSetChanged();
 
-                notice.setVisibility(View.GONE);
-                recycleView.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                notice.setVisibility(View.VISIBLE);
-                recycleView.setVisibility(View.GONE);
-            }
-        });
 
         viewModel.getAnimation().observe((LifecycleOwner)requireContext(), aBoolean -> {
             if( aBoolean )

@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        app:fabAlignmentMode="center"
         android:id="@+id/bottomAppBar"
         app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="30dp"
