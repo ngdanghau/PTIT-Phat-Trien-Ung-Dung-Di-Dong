@@ -87,9 +87,45 @@
         android:layout_gravity="center"
         android:text="@string/signUp" />
 
-    <Space
+    <TextView
+        style="@style/text_view_color_normal_style"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_marginVertical="15dp"
+        android:text="@string/or"/>
+
+    <LinearLayout
+        android:layout_marginBottom="15dp"
+        android:paddingHorizontal="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/loginSignInWithGoogle"
+            android:src="@drawable/google"
+            android:background="@drawable/back_btn_background"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/loginSignInWithFacebook"
+            android:src="@drawable/facebook"
+            android:background="@drawable/back_btn_background"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 
     <LinearLayout

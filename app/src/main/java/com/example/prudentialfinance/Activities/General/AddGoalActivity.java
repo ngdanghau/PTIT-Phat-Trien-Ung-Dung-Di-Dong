@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -20,6 +23,9 @@ import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Categories.AddCategoryViewModel;
 import com.example.prudentialfinance.ViewModel.Goal.GoalAddViewModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Map;
 
 public class AddGoalActivity extends AppCompatActivity {
@@ -29,6 +35,8 @@ public class AddGoalActivity extends AppCompatActivity {
     private AppCompatButton btn_add;
     private ImageButton btn_back;
     private Goal goal;
+    private final Calendar myCalendar= Calendar.getInstance();
+
 
 
     private GoalAddViewModel viewModel;
@@ -47,6 +55,7 @@ public class AddGoalActivity extends AppCompatActivity {
         Intent intent = getIntent();
         goal = (Goal) intent.getSerializableExtra("goal");
         setControl();
+        initializeDatePicker();
         setComponent();
         setData();
         setEvent();
@@ -75,8 +84,10 @@ public class AddGoalActivity extends AppCompatActivity {
     private void setData(){
         if(goal.getId()==0)
         {
+            btn_add.setText("Thêm mục tiêu");
             topTitle.setText("Thêm mục tiêu");
         }else{
+            btn_add.setText("Xác nhận");
             topTitle.setText("Sửa mục tiêu");
             goal_name.setText(goal.getName());
             goal_amount.setText(String.valueOf(goal.getAmount()));
@@ -99,6 +110,28 @@ public class AddGoalActivity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(goal_name.getText().toString().isEmpty())
+                {
+                    alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập tên mục tiêu.", R.drawable.ic_info);
+                    return;
+                }else if (goal_balance.getText().toString().isEmpty())
+                {
+                    alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số tiền mục tiêu.", R.drawable.ic_info);
+                    return;
+                }else if (goal_amount.getText().toString().isEmpty())
+                {
+                    alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số dư cho mục tiêu.", R.drawable.ic_info);
+                    return;
+                }else if (goal_deadline.getText().toString().isEmpty())
+                {
+                    alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập ngày hết hạn mục tiêu.", R.drawable.ic_info);
+                    return;
+                }
+                if(Integer.parseInt(goal_amount.getText().toString())<=Integer.parseInt(goal_balance.getText().toString()))
+                {
+                    alert.showAlert(getResources().getString(R.string.alertTitle), "Số dư phải nhỏ hơn mục tiêu.", R.drawable.ic_info);
+                    return;
+                }
                 goal.setName(goal_name.getText().toString());
                 goal.setAmount(Long.parseLong(goal_amount.getText().toString()));
                 goal.setBalance(Long.parseLong(goal_balance.getText().toString()));
@@ -140,5 +173,27 @@ public class AddGoalActivity extends AppCompatActivity {
                 loadingDialog.dismissDialog();
             }
         });
+    }
+
+    private void initializeDatePicker()
+    {
+        DatePickerDialog.OnDateSetListener datePicker = (view, year, month, day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH,month);
+            myCalendar.set(Calendar.DAY_OF_MONTH,day);
+
+
+            /*set text to date*/
+            String format = "yyyy-MM-dd";
+            SimpleDateFormat dateFormat=new SimpleDateFormat(format, Locale.CHINESE);
+            goal_deadline.setText(dateFormat.format(myCalendar.getTime()));
+        };
+
+        goal_deadline.setOnClickListener(view-> new DatePickerDialog(AddGoalActivity.this,
+                datePicker,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH))
+                .show());
     }
 }

@@ -36,5 +36,6 @@
     <color name="colorBlue">#33b5e5</color>
     <color name="backgroundBlack">#FF000000</color>
     <color name="backgroundIcon">#F9FAFB</color>
+    <color name="backgroundStroke">#E5E7EB</color>
 
 </resources>
