@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -33,6 +34,7 @@ import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.GoalRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.Goal.GoalViewModel;
 import com.google.android.material.snackbar.Snackbar;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,19 +44,20 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class GoalActivity extends AppCompatActivity {
 
-    GoalViewModel viewModel;
-    ImageButton Btn_back,Btn_add,Btn_more;
-    LoadingDialog loadingDialog;
-    Alert alert;
-    Map<String, String > headers;
-    ArrayList<Goal> data;
-    GoalRecycleViewAdapter adapter;
-    RecyclerView rViewGoal;
-    LinearLayoutManager manager;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private GoalViewModel viewModel;
+    private ImageButton Btn_back,Btn_add,Btn_more;
+    private SearchView searchView;
+    private LoadingDialog loadingDialog;
+    private Alert alert;
+    private Map<String, String > headers;
+    private ArrayList<Goal> data;
+    private GoalRecycleViewAdapter adapter;
+    private RecyclerView rViewGoal;
+    private LinearLayoutManager manager;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    Goal entry;
-    User authUser;
+    private Goal entry;
+    private User authUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class GoalActivity extends AppCompatActivity {
     }
 
     private void setControl(){
+        searchView = findViewById(R.id.goal_SearchView);
         Btn_back = findViewById(R.id.Btn_back);
         Btn_add = findViewById(R.id.Btn_AddGoal);
         Btn_more = findViewById(R.id.Btn_more);
@@ -77,6 +81,21 @@ public class GoalActivity extends AppCompatActivity {
     }
     @SuppressLint("NotifyDataSetChanged")
     private void setEvent(){
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                data.clear();
+                viewModel.getData(headers, query,0);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         Btn_back.setOnClickListener(view -> finish());
 
@@ -115,6 +134,7 @@ public class GoalActivity extends AppCompatActivity {
             data.clear();
             viewModel.getData(headers, "",0);
             swipeRefreshLayout.setRefreshing(false);
+            FancyToast.makeText(this,"Làm mới thành công", FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,R.drawable.ic_check,true).show();
         });
 
         AlertDialog.Builder b = new AlertDialog.Builder(this);
@@ -240,7 +260,11 @@ public class GoalActivity extends AppCompatActivity {
                     Goal dataFromActivity = (Goal) data.getSerializableExtra("goal_entry");
 
                     System.out.println(dataFromActivity.toString());
-                    addData(dataFromActivity);
+                    int check = addData(dataFromActivity);
+                    if(check==0)
+                        FancyToast.makeText(this,"Sửa thành công", FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,R.drawable.ic_check,true).show();
+                    else
+                        FancyToast.makeText(this,"Thêm thành công", FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,R.drawable.ic_check,true).show();
                 }else  if (result.getResultCode() == 79) {
                     // There are no request codes
                     Intent data = result.getData();
@@ -250,12 +274,14 @@ public class GoalActivity extends AppCompatActivity {
 
                     System.out.println("DEPOSIT : ID= "+id);
                     deposit(id,deposit);
+                    FancyToast.makeText(this,"Thêm tiền thành công", FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,R.drawable.ic_check,true).show();
                 }
             });
 
 
 
-    public void addData(Goal entry){
+    public int addData(Goal entry){
+//        Nếu là edit thì return 0, add thì return 1 - If edit then return 0, if Add return 1
         boolean isAdd = true;
         for (Goal item: data) {
             if(item.getId()==entry.getId()){
@@ -270,8 +296,14 @@ public class GoalActivity extends AppCompatActivity {
 
         if(isAdd){
             data.add(0, entry);
+            adapter.notifyDataSetChanged();
+            return 1;
+        }else{
+            adapter.notifyDataSetChanged();
+            return 0;
         }
-        adapter.notifyDataSetChanged();
+
+
     }
 
 

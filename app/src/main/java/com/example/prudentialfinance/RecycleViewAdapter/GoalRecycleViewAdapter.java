@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +63,16 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
         holder.progressBar.setProgress((int)progress);
 
 //        SET CONTROL
-
-
+        if(entry.getStatus()==1)
+        {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+        }else if(entry.getStatus()==2)
+        {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#03DAC5")));
+        }else if(entry.getStatus()==3)
+        {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+        }
 
         holder.goal_name.setText(Helper.truncate_string(entry.getName(),25, "...", true));
         holder.goal_deadline.setText(Helper.truncate_string(entry.getDeadline(), 25, "...", true));
