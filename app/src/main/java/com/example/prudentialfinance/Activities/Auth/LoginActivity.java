@@ -8,8 +8,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
 
-    SignInButton loginSignInWithGoogle;
+    ImageButton loginSignInWithGoogle, loginSignInWithFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setControl() {
         buttonSignIn = findViewById(R.id.loginButtonSignIn);
         loginSignInWithGoogle = findViewById(R.id.loginSignInWithGoogle);
+        loginSignInWithFacebook = findViewById(R.id.loginSignInWithFacebook);
         loginTextViewCreateAccount = findViewById(R.id.loginTextViewCreateAccount);
         username = findViewById(R.id.loginTextViewUsername);
         password = findViewById(R.id.loginTextViewPassword);

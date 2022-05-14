@@ -1,5 +1,7 @@
 package com.example.prudentialfinance.Activities.Auth;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,12 @@ import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Auth.SignUpViewModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -27,6 +36,11 @@ public class SignUpActivity extends AppCompatActivity {
     SignUpViewModel viewModel;
     LoadingDialog loadingDialog;
     Alert alert;
+    GlobalVariable state;
+
+    GoogleSignInOptions gso;
+    GoogleSignInClient mGoogleSignInClient;
+    ImageButton loginSignInWithGoogle, loginSignInWithFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +56,12 @@ public class SignUpActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         loadingDialog = new LoadingDialog(SignUpActivity.this);
         alert = new Alert(SignUpActivity.this, 1);
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     private void setControl() {
@@ -52,11 +72,13 @@ public class SignUpActivity extends AppCompatActivity {
         signUpPass = findViewById(R.id.signUpPass);
         signUpPassConfirm = findViewById(R.id.signUpPassConfirm);
         signUpBtn = findViewById(R.id.signUpBtn);
+        loginSignInWithGoogle = findViewById(R.id.loginSignInWithGoogle);
+        loginSignInWithFacebook = findViewById(R.id.loginSignInWithFacebook);
     }
 
     private void setAuthorizedToken( String accessToken) {
         String token = "JWT " +  accessToken.trim();
-        GlobalVariable state = ((GlobalVariable) this.getApplication());
+        state = ((GlobalVariable) this.getApplication());
 
         state.setAccessToken(token);
 
@@ -95,6 +117,8 @@ public class SignUpActivity extends AppCompatActivity {
 
             if (object.getResult() == 1) {
                 setAuthorizedToken(object.getAccessToken());
+                state.setAuthUser(object.getData());
+
                 Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
                 startActivity(intent);
 
@@ -102,8 +126,41 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             } else {
                 setAuthorizedToken("");
+                state.setAuthUser(null);
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
         });
+
+        loginSignInWithGoogle.setOnClickListener(view -> {
+            Intent intent = mGoogleSignInClient.getSignInIntent();
+            loginWithGoogle.launch(intent);
+        });
+
+    }
+
+    ActivityResultLauncher<Intent> loginWithGoogle = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    // There are no request codes
+                    Intent data = result.getData();
+                    assert data != null;
+
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleSignInResult(task);
+                }
+            });
+
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            String idToken = account.getIdToken();
+            viewModel.loginGoogle(idToken);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            alert.showAlert(getString(R.string.alertTitle), "signInResult:failed code=" + e.getStatusCode(), R.drawable.ic_close);
+        }
     }
 }

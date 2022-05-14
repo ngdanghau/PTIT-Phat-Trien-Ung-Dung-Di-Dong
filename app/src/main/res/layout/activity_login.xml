@@ -107,11 +107,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.gms.common.SignInButton
-            android:background="@color/colorBackground"
+        <ImageButton
             android:id="@+id/loginSignInWithGoogle"
+            android:src="@drawable/google"
+            android:background="@drawable/back_btn_background"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="60dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
+
 
         <Space
             android:layout_width="10dp"
@@ -119,8 +123,10 @@
 
         <ImageButton
             android:id="@+id/loginSignInWithFacebook"
-            android:src="@drawable/apple"
-            android:background="@color/colorBackground"
+            android:src="@drawable/facebook"
+            android:background="@drawable/back_btn_background"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="60dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

@@ -47,13 +47,13 @@
                     android:textSize="20sp" />
 
                 <ImageButton
+                    android:layout_width="40sp"
+                    android:layout_height="40sp"
                     android:layout_marginStart="-76dp"
                     android:layout_marginTop="30dp"
                     android:layout_toEndOf="@+id/fragmentHomeAuthName"
-                    android:layout_width="40sp"
-                    android:layout_height="40sp"
                     android:background="@drawable/transparent_background_border"
-                    android:src="@drawable/ic_baseline_notifications_active_24"/>
+                    android:src="@drawable/ic_baseline_notifications_active_24" />
 
 
             </RelativeLayout>

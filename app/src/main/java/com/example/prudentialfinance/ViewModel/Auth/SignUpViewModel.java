@@ -65,4 +65,38 @@ public class SignUpViewModel extends ViewModel {
             }
         });
     }
+
+    public void loginGoogle(String idToken) {
+        isLoading.setValue(true);
+        /*Step 1*/
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        /*Step 2*/
+        Call<Login> container = api.loginGoogle(idToken);
+        container.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+                isLoading.setValue(false);
+                if(response.isSuccessful())
+                {
+                    Login resource = response.body();
+                    assert resource != null;
+                    if(resource.getResult() == 1){
+                        object.setValue(resource);
+                    }else{
+                        object.setValue(null);
+                    }
+                }else{
+                    object.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                isLoading.setValue(false);
+                object.setValue(null);
+            }
+        });
+    }
 }
