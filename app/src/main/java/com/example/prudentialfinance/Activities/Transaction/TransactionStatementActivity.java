@@ -2,6 +2,7 @@ package com.example.prudentialfinance.Activities.Transaction;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -52,11 +53,12 @@ public class TransactionStatementActivity extends AppCompatActivity {
     private EditText toDate;
     private EditText search;
     private EditText length;
+
     private final Calendar myCalendar= Calendar.getInstance();
     private static Map<String, String > headers = null;
 
     private Spinner natureSpinner, columnSpinner;
-    private AppCompatButton buttonCreateStatement;
+    private AppCompatButton buttonCreate, buttonPreview;
 
     private String dateFrom;//  fromdate
     private String dateTo;//    todate
@@ -153,7 +155,8 @@ public class TransactionStatementActivity extends AppCompatActivity {
         natureSpinner = findViewById(R.id.sortByNatureSpinner);
         columnSpinner = findViewById(R.id.sortByColumnSpinner);
 
-        buttonCreateStatement = findViewById(R.id.buttonCreateStatement);
+        buttonCreate = findViewById(R.id.buttonCreateStatement);
+        buttonPreview = findViewById(R.id.buttonPreviewStatement);
         loadingDialog = new LoadingDialog(this);
     }
 
@@ -172,7 +175,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
         initializeColumnSpinner();
 
 
-        buttonCreateStatement.setOnClickListener(view->{
+        buttonCreate.setOnClickListener(view->{
             dateFrom = Helper.convertStringToValidDate( fromDate.getText().toString() );
             dateTo = Helper.convertStringToValidDate(   toDate.getText().toString() );
             keyword = search.getText().toString().trim();
@@ -180,6 +183,23 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
             /*nature & column is gotten from natureSpinner & columnSpinner*/
             createStatementWithBodyRequest(dateFrom, dateTo, keyword, quantity, nature, column);
+        });
+
+        buttonPreview.setOnClickListener(view->{
+            dateFrom = Helper.convertStringToValidDate( fromDate.getText().toString() );
+            dateTo = Helper.convertStringToValidDate(   toDate.getText().toString() );
+            keyword = search.getText().toString().trim();
+            quantity = length.getText().toString();
+
+            Intent intent = new Intent(TransactionStatementActivity.this, TransactionPreviewStatementActivity.class);
+            intent.putExtra("dateFrom", dateFrom);
+            intent.putExtra("dateTo",dateTo);
+            intent.putExtra("length", quantity);
+            intent.putExtra("keyword", keyword);
+            intent.putExtra("quantity", quantity);
+            intent.putExtra("column", column);
+            intent.putExtra("nature", nature);
+            startActivity(intent);
         });
     }
 
@@ -225,6 +245,9 @@ public class TransactionStatementActivity extends AppCompatActivity {
     /**
      * @author Phong-Kaster
      * create PDF file with itext 7 library
+     *
+     * open View->Tool Windows->Device File Explorer->com.example.prudential->files->transaction-statement.pdf
+     *
      * Step 1: create path to know where to store file
      * Step 2: declare neccessary variable
      * */

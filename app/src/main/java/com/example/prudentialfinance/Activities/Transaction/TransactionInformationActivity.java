@@ -2,6 +2,7 @@ package com.example.prudentialfinance.Activities.Transaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,9 @@ public class TransactionInformationActivity extends AppCompatActivity {
     private NoticeDialog noticeDialog;
 
     private TextView name,date, amount, account, category, reference, description;
-    private AppCompatButton buttonEdit, buttonGoBack;
+    private AppCompatButton buttonEdit;
+    private ImageButton buttonGoBack;
+
     public static WeakReference<TransactionInformationActivity> weakActivity;
 
     public static TransactionInformationActivity getmInstanceActivity() {
@@ -114,9 +117,7 @@ public class TransactionInformationActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        buttonGoBack.setOnClickListener(view->{
-            finish();
-        });
+        buttonGoBack.setOnClickListener(view-> finish());
     }
 
     public void setContentWithValue(String nameContent, String dateContent,

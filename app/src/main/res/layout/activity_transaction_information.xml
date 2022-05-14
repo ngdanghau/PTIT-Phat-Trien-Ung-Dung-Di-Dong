@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.Transaction.TransactionInformationActivity">
 
-    <TextView
-        android:id="@+id/transactionInforTitle"
-        style="@style/text_view_color_theme_style"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/transactionInforTitleAndButtonBack"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="38dp"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:text="@string/detail"
-        android:textSize="24sp"
-        tools:ignore="RtlSymmetry" />
+        android:layout_marginTop="20sp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/transactionInforButtonGoBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/back_btn_background"
+            android:src="@drawable/chevron_left"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/detail"
+            android:textColor="@color/colorNormalText"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/transactionInforAvatar"
         android:layout_width="88dp"
         android:layout_height="88dp"
-        android:layout_below="@+id/transactionInforTitle"
+        android:layout_below="@+id/transactionInforTitleAndButtonBack"
         android:layout_alignParentStart="true"
         android:layout_marginStart="161dp"
         android:layout_marginTop="27dp"
@@ -71,8 +84,8 @@
 
             <TextView
                 android:id="@+id/transactionInforAmountTitle"
-                android:layout_below="@+id/transactionInforDateTitle"
                 style="@style/transaction_information_text_view_title"
+                android:layout_below="@+id/transactionInforDateTitle"
                 android:text="@string/cost" />
 
             <TextView
@@ -149,16 +162,4 @@
         android:layout_marginTop="102dp"
         android:text="@string/edit"
         style="@style/transaction_information_button_style" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/transactionInforButtonGoBack"
-
-        style="@style/transaction_information_button_style"
-        android:layout_marginTop="10dp"
-
-        android:layout_below="@id/transactionInforButtonEdit"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="603dp"
-        android:text="@string/go_back" />
-
 </RelativeLayout>

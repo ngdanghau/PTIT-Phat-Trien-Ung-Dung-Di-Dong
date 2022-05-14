@@ -136,7 +136,6 @@
     <string name="goal_export">Xuất file pdf</string>
     <string name="goal_deposit_tv">Tiền cộng dồn</string>
 
-
     <string name="categories">Thể loại</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
     <string name="alertTitle">Oops!</string>
@@ -212,6 +211,17 @@
 
     <string name="total_money_income_year">Tổng tiền kiếm được trong năm</string>
     <string name="total_money_expense_year">Tổng tiền đã chi trong năm</string>
+    <string name="preview_statement">Xem trước bản in</string>
+    <string name="vietnam_central_bank">Ngân hàng Trung ương Việt Nam</string>
+    <string name="branch_prudential_bank">Chi nhánh: Prudential Bank</string>
+    <string name="preview_account_owner">Chủ tài khoản:</string>
+    <string name="preview_account_name">Tên tài khoản:</string>
+    <string name="nguyen_thanh_phong">Nguyễn Thành Phong</string>
+    <string name="email_value">phongkaster@gmail.com</string>
+    <string name="account_statement">SAO KÊ TÀI KHOẢN</string>
+    <string name="thank_you_for_using_prudential_bank_s_service">Trân trọng cảm ơn quý khách đã sử dụng dịch vụ của Prudential Bank</string>
+    <string name="prudential_bank_together_for_the_future">PRUDENTIAL BANK - Chung niềm tin vững tương lại</string>
+    <string name="note">Chú ý: Bản sao kê này của ngân hàng TMCP Prudential Bank không tạo nên bất kì cam đoan hay bảo đảm tại thời điểm hiện tại hay tương lai về các nghĩa vụ của khách hàng đã xác nhận với bên thứ ba</string>
 
 
     <!--    Config google services-->
