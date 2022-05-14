@@ -66,6 +66,10 @@ public interface HTTPRequest {
     @POST("api/login/google")
     Call<Login> loginGoogle(@Field("id_token") String id_token);
 
+    @FormUrlEncoded
+    @POST("api/login/facebook")
+    Call<Login> loginFacebook(@Field("access_token") String access_token);
+
 
     //Recovery password
     @FormUrlEncoded
@@ -410,4 +414,5 @@ public interface HTTPRequest {
                                               @Field("transactiondate") String transactionDate,
                                               @Field("type") String type,
                                               @Field("description") String description);
+
 }

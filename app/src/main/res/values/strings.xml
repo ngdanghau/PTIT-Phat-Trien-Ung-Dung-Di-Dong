@@ -217,5 +217,9 @@
     <!--    Config google services-->
     <string name="server_client_id">538016634184-aqf25ouan4v2bscstec48atnh05ibv13.apps.googleusercontent.com</string>
 
+    <!--    Config facebook services-->
+    <string name="facebook_app_id">477715650706961</string>
+    <string name="fb_login_protocol_scheme">fb477715650706961</string>
+    <string name="facebook_client_token">b4344548855c73b2adc72bbe3917b1d7</string>
 
 </resources>
