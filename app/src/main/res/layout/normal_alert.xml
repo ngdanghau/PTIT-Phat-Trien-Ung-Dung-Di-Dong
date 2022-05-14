@@ -53,8 +53,8 @@
 
     <ImageView
         android:id="@+id/iconAlert"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:background="@drawable/bg_alert_success"
         android:src="@drawable/ic_check"
         android:padding="8dp"
