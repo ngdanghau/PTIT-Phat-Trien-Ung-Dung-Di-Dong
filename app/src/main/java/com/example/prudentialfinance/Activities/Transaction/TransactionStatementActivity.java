@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -69,7 +70,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
     private final HashMap<String, String> natureOptions = new HashMap<>();
     private final HashMap<String, String> columnOptions = new HashMap<>();
-
+    private ImageButton buttonGoBack;
     private TransactionViewModel transactionViewModel = null;
     private Alert alert;
     private LoadingDialog loadingDialog;
@@ -159,6 +160,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
         buttonCreate = findViewById(R.id.buttonCreateStatement);
         buttonPreview = findViewById(R.id.buttonPreviewStatement);
         alert = new Alert(this, 1);
+        loadingDialog = new LoadingDialog(this);
     }
 
 
@@ -175,6 +177,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
         initializeNatureSpinner();
         initializeColumnSpinner();
 
+        buttonGoBack.setOnClickListener(view -> finish());
 
         buttonCreate.setOnClickListener(view->{
             dateFrom = Helper.convertStringToValidDate( fromDate.getText().toString() );
