@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.Activities.General.AddGoalActivity;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.R;
 
@@ -49,13 +50,13 @@ public class GoalDetailActivity extends AppCompatActivity {
 
     private void setData(Goal goal){
         progress.setMax(100);
-        int percent = (int)(goal.getBalance()*100 /goal.getAmount());
+        int percent = (int)((goal.getBalance()+goal.getDeposit())*100 /goal.getAmount());
         progress.setProgress(percent);
         goal_name.setText(goal.getName());
-        goal_amount.setText(String.valueOf(goal.getAmount()));
+        goal_amount.setText(Helper.formatNumber((int)goal.getAmount()));
         goal_deadline.setText(goal.getDeadline());
-        goal_balance.setText(String.valueOf(goal.getBalance()));
-        goal_deposit.setText(String.valueOf(goal.getDeposit()));
+        goal_balance.setText(Helper.formatNumber((int)goal.getBalance()));
+        goal_deposit.setText(Helper.formatNumber((int)goal.getDeposit()));
 
     }
 
