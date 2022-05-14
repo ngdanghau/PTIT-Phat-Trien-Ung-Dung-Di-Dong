@@ -102,18 +102,8 @@ public class TransactionViewModel extends ViewModel {
                     String msg = resource.getMsg();
                     int id = resource.getTransaction();
 
-
                     transactionMessage.setValue(msg);
                     transactionCreation.setValue(id);
-                }
-                if(response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        System.out.println("Transaction View Model - createTransaction");
-                        System.out.println( jObjError );
-                    } catch (Exception e) {
-                        System.out.println( e.getMessage() );
-                    }
                 }
             }
 
@@ -148,30 +138,20 @@ public class TransactionViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<TransactionRemove> call,
                                    @NonNull Response<TransactionRemove> response) {
+                animation.setValue(false);
                 if(response.isSuccessful())
                 {
-                    animation.setValue(false);
                     TransactionRemove resource = response.body();
-
                     assert resource != null;
                     int result = resource.getResult();
                     transactionRemoval.setValue(result);
-                }
-                if(response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        System.out.println("Transaction View Model - eradicateTransaction");
-                        System.out.println( jObjError );
-                    } catch (Exception e) {
-                        System.out.println( e.getMessage() );
-                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TransactionRemove> call,
                                   @NonNull Throwable t) {
-
+                animation.setValue(false);
             }
         });
     }
@@ -210,9 +190,9 @@ public class TransactionViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<TransactionUpdate> call,
                                    @NonNull Response<TransactionUpdate> response) {
+                animation.setValue(false);
                 if(response.isSuccessful())
                 {
-                    animation.setValue(false);
                     TransactionUpdate resource = response.body();
 
                     assert resource != null;
@@ -221,20 +201,11 @@ public class TransactionViewModel extends ViewModel {
                     transactionMessage.setValue(msg);
                     transactionUpdate.setValue(result);
                 }
-                if(response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        System.out.println("Transaction View Model - update transaction");
-                        System.out.println( jObjError );
-                    } catch (Exception e) {
-                        System.out.println( e.getMessage() );
-                    }
-                }
             }
 
             @Override
             public void onFailure(@NonNull Call<TransactionUpdate> call, @NonNull Throwable t) {
-
+                animation.setValue(true);
             }
         });
     }
@@ -261,26 +232,17 @@ public class TransactionViewModel extends ViewModel {
                 {
                     animation.setValue(false);
                     HomeLatestTransactions resource = response.body();
-
-                    System.out.println("transaction view model - result" + resource.getResult());
-                    System.out.println("transaction view model - total count" + resource.getSummary().getTotalCount());
-
                     transactionCreationStatement.postValue(resource);
                     return;
-                }
-                if(response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        System.out.println( jObjError );
-                    } catch (Exception e) {
-                        System.out.println( e.getMessage() );
-                    }
+                }else{
+                    transactionCreationStatement.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<HomeLatestTransactions> call, @NonNull Throwable t) {
-
+                animation.setValue(false);
+                transactionCreationStatement.postValue(null);
             }
         });
     }

@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    <img src="./photo/cover.jpg" width="1280" />
+    <img src="./photo/bliz.jpg" width="1280" />
 </p>
 
 
@@ -27,7 +27,7 @@
 - [**Timeline**](#timeline)
   - [**Phase 1: 28-04-2022 to 03-05-2022**](#phase-1-28-04-2022-to-03-05-2022)
   - [**Phase 2: 03-05-2022 to 10-05-2022**](#phase-2-03-05-2022-to-10-05-2022)
-  - [**Phase 3: xx-xx-2022 to xx-xx-2022**](#phase-3-xx-xx-2022-to-xx-xx-2022)
+  - [**Phase 3: 10-05-2022 to 15-05-2022**](#phase-3-10-05-2022-to-15-05-2022)
 - [**Our Team**](#our-team)
 - [**Made with 💘 and JAVA <img src="https://www.vectorlogo.zone/logos/java/java-horizontal.svg" width="60">**](#made-with--and-java-)
 
@@ -257,8 +257,17 @@ Các activity là các màn hình chủ chốt và quan trọng của dự án n
 
 - Thêm menu tùy chọn đến các chức năng
 
-## [**Phase 3: xx-xx-2022 to xx-xx-2022**](#phase-3-xx-xx-2022-to-xx-xx-2022)
+## [**Phase 3: 10-05-2022 to 15-05-2022**](#phase-3-10-05-2022-to-15-05-2022)
 
+- Sử dụng Modal Bottom Sheet thay các Activity lựa chọn
+
+- Tối ưu hóa trải nghiệm người dùng
+
+- Tinh chỉnh lại cách các Live Data được làm mới 
+
+- Chức năng tạo kê
+
+- Sử dụng Extending Floating Button để tạo menu dạng bong bóng
 
 # [**Our Team**](#our-team)
 

@@ -8,12 +8,10 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.prudentialfinance.Container.AccountEdit;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
@@ -31,6 +29,7 @@ public class CardUpdateActivity extends AppCompatActivity {
     private CardViewModel viewModel;
 
     LoadingDialog loadingDialog;
+    private Alert alert;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -46,7 +45,7 @@ public class CardUpdateActivity extends AppCompatActivity {
 
 
         /*get account from recycle view*/
-        Account account = (Account) getIntent().getParcelableExtra("account");
+        Account account = getIntent().getParcelableExtra("account");
 
 
         setControl();
@@ -56,9 +55,7 @@ public class CardUpdateActivity extends AppCompatActivity {
         viewModel.getAccountRemoval().observe(CardUpdateActivity.this, s -> {
             if( s.length() > 0)
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialogWithContent(CardUpdateActivity.this, s.trim());
-                finish();
+                alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
             }
         });
 
@@ -66,13 +63,11 @@ public class CardUpdateActivity extends AppCompatActivity {
             int result = accountEdit.getResult();
             if( result == 1)
             {
-                NoticeDialog noticeDialog = new NoticeDialog();
-                noticeDialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
+                alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
             }
             else
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialogWithContent(CardUpdateActivity.this, accountEdit.getMsg() );
+                alert.showAlert(getString(R.string.alertTitle), accountEdit.getMsg(), R.drawable.ic_close);
             }
         });
 
@@ -86,6 +81,8 @@ public class CardUpdateActivity extends AppCompatActivity {
                 loadingDialog.dismissDialog();
             }
         });
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
 
@@ -105,6 +102,7 @@ public class CardUpdateActivity extends AppCompatActivity {
         cardBank = findViewById(R.id.cardUpdateCardBank);
 
         loadingDialog = new LoadingDialog(CardUpdateActivity.this);
+        alert = new Alert(this, 1);
     }
 
     private void setViewModel() {
@@ -156,5 +154,7 @@ public class CardUpdateActivity extends AppCompatActivity {
             int id = account.getId();
             viewModel.deleteAccount(headers, id);
         });
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 }

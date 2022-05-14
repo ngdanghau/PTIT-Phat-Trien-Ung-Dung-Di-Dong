@@ -2,7 +2,6 @@ package com.example.prudentialfinance.Activities.Card;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -10,9 +9,8 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.prudentialfinance.Container.AccountCreate;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.CardViewModel;
@@ -27,6 +25,7 @@ public class  CardCreationActivity extends AppCompatActivity {
     private CardViewModel viewModel;
     private Map<String, String > headers = null;
     private LoadingDialog loadingDialog;
+    private Alert alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +60,7 @@ public class  CardCreationActivity extends AppCompatActivity {
     private void setViewModel() {
         viewModel = new ViewModelProvider(this).get(CardViewModel.class);
         loadingDialog = new LoadingDialog(CardCreationActivity.this);
+        alert = new Alert(this, 1);
     }
 
     /**
@@ -90,13 +90,11 @@ public class  CardCreationActivity extends AppCompatActivity {
             int result = accountCreate.getResult();
             if( result == 1)
             {
-                NoticeDialog noticeDialog = new NoticeDialog();
-                noticeDialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_successfully);
+                alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
             }
             else
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialogWithContent(this, accountCreate.getMsg() );
+                alert.showAlert("Thất bại", accountCreate.getMsg(), R.drawable.ic_close);
             }
         });
 
@@ -110,6 +108,8 @@ public class  CardCreationActivity extends AppCompatActivity {
                 loadingDialog.dismissDialog();
             }
         });
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
 

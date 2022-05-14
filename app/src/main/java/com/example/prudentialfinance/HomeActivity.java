@@ -1,6 +1,7 @@
 package com.example.prudentialfinance;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,11 +13,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.prudentialfinance.Activities.General.AddGoalActivity;
+import com.example.prudentialfinance.Activities.General.CategoriesActivity;
+import com.example.prudentialfinance.Activities.General.GoalActivity;
+import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
 import com.example.prudentialfinance.Fragment.ReportFragment;
 import com.example.prudentialfinance.Fragment.SettingsFragment;
 import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.ViewModel.CardFragmentViewModel;
@@ -31,7 +37,6 @@ public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private Fragment fragment = null;
 
-    FloatingActionButton fab, budgetFab, categoryFab, goalFab;
     Animation rotateOpen, rotateClose, fromBottom, toBottom;
     private boolean isOpen = false;
 
@@ -87,18 +92,32 @@ public class HomeActivity extends AppCompatActivity {
             isOpen = !isOpen;
         });
 
+        binding.transactionFab.setOnClickListener(view -> {
+            Intent intent = new Intent(this, TransactionCreationActivity.class);
+            intent.putExtra("type", "1");
+            startActivity(intent);
+        });
         binding.budgetFab.setOnClickListener(view -> System.out.println("budgetFab"));
-        binding.categoryFab.setOnClickListener(view -> System.out.println("categoryFab"));
-        binding.goalFab.setOnClickListener(view -> System.out.println("goalFab"));
+        binding.categoryFab.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CategoriesActivity.class);
+            startActivity(intent);
+        });
+        binding.goalFab.setOnClickListener(view -> {
+            Intent intent = new Intent (this, AddGoalActivity.class);
+            intent.putExtra("goal", new Goal(0));
+            startActivity(intent);
+        });
 
     }
 
     private void setVisibility() {
         if(isOpen){
             binding.budgetFab.setVisibility(View.INVISIBLE);
+            binding.transactionFab.setVisibility(View.INVISIBLE);
             binding.categoryFab.setVisibility(View.INVISIBLE);
             binding.goalFab.setVisibility(View.INVISIBLE);
         }else{
+            binding.transactionFab.setVisibility(View.VISIBLE);
             binding.budgetFab.setVisibility(View.VISIBLE);
             binding.categoryFab.setVisibility(View.VISIBLE);
             binding.goalFab.setVisibility(View.VISIBLE);
@@ -107,11 +126,13 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setAnimation() {
         if(isOpen){
+            binding.transactionFab.startAnimation(toBottom);
             binding.budgetFab.startAnimation(toBottom);
             binding.categoryFab.startAnimation(toBottom);
             binding.goalFab.startAnimation(toBottom);
             binding.fab.startAnimation(rotateClose);
         }else{
+            binding.transactionFab.startAnimation(fromBottom);
             binding.budgetFab.startAnimation(fromBottom);
             binding.categoryFab.startAnimation(fromBottom);
             binding.goalFab.startAnimation(fromBottom);

@@ -29,6 +29,7 @@ import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Goal;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.GoalRecycleViewAdapter;
@@ -61,9 +62,9 @@ public class GoalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
+
         setControl();
         loadComponent();
         setEvent();
@@ -78,10 +79,11 @@ public class GoalActivity extends AppCompatActivity {
         Btn_more = findViewById(R.id.Btn_more);
         rViewGoal = findViewById(R.id.rv_Goals);
         swipeRefreshLayout = findViewById(R.id.refreshLayoutGoal);
+
     }
+  
     @SuppressLint("NotifyDataSetChanged")
     private void setEvent(){
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -97,6 +99,7 @@ public class GoalActivity extends AppCompatActivity {
             }
         });
 
+    
         Btn_back.setOnClickListener(view -> finish());
 
         Btn_add.setOnClickListener(view ->{
@@ -107,7 +110,7 @@ public class GoalActivity extends AppCompatActivity {
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
-        viewModel.isLoading().observe((LifecycleOwner) this, isLoading -> {
+        viewModel.isLoading().observe(this, isLoading -> {
             if(isLoading){
                 loadingDialog.startLoadingDialog();
             }else{
@@ -115,7 +118,7 @@ public class GoalActivity extends AppCompatActivity {
             }
         });
 
-        viewModel.getObject().observe((LifecycleOwner) this, object -> {
+        viewModel.getObject().observe( this, object -> {
             if(object == null){
                 alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
@@ -130,43 +133,37 @@ public class GoalActivity extends AppCompatActivity {
             }
         });
 
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setTitle("Lọc");
+        String[] types = {"Chưa hoàn thành", "Hoàn thành","Quá hạn"};
+        b.setItems(types, (dialog, which) -> {
+            dialog.dismiss();
+            switch(which){
+                case 0:
+                    data.clear();
+                    viewModel.getData(headers, "",1);
+                    break;
+                case 1:
+                    data.clear();
+                    viewModel.getData(headers, "",2);
+                    break;
+                case 2:
+                    data.clear();
+                    viewModel.getData(headers, "",3);
+                    break;
+            }
+        });
+
+        Btn_more.setOnClickListener(view -> {
+              b.show();
+        });
+
         swipeRefreshLayout.setOnRefreshListener(() -> {
             data.clear();
             viewModel.getData(headers, "",0);
             swipeRefreshLayout.setRefreshing(false);
             FancyToast.makeText(this,"Làm mới thành công", FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,R.drawable.ic_check,true).show();
         });
-
-        AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setTitle("Lọc");
-        String[] types = {"Chưa hoàn thành", "Hoàn thành","Quá hạn"};
-        b.setItems(types, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.dismiss();
-                switch(which){
-                    case 0:
-                        data.clear();
-                        viewModel.getData(headers, "",1);
-                        break;
-                    case 1:
-                        data.clear();
-                        viewModel.getData(headers, "",2);
-                        break;
-                    case 2:
-                        data.clear();
-                        viewModel.getData(headers, "",3);
-                        break;
-                }
-            }
-
-        });
-
-        Btn_more.setOnClickListener(view -> {
-              b.show();
-    });
     }
 
 
@@ -174,25 +171,21 @@ public class GoalActivity extends AppCompatActivity {
         data = new ArrayList<>();
         viewModel.getData(headers, "",0);
 
-        manager = new LinearLayoutManager(this.getApplicationContext());
+        manager = new LinearLayoutManager(this);
         rViewGoal.setLayoutManager(manager);
 
-        adapter = new GoalRecycleViewAdapter(this.getApplicationContext(), data, addGoalActivity);
+        adapter = new GoalRecycleViewAdapter(this, data, addGoalActivity, appInfo);
         rViewGoal.setAdapter(adapter);
 
     }
 
     private void loadComponent() {
         headers = ((GlobalVariable)getApplication()).getHeaders();
-        String accessToken = headers.get("Authorization");
-        String contentType = headers.get("Content-Type");
-        User AuthUser = ((GlobalVariable)getApplication()).getAuthUser();
+        authUser = ((GlobalVariable)getApplication()).getAuthUser();
+        appInfo = ((GlobalVariable)getApplication()).getAppInfo();
         loadingDialog = new LoadingDialog(GoalActivity.this);
         alert = new Alert(this, 1);
         viewModel = new ViewModelProvider(this).get(GoalViewModel.class);
-
-
-
     }
 
     private void setSwipe() {
@@ -221,12 +214,9 @@ public class GoalActivity extends AppCompatActivity {
                                 }
                             }
                         })
-                        .setAction("Khôi phục", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                data.add(position, entry);
-                                adapter.notifyItemInserted(position);
-                            }
+                        .setAction("Khôi phục", view -> {
+                            data.add(position, entry);
+                            adapter.notifyItemInserted(position);
                         }).show();
             }
 
@@ -243,10 +233,6 @@ public class GoalActivity extends AppCompatActivity {
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(rViewGoal);
-
-
-
-
     }
 
     // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed

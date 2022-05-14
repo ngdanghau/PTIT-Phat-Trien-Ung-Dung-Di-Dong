@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
 
@@ -19,7 +19,7 @@ public class TransactionInformationActivity extends AppCompatActivity {
 
     private TransactionDetail transaction;
     private Account atm;
-    private NoticeDialog noticeDialog;
+    private Alert alert;
 
     private TextView name,date, amount, account, category, reference, description;
     private AppCompatButton buttonEdit;
@@ -45,7 +45,7 @@ public class TransactionInformationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if( bundle == null)
         {
-            noticeDialog.showDialogWithContent(this,"Đã xảy ra sự cố, vui lòng thử lại");
+            alert.showAlert("Thất bại", "Đã xảy ra sự cố", R.drawable.ic_close);
             return;
         }
 
@@ -71,6 +71,8 @@ public class TransactionInformationActivity extends AppCompatActivity {
         description = findViewById(R.id.transactionInforDescriptionContent);
         buttonEdit = findViewById(R.id.transactionInforButtonEdit);
         buttonGoBack = findViewById(R.id.transactionInforButtonGoBack);
+
+        alert = new Alert(this, 1);
     }
 
     private void setContent()
@@ -118,6 +120,8 @@ public class TransactionInformationActivity extends AppCompatActivity {
         });
 
         buttonGoBack.setOnClickListener(view-> finish());
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
     public void setContentWithValue(String nameContent, String dateContent,
