@@ -21,19 +21,9 @@ import retrofit2.Retrofit;
 
 public class LoginViewModel extends ViewModel {
 
-    private static final String TAG = "LoginViewModel";
-    private MutableLiveData<Login> object;
+    private MutableLiveData<Login> object = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     private Retrofit service;
-    private String accessToken;
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
     /**
      * https://codingwithmitch.com/blog/getting-started-with-mvvm-android/#view-models
      *
@@ -51,61 +41,120 @@ public class LoginViewModel extends ViewModel {
      * */
     public LiveData<Login> getObject()
     {
+        if (object == null) {
+            object = new MutableLiveData<>();
+        }
         return this.object;
     }
 
+    public LiveData<Boolean> isLoading() {
+        if (isLoading == null) {
+            isLoading = new MutableLiveData<>();
+        }
+        return isLoading;
+    }
 
-
-
-
-    /**
-     * @author Phong-Kaster
-     * Step 1: create connect to our server by Retrofit 2. Here it is call HTTP Server
-     *
-     * Step 2: call api
-     *
-     * Step 3: wait and catch retured data and use it
-     *
-     * */
-    public void login(Context context, String username, String password)
+    public void login(String username, String password)
     {
+        isLoading.setValue(true);
         /*Step 1*/
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
-
 
         /*Step 2*/
         Call<Login> container = api.login(username, password);
         container.enqueue(new Callback<Login>() {
             @Override
             public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+                isLoading.setValue(false);
                 if(response.isSuccessful())
                 {
                     Login resource = response.body();
                     assert resource != null;
-                    int result = resource.getResult();
-
-                    if( result == 1 )
-                    {
-                        setAccessToken( resource.getAccessToken() );
-
-                        Intent intent = new Intent(context, HomeActivity.class);
-                        context.startActivity(intent);
-                        Toast.makeText(context, "Đăng nhập thành công !", Toast.LENGTH_LONG).show();
+                    if(resource.getResult() == 1){
+                        object.setValue(resource);
+                    }else{
+                        object.setValue(null);
                     }
-                    else
-                    {
-                        Toast.makeText(context, "Tài khoản hoặc mật khẩu không chính xác !", Toast.LENGTH_LONG).show();
-                    }
+                }else{
+                    object.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
-
+                isLoading.setValue(false);
+                object.setValue(null);
             }
         });
 
     }
 
+    public void loginGoogle(String idToken) {
+        isLoading.setValue(true);
+        /*Step 1*/
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        /*Step 2*/
+        Call<Login> container = api.loginGoogle(idToken);
+        container.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+                isLoading.setValue(false);
+                if(response.isSuccessful())
+                {
+                    Login resource = response.body();
+                    assert resource != null;
+                    if(resource.getResult() == 1){
+                        object.setValue(resource);
+                    }else{
+                        object.setValue(null);
+                    }
+                }else{
+                    object.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                isLoading.setValue(false);
+                object.setValue(null);
+            }
+        });
+    }
+
+    public void loginFacebook(String access_token) {
+        isLoading.setValue(true);
+        /*Step 1*/
+        this.service = HTTPService.getInstance();
+        HTTPRequest api = service.create(HTTPRequest.class);
+
+        /*Step 2*/
+        Call<Login> container = api.loginFacebook(access_token);
+        container.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
+                isLoading.setValue(false);
+                if(response.isSuccessful())
+                {
+                    Login resource = response.body();
+                    assert resource != null;
+                    if(resource.getResult() == 1){
+                        object.setValue(resource);
+                    }else{
+                        object.setValue(null);
+                    }
+                }else{
+                    object.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                isLoading.setValue(false);
+                object.setValue(null);
+            }
+        });
+    }
 }

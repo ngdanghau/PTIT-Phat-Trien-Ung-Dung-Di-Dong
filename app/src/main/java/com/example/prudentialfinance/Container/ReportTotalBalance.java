@@ -37,4 +37,13 @@ public class ReportTotalBalance {
     public void setMethod(String method) {
         this.method = method;
     }
+
+    @Override
+    public String toString() {
+        return "ReportTotalBalance{" +
+                "result=" + result +
+                ", month=" + month +
+                ", method='" + method + '\'' +
+                '}';
+    }
 }

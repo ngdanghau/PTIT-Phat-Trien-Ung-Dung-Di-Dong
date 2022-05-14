@@ -62,6 +62,14 @@ public interface HTTPRequest {
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("api/login/google")
+    Call<Login> loginGoogle(@Field("id_token") String id_token);
+
+    @FormUrlEncoded
+    @POST("api/login/facebook")
+    Call<Login> loginFacebook(@Field("access_token") String access_token);
+
 
     //Recovery password
     @FormUrlEncoded
@@ -224,6 +232,14 @@ public interface HTTPRequest {
                              @Field("balance") long balance,
                              @Field("amount") long amount,
                              @Field("deadline") String deadline);
+
+    @FormUrlEncoded
+    @POST("api/goals/{id}")
+    Call<GoalAdd> depositGoal(@HeaderMap Map<String, String> headers,
+                              @Path("id") int id,
+                             @Field("deposit") int deposit,
+                             @Field("action") String action
+                             );
 
     @FormUrlEncoded
     @PUT("api/goals/{id}")
@@ -398,4 +414,5 @@ public interface HTTPRequest {
                                               @Field("transactiondate") String transactionDate,
                                               @Field("type") String type,
                                               @Field("description") String description);
+
 }

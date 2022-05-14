@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:orientation="vertical"
-    tools:context=".Activities.General.AddCategoryActivity"
+    tools:context=".Activities.General.AddGoalActivity"
     android:padding="20dp">
 
 
@@ -133,7 +133,8 @@
                 android:inputType="text"
                 android:textColor="@color/colorNormalText"
                 android:hint="@string/goal_deadline_tv"
-                style="@style/custom_input" />
+                style="@style/custom_input"
+                android:focusable="false"/>
 
         </LinearLayout>
 
