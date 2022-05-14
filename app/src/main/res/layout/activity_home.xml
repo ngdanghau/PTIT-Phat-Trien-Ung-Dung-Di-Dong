@@ -57,6 +57,17 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     app:borderWidth="0dp"
                     android:layout_marginBottom="12dp"
+                    android:id="@+id/transactionFab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:tint="@color/white"
+                    android:backgroundTint="@color/colorTheme"
+                    app:srcCompat="@drawable/icon_transactions" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    app:borderWidth="0dp"
+                    android:layout_marginBottom="12dp"
                     android:id="@+id/goalFab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

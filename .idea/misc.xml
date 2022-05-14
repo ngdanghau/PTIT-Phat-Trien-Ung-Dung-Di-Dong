@@ -159,6 +159,7 @@
         <entry key="app/src/main/res/drawable/icon_account.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/icon_bg_transparent.xml" value="0.1845" />
         <entry key="app/src/main/res/drawable/icon_home.xml" value="0.212" />
+        <entry key="app/src/main/res/drawable/icon_transactions.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/indicator.xml" value="0.1975" />
         <entry key="app/src/main/res/drawable/layout_custom_dialog.xml" value="0.2305" />
         <entry key="app/src/main/res/drawable/shortcut_transaction_state.xml" value="0.231" />
@@ -174,6 +175,7 @@
         <entry key="app/src/main/res/layout/activity_categories.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_category_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/activity_deposit.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_email_settings.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_goal.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_goals.xml" value="0.2740628166160081" />
