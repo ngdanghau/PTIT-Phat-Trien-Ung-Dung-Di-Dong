@@ -158,6 +158,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
         buttonCreate = findViewById(R.id.buttonCreateStatement);
         buttonPreview = findViewById(R.id.buttonPreviewStatement);
+        buttonGoBack = findViewById(R.id.buttonGoBack);
         alert = new Alert(this, 1);
         loadingDialog = new LoadingDialog(this);
     }
