@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,7 +32,8 @@ public class CardUpdateActivity extends AppCompatActivity {
     private ImageButton buttonGoBack;
     private AppCompatButton buttonCreate;
     private ImageButton buttonMore;
-    private PopupMenu popupMenu;
+    private MenuPopupHelper menuHelper;
+    private MenuBuilder menuBuilder;
 
 
     private EditText cardNumber, cardBalance, cardBank, cardDescription;
@@ -95,6 +101,7 @@ public class CardUpdateActivity extends AppCompatActivity {
      * @author Phong
      * listening event for every component.
      * */
+    @SuppressLint("RestrictedApi")
     private void setControl() {
         buttonGoBack = findViewById(R.id.cardUpdateButtonGoBack);
         buttonCreate = findViewById(R.id.cardUpdateButtonCreate);
@@ -109,8 +116,12 @@ public class CardUpdateActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(CardUpdateActivity.this);
         alert = new Alert(this, 1);
 
-        popupMenu = new PopupMenu(this,  buttonMore);
-        popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
+        menuBuilder = new MenuBuilder(this);
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.card_menu, menuBuilder);
+
+        menuHelper = new MenuPopupHelper(this, menuBuilder, buttonMore);
+        menuHelper.setForceShowIcon(true);
     }
 
     private void setViewModel() {
@@ -128,7 +139,7 @@ public class CardUpdateActivity extends AppCompatActivity {
      * Step 3: observe data if some data changes on server then
      * the data in this fragment is also updated automatically
      * */
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "RestrictedApi"})
     private void setEvent(Account account,  Map<String, String > headers) {
         cardNumber.setFocusable(false);
         if( account == null)
@@ -159,24 +170,31 @@ public class CardUpdateActivity extends AppCompatActivity {
 
         /*Step 4*/
         buttonMore.setOnClickListener(view -> {
-            popupMenu.show();
-
+            menuHelper.show();
         });
 
 
-        popupMenu.setOnMenuItemClickListener(menuItem -> {
-            switch (menuItem.getItemId()){
-                case R.id.deleteMenu:
-                    int id = account.getId();
-                    viewModel.deleteAccount(headers, id);
-                    break;
-                case R.id.chartMenu:
-                    Intent intent = new Intent(this, AccountChartActivity.class);
-                    intent.putExtra("account", (Parcelable) account);
-                    startActivity(intent);
-                    break;
+        menuBuilder.setCallback(new MenuBuilder.Callback() {
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuBuilder menu, @NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.deleteMenu:
+                        int id = account.getId();
+                        viewModel.deleteAccount(headers, id);
+                        break;
+                    case R.id.chartMenu:
+                        Intent intent = new Intent(CardUpdateActivity.this, AccountChartActivity.class);
+                        intent.putExtra("account", (Parcelable) account);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
             }
-            return true;
+
+            @Override
+            public void onMenuModeChange(@NonNull MenuBuilder menu) {
+
+            }
         });
 
         alert.btnOK.setOnClickListener(view->finish());

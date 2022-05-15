@@ -4,10 +4,12 @@
 
     <item
         android:id="@+id/chartMenu"
+        android:icon="@drawable/ic_baseline_bar_chart_24"
         android:title="@string/chart"/>
 
     <item
         android:id="@+id/deleteMenu"
+        android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/delete"/>
 
 </menu>
