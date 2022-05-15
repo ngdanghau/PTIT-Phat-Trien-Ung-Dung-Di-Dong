@@ -25,7 +25,6 @@
             android:src="@drawable/ic_baseline_arrow_downward_24"/>
 
         <TextView
-            android:layout_marginLeft="40dp"
             android:layout_weight="0.98"
             android:id="@+id/topTitle"
             android:layout_width="match_parent"

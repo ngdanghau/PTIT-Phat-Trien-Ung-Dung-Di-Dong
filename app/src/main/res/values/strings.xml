@@ -140,6 +140,7 @@
 
     <string name="categories">Thể loại</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
+    <string name="alertNumber">Hãy nhập đúng ký tự số nguyên dương > 0</string>
     <string name="alertTitle">Oops!</string>
     <string name="alertConfirm">Bạn có chắc không? Dữ liệu đã xoá không thể khôi phục!</string>
     <string name="alertWarning">Warning!</string>
@@ -162,6 +163,8 @@
     <string name="reportIncome">Báo cáo thu nhập</string>
     <string name="reportExpense">Báo cáo chi tiêu</string>
     <string name="report">Báo cáo</string>
+    <string name="report_category_expense">Thống kê chi tiêu</string>
+    <string name="report_category_income">Thống kê thu nhập</string>
     <string name="turn_on_off_dark_mode">Bật/tắt chế độ ban đêm</string>
     <string name="turn_on_dark_mode">Bật chế độ ban đêm</string>
     <string name="turn_off_dark_mode">Tắt chế độ dark mode</string>
@@ -226,6 +229,24 @@
     <string name="thank_you_for_using_prudential_bank_s_service">Trân trọng cảm ơn quý khách đã sử dụng dịch vụ của Prudential Bank</string>
     <string name="prudential_bank_together_for_the_future">PRUDENTIAL BANK - Chung niềm tin vững tương lại</string>
     <string name="note">Chú ý: Bản sao kê này của ngân hàng TMCP Prudential Bank không tạo nên bất kì cam đoan hay bảo đảm tại thời điểm hiện tại hay tương lai về các nghĩa vụ của khách hàng đã xác nhận với bên thứ ba</string>
+    <string name="number_of_row">Số lượng cột trả về</string>
+
+
+    <string name="jan">Tháng 1</string>
+    <string name="feb">Tháng 2</string>
+    <string name="mar">Tháng 3</string>
+    <string name="apr">Tháng 4</string>
+    <string name="may">Tháng 5</string>
+    <string name="jun">Tháng 6</string>
+    <string name="jul">Tháng 7</string>
+    <string name="aug">Tháng 8</string>
+    <string name="sep">Tháng 9</string>
+    <string name="oct">Tháng 10</string>
+    <string name="nov">Tháng 11</string>
+    <string name="dec">Tháng 12</string>
+    <string name="total">Tổng cộng</string>
+    <string name="name_col">Tên</string>
+
 
 
     <!--    Config google services-->

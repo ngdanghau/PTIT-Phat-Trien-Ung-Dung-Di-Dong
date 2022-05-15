@@ -171,6 +171,7 @@
         <entry key="app/src/main/res/layout/activity_card_update.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/activity_categories.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_category_element.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/activity_category_export.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_deposit.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_email_settings.xml" value="0.2740628166160081" />
@@ -187,6 +188,7 @@
         <entry key="app/src/main/res/layout/activity_site_settings.xml" value="0.2658514492753623" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.2658514492753623" />
         <entry key="app/src/main/res/layout/activity_transaction_menu.xml" value="0.26132246376811596" />
+        <entry key="app/src/main/res/layout/activity_transaction_preview_statement.xml" value="0.4121376811594203" />
         <entry key="app/src/main/res/layout/activity_transaction_statement.xml" value="0.2653985507246377" />
         <entry key="app/src/main/res/layout/activity_user_management.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/categories_expense_fragment.xml" value="0.2740628166160081" />

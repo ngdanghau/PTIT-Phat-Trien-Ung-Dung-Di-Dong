@@ -9,9 +9,7 @@ import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
 import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
-import com.example.prudentialfinance.Container.TransactionGetTotal;
-
-import org.json.JSONObject;
+import com.example.prudentialfinance.Container.Transactions.TransactionGetTotal;
 
 import java.util.Map;
 
@@ -65,7 +63,7 @@ public class ReportViewModel extends ViewModel {
         HTTPRequest api = service.create(HTTPRequest.class);
 
         Call<CategoryReportResponse> container;
-        if(type == "income"){
+        if(type.equals("income")){
             container = api.incomeByDate(headers, date);
         }else {
             container = api.expenseByDate(headers, date);

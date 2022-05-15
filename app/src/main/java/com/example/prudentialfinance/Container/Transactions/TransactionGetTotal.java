@@ -1,4 +1,4 @@
-package com.example.prudentialfinance.Container;
+package com.example.prudentialfinance.Container.Transactions;
 
 import com.example.prudentialfinance.ContainerModel.TransactionTotal;
 import com.google.gson.annotations.Expose;

@@ -1,5 +1,6 @@
 package com.example.prudentialfinance.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,7 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
+import com.example.prudentialfinance.Activities.Report.CategoryExportActivity;
 import com.example.prudentialfinance.Container.Report.CategoryReport;
 import com.example.prudentialfinance.Container.Report.DateRange;
 import com.example.prudentialfinance.Container.Report.DateReport;
@@ -127,7 +129,8 @@ public class ReportFragment extends Fragment{
         });
 
         exportBtn.setOnClickListener(view -> {
-            System.out.println("export");
+            Intent intent = new Intent(getContext(), CategoryExportActivity.class);
+            startActivity(intent);
         });
 
         popupMenu.setOnMenuItemClickListener(menuItem -> {

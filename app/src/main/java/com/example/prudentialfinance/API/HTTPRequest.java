@@ -6,6 +6,7 @@ import com.example.prudentialfinance.Container.Accounts.AccountDelete;
 import com.example.prudentialfinance.Container.Accounts.AccountEdit;
 import com.example.prudentialfinance.Container.Accounts.AccountGetAll;
 import com.example.prudentialfinance.Container.Accounts.AccountGetById;
+import com.example.prudentialfinance.Container.CategoryMonthlyResponse;
 import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
@@ -19,10 +20,10 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
-import com.example.prudentialfinance.Container.TransactionCreate;
-import com.example.prudentialfinance.Container.TransactionGetTotal;
-import com.example.prudentialfinance.Container.TransactionRemove;
-import com.example.prudentialfinance.Container.TransactionUpdate;
+import com.example.prudentialfinance.Container.Transactions.TransactionCreate;
+import com.example.prudentialfinance.Container.Transactions.TransactionGetTotal;
+import com.example.prudentialfinance.Container.Transactions.TransactionRemove;
+import com.example.prudentialfinance.Container.Transactions.TransactionUpdate;
 import com.example.prudentialfinance.Container.Users.UserAdd;
 import com.example.prudentialfinance.Container.Users.UserGetAll;
 
@@ -382,6 +383,15 @@ public interface HTTPRequest {
                                                                  @Query("fromdate") String fromdate,
                                                                  @Query("todate") String todate,
                                                                  @Query("category_id") int category_id);
+
+    @GET("/api/report/categorymonthly")
+    Call<CategoryMonthlyResponse> getCategoryMonthly(@HeaderMap Map<String, String> headers,
+                                                     @Query("search") String search,
+                                                     @Query("start") int start,
+                                                     @Query("length") int length,
+                                                     @Query("order[column]") String column,
+                                                     @Query("order[dir]") String dir,
+                                                     @Query("type") int type);
 
 
     /***************************TRANSACTIONS***************************/

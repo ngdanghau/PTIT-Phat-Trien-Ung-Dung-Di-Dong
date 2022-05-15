@@ -7,22 +7,16 @@ import androidx.lifecycle.ViewModel;
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
 import com.example.prudentialfinance.Container.HomeLatestTransactions;
-import com.example.prudentialfinance.Container.TransactionCreate;
-import com.example.prudentialfinance.Container.TransactionRemove;
-import com.example.prudentialfinance.Container.TransactionUpdate;
-import com.example.prudentialfinance.ContainerModel.TransactionDetail;
+import com.example.prudentialfinance.Container.Transactions.TransactionCreate;
+import com.example.prudentialfinance.Container.Transactions.TransactionRemove;
+import com.example.prudentialfinance.Container.Transactions.TransactionUpdate;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.http.Field;
 
 public class TransactionViewModel extends ViewModel {
     private final MutableLiveData<Integer> transactionCreation = new MutableLiveData<>();

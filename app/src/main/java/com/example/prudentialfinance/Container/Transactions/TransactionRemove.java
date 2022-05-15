@@ -1,9 +1,10 @@
-package com.example.prudentialfinance.Container;
+package com.example.prudentialfinance.Container.Transactions;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TransactionUpdate {
+public class TransactionRemove {
+
     @SerializedName("result")
     @Expose
     private int result;
