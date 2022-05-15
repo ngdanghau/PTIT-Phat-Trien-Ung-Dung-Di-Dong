@@ -146,7 +146,6 @@ public class TransactionStatementActivity extends AppCompatActivity {
     /**
      * @author Phong-Kaster
      * */
-    @SuppressLint("CutPasteId")
     private void setComponent() {
         fromDate = findViewById(R.id.fromDate);
         toDate = findViewById(R.id.toDate);

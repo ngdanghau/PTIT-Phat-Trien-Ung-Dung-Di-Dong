@@ -1,12 +1,16 @@
-package com.example.prudentialfinance.Container;
+package com.example.prudentialfinance.Container.Accounts;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AccountDelete {
+public class AccountCreate {
     @SerializedName("result")
     @Expose
     private int result;
+
+    @SerializedName("account")
+    @Expose
+    private int account;
 
     @SerializedName("msg")
     @Expose
@@ -16,9 +20,13 @@ public class AccountDelete {
     @Expose
     private String method;
 
-    @SerializedName("account")
-    @Expose
-    private int account;
+    public int getResult() {
+        return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
+    }
 
     public int getAccount() {
         return account;
@@ -26,14 +34,6 @@ public class AccountDelete {
 
     public void setAccount(int account) {
         this.account = account;
-    }
-
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
     }
 
     public String getMsg() {

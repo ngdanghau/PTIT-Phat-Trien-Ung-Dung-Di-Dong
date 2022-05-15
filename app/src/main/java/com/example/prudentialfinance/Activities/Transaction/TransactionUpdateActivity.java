@@ -27,7 +27,7 @@ import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
-import com.example.prudentialfinance.ViewModel.AccountViewModel;
+import com.example.prudentialfinance.ViewModel.Accounts.AccountViewModel;
 import com.example.prudentialfinance.ViewModel.CategoryViewModel;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.ViewModel.TransactionViewModel;

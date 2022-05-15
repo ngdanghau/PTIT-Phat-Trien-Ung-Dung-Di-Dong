@@ -1,10 +1,11 @@
 package com.example.prudentialfinance.API;
 
-import com.example.prudentialfinance.Container.AccountCreate;
-import com.example.prudentialfinance.Container.AccountDelete;
-import com.example.prudentialfinance.Container.AccountEdit;
-import com.example.prudentialfinance.Container.AccountGetAll;
-import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.Accounts.AccountBalanceResponse;
+import com.example.prudentialfinance.Container.Accounts.AccountCreate;
+import com.example.prudentialfinance.Container.Accounts.AccountDelete;
+import com.example.prudentialfinance.Container.Accounts.AccountEdit;
+import com.example.prudentialfinance.Container.Accounts.AccountGetAll;
+import com.example.prudentialfinance.Container.Accounts.AccountGetById;
 import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
@@ -18,7 +19,6 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
-import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Container.TransactionCreate;
 import com.example.prudentialfinance.Container.TransactionGetTotal;
 import com.example.prudentialfinance.Container.TransactionRemove;
@@ -194,6 +194,11 @@ public interface HTTPRequest {
 
     @DELETE("api/accounts/{id}")
     Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers,@Path("id") int id);
+
+    @GET("/api/home/accountbalance")
+    Call<AccountBalanceResponse> accountBalance(@HeaderMap Map<String, String> headers);
+
+
 
 
     /***************************HOME*********************************/
