@@ -1,10 +1,13 @@
 package com.example.prudentialfinance.Activities.Card;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -23,7 +26,9 @@ public class CardUpdateActivity extends AppCompatActivity {
 
     private ImageButton buttonGoBack;
     private AppCompatButton buttonCreate;
-    private ImageButton buttonRemove;
+    private ImageButton buttonMore;
+    private PopupMenu popupMenu;
+
 
     private EditText cardNumber, cardBalance, cardBank, cardDescription;
     private CardViewModel viewModel;
@@ -93,7 +98,7 @@ public class CardUpdateActivity extends AppCompatActivity {
     private void setControl() {
         buttonGoBack = findViewById(R.id.cardUpdateButtonGoBack);
         buttonCreate = findViewById(R.id.cardUpdateButtonCreate);
-        buttonRemove = findViewById(R.id.cardUpdateButtonRemove);
+        buttonMore = findViewById(R.id.cardUpdateButtonMore);
 
 
         cardNumber = findViewById(R.id.cardUpdateCardNumber);
@@ -103,6 +108,9 @@ public class CardUpdateActivity extends AppCompatActivity {
 
         loadingDialog = new LoadingDialog(CardUpdateActivity.this);
         alert = new Alert(this, 1);
+
+        popupMenu = new PopupMenu(this,  buttonMore);
+        popupMenu.getMenuInflater().inflate(R.menu.card_menu, popupMenu.getMenu());
     }
 
     private void setViewModel() {
@@ -150,9 +158,25 @@ public class CardUpdateActivity extends AppCompatActivity {
         });
 
         /*Step 4*/
-        buttonRemove.setOnClickListener(view -> {
-            int id = account.getId();
-            viewModel.deleteAccount(headers, id);
+        buttonMore.setOnClickListener(view -> {
+            popupMenu.show();
+
+        });
+
+
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()){
+                case R.id.deleteMenu:
+                    int id = account.getId();
+                    viewModel.deleteAccount(headers, id);
+                    break;
+                case R.id.chartMenu:
+                    Intent intent = new Intent(this, AccountChartActivity.class);
+                    intent.putExtra("account", (Parcelable) account);
+                    startActivity(intent);
+                    break;
+            }
+            return true;
         });
 
         alert.btnOK.setOnClickListener(view->finish());

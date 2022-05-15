@@ -209,6 +209,7 @@
     <string name="toDate">Tới ngày</string>
     <string name="go_back">Trở về</string>
     <string name="reportAccount">Báo cáo số dư tài khoản</string>
+    <string name="reportAccountBalanceMonth">Báo cáo số dư tháng</string>
 
     <string name="total_money_income_week">Tổng tiền kiếm được trong tuần</string>
     <string name="total_money_expense_week">Tổng tiền đã chi trong tuần</string>
@@ -230,6 +231,8 @@
     <string name="prudential_bank_together_for_the_future">PRUDENTIAL BANK - Chung niềm tin vững tương lại</string>
     <string name="note">Chú ý: Bản sao kê này của ngân hàng TMCP Prudential Bank không tạo nên bất kì cam đoan hay bảo đảm tại thời điểm hiện tại hay tương lai về các nghĩa vụ của khách hàng đã xác nhận với bên thứ ba</string>
     <string name="number_of_row">Số lượng cột trả về</string>
+    <string name="delete">Xoá</string>
+    <string name="chart">Biểu đồ</string>
 
 
     <string name="jan">Tháng 1</string>
@@ -244,9 +247,22 @@
     <string name="oct">Tháng 10</string>
     <string name="nov">Tháng 11</string>
     <string name="dec">Tháng 12</string>
+
+    <string name="jan_short">1</string>
+    <string name="feb_short">2</string>
+    <string name="mar_short">3</string>
+    <string name="apr_short">4</string>
+    <string name="may_short">5</string>
+    <string name="jun_short">6</string>
+    <string name="jul_short">7</string>
+    <string name="aug_short">8</string>
+    <string name="sep_short">9</string>
+    <string name="oct_short">10</string>
+    <string name="nov_short">11</string>
+    <string name="dec_short">12</string>
+
     <string name="total">Tổng cộng</string>
     <string name="name_col">Tên</string>
-
 
 
     <!--    Config google services-->

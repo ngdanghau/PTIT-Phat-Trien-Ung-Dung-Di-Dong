@@ -296,7 +296,7 @@ public class ReportFragment extends Fragment{
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("số tiền: {%Value} " + appInfo.getCurrency());
+                .format(getString(R.string.money_string) + ": {%Value} " + appInfo.getCurrency());
 
         cartesian.animation(true);
         cartesian.yScale().minimum(0d);

@@ -6,6 +6,7 @@ import com.example.prudentialfinance.Container.Accounts.AccountDelete;
 import com.example.prudentialfinance.Container.Accounts.AccountEdit;
 import com.example.prudentialfinance.Container.Accounts.AccountGetAll;
 import com.example.prudentialfinance.Container.Accounts.AccountGetById;
+import com.example.prudentialfinance.Container.Accounts.AccountMonthlyResponse;
 import com.example.prudentialfinance.Container.CategoryMonthlyResponse;
 import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
@@ -26,6 +27,7 @@ import com.example.prudentialfinance.Container.Transactions.TransactionRemove;
 import com.example.prudentialfinance.Container.Transactions.TransactionUpdate;
 import com.example.prudentialfinance.Container.Users.UserAdd;
 import com.example.prudentialfinance.Container.Users.UserGetAll;
+import com.example.prudentialfinance.Model.AccountMonthly;
 
 import java.util.Map;
 
@@ -194,10 +196,14 @@ public interface HTTPRequest {
 
 
     @DELETE("api/accounts/{id}")
-    Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers,@Path("id") int id);
+    Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
     @GET("/api/home/accountbalance")
     Call<AccountBalanceResponse> accountBalance(@HeaderMap Map<String, String> headers);
+
+
+    @GET("/api/accounts/accountbalancebymonth/{id}")
+    Call<AccountMonthlyResponse> accountBalanceMonthly(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
 
 

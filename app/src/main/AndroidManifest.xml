@@ -20,6 +20,9 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Card.AccountChartActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Report.CategoryExportActivity"
             android:exported="false" />
         <activity
