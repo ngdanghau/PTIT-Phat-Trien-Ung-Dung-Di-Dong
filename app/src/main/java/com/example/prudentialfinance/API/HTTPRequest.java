@@ -11,6 +11,8 @@ import com.example.prudentialfinance.Container.CategoryMonthlyResponse;
 import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
+import com.example.prudentialfinance.Container.NotificationGetAll;
+import com.example.prudentialfinance.Container.NotificationResponse;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
 import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
 import com.example.prudentialfinance.Container.Report.TransactionByCategoryResponse;
@@ -435,5 +437,15 @@ public interface HTTPRequest {
                                               @Field("transactiondate") String transactionDate,
                                               @Field("type") String type,
                                               @Field("description") String description);
+
+    // Notification
+    @GET("/api/notifications")
+    Call<NotificationGetAll> getNotification(@HeaderMap Map<String, String> headers);
+
+    @POST("/api/notifications")
+    Call<NotificationResponse> maskedAsRead(@HeaderMap Map<String, String> headers);
+
+    @GET("/api/notifications/{id}")
+    Call<NotificationResponse> maskedAsReadOne(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
 }

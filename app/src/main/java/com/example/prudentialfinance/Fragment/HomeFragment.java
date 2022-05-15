@@ -1,17 +1,23 @@
 package com.example.prudentialfinance.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,14 +31,19 @@ import com.example.prudentialfinance.Activities.General.CategoriesActivity;
 import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Transaction.TransactionActivity;
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.HomeActivity;
+import com.example.prudentialfinance.Model.Notification;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.RecycleViewAdapter.NotificationRecycleViewAdapter;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
+import com.example.prudentialfinance.ViewModel.NotificationViewModel;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,23 +61,34 @@ public class HomeFragment extends Fragment {
     private LoadingDialog loadingDialog;
 
     private ImageButton buttonCategory;
-    private ImageButton buttonBudget;
+    private ImageButton buttonBudget, ringBellBtn;
 
     private ImageButton buttonButtonGoal;
-    private RecyclerView recycleView;
+    private RecyclerView recycleView, rvNotifications;
 
     private HomeFragmentViewModel viewModel;
+    private NotificationViewModel viewModelNotif;
     private TextView name, remaining, seeAll;
-    private CircleImageView avatar;
 
     private RelativeLayout transactionsContainer;
     private TextView notice;
 
+    private FrameLayout layoutNotif;
+    private ProgressBar progress_bar;
+    private Alert alert;
     private User AuthUser;
     private SiteSettings appInfo;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TransactionRecycleViewAdapter adapter;
+    private AppCompatImageView ivHaveNotif;
 
+    private ArrayList<Notification> dataNotif = new ArrayList<>();
+    private NotificationRecycleViewAdapter adapterNotif;
+    private Dialog dialog;
+
+    private boolean isShow = false;
+    private boolean isNotificationRemaning = false;
+    private Map<String, String> headers = new HashMap<>();
 
 
     private List<TransactionDetail> objects = new ArrayList<>();
@@ -105,7 +127,6 @@ public class HomeFragment extends Fragment {
 
 
         /*initialize headers to attach HTTP Request*/
-        Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", accessToken);
         headers.put("Content-Type", contentType);
 
@@ -130,6 +151,20 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+
+
+        viewModelNotif.isLoading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if( aBoolean )
+            {
+                progress_bar.setVisibility(View.VISIBLE);
+                rvNotifications.setVisibility(View.INVISIBLE);
+            }
+            else
+            {
+                progress_bar.setVisibility(View.INVISIBLE);
+                rvNotifications.setVisibility(View.VISIBLE);
+            }
+        });
 
 
 
@@ -161,6 +196,9 @@ public class HomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
 
+
+        viewModelNotif.getData();
+
         return view;
     }
 
@@ -175,19 +213,28 @@ public class HomeFragment extends Fragment {
 
         buttonTransaction       = view.findViewById(R.id.fragmentHomeButtonTransactions);
         buttonCategory  = view.findViewById(R.id.fragmentHomeButtonCategory);
+        layoutNotif  = view.findViewById(R.id.layoutNotif);
 
         buttonBudget = view.findViewById(R.id.fragmentHomeButtonBudget);
         buttonButtonGoal        = view.findViewById(R.id.fragmentHomeButtonGoal);
+        ringBellBtn        = view.findViewById(R.id.ringBellBtn);
+        progress_bar        = view.findViewById(R.id.progress_bar);
 
         recycleView  = view.findViewById(R.id.fragmentHomeRecentTransactions);
+        rvNotifications  = view.findViewById(R.id.rvNotifications);
         name = view.findViewById(R.id.fragmentHomeAuthName);
 
         remaining = view.findViewById(R.id.fragmentHomeAuthRemaining);
+        ivHaveNotif = view.findViewById(R.id.ivHaveNotif);
 
         seeAll = view.findViewById(R.id.homeFragmentSeeAll);
         notice = view.findViewById(R.id.homeFragmentNotice);
 
         transactionsContainer = view.findViewById(R.id.homeFragmentTransactionLayout);
+
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.notif_popup);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     /**
@@ -208,12 +255,57 @@ public class HomeFragment extends Fragment {
 
         /*Step 1*/
         viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(HomeFragmentViewModel.class);
-//        viewModel.instanciate(headers);
+        viewModelNotif = new ViewModelProvider((ViewModelStoreOwner) context).get(NotificationViewModel.class);
+        viewModelNotif.setHeaders(headers);
 
         /*Step 2*/
         viewModel.getTotalBalance().observe((LifecycleOwner) context, aDouble -> {
             String value = Helper.formatNumber(aDouble);
             remaining.setText( value + " " + appInfo.getCurrency() );
+        });
+
+        alert = new Alert(getContext(), 1);
+
+        viewModelNotif.getObject().observe(getViewLifecycleOwner(), object -> {
+            if(object == null){
+                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+                return;
+            }
+
+            if (object.getResult() == 1) {
+                dataNotif.clear();
+                dataNotif.addAll(object.getData());
+                dataNotif.add(new Notification(0));
+                adapterNotif.notifyDataSetChanged();
+
+                for (Notification item: dataNotif) {
+                    if(item.getId() != 0 && !item.isIs_read()) {
+                        isNotificationRemaning = true;
+                        break;
+                    }
+                }
+                ivHaveNotif.setVisibility(isNotificationRemaning ? View.VISIBLE : View.INVISIBLE);
+            } else {
+                alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
+            }
+        });
+
+        viewModelNotif.getObjectResponse().observe(getViewLifecycleOwner(), object -> {
+            if(object == null){
+                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+                return;
+            }
+            if (object.getResult() == 1) {
+                if(object.getData() == null){
+                    ivHaveNotif.setVisibility(View.INVISIBLE);
+                }
+
+                FancyToast.makeText(getContext(), object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
+                        R.drawable.ic_check, true).show();
+
+            } else {
+                alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
+            }
         });
     }
 
@@ -226,10 +318,16 @@ public class HomeFragment extends Fragment {
         adapter = new TransactionRecycleViewAdapter(fragment.getContext(), objects);
         recycleView.setAdapter(adapter);
 
-
         /*Step 2*/
         LinearLayoutManager manager = new LinearLayoutManager(fragment.getContext());
         recycleView.setLayoutManager(manager);
+
+        adapterNotif = new NotificationRecycleViewAdapter(getContext(), dataNotif, dialog, viewModelNotif);
+        rvNotifications.setAdapter(adapterNotif);
+
+        LinearLayoutManager manager2 = new LinearLayoutManager(fragment.getContext());
+        rvNotifications.setLayoutManager(manager2);
+
     }
 
     /**
@@ -261,6 +359,16 @@ public class HomeFragment extends Fragment {
         seeAll.setOnClickListener(view ->{
             Intent intent = new Intent(getActivity(), TransactionActivity.class);
             startActivity(intent);
+        });
+
+        ringBellBtn.setOnClickListener(view -> {
+            isShow = !isShow;
+            if(isShow){
+                layoutNotif.setVisibility(View.VISIBLE);
+                viewModelNotif.getData();
+            }else{
+                layoutNotif.setVisibility(View.INVISIBLE);
+            }
         });
 
 

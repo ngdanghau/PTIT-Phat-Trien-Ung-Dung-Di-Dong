@@ -263,6 +263,7 @@
 
     <string name="total">Tổng cộng</string>
     <string name="name_col">Tên</string>
+    <string name="masked_as_read">Đánh dấu đã đọc</string>
 
 
     <!--    Config google services-->
