@@ -27,6 +27,7 @@ import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.GoalRecycleViewAdapter;
+import com.example.prudentialfinance.ViewModel.Goal.GoalAddViewModel;
 import com.example.prudentialfinance.ViewModel.Goal.GoalViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.shashank.sony.fancytoastlib.FancyToast;
@@ -39,6 +40,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class GoalActivity extends AppCompatActivity {
 
     private GoalViewModel viewModel;
+    private GoalAddViewModel viewModelAdd;
     private ImageButton Btn_back,Btn_add,Btn_more;
     private SearchView searchView;
     private LoadingDialog loadingDialog;
@@ -112,6 +114,27 @@ public class GoalActivity extends AppCompatActivity {
             }
         });
 
+        viewModelAdd.getIsLoading().observe(this,isLoading->{
+            if(isLoading){
+                loadingDialog.startLoadingDialog();
+            }else{
+                loadingDialog.dismissDialog();
+            }
+        });
+
+        viewModelAdd.getObject().observe(this,object->{
+            if(object==null){
+                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+                return;
+            }
+
+            if (object.getResult() == 1) {
+               FancyToast.makeText(this,"Phục hồi thành công",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,false);
+            } else {
+                alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
+            }
+        });
+
         viewModel.getObject().observe( this, object -> {
             if(object == null){
                 alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
@@ -180,6 +203,7 @@ public class GoalActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(GoalActivity.this);
         alert = new Alert(this, 1);
         viewModel = new ViewModelProvider(this).get(GoalViewModel.class);
+        viewModelAdd = new ViewModelProvider(this).get(GoalAddViewModel.class);
     }
 
     private void setSwipe() {
@@ -197,20 +221,13 @@ public class GoalActivity extends AppCompatActivity {
 
                 data.remove(position);
                 adapter.notifyItemRemoved(position);
-
+                viewModel.deteteItem(headers, entry.getId());
 
                 Snackbar.make(rViewGoal, "Đã xóa " + entry.getName(), 10000)
-                        .addCallback(new Snackbar.Callback(){
-                            @Override
-                            public void onDismissed(Snackbar snackbar, int event) {
-                                if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                                    viewModel.deteteItem(headers, entry.getId());
-                                }
-                            }
-                        })
                         .setAction("Khôi phục", view -> {
                             data.add(position, entry);
                             adapter.notifyItemInserted(position);
+                            viewModelAdd.saveData(headers,entry);
                         }).show();
             }
 
