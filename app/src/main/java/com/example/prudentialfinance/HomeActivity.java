@@ -21,6 +21,7 @@ import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
 import com.example.prudentialfinance.Fragment.ReportFragment;
 import com.example.prudentialfinance.Fragment.SettingsFragment;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Model.SiteSettings;
@@ -44,6 +45,18 @@ public class HomeActivity extends AppCompatActivity {
     private HomeFragmentViewModel homeFragmentViewModel = null;
     private Map<String, String> headers;
 
+
+    @Override
+    public void onBackPressed() {
+        Alert alert = new Alert(this,0);
+        alert.btnOK.setOnClickListener(view->{
+            HomeActivity.super.onBackPressed();
+            alert.dismiss();
+        } );
+        alert.btnCancel.setOnClickListener(view-> alert.dismiss());
+        alert.showAlert("Thoát","Bạn có muốn thoát khỏi ứng dụng",R.drawable.ic_close);
+
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -107,6 +120,7 @@ public class HomeActivity extends AppCompatActivity {
             intent.putExtra("goal", new Goal(0));
             startActivity(intent);
         });
+
 
     }
 
