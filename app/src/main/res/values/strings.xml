@@ -290,7 +290,7 @@
     <string name="budget_element_name">Total budget</string>
     <string name="budget_element_description">Total budget for meals</string>
     <string name="budget_element_date">March 2022</string>
-    <string name="budget_month">Tháng</string>
+    <string name="budget_month">Month</string>
     <string name="budget_year">Year</string>
     <string name="vn">VND</string>
 
