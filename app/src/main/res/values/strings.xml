@@ -200,11 +200,11 @@
     <string name="create_income_transaction">Tạo hoạt động thu nhập</string>
     <string name="create_expense_transaction">Tạo hoạt động chi tiêu</string>
     <string name="create_statement">Create Statement</string>
-    <string name="you_don_have_any_transaction">Bạn chưa có giao dịch nào !</string>
+    <string name="you_don_have_any_transaction">Không tìm thấy giao dịch phù hợp !</string>
     <string name="you_don_have_any_ATM">Bạn chưa có thẻ ATM nào</string>
     <string name="edit_transaction">Chỉnh sửa hoạt động</string>
     <string name="number_of_transactions">Số lượng giao dịch trả về</string>
-    <string name="sort">Sắp theo theo chiều</string>
+    <string name="sort">Sắp theo chiều</string>
     <string name="sort_by_column">Sắp xếp theo cột</string>
     <string name="sort_by_category">Sắp xếp theo thể loại</string>
     <string name="fromDate">Từ ngày</string>
@@ -243,7 +243,8 @@
     <string name="apr">April</string>
     <string name="may">May</string>
     <string name="jun">June</string>
-    <string name="jul">July</string>
+    <string name="jul">July</string>    
+    <string name="aug">August</string>
     <string name="sep">September</string>
     <string name="oct">October</string>
     <string name="nov">November</string>
@@ -269,14 +270,16 @@
     <string name="appearance">Appearance</string>
     <string name="warning_change_language">You must restart your computer to apply these changes</string>
 
+    <string name="creat_new_account">Thêm tài khoản ngân hàng mới</string>
+    <string name="add_account_to_manage_easily">Thêm thông tin tài khoản ngân hàng mới của bạn để tiện quản lý chi tiêu</string>
 
     <!--    Config google services-->
     <string name="server_client_id" translatable="false">538016634184-aqf25ouan4v2bscstec48atnh05ibv13.apps.googleusercontent.com</string>
 
     <!--    Config facebook services-->
-    <string name="facebook_app_id" translatable="false">477715650706961</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb477715650706961</string>
-    <string name="facebook_client_token" translatable="false">b4344548855c73b2adc72bbe3917b1d7</string>
-    <string name="aug">August</string>
+    <string name="facebook_app_id">477715650706961</string>
+    <string name="fb_login_protocol_scheme">fb477715650706961</string>
+    <string name="facebook_client_token">b4344548855c73b2adc72bbe3917b1d7</string>
+
 
 </resources>
