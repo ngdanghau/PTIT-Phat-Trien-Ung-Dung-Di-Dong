@@ -20,6 +20,12 @@
         android:theme="@style/Theme.PrudentialFinance"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.Budget.BudgetReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Transaction.TransactionMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Card.AccountChartActivity"
             android:exported="false" />
         <activity
@@ -53,7 +59,10 @@
             android:name=".Activities.Settings.DarkModeActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.BudgetsActivity"
+            android:name=".Activities.Budget.BudgetsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Budget.AddBudgetActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Report.TransactionsByCategoryActivity"

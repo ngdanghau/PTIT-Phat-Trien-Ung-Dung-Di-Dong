@@ -1,4 +1,6 @@
-package com.example.prudentialfinance.ViewModel.Goal;
+package com.example.prudentialfinance.ViewModel.budget;
+
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -7,8 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.GoalAdd;
-import com.example.prudentialfinance.Container.GoalGetAll;
+import com.example.prudentialfinance.Container.budgets.budgetGET.Root;
 
 import java.util.Map;
 
@@ -17,8 +18,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class GoalViewModel extends ViewModel {
-    private MutableLiveData<GoalGetAll> object;
+public class BudgetGetModelView extends ViewModel {
+    private MutableLiveData<Root> object;
     private Retrofit service;
     private MutableLiveData<Boolean> isLoading;
     private int start = 0;
@@ -31,7 +32,7 @@ public class GoalViewModel extends ViewModel {
         return isLoading;
     }
 
-    public LiveData<GoalGetAll> getObject()
+    public LiveData<Root> getObject()
     {
         if (object == null) {
             object = new MutableLiveData<>();
@@ -39,20 +40,19 @@ public class GoalViewModel extends ViewModel {
         return object;
     }
 
-
-    public void getData(Map<String, String> headers, String query,int status){
+    public void getData(Map<String, String> headers,  String query){
         isLoading.setValue(true);
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
 
-        Call<GoalGetAll> container = api.getGoals(headers, query, start, length, "id", "desc",status,"","");
-        container.enqueue(new Callback<GoalGetAll>() {
+        Call<Root> container = api.budget(headers, query, start, length, "id", "decs");
+        container.enqueue(new Callback<Root>() {
             @Override
-            public void onResponse(@NonNull Call<GoalGetAll> call, @NonNull Response<GoalGetAll> response) {
+            public void onResponse(@NonNull Call<Root> call, @NonNull Response<Root> response) {
                 isLoading.setValue(false);
                 System.out.println(response.toString());
                 if (response.isSuccessful()) {
-                    GoalGetAll resource = response.body();
+                    Root resource = response.body();
                     assert resource != null;
                     object.setValue(resource);
                     return;
@@ -61,35 +61,35 @@ public class GoalViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<GoalGetAll> call, @NonNull Throwable t) {
-                t.printStackTrace();
+            public void onFailure(@NonNull Call<Root> call, @NonNull Throwable t) {
                 isLoading.setValue(false);
                 object.setValue(null);
             }
         });
     }
-
-    public void deteteItem(Map<String, String> headers, Integer id){
+    public void remove(Map<String, String> headers,  int id){
+        isLoading.setValue(true);
         this.service = HTTPService.getInstance();
         HTTPRequest api = service.create(HTTPRequest.class);
-        Call<GoalAdd> container = api.removeGoal(headers, id);
-        container.enqueue(new Callback<GoalAdd>() {
+        Call<Root> container = api.removeBudget(headers, id);
+        container.enqueue(new Callback<Root>() {
             @Override
-            public void onResponse(@NonNull Call<GoalAdd> call, @NonNull Response<GoalAdd> response) {
+            public void onResponse(@NonNull Call<Root> call, @NonNull Response<Root> response) {
                 isLoading.setValue(false);
-                System.out.println(response.toString());
+                Log.i("Remove budget", String.valueOf(response));
                 if (response.isSuccessful()) {
-                    GoalAdd resource = response.body();
+                    Root resource = response.body();
                     assert resource != null;
-                    System.out.println(resource.toString());
+                    Log.i("Remove budget", "Success");
+                    Log.i("Remove budget", resource.toString());
+//                    object.setValue(resource);
                     return;
                 }
                 object.setValue(null);
             }
 
             @Override
-            public void onFailure(@NonNull Call<GoalAdd> call, @NonNull Throwable t) {
-                t.printStackTrace();
+            public void onFailure(@NonNull Call<Root> call, @NonNull Throwable t) {
                 isLoading.setValue(false);
                 object.setValue(null);
             }

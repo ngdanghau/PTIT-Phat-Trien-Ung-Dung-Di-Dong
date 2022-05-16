@@ -23,6 +23,9 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Container.budgets.budgetGET.BudgetAdd;
+import com.example.prudentialfinance.Container.budgets.budgetGET.Root;
+
 import com.example.prudentialfinance.Container.SimpleResponse;
 import com.example.prudentialfinance.Container.Transactions.TransactionCreate;
 import com.example.prudentialfinance.Container.Transactions.TransactionGetTotal;
@@ -31,6 +34,7 @@ import com.example.prudentialfinance.Container.Transactions.TransactionUpdate;
 import com.example.prudentialfinance.Container.Users.UserAdd;
 import com.example.prudentialfinance.Container.Users.UserGetAll;
 import com.example.prudentialfinance.Model.AccountMonthly;
+
 
 import java.util.Map;
 
@@ -432,6 +436,7 @@ public interface HTTPRequest {
     Call<TransactionRemove> transactionRemove(@HeaderMap Map<String, String> headers,
                                               @Path("id") String id);
 
+  
     @FormUrlEncoded
     @PUT("api/transactions/{id}")
     Call<TransactionUpdate> transactionUpdate(@HeaderMap Map<String, String> headers,
@@ -444,6 +449,45 @@ public interface HTTPRequest {
                                               @Field("transactiondate") String transactionDate,
                                               @Field("type") String type,
                                               @Field("description") String description);
+
+  
+  
+    /***************************BUDGET***************************/
+    @GET("api/budgets")
+    Call<Root> budget(@HeaderMap Map<String, String> headers,
+                      @Query("search") String search,
+                      @Query("start") int start,
+                      @Query("length") int length,
+                      @Query("order[column]") String column,
+                      @Query("order[dir]") String dir);
+    @DELETE("api/budgets/{id}")
+    Call<Root> removeBudget(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @PATCH("api/budgets/{id}")
+    Call<BudgetAdd> restoreBudget(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @FormUrlEncoded
+    @POST("/api/budgets")
+    Call<BudgetAdd> addBudget(@HeaderMap Map<String, String> headers,
+                              @Field("amount") String amount,
+                              @Field("description") String description,
+                              @Field("category_id") String category_id,
+                              @Field("month") String month,
+                              @Field("year") String year
+    );
+
+    @FormUrlEncoded
+    @PUT("api/budgets/{id}")
+    Call<BudgetAdd> updateBudget(@HeaderMap Map<String, String> headers,
+                             @Path("id") String id,
+                             @Field("amount") String amount,
+                             @Field("description") String description,
+                             @Field("category_id") String category_id,
+                             @Field("month") String month,
+                             @Field("year") String year
+    );
+  
+  
 
     // Notification
     @GET("/api/notifications")

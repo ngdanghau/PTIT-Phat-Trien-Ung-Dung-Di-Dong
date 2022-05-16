@@ -1,7 +1,5 @@
 package com.example.prudentialfinance.RecycleViewAdapter;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +13,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prudentialfinance.Activities.BudgetsActivity;
+import com.example.prudentialfinance.Activities.Budget.BudgetsActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
 import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Settings.DarkModeActivity;
