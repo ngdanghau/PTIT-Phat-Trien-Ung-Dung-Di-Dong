@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                             state.setAuthUser(resource.getData());
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
-
+                           Log.i("AccessToken", resource.getAccessToken());
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công !", Toast.LENGTH_LONG).show();
                             finish();
                         }

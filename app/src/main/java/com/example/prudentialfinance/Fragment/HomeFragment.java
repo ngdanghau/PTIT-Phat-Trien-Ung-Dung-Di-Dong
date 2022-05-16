@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.prudentialfinance.Activities.BudgetsActivity;
+import com.example.prudentialfinance.Activities.Budget.BudgetsActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
 import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Transaction.TransactionActivity;
@@ -271,7 +271,8 @@ public class HomeFragment extends Fragment {
      * */
     private void setScreen()
     {
-        String fullName = "Xin chào, "+ AuthUser.getFirstname() + " " + AuthUser.getLastname();
+//        String fullName = "Xin chào, " + AuthUser.getFirstname() + " " + AuthUser.getLastname();
+        String fullName = "Xin chào, ";
         name.setText(fullName);
     }
 }

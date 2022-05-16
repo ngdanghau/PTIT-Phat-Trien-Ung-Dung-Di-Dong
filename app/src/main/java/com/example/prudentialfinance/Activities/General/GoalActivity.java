@@ -78,7 +78,7 @@ public class GoalActivity extends AppCompatActivity {
         Btn_back.setOnClickListener(view -> finish());
 
         Btn_add.setOnClickListener(view ->{
-            Intent intent = new Intent (this,AddGoalActivity.class);
+            Intent intent = new Intent(this,AddGoalActivity.class);
             intent.putExtra("goal", new Goal(0));
             addGoalActivity.launch(intent);
         });

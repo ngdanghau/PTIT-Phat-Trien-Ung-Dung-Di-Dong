@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="button_style">
         <item name="android:layout_width">247dp</item>
@@ -33,6 +33,17 @@
         <item name="android:layout_height">50dp</item>
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="custom_picker">
+        <item name="android:background">@drawable/custom_input</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:selectionDividerHeight" tools:targetApi="q">0dp</item>
+        <item name="colorControlNormal">@color/transparent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+
     </style>
 
     <style name="dashboard_image_button_style">

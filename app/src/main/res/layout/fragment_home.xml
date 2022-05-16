@@ -248,10 +248,10 @@
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:layout_below="@+id/homeFragmentSeeAll"
             android:id="@+id/homeFragmentSwipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/homeFragmentSeeAll">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/fragmentHomeRecentTransactions"
