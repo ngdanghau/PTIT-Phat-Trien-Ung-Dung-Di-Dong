@@ -95,11 +95,11 @@ public class AddGoalActivity extends AppCompatActivity {
     private void setData(){
         if(goal.getId()==0)
         {
-            btn_add.setText("Thêm mục tiêu");
-            topTitle.setText("Thêm mục tiêu");
+            btn_add.setText(getString(R.string.goal_add));
+            topTitle.setText(getString(R.string.goal_add));
         }else{
-            btn_add.setText("Xác nhận");
-            topTitle.setText("Sửa mục tiêu");
+            btn_add.setText(getString(R.string.confirm));
+            topTitle.setText(getString(R.string.goal_edit));
             goal_name.setText(goal.getName());
             goal_amount.setText(Helper.formatNumber((int)goal.getAmount()));
             goal_balance.setText(Helper.formatNumber((int)goal.getBalance()));
@@ -155,7 +155,7 @@ public class AddGoalActivity extends AppCompatActivity {
 
                 }catch (NumberFormatException e)
                 {
-                    alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số dư bằng số nguyên.", R.drawable.ic_info);
+                    alert.showAlert(getResources().getString(R.string.alertTitle), getString(R.string.number_format_exception), R.drawable.ic_info);
                     return;
                 }
 

@@ -149,23 +149,23 @@ public class ReportFragment extends Fragment{
                 switch (item.getItemId()){
                     case R.id.incomeMenu:
                         typeCategory = "income";
-                        topTitle.setText(getString(R.string.reportIncome));
+                        topTitle.setText(container.getContext().getString(R.string.reportIncome));
                         break;
                     case R.id.expenseMenu:
                         typeCategory = "expense";
-                        topTitle.setText(getString(R.string.reportExpense));
+                        topTitle.setText(container.getContext().getString(R.string.reportExpense));
                         break;
                 }
 
                 switch (typeDate){
                     case "week":
-                        title_total.setText(getString(R.string.total_money_income_week));
+                        title_total.setText(container.getContext().getString(R.string.total_money_income_week));
                         break;
                     case "month":
-                        title_total.setText(getString(R.string.total_money_income_month));
+                        title_total.setText(container.getContext().getString(R.string.total_money_income_month));
                         break;
                     case "year":
-                        title_total.setText(getString(R.string.total_money_income_year));
+                        title_total.setText(container.getContext().getString(R.string.total_money_income_year));
                         break;
                 }
 

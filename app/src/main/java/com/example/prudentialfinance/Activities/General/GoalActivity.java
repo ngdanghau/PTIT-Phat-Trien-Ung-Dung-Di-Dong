@@ -32,6 +32,7 @@ import com.example.prudentialfinance.ViewModel.Goal.GoalViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -151,8 +152,8 @@ public class GoalActivity extends AppCompatActivity {
         });
 
         AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setTitle("Lọc");
-        String[] types = {"Chưa hoàn thành", "Hoàn thành","Quá hạn"};
+        b.setTitle(this.getString(R.string.sort));
+        String[] types = this.getResources().getStringArray(R.array.sort);
         b.setItems(types, (dialog, which) -> {
             dialog.dismiss();
             switch(which){

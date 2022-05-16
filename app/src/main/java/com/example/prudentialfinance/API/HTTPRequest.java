@@ -23,6 +23,7 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Container.budgets.budgetGET.AmountGet;
 import com.example.prudentialfinance.Container.budgets.budgetGET.BudgetAdd;
 import com.example.prudentialfinance.Container.budgets.budgetGET.Root;
 
@@ -468,6 +469,15 @@ public interface HTTPRequest {
 
     @FormUrlEncoded
     @POST("/api/budgets")
+    Call<BudgetAdd> getTransactionByDate(@HeaderMap Map<String, String> headers,
+                              @Field("amount") String amount,
+                              @Field("description") String description,
+                              @Field("category_id") String category_id,
+                              @Field("month") String month,
+                              @Field("year") String year
+    );
+    @FormUrlEncoded
+    @POST("/api/budgets")
     Call<BudgetAdd> addBudget(@HeaderMap Map<String, String> headers,
                               @Field("amount") String amount,
                               @Field("description") String description,
@@ -475,6 +485,11 @@ public interface HTTPRequest {
                               @Field("month") String month,
                               @Field("year") String year
     );
+
+    @GET("/api/budgets/gettransactionbydate")
+    Call<AmountGet> getAmount(@HeaderMap Map<String, String> headers,
+                              @Query("category_id") String categoryId,
+                              @Query("date") String date);
 
     @FormUrlEncoded
     @PUT("api/budgets/{id}")

@@ -41,6 +41,7 @@
     <string name="budget">Budget</string>
     <string name="income_example" translatable="false">$125.000</string>
     <string name="recent">Recent</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
@@ -140,6 +141,34 @@
     <string name="export_excel">Export file excel</string>
     <string name="export_success">Export successful</string>
     <string name="goal_deposit_tv">Deposit</string>
+    <string name="deposit_title">Deposit your money for goal</string>
+    <string name="error_deposit_max">Your money have been over the goal please input maximum\n</string>
+    <string name="deposit_description">Input your money you have save for this goal</string>
+    <string name="number_format_exception">Format Number Exception</string>
+    <string name="search">Search here...</string>
+
+
+
+    <string name="action">Action</string>
+
+    <array name="sort" >
+        <item> In progress</item>
+        <item> Done</item>
+        <item>  Outdated </item>
+    </array>
+    <array name="action" >
+        <item> Detail</item>
+        <item> Edit</item>
+        <item>  Deposit </item>
+    </array>
+    <array name="action_forgoal23" >
+        <item> Detail</item>
+        <item> Edit</item>
+    </array>
+
+    <string name="had_money">Balance:</string>
+    <string name="done">Done</string>
+
 
     <string name="categories">Category</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
@@ -282,10 +311,10 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb477715650706961</string>
     <string name="facebook_client_token">b4344548855c73b2adc72bbe3917b1d7</string>
 
-    <string name="budget_title">Ngân sách chi tiêu</string>
+    <string name="budget_title">Budget</string>
     <string name="budget_edit_title">Edit budget</string>
-    <string name="budget_report_title">Xem thống kê ngân sách</string>
-    <string name="budget_add_title">Thêm ngân sách</string>
+    <string name="budget_report_title">Report Budget</string>
+    <string name="budget_add_title">Add budget</string>
 
     <string name="budget_element_name">Total budget</string>
     <string name="budget_element_description">Total budget for meals</string>
@@ -294,28 +323,27 @@
     <string name="budget_year">Year</string>
     <string name="vn">VND</string>
 
-    <string name="budget_add_categories">Thể loại</string>
-    <string name="budget_add_budget">Ngân sách</string>
+    <string name="budget_add_categories">Category</string>
+    <string name="budget_add_budget">Budget</string>
     <string name="budget_description_hint">Budget description</string>
     <string name="budget_description">Description</string>
-    <string name="budget_error">Thiếu phần</string>
+    <string name="budget_error">Error</string>
     <string name="budget_des_value">Description</string>
-
     <string name="budget_value" translatable="false">30000</string>
 
+    <string name="chart_center_lable">Budget</string>
+    <string name="report_lable">Budget</string>
 
-    <string name="chart_center_lable">Ngân sách</string>
-    <string name="report_lable">Ngân sách</string>
-
-    <string name="name_title">Tên</string>
+    <string name="name_title">Name</string>
     <string name="description_title">Description</string>
-    <string name="todate_title">To date</string>
+    <string name="todate_title">To Date</string>
     <string name="amount_title">Amount</string>
+    <string name="report_lable_real">Actually</string>
+    <string name="report_lable_plan">Plan</string>
+    <string name="budget_value_have">Remaining Amount</string>
 
 
     <string name="english">English</string>
     <string name="vietnamese">Vietnamese</string>
-
-
 
 </resources>
