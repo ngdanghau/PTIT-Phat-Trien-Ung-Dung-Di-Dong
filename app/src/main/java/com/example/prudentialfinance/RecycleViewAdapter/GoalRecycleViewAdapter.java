@@ -62,6 +62,10 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
 
         holder.progressBar.setMax(100);
         long progress =Math.round(((double)(entry.getDeposit()+entry.getBalance())/(double)entry.getAmount())*100);
+        if(progress==0)
+        {
+            holder.progressBar.setProgress(1);
+        }else
         holder.progressBar.setProgress((int)progress);
 
 //        SET CONTROL
@@ -86,7 +90,11 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
 
         AlertDialog.Builder b = new AlertDialog.Builder(context);
         b.setTitle("Hành động");
-        String[] types = {"Chi tiết", "Sửa","Thêm tiền"};
+        String[] types;
+        if(entry.getStatus()==3)
+            types = new String[]{"Chi tiết", "Sửa"};
+        else
+            types = new String[]{"Chi tiết", "Sửa", "Thêm tiền"};
         b.setItems(types, (dialog, which) -> {
             dialog.dismiss();
             switch(which){

@@ -116,11 +116,11 @@ public class AddGoalActivity extends AppCompatActivity {
                 {
                     alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập tên mục tiêu.", R.drawable.ic_info);
                     return;
-                }else if (goal_balance.getText().toString().isEmpty())
+                }else if (goal_amount.getText().toString().isEmpty())
                 {
                     alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số tiền mục tiêu.", R.drawable.ic_info);
                     return;
-                }else if (goal_amount.getText().toString().isEmpty())
+                }else if (goal_balance.getText().toString().isEmpty())
                 {
                     alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số dư cho mục tiêu.", R.drawable.ic_info);
                     return;
