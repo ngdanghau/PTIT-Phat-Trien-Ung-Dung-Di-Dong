@@ -41,6 +41,7 @@
     <string name="budget">Budget</string>
     <string name="income_example" translatable="false">$125.000</string>
     <string name="recent">Recent</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
@@ -140,6 +141,34 @@
     <string name="export_excel">Export file excel</string>
     <string name="export_success">Export successful</string>
     <string name="goal_deposit_tv">Deposit</string>
+    <string name="deposit_title">Deposit your money for goal</string>
+    <string name="error_deposit_max">Your money have been over the goal please input maximum\n</string>
+    <string name="deposit_description">Input your money you have save for this goal</string>
+    <string name="number_format_exception">Format Number Exception</string>
+    <string name="search">Search here...</string>
+
+
+
+    <string name="action">Action</string>
+
+    <array name="sort" >
+        <item> In progress</item>
+        <item> Done</item>
+        <item>  Outdated </item>
+    </array>
+    <array name="action" >
+        <item> Detail</item>
+        <item> Edit</item>
+        <item>  Deposit </item>
+    </array>
+    <array name="action_forgoal23" >
+        <item> Detail</item>
+        <item> Edit</item>
+    </array>
+
+    <string name="had_money">Balance:</string>
+    <string name="done">Done</string>
+
 
     <string name="categories">Category</string>
     <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>

@@ -50,7 +50,7 @@
                 android:id="@+id/goal_name_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thêm tiền cho mục tiêu"
+                android:text="@string/deposit_title"
                 style="@style/text_view_label"
                 android:layout_gravity="center"
                 android:textAlignment="center"
@@ -61,8 +61,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="11dp"
-                android:text="Nhập số tiền bạn đã tiết kiệm được\n cho
- mục tiêu này."
+                android:text="@string/deposit_description"
                 style="@style/text_view_label"/>
 
             <LinearLayout
@@ -77,6 +76,7 @@
                     android:layout_height="70dp"
                     android:gravity="center"
                     android:textColor="@color/colorNormalText"
+                    android:maxLength="11"
                     android:hint="@string/amount"
                     style="@style/custom_input"
                     android:textSize="32dp"

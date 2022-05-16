@@ -41,6 +41,8 @@
     <string name="budget">Ngân sách</string>
     <string name="income_example">$125.000</string>
     <string name="recent">Gần đây</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Trang chủ</string>
@@ -139,6 +141,30 @@
     <string name="export_excel">Xuất file excel</string>
     <string name="export_success">Xuất thành công</string>
     <string name="goal_deposit_tv">Tiền cộng dồn</string>
+    <string name="action">Hành động</string>
+    <array name="sort">
+        <item> Chưa hoàn thành</item>
+        <item>  Hoàn thành</item>
+        <item>  Quá hạn </item>
+    </array>
+    <array name="action" >
+        <item> Chi tiết</item>
+        <item> Sửa</item>
+        <item>  Thêm tiền </item>
+    </array>
+    <array name="action_forgoal23">
+        <item> Chi tiết</item>
+        <item> Sửa</item>
+    </array>
+    <string name="had_money">Đã có</string>
+    <string name="done">Hoàn thành</string>
+    <string name="deposit_title">Thêm tiền cho mục tiêu</string>
+    <string name="deposit_description">Nhập số tiền bạn đã tiết kiệm cho mục tiêu</string>
+    <string name="error_deposit_max">Số tiền bạn thêm vào đã vượt quá mục tiêu, vui lòng thêm tối đa </string>
+    <string name="number_format_exception">Lỗi chuyển số</string>
+    <string name="search">Tìm kiếm...</string>
+
+
 
     <string name="categories">Thể loại</string>
     <string name="alertDefault">Oops! Đã xảy ra lỗi. Vui lòng thử lại sau!</string>
