@@ -50,6 +50,7 @@ public class DarkModeActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     Map<String, String> headers;
     AppearanceViewModel viewModel;
+    String selectedLang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,13 +109,8 @@ public class DarkModeActivity extends AppCompatActivity {
         spnLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedLang = adapterView.getItemAtPosition(i).toString();
-                if(!languageManager.getCurrent().equals(selectedLang)){
-                    languageManager.setLang(selectedLang);
-                    languageManager.updateResource();
-
-                    alertConfirm.showAlert(getString(R.string.alertTitle), getString(R.string.warning_change_language), R.drawable.ic_close);
-                }
+                selectedLang = adapterView.getItemAtPosition(i).toString();
+                alertConfirm.showAlert(getString(R.string.alertTitle), getString(R.string.warning_change_language), R.drawable.ic_close);
             }
 
             @Override
@@ -140,7 +136,12 @@ public class DarkModeActivity extends AppCompatActivity {
 
         alertConfirm.btnCancel.setOnClickListener(view -> alertConfirm.dismiss());
         alertConfirm.btnOK.setOnClickListener(view -> {
-            viewModel.updateLanguage(headers, languageManager.getCurrent());
+            if(!languageManager.getCurrent().equals(selectedLang)){
+                languageManager.setLang(selectedLang);
+                languageManager.updateResource();
+                viewModel.updateLanguage(headers, languageManager.getCurrent());
+            }
+            alertConfirm.dismiss();
         });
 
         viewModel.isLoading().observe(this, isLoading -> {

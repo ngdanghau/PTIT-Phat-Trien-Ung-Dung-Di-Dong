@@ -38,6 +38,7 @@
     <string name="income">Thu nhập</string>
     <string name="expense">Chi tiêu</string>
     <string name="goal">Mục tiêu</string>
+    <string name="budget">Ngân sách</string>
     <string name="income_example">$125.000</string>
     <string name="recent">Gần đây</string>
     <!-- TODO: Remove or change this placeholder text -->
