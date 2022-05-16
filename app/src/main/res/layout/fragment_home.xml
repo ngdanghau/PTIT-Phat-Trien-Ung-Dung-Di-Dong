@@ -9,20 +9,22 @@
     tools:context=".Fragment.HomeFragment">
 
     <RelativeLayout
-        android:gravity="left"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="274dp"
+        android:gravity="left"
+        tools:ignore="RtlHardcoded">
 
         <RelativeLayout
             android:id="@+id/header_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:id="@+id/header_banner_title"
-                android:orientation="vertical"
-                android:background="@drawable/home_fragment_header_style"
                 android:layout_width="match_parent"
-                android:layout_height="230dp">
+                android:layout_height="230dp"
+                android:background="@drawable/home_fragment_header_style"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/fragmentHomeTitleHeader"
@@ -66,8 +68,7 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="top|right"
-                        app:srcCompat="@drawable/notif_focus"
-                        />
+                        app:srcCompat="@drawable/notif_focus" />
                 </FrameLayout>
 
 
@@ -89,21 +90,21 @@
 
         <FrameLayout
             android:id="@+id/layoutNotif"
-            android:visibility="invisible"
-            android:animateLayoutChanges="true"
-            android:layout_marginTop="70dp"
-            android:layout_marginRight="30dp"
-            android:layout_alignParentRight="true"
-            android:padding="10dp"
-            android:background="@drawable/notification_background"
             android:layout_width="200dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="30dp"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/notification_background"
+            android:padding="10dp"
+            android:visibility="invisible">
 
             <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvNotifications"
@@ -113,13 +114,13 @@
         </FrameLayout>
 
         <TextView
-            android:layout_below="@id/header_banner"
             android:id="@+id/total_remaining"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/header_banner"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="-110dp"
-            android:layout_marginLeft="40dp"
             android:text="@string/total_remaining"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -130,46 +131,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/total_remaining"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
             android:text="@string/total_remaining_value"
             android:textColor="@color/white"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
 
     <!-- 4 SHORTCUTS -->
+
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:layout_marginTop="20sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/customized_layout"
         android:orientation="vertical"
+        android:paddingBottom="10sp"
+        android:paddingStart="10sp"
+        android:paddingEnd="10sp"
         tools:ignore="UseCompoundDrawables">
         <!-- Button Transactions -->
+
+
+        <!-- Button Income Statistics -->
+
         <ImageButton
             android:id="@+id/fragmentHomeButtonTransactions"
             style="@style/dashboard_image_button_style"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="11dp"
             android:src="@drawable/icon_transactions"
             tools:ignore="ContentDescription" />
 
         <TextView
-            style="@style/dashboard_text_view_style"
             android:id="@+id/fragmentHomeTitleTransactions"
+            style="@style/dashboard_text_view_style"
             android:layout_below="@+id/fragmentHomeButtonTransactions"
-            android:layout_marginStart="40dp"
-            android:text="@string/transaction"/>
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:text="@string/transaction" />
+        <!-- Button Expense Statistics -->
 
-
-        <!-- Button Income Statistics -->
         <ImageButton
             android:id="@+id/fragmentHomeButtonCategory"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/fragmentHomeButtonTransactions"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="111dp"
+            android:layout_marginTop="11dp"
             android:src="@drawable/ic_baseline_category_24"
             tools:ignore="ContentDescription" />
 
@@ -177,30 +190,38 @@
             android:id="@+id/fragmentHomeTitleCategory"
             style="@style/dashboard_text_view_style"
             android:layout_below="@+id/fragmentHomeButtonTransactions"
-            android:layout_toEndOf="@+id/fragmentHomeTitleTransactions"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="110dp"
             android:text="@string/category" />
 
-        <!-- Button Expense Statistics -->
         <ImageButton
             android:id="@+id/fragmentHomeButtonBudget"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/fragmentHomeButtonCategory"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="205dp"
+            android:layout_marginTop="11dp"
             android:src="@drawable/icon_outflow"
             tools:ignore="ContentDescription" />
+
+
+        <!-- Button Goal -->
 
         <TextView
             android:id="@+id/fragmentHomeTitleExpenseStatistics"
             style="@style/dashboard_text_view_style"
             android:layout_below="@+id/fragmentHomeButtonCategory"
-            android:layout_toEndOf="@id/fragmentHomeTitleCategory"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="210dp"
             android:text="@string/expense" />
 
-
-        <!-- Button Goal -->
         <ImageButton
             android:id="@+id/fragmentHomeButtonGoal"
             style="@style/dashboard_image_button_style"
-            android:layout_toEndOf="@+id/fragmentHomeButtonBudget"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="286dp"
+            android:layout_marginTop="11dp"
             android:src="@drawable/icon_goal"
             tools:ignore="ContentDescription" />
 
@@ -208,7 +229,8 @@
             android:id="@+id/dashboardTitleGoal"
             style="@style/dashboard_text_view_style"
             android:layout_below="@+id/fragmentHomeButtonGoal"
-            android:layout_toEndOf="@+id/fragmentHomeButtonBudget"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="295dp"
             android:text="@string/goal" />
 
     </RelativeLayout>
@@ -241,7 +263,7 @@
             android:layout_toEndOf="@+id/recentImage"
             android:text="@string/recent"
             android:textColor="@color/colorSupportText"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
 
 
@@ -255,7 +277,7 @@
             android:layout_toEndOf="@+id/recentImage"
             android:text="@string/see_all"
             android:textColor="@color/colorShortcut"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
 

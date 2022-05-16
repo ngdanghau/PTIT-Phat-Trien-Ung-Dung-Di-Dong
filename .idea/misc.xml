@@ -51,28 +51,37 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/drawable/shotcut_home_state.xml" value="0.109" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_card_creation.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_card_creation_failed.xml" value="0.2436923148431724" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_card_creation_successfully.xml" value="0.16246154322878156" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_card_creation_successfully.xml" value="0.2436923148431724" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_card_introduce.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_card_update.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_creation.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_dark_mode.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_dashboard.xml" value="0.2436923148431724" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_email_settings.xml" value="0.36923078006541266" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_email_settings.xml" value="0.25" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_goal_element.xml" value="0.553846170098119" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_introduce.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_login.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_profile.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_register.xml" value="0.2436923148431724" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_report_category_element.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_sign_up.xml" value="0.1890625" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_site_settings.xml" value="0.16246154322878156" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction.xml" value="0.16246154322878156" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction_creation.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_site_settings.xml" value="0.25" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction_creation.xml" value="0.2436923148431724" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction_information.xml" value="0.36923078006541266" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction_menu.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction_preview_statement.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction_statement.xml" value="0.2436923148431724" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transaction_update.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transactions_read.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/activity_transactions_read_element.xml" value="0.2436923148431724" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_account.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_card_element.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_dashboard.xml" value="0.129981884057971" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.18461539003270633" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_home_transaction_element.xml" value="0.1" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_menu.xml" value="0.18461539003270633" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_menu_element.xml" value="0.18461539003270633" />
@@ -80,10 +89,9 @@
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_settings_element.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/fragment_settings_element_header.xml" value="0.1890625" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/notification_with_content.xml" value="0.2436923148431724" />
-        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/spinner_account_element.xml" value="0.2436923148431724" />
+        <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/spinner_account_element.xml" value="0.553846170098119" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/layout/spinner_category_element.xml" value="0.36923078006541266" />
         <entry key="..\:/GitHub/PrudentialFinance/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1890625" />
-        <entry key="..\:/LDK/HK2NAM4/DiDong/OldDidong/PrudentialFinance/app/src/main/res/layout/activity_add_goal.xml" value="0.3619791666666667" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/drawable/button_background_green.xml" value="0.233" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/drawable/button_background_red.xml" value="0.154" />
         <entry key="..\:/LDK/HK2NAM4/DiDong/PrudentialFinance/app/src/main/res/drawable/button_style_state.xml" value="0.154" />
@@ -169,7 +177,6 @@
         <entry key="app/src/main/res/layout/activity_account_chart.xml" value="0.3383152173913043" />
         <entry key="app/src/main/res/layout/activity_account_report.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_category.xml" value="0.34103260869565216" />
-        <entry key="app/src/main/res/layout/activity_add_goal.xml" value="0.3265625" />
         <entry key="app/src/main/res/layout/activity_add_user.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/activity_card_creation.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/activity_card_creation_successfully.xml" value="0.25407608695652173" />
@@ -182,9 +189,6 @@
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_deposit.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_email_settings.xml" value="0.2740628166160081" />
-        <entry key="app/src/main/res/layout/activity_goal.xml" value="0.18840579710144928" />
-        <entry key="app/src/main/res/layout/activity_goal_detail.xml" value="0.3265625" />
-        <entry key="app/src/main/res/layout/activity_goal_element.xml" value="0.3265625" />
         <entry key="app/src/main/res/layout/activity_goals.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_introduce.xml" value="0.33967391304347827" />
@@ -197,7 +201,6 @@
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_site_settings.xml" value="0.2658514492753623" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.2658514492753623" />
-        <entry key="app/src/main/res/layout/activity_transaction.xml" value="0.3265625" />
         <entry key="app/src/main/res/layout/activity_transaction_menu.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_transaction_preview_statement.xml" value="0.4121376811594203" />
         <entry key="app/src/main/res/layout/activity_transaction_statement.xml" value="0.2653985507246377" />

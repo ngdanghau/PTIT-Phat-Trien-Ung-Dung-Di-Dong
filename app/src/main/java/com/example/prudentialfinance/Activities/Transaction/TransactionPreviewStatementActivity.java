@@ -18,6 +18,7 @@ import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.TransactionViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -87,7 +88,8 @@ public class TransactionPreviewStatementActivity extends AppCompatActivity {
         accountName.setText( AuthUser.getFirstname()+ " " + AuthUser.getLastname() );
 
         Date currentDay = new Date();
-        today.setText( currentDay.toString() );
+        SimpleDateFormat conventer = new SimpleDateFormat("dd-MM-yyyy");
+        today.setText( conventer.format(currentDay) );
 
         dateStart.setText( dateFrom );
         dateEnd.setText( dateTo );

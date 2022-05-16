@@ -119,14 +119,14 @@
 
                 <EditText
                     android:id="@+id/siteDescription"
-                    android:text=""
+                    style="@style/custom_input"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/site_description"
                     android:inputType="textMultiLine"
                     android:lines="8"
                     android:scrollbars="vertical"
-                    android:hint="@string/site_description"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorNormalText"
-                    style="@style/custom_input" />
+                    android:text=""
+                    android:textColor="@color/colorNormalText" />
 
             </LinearLayout>
 

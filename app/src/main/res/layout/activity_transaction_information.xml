@@ -22,9 +22,8 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/detail"
@@ -55,89 +54,139 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/transactionInforNameTitle"
-                style="@style/transaction_information_text_view_title"
-                android:text="@string/transaction_name"
-                tools:ignore="RtlSymmetry" />
+            <LinearLayout
+                android:paddingBottom="10dp"
+                android:id="@+id/layoutName"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/transactionInforNameContent"
-                style="@style/transaction_information_text_view_content"
-                android:layout_toEndOf="@id/transactionInforNameTitle"
-                android:text="@string/introduce1" />
+                <TextView
+                    android:id="@+id/transactionInforNameTitle"
+                    style="@style/transaction_information_text_view_title"
+                    android:text="@string/transaction_name"
+                    tools:ignore="RtlSymmetry" />
 
-            <TextView
-                android:id="@+id/transactionInforDateTitle"
-                android:layout_below="@id/transactionInforNameTitle"
-                style="@style/transaction_information_text_view_title"
-                android:text="@string/date"
-                tools:ignore="RtlSymmetry" />
+                <TextView
+                    android:id="@+id/transactionInforNameContent"
+                    style="@style/transaction_information_text_view_content"
+                    android:text="@string/introduce1" />
 
-            <TextView
-                android:id="@+id/transactionInforDateContent"
-                style="@style/transaction_information_text_view_content"
-                android:layout_below="@+id/transactionInforNameContent"
-                android:layout_toEndOf="@id/transactionInforDateTitle"
-                android:text="@string/date_value"
-                tools:ignore="RtlSymmetry" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/transactionInforAmountTitle"
-                style="@style/transaction_information_text_view_title"
-                android:layout_below="@+id/transactionInforDateTitle"
-                android:text="@string/cost" />
 
-            <TextView
-                android:id="@+id/transactionInforAmountContent"
-                android:layout_toEndOf="@+id/transactionInforAmountTitle"
-                android:layout_below="@id/transactionInforDateContent"
-                android:text="@string/income_example"
-                style="@style/transaction_information_text_view_content"/>
 
-            <TextView
-                android:id="@+id/transactionInforAccountTitle"
-                android:layout_below="@id/transactionInforAmountTitle"
-                android:text="@string/account_name"
-                style="@style/transaction_information_text_view_title"/>
+            <LinearLayout
+                android:id="@+id/layoutDate"
+                android:layout_below="@id/layoutName"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/transactionInforAccountContent"
-                android:text="@string/app_name"
-                android:layout_below="@id/transactionInforAmountContent"
-                android:layout_toEndOf="@id/transactionInforAccountTitle"
-                style="@style/transaction_information_text_view_content" />
+                <TextView
+                    android:id="@+id/transactionInforDateTitle"
+                    style="@style/transaction_information_text_view_title"
+                    android:text="@string/date"
+                    tools:ignore="RtlSymmetry" />
 
-            <TextView
-                android:id="@+id/transactionInforCategoryTitle"
-                android:layout_below="@id/transactionInforAccountTitle"
-                style="@style/transaction_information_text_view_title"
-                android:text="@string/category_name_2" />
+                <TextView
+                    android:id="@+id/transactionInforDateContent"
+                    style="@style/transaction_information_text_view_content"
+                    android:text="@string/date_value"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/transactionInforCategoryContent"
-                style="@style/transaction_information_text_view_content"
-                android:layout_below="@id/transactionInforAccountContent"
-                android:layout_toEndOf="@id/transactionInforCategoryTitle"
-                android:text="@string/task_destroyer" />
 
-            <TextView
-                android:id="@+id/transactionInforReferenceTitle"
-                android:layout_below="@id/transactionInforCategoryTitle"
-                style="@style/transaction_information_text_view_title"
-                android:text="@string/reference_2" />
+            <LinearLayout
+                android:layout_below="@+id/layoutDate"
+                android:id="@+id/layoutAmount"
+                android:layout_width="match_parent"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/transactionInforReferenceContent"
-                style="@style/transaction_information_text_view_content"
-                android:layout_below="@id/transactionInforCategoryContent"
-                android:layout_toEndOf="@id/transactionInforReferenceTitle"
-                android:text="@string/app_name" />
+                <TextView
+                    android:id="@+id/transactionInforAmountTitle"
+                    style="@style/transaction_information_text_view_title"
+                    android:text="@string/cost" />
+
+                <TextView
+                    android:id="@+id/transactionInforAmountContent"
+                    style="@style/transaction_information_text_view_content"
+                    android:text="@string/income_example" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_below="@id/layoutAmount"
+                android:id="@+id/layoutAccountName"
+                android:layout_width="match_parent"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/transactionInforAccountTitle"
+                    style="@style/transaction_information_text_view_title"
+                    android:text="@string/account_name" />
+
+                <TextView
+                    android:id="@+id/transactionInforAccountContent"
+                    style="@style/transaction_information_text_view_content"
+                    android:text="@string/app_name" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_below="@id/layoutAccountName"
+                android:id="@+id/layoutCategoryName"
+                android:layout_width="match_parent"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/transactionInforCategoryTitle"
+                    style="@style/transaction_information_text_view_title"
+                    android:text="@string/category_name_2" />
+
+                <TextView
+                    android:id="@+id/transactionInforCategoryContent"
+                    style="@style/transaction_information_text_view_content"
+                    android:text="@string/task_destroyer" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_below="@id/layoutCategoryName"
+                android:id="@+id/layoutReference"
+                android:layout_width="match_parent"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/transactionInforReferenceTitle"
+                    style="@style/transaction_information_text_view_title"
+                    android:text="@string/reference_2" />
+
+                <TextView
+                    android:id="@+id/transactionInforReferenceContent"
+                    style="@style/transaction_information_text_view_content"
+                    android:text="@string/app_name" />
+
+            </LinearLayout>
+
+
+
+
 
             <TextView
                 android:id="@+id/transactionInforDescription"
                 style="@style/transaction_information_text_view_title"
-                android:layout_below="@id/transactionInforReferenceTitle"
+                android:layout_below="@id/layoutReference"
                 android:text="@string/description" />
 
             <TextView
@@ -156,10 +205,10 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/transactionInforButtonEdit"
-
+        style="@style/transaction_information_button_style"
         android:layout_below="@id/transactionInforContent"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="102dp"
-        android:text="@string/edit"
-        style="@style/transaction_information_button_style" />
+        android:text="@string/edit" />
 </RelativeLayout>
