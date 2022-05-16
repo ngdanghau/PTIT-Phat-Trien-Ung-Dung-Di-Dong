@@ -281,4 +281,34 @@
     <string name="fb_login_protocol_scheme">fb477715650706961</string>
     <string name="facebook_client_token">b4344548855c73b2adc72bbe3917b1d7</string>
 
+    <string name="budget_title">Ngân sách chi tiêu</string>
+    <string name="budget_edit_title">Sửa ngân sách</string>
+    <string name="budget_report_title">Xem thống kê ngân sách</string>
+    <string name="budget_add_title">Thêm ngân sách</string>
+
+    <string name="budget_element_name">Tổng tiền ăn</string>
+    <string name="budget_element_description">Tổng ngân sách cho việc ăn uống</string>
+    <string name="budget_element_date">Tháng 3 2022</string>
+    <string name="budget_month">Tháng</string>
+    <string name="budget_year">Năm</string>
+    <string name="vn">VNĐ</string>
+
+    <string name="budget_add_categories">Thể loại</string>
+    <string name="budget_add_budget">Ngân sách</string>
+    <string name="budget_description_hint">Mô tả ngân sách</string>
+    <string name="budget_description">Mô tả</string>
+    <string name="budget_error">Thiếu phần</string>
+    <string name="budget_des_value">Mô t</string>
+
+    <string name="budget_value">30000</string>
+
+
+    <string name="chart_center_lable">Ngân sách</string>
+    <string name="report_lable">Ngân sách</string>
+
+    <string name="name_title">Tên</string>
+    <string name="description_title">Mô tả</string>
+    <string name="todate_title">Hạn chót</string>
+    <string name="amount_title">Mức tiền</string>
+
 </resources>
