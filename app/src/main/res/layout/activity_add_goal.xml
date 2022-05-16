@@ -75,18 +75,21 @@
                 <EditText
                     android:id="@+id/goal_amount_add"
                     style="@style/custom_input"
+                    android:digits="0123456789"
                     android:hint="@string/goal_target_tv"
                     android:inputType="number"
+                    android:maxLength="10"
                     android:textColor="@color/colorNormalText" />
 
                 <TextView
+                    android:id="@+id/tv_currency_amount"
                     style="@style/text_view_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
                     android:paddingRight="10dp"
-                    android:text="VNĐ" />
+                    android:text="@string/goal_currency_VN" />
 
             </RelativeLayout>
 
@@ -106,18 +109,21 @@
                 <EditText
                     android:id="@+id/goal_balance_add"
                     style="@style/custom_input"
+                    android:digits="0123456789"
                     android:hint="@string/goal_balance_tv"
                     android:inputType="number"
+                    android:maxLength="10"
                     android:textColor="@color/colorNormalText" />
 
                 <TextView
+                    android:id="@+id/tv_currency_balance"
                     style="@style/text_view_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
                     android:paddingRight="10dp"
-                    android:text="VNĐ" />
+                    android:text="@string/goal_currency_VN" />
 
             </RelativeLayout>
 
