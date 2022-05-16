@@ -2,7 +2,6 @@ package com.example.prudentialfinance.Activities.Card;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -10,20 +9,23 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.prudentialfinance.Helpers.NoticeDialog;
+import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.CardViewModel;
 
 import java.util.Map;
 
-public class CardCreationActivity extends AppCompatActivity {
+public class  CardCreationActivity extends AppCompatActivity {
 
     private ImageButton buttonGoBack;
     private AppCompatButton buttonCreate;
     private TextView cardNumber, cardBalance, cardBank, cardDescription;
     private CardViewModel viewModel;
     private Map<String, String > headers = null;
+    private LoadingDialog loadingDialog;
+    private Alert alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class CardCreationActivity extends AppCompatActivity {
 
     private void setViewModel() {
         viewModel = new ViewModelProvider(this).get(CardViewModel.class);
+        loadingDialog = new LoadingDialog(CardCreationActivity.this);
+        alert = new Alert(this, 1);
     }
 
     /**
@@ -71,34 +75,41 @@ public class CardCreationActivity extends AppCompatActivity {
      * the data in this fragment is also updated automatically
      * */
     private void setEvent() {
-        buttonGoBack.setOnClickListener(view->{
-            finish();
-        });
+        buttonGoBack.setOnClickListener(view-> finish());
 
         buttonCreate.setOnClickListener(view->{
             String number = cardNumber.getText().toString();
-            int balance =  Integer.parseInt(cardBalance.getText().toString());
+            String balance =  cardBalance.getText().toString();
             String bank = cardBank.getText().toString();
             String description = cardDescription.getText().toString();
 
             viewModel.createAccount(headers, bank, balance, description, number);
         });
 
-        viewModel.getAccountCreation().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if( integer == 1)
-                {
-                    NoticeDialog dialog = new NoticeDialog();
-                    dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_successfully);
-                }
-                else
-                {
-                    NoticeDialog dialog = new NoticeDialog();
-                    dialog.showDialog(CardCreationActivity.this, R.layout.activity_card_creation_failed);
-                }
+        viewModel.getAccountCreationResource().observe(this, accountCreate -> {
+            int result = accountCreate.getResult();
+            if( result == 1)
+            {
+                alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
+            }
+            else
+            {
+                alert.showAlert("Thất bại", accountCreate.getMsg(), R.drawable.ic_close);
             }
         });
+
+        viewModel.getAnimation().observe(this, aBoolean -> {
+            if( aBoolean )
+            {
+                loadingDialog.startLoadingDialog();
+            }
+            else
+            {
+                loadingDialog.dismissDialog();
+            }
+        });
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
 

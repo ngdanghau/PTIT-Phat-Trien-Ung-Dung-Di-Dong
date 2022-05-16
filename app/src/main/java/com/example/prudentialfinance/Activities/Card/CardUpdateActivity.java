@@ -1,18 +1,25 @@
 package com.example.prudentialfinance.Activities.Card;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
@@ -24,12 +31,16 @@ public class CardUpdateActivity extends AppCompatActivity {
 
     private ImageButton buttonGoBack;
     private AppCompatButton buttonCreate;
-    private ImageButton buttonRemove;
+    private ImageButton buttonMore;
+    private MenuPopupHelper menuHelper;
+    private MenuBuilder menuBuilder;
+
 
     private EditText cardNumber, cardBalance, cardBank, cardDescription;
     private CardViewModel viewModel;
 
     LoadingDialog loadingDialog;
+    private Alert alert;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -45,7 +56,7 @@ public class CardUpdateActivity extends AppCompatActivity {
 
 
         /*get account from recycle view*/
-        Account account = (Account) getIntent().getParcelableExtra("account");
+        Account account = getIntent().getParcelableExtra("account");
 
 
         setControl();
@@ -55,21 +66,19 @@ public class CardUpdateActivity extends AppCompatActivity {
         viewModel.getAccountRemoval().observe(CardUpdateActivity.this, s -> {
             if( s.length() > 0)
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialogWithContent(CardUpdateActivity.this, s.trim());
+                alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
             }
         });
 
-        viewModel.getAccountUpdate().observe(this, integer -> {
-            if( integer == 1)
+        viewModel.getAccountUpdateResource().observe(this, accountEdit -> {
+            int result = accountEdit.getResult();
+            if( result == 1)
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_successfully);
+                alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
             }
             else
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialog(CardUpdateActivity.this, R.layout.activity_card_creation_failed);
+                alert.showAlert(getString(R.string.alertTitle), accountEdit.getMsg(), R.drawable.ic_close);
             }
         });
 
@@ -83,6 +92,8 @@ public class CardUpdateActivity extends AppCompatActivity {
                 loadingDialog.dismissDialog();
             }
         });
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
 
@@ -90,10 +101,11 @@ public class CardUpdateActivity extends AppCompatActivity {
      * @author Phong
      * listening event for every component.
      * */
+    @SuppressLint("RestrictedApi")
     private void setControl() {
         buttonGoBack = findViewById(R.id.cardUpdateButtonGoBack);
         buttonCreate = findViewById(R.id.cardUpdateButtonCreate);
-        buttonRemove = findViewById(R.id.cardUpdateButtonRemove);
+        buttonMore = findViewById(R.id.cardUpdateButtonMore);
 
 
         cardNumber = findViewById(R.id.cardUpdateCardNumber);
@@ -102,6 +114,14 @@ public class CardUpdateActivity extends AppCompatActivity {
         cardBank = findViewById(R.id.cardUpdateCardBank);
 
         loadingDialog = new LoadingDialog(CardUpdateActivity.this);
+        alert = new Alert(this, 1);
+
+        menuBuilder = new MenuBuilder(this);
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.card_menu, menuBuilder);
+
+        menuHelper = new MenuPopupHelper(this, menuBuilder, buttonMore);
+        menuHelper.setForceShowIcon(true);
     }
 
     private void setViewModel() {
@@ -119,7 +139,7 @@ public class CardUpdateActivity extends AppCompatActivity {
      * Step 3: observe data if some data changes on server then
      * the data in this fragment is also updated automatically
      * */
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "RestrictedApi"})
     private void setEvent(Account account,  Map<String, String > headers) {
         cardNumber.setFocusable(false);
         if( account == null)
@@ -149,9 +169,34 @@ public class CardUpdateActivity extends AppCompatActivity {
         });
 
         /*Step 4*/
-        buttonRemove.setOnClickListener(view -> {
-            int id = account.getId();
-            viewModel.deleteAccount(headers, id);
+        buttonMore.setOnClickListener(view -> {
+            menuHelper.show();
         });
+
+
+        menuBuilder.setCallback(new MenuBuilder.Callback() {
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuBuilder menu, @NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.deleteMenu:
+                        int id = account.getId();
+                        viewModel.deleteAccount(headers, id);
+                        break;
+                    case R.id.chartMenu:
+                        Intent intent = new Intent(CardUpdateActivity.this, AccountChartActivity.class);
+                        intent.putExtra("account", (Parcelable) account);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onMenuModeChange(@NonNull MenuBuilder menu) {
+
+            }
+        });
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 }

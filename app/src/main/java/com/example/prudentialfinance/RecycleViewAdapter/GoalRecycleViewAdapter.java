@@ -1,29 +1,32 @@
 package com.example.prudentialfinance.RecycleViewAdapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.Activities.General.AddGoalActivity;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Model.Goal;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.R;
+import com.example.prudentialfinance.Activities.General.DepositActivity;
+import com.example.prudentialfinance.Activities.General.GoalDetailActivity;
 
 import java.util.ArrayList;
 
@@ -32,10 +35,12 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
     private Context context;
     private ArrayList<Goal> objects;
     ActivityResultLauncher<Intent> addGoalActivity;
+    SiteSettings appInfo;
 
-    public GoalRecycleViewAdapter(Context content, ArrayList<Goal> objects, ActivityResultLauncher<Intent> addGoalActivity) {
+    public GoalRecycleViewAdapter(Context context, ArrayList<Goal> objects, ActivityResultLauncher<Intent> addGoalActivity, SiteSettings appInfo) {
         this.context = context;
         this.objects = objects;
+        this.appInfo = appInfo;
         this.addGoalActivity = addGoalActivity;
     }
 
@@ -45,23 +50,73 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.activity_goal_element, parent, false);
-        return new GoalRecycleViewAdapter.ViewHolder(view, parent);
+        return new GoalRecycleViewAdapter.ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Goal entry = objects.get(position);
 
-        holder.goal_avt.getBackground().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC);
-        holder.goal_name.setText(Helper.truncate_string(entry.getName(),70, "...", true));
-        holder.goal_deadline.setText(Helper.truncate_string(entry.getDeadline(), 70, "...", true));
-        Context parentContext = holder.parent.getContext();
+        holder.progressBar.setMax(100);
+        long progress =Math.round(((double)(entry.getDeposit()+entry.getBalance())/(double)entry.getAmount())*100);
+        if(progress==0)
+        {
+            holder.progressBar.setProgress(1);
+        }else
+        holder.progressBar.setProgress((int)progress);
+
+//        SET CONTROL
+        if(entry.getStatus()==1)
+        {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+        }else if(entry.getStatus()==2)
+        {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#03DAC5")));
+        }else if(entry.getStatus()==3)
+        {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+        }
+
+        holder.goal_name.setText(Helper.truncate_string(entry.getName(),25, "...", true));
+        holder.goal_deadline.setText(Helper.truncate_string(entry.getDeadline(), 25, "...", true));
+        holder.goal_amount.setText(Helper.truncate_string(Helper.formatNumber((int)entry.getAmount())+ appInfo.getCurrency(), 25, "...", true));
+        if(progress>=100)
+            holder.goal_balance.setText("Hoàn thành");
+        else
+        holder.goal_balance.setText(Helper.truncate_string("Đã có: "+Helper.formatNumber((int)(entry.getDeposit()+entry.getBalance()))+appInfo.getCurrency(), 70, "...", true));
+
+        AlertDialog.Builder b = new AlertDialog.Builder(context);
+        b.setTitle("Hành động");
+        String[] types;
+        if(entry.getStatus()==3)
+            types = new String[]{"Chi tiết", "Sửa"};
+        else
+            types = new String[]{"Chi tiết", "Sửa", "Thêm tiền"};
+        b.setItems(types, (dialog, which) -> {
+            dialog.dismiss();
+            switch(which){
+                case 0:
+                    Intent intent = new Intent (context, GoalDetailActivity.class);
+                    intent.putExtra("goal", entry);
+                    context.startActivity(intent);
+                    break;
+                case 1:
+                    Intent intent1 = new Intent (context, AddGoalActivity.class);
+                    intent1.putExtra("goal", entry);
+                    addGoalActivity.launch(intent1);
+                    break;
+                case 2:
+                    Intent intent2 = new Intent (context, DepositActivity.class);
+                    intent2.putExtra("id", entry.getId());
+                    addGoalActivity.launch(intent2);
+            }
+        });
+
         holder.goal_layout.setOnClickListener(view -> {
-            Intent intent = new Intent (parentContext, AddGoalActivity.class);
-            intent.putExtra("goal", entry);
-            addGoalActivity.launch(intent);
+            b.show();
         });
     }
 
@@ -73,23 +128,23 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-        private ImageButton goal_avt;
-        private TextView goal_name, goal_deadline;
+        private TextView goal_name, goal_deadline,goal_amount,goal_balance;
         private LinearLayout goal_layout;
-        private ViewGroup parent;
+        private ProgressBar progressBar;
 
-        public ViewHolder(@NonNull View itemView, ViewGroup parent) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             setControl(itemView);
-            this.parent = parent;
         }
 
         private void setControl(View itemView)
         {
-            goal_avt = itemView.findViewById(R.id.goal_avatar);
             goal_name = itemView.findViewById(R.id.goal_name);
             goal_deadline = itemView.findViewById(R.id.goal_deadline);
+            goal_amount = itemView.findViewById(R.id.goal_amount);
+            goal_balance = itemView.findViewById(R.id.goal_balance);
             goal_layout = itemView.findViewById(R.id.goal_layout);
+            progressBar = itemView.findViewById(R.id.progressBar_Goal);
         }
     }
 }

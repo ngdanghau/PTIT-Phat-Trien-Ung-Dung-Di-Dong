@@ -54,4 +54,14 @@ public class SiteSettingsResponse {
     public void setMethod(String method) {
         this.method = method;
     }
+
+    @Override
+    public String toString() {
+        return "SiteSettingsResponse{" +
+                "result=" + result +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                ", method='" + method + '\'' +
+                '}';
+    }
 }

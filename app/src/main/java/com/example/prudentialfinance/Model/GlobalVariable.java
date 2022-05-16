@@ -15,6 +15,15 @@ public class GlobalVariable extends Application {
 
 
     private User AuthUser;
+    private SiteSettings appInfo;
+
+    public SiteSettings getAppInfo() {
+        return appInfo;
+    }
+
+    public void setAppInfo(SiteSettings appInfo) {
+        this.appInfo = appInfo;
+    }
 
     public User getAuthUser() {
         return AuthUser;

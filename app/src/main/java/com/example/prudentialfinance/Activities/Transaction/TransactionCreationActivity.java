@@ -4,14 +4,12 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -20,15 +18,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.prudentialfinance.Adapter.AccountAdapter;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
-import com.example.prudentialfinance.HomeActivity;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
-import com.example.prudentialfinance.ViewModel.AccountViewModel;
+import com.example.prudentialfinance.ViewModel.Accounts.AccountViewModel;
 import com.example.prudentialfinance.ViewModel.CategoryViewModel;
 import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.ViewModel.TransactionViewModel;
@@ -58,6 +55,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
     private EditText transactionName, transactionAmount, transactionReference,
              transactionDescription, transactionDate;
+
+
     private final Calendar myCalendar= Calendar.getInstance();
     private static Map<String, String > headers = null;
 
@@ -71,6 +70,7 @@ public class TransactionCreationActivity extends AppCompatActivity{
     private String type;
     private String description;
 
+    private Alert alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +102,11 @@ public class TransactionCreationActivity extends AppCompatActivity{
         transactionCreation.observe(this, integer -> {
             if( integer > 0)
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialog(TransactionCreationActivity.this, R.layout.activity_card_creation_successfully);
+                alert.showAlert("Thành công", "Thao tác đã được thực hiện thành công", R.drawable.ic_check);
             }
             else
             {
-                NoticeDialog dialog = new NoticeDialog();
-                dialog.showDialogWithContent(this, transactionViewModel.getTransactionMessage().getValue() );
+                alert.showAlert("Thất bại", transactionViewModel.getTransactionMessage().getValue(), R.drawable.ic_close);
             }
         });
 
@@ -142,6 +140,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
         buttonSave = findViewById(R.id.transactionCreationButtonSave);
         buttonGoBack = findViewById(R.id.transactionCreationButtonGoBack);
+
+        alert = new Alert(TransactionCreationActivity.this, 1);
     }
 
     private void setViewModel(Map<String, String> headers) {
@@ -203,6 +203,8 @@ public class TransactionCreationActivity extends AppCompatActivity{
 
         /*listen button goback*/
         buttonGoBack.setOnClickListener(view-> finish());
+
+        alert.btnOK.setOnClickListener(view->finish());
     }
 
     /**
@@ -216,7 +218,6 @@ public class TransactionCreationActivity extends AppCompatActivity{
         accountSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(TransactionCreationActivity.this,accounts.get(i).getName(), Toast.LENGTH_SHORT).show();
                 /*get account id which is selected from account spinner*/
                 accountId = String.valueOf(accounts.get(i).getId());
             }

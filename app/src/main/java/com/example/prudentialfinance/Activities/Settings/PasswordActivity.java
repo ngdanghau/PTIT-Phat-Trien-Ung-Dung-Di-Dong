@@ -15,9 +15,9 @@ import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Settings.PasswordViewModel;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.Map;
-
 
 public class PasswordActivity extends AppCompatActivity {
 
@@ -31,6 +31,7 @@ public class PasswordActivity extends AppCompatActivity {
     Alert alert;
 
     Map<String, String> headers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,14 +46,14 @@ public class PasswordActivity extends AppCompatActivity {
 
     private void setComponent() {
         global = (GlobalVariable) getApplication();
-        headers = ((GlobalVariable)getApplication()).getHeaders();
+        headers = ((GlobalVariable) getApplication()).getHeaders();
         loadingDialog = new LoadingDialog(PasswordActivity.this);
         alert = new Alert(PasswordActivity.this, 1);
         viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
     }
 
-    private void setAuthorizedToken( String accessToken) {
-        String token = "JWT " +  accessToken.trim();
+    private void setAuthorizedToken(String accessToken) {
+        String token = "JWT " + accessToken.trim();
         GlobalVariable state = ((GlobalVariable) this.getApplication());
 
         state.setAccessToken(token);
@@ -65,27 +66,28 @@ public class PasswordActivity extends AppCompatActivity {
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
-
         saveBtn.setOnClickListener(view -> updateData());
 
         viewModel.isLoading().observe(this, isLoading -> {
-            if(isLoading){
+            if (isLoading) {
                 loadingDialog.startLoadingDialog();
-            }else{
+            } else {
                 loadingDialog.dismissDialog();
             }
         });
 
         viewModel.getObject().observe(this, object -> {
-            if(object == null){
-                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+            if (object == null) {
+                alert.showAlert(getResources().getString(R.string.alertTitle),
+                        getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
             if (object.getResult() == 1) {
-                setAuthorizedToken( object.getAccessToken() );
+                setAuthorizedToken(object.getAccessToken());
                 global.setAuthUser(object.getData());
-                Toast.makeText(PasswordActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                FancyToast.makeText(this, object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
+                        R.drawable.ic_check, true).show();
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
@@ -100,7 +102,7 @@ public class PasswordActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveBtn);
     }
 
-    private void updateData(){
+    private void updateData() {
 
         String newPass = password.getText().toString().trim();
         String oldPass = oldPassword.getText().toString().trim();

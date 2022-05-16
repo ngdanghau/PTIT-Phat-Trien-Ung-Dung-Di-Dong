@@ -1,13 +1,18 @@
 package com.example.prudentialfinance.API;
 
-import com.example.prudentialfinance.Container.AccountCreate;
-import com.example.prudentialfinance.Container.AccountDelete;
-import com.example.prudentialfinance.Container.AccountEdit;
-import com.example.prudentialfinance.Container.AccountGetAll;
-import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.Accounts.AccountBalanceResponse;
+import com.example.prudentialfinance.Container.Accounts.AccountCreate;
+import com.example.prudentialfinance.Container.Accounts.AccountDelete;
+import com.example.prudentialfinance.Container.Accounts.AccountEdit;
+import com.example.prudentialfinance.Container.Accounts.AccountGetAll;
+import com.example.prudentialfinance.Container.Accounts.AccountGetById;
+import com.example.prudentialfinance.Container.Accounts.AccountMonthlyResponse;
+import com.example.prudentialfinance.Container.CategoryMonthlyResponse;
 import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
+import com.example.prudentialfinance.Container.NotificationGetAll;
+import com.example.prudentialfinance.Container.NotificationResponse;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
 import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
 import com.example.prudentialfinance.Container.Report.TransactionByCategoryResponse;
@@ -19,13 +24,17 @@ import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
 import com.example.prudentialfinance.Container.budgets.budgetGET.BudgetAdd;
-import com.example.prudentialfinance.Model.Goal;
-import com.example.prudentialfinance.Container.TransactionCreate;
-import com.example.prudentialfinance.Container.TransactionGetTotal;
-import com.example.prudentialfinance.Container.TransactionRemove;
+import com.example.prudentialfinance.Container.budgets.budgetGET.Root;
+
+import com.example.prudentialfinance.Container.SimpleResponse;
+import com.example.prudentialfinance.Container.Transactions.TransactionCreate;
+import com.example.prudentialfinance.Container.Transactions.TransactionGetTotal;
+import com.example.prudentialfinance.Container.Transactions.TransactionRemove;
+import com.example.prudentialfinance.Container.Transactions.TransactionUpdate;
 import com.example.prudentialfinance.Container.Users.UserAdd;
 import com.example.prudentialfinance.Container.Users.UserGetAll;
-import com.example.prudentialfinance.Container.budgets.budgetGET.Root;
+import com.example.prudentialfinance.Model.AccountMonthly;
+
 
 import java.util.Map;
 
@@ -62,6 +71,14 @@ public interface HTTPRequest {
     @FormUrlEncoded
     @POST("api/login")
     Call<Login> login(@Field("username") String username, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("api/login/google")
+    Call<Login> loginGoogle(@Field("id_token") String id_token);
+
+    @FormUrlEncoded
+    @POST("api/login/facebook")
+    Call<Login> loginFacebook(@Field("access_token") String access_token);
 
 
     //Recovery password
@@ -103,6 +120,12 @@ public interface HTTPRequest {
     Call<AvatarUpload> uploadAvatar(@Header("Authorization") String authorization,
                                     @Part("action") RequestBody action,
                                     @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("api/profile")
+    Call<SimpleResponse> updateLanguage(@HeaderMap Map<String, String> headers,
+                                        @Field("action") String action,
+                                        @Field("langcode") String langcode);
 
 
     @FormUrlEncoded
@@ -165,7 +188,7 @@ public interface HTTPRequest {
     @POST("api/accounts")
     Call<AccountCreate> accountCreate(@HeaderMap Map<String, String> headers,
                                       @Field("name") String name,
-                                      @Field("balance") int balance,
+                                      @Field("balance") String balance,
                                       @Field("description") String description,
                                       @Field("accountnumber") String accountnumber);
 
@@ -186,7 +209,16 @@ public interface HTTPRequest {
 
 
     @DELETE("api/accounts/{id}")
-    Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers,@Path("id") int id);
+    Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @GET("/api/home/accountbalance")
+    Call<AccountBalanceResponse> accountBalance(@HeaderMap Map<String, String> headers);
+
+
+    @GET("/api/accounts/accountbalancebymonth/{id}")
+    Call<AccountMonthlyResponse> accountBalanceMonthly(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+
 
 
     /***************************HOME*********************************/
@@ -225,6 +257,14 @@ public interface HTTPRequest {
                              @Field("balance") long balance,
                              @Field("amount") long amount,
                              @Field("deadline") String deadline);
+
+    @FormUrlEncoded
+    @POST("api/goals/{id}")
+    Call<GoalAdd> depositGoal(@HeaderMap Map<String, String> headers,
+                              @Path("id") int id,
+                             @Field("deposit") int deposit,
+                             @Field("action") String action
+                             );
 
     @FormUrlEncoded
     @PUT("api/goals/{id}")
@@ -298,6 +338,11 @@ public interface HTTPRequest {
                                           @Field("color") String color);
 
 
+    @GET("/api/home/incomevsexpense")
+    Call<IncomeVsExpenseResponse> getReportGroupByDate(@HeaderMap Map<String, String> headers,
+                                                 @Query("type") String type,
+                                                 @Query("date") String date);
+
     /***************************USER***************************/
     @GET("api/users")
     Call<UserGetAll> searchUsers(@HeaderMap Map<String, String> headers,
@@ -339,11 +384,6 @@ public interface HTTPRequest {
     Call<ReportTotalBalance> reportTotalBalace(@HeaderMap Map<String, String> headers,
                                                @Query("date") String date);
 
-    @GET("/api/home/incomevsexpense")
-    Call<IncomeVsExpenseResponse> incomeExpenseByDate(@HeaderMap Map<String, String> headers,
-                                                      @Query("type") String type,
-                                                      @Query("date") String date);
-
     @GET("/api/home/category/income")
     Call<CategoryReportResponse> incomeByDate(@HeaderMap Map<String, String> headers,
                                               @Query("date") String date);
@@ -363,12 +403,21 @@ public interface HTTPRequest {
                                                                  @Query("todate") String todate,
                                                                  @Query("category_id") int category_id);
 
+    @GET("/api/report/categorymonthly")
+    Call<CategoryMonthlyResponse> getCategoryMonthly(@HeaderMap Map<String, String> headers,
+                                                     @Query("search") String search,
+                                                     @Query("start") int start,
+                                                     @Query("length") int length,
+                                                     @Query("order[column]") String column,
+                                                     @Query("order[dir]") String dir,
+                                                     @Query("type") int type);
+
 
     /***************************TRANSACTIONS***************************/
-    @GET("api/transactions/income/total")
+    @GET("/api/transactions/income/gettotal")
     Call<TransactionGetTotal> transactionIncomeTotal(@HeaderMap Map<String, String> headers);
 
-    @GET("api/transactions/expense/total")
+    @GET("/api/transactions/expense/gettotal")
     Call<TransactionGetTotal> transactionExpenseTotal(@HeaderMap Map<String, String> headers);
 
     @FormUrlEncoded
@@ -387,6 +436,22 @@ public interface HTTPRequest {
     Call<TransactionRemove> transactionRemove(@HeaderMap Map<String, String> headers,
                                               @Path("id") String id);
 
+  
+    @FormUrlEncoded
+    @PUT("api/transactions/{id}")
+    Call<TransactionUpdate> transactionUpdate(@HeaderMap Map<String, String> headers,
+                                              @Path("id") int id,
+                                              @Field("category_id") String categoryId,
+                                              @Field("account_id") String accountId,
+                                              @Field("name") String name,
+                                              @Field("amount") String amount,
+                                              @Field("reference") String reference,
+                                              @Field("transactiondate") String transactionDate,
+                                              @Field("type") String type,
+                                              @Field("description") String description);
+
+  
+  
     /***************************BUDGET***************************/
     @GET("api/budgets")
     Call<Root> budget(@HeaderMap Map<String, String> headers,
@@ -421,5 +486,17 @@ public interface HTTPRequest {
                              @Field("month") String month,
                              @Field("year") String year
     );
+  
+  
+
+    // Notification
+    @GET("/api/notifications")
+    Call<NotificationGetAll> getNotification(@HeaderMap Map<String, String> headers);
+
+    @POST("/api/notifications")
+    Call<NotificationResponse> maskedAsRead(@HeaderMap Map<String, String> headers);
+
+    @GET("/api/notifications/{id}")
+    Call<NotificationResponse> maskedAsReadOne(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
 }

@@ -147,15 +147,7 @@ public class HomeFragmentViewModel extends ViewModel {
                     HomeLatestTransactions resource = response.body();
 
                     assert resource != null;
-//                    System.out.println("homefragment view model - retrieveDetailTransactionsWithQuery - summary: " + resource.getSummary().getTotalCount());
-//
-//
                     List<TransactionDetail> array = resource.getData();
-//
-//                    for(TransactionDetail e: array)
-//                    {
-//                        System.out.println(e.getName());
-//                    }
                     transactions.postValue(array);
                     return;
                 }
@@ -193,26 +185,19 @@ public class HomeFragmentViewModel extends ViewModel {
         container.enqueue(new Callback<ReportTotalBalance>() {
             @Override
             public void onResponse(@NonNull Call<ReportTotalBalance> call, @NonNull Response<ReportTotalBalance> response) {
+                animation.setValue(false);
                 if(response.isSuccessful())
                 {
-                    animation.setValue(false);
                     ReportTotalBalance resource = response.body();
                     assert resource != null;
                     totalBalance.setValue(resource.getMonth());
-                }
-                if(response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        System.out.println( jObjError );
-                    } catch (Exception e) {
-                        System.out.println( e.getMessage() );
-                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ReportTotalBalance> call,@NonNull Throwable t) {
-
+                animation.setValue(false);
+                totalBalance.setValue(0.0);
             }
         });
     }

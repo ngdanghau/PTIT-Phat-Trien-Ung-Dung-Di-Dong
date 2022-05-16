@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.AccountCreate;
-import com.example.prudentialfinance.Container.AccountDelete;
-import com.example.prudentialfinance.Container.AccountEdit;
+import com.example.prudentialfinance.Container.Accounts.AccountCreate;
+import com.example.prudentialfinance.Container.Accounts.AccountDelete;
+import com.example.prudentialfinance.Container.Accounts.AccountEdit;
 
 import org.json.JSONObject;
 
@@ -23,8 +23,19 @@ public class CardViewModel extends ViewModel {
     private final MutableLiveData<Integer> accountCreation = new MutableLiveData<>();
     private final MutableLiveData<Integer> accountUpdate = new MutableLiveData<>();
     private final MutableLiveData<String> accountRemoval = new MutableLiveData<>();
+    private final MutableLiveData<AccountEdit> accountUpdateResource = new MutableLiveData<>();
+    private final MutableLiveData<AccountCreate> accountCreationResource = new MutableLiveData<>();
+    private final MutableLiveData<String> accountMessage = new MutableLiveData<>();
 
     private final MutableLiveData<Boolean> animation = new MutableLiveData<>();
+
+    public MutableLiveData<AccountEdit> getAccountUpdateResource() {
+        return accountUpdateResource;
+    }
+
+    public MutableLiveData<String> getAccountMessage() {
+        return accountMessage;
+    }
 
     public MutableLiveData<Boolean> getAnimation() {
         return animation;
@@ -45,11 +56,15 @@ public class CardViewModel extends ViewModel {
     }
 
 
+    public MutableLiveData<AccountCreate> getAccountCreationResource() {
+        return accountCreationResource;
+    }
+
     /**
      * @author Phong-Kaster
      * send HTTP Request to create account
      * */
-    public void createAccount(Map<String, String> headers, String name, int balance, String description, String accountnumber)
+    public void createAccount(Map<String, String> headers, String name, String balance, String description, String accountnumber)
     {
         animation.setValue(true);
         /*Step 1*/
@@ -75,7 +90,9 @@ public class CardViewModel extends ViewModel {
 
                     System.out.println(result);
                     System.out.println(msg);
-                    accountCreation.setValue(result);
+
+                    accountCreationResource.setValue(resource);
+
                 }
                 if(response.errorBody() != null) {
                     try {
@@ -127,8 +144,8 @@ public class CardViewModel extends ViewModel {
 
                     assert resource != null;
 
-                    int result = resource.getResult();
-                    accountUpdate.setValue(result);
+
+                    accountUpdateResource.setValue(resource);
 
                 }
 
@@ -173,11 +190,8 @@ public class CardViewModel extends ViewModel {
                     AccountDelete resource = response.body();
 
                     assert resource != null;
-
-                    int result = resource.getResult();
                     String msg = resource.getMsg();
-                    System.out.println("Card View Model - remove account - result: " + result);
-                    System.out.println("Card View Model - remove account - msg: " + msg);
+
                     accountRemoval.setValue(msg);
                 }
             }

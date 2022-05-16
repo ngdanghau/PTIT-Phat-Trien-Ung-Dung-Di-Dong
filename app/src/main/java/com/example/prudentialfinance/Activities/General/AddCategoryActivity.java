@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.Category;
 import com.example.prudentialfinance.Model.GlobalVariable;
@@ -68,7 +69,11 @@ public class AddCategoryActivity extends AppCompatActivity {
         cat_color.getBackground().setColorFilter(Color.parseColor(category.getColor()), PorterDuff.Mode.SRC);
 
         if(category.getId() == 0 ){
-            topTitle.setText(getString(R.string.add_category));
+            String sub = "Thu nhập";
+            if(category.getType() == 2){
+                 sub = "Chi tiêu";
+            }
+            topTitle.setText(getString(R.string.add_category) + " " + sub);
         }else{
             topTitle.setText(getString(R.string.edit_category));
         }
@@ -82,7 +87,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                     .setPreferenceName("MyColorPickerDialog")
                     .setPositiveButton(getString(R.string.confirm),
                             (ColorEnvelopeListener) (envelope, fromUser) -> {
-                                category.setColor(envelope.getHexCode().replace("D0", "#"));
+                                category.setColor(Helper.getRealColor(envelope.getHexCode()));
                                 cat_color.getBackground().setColorFilter(envelope.getColor(), PorterDuff.Mode.SRC);
                             })
                     .setNegativeButton(getString(R.string.cancel),

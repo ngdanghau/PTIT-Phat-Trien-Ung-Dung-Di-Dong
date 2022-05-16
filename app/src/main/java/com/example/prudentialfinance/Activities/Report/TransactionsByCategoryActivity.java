@@ -18,6 +18,7 @@ import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionsByCategoryRecycleViewAdapter;
@@ -38,6 +39,7 @@ public class TransactionsByCategoryActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     Alert alert;
     User authUser;
+    SiteSettings appInfo;
     Map<String, String> headers;
 
     RecyclerView lvTransactions;
@@ -73,7 +75,7 @@ public class TransactionsByCategoryActivity extends AppCompatActivity {
         manager = new LinearLayoutManager(this);
         lvTransactions.setLayoutManager(manager);
 
-        adapter = new TransactionsByCategoryRecycleViewAdapter(this, data);
+        adapter = new TransactionsByCategoryRecycleViewAdapter(this, data, appInfo);
         lvTransactions.setAdapter(adapter);
     }
 
@@ -84,6 +86,7 @@ public class TransactionsByCategoryActivity extends AppCompatActivity {
         alert = new Alert(this, 1);
         viewModel = new ViewModelProvider(this).get(TransactionsByCategoryViewModel.class);
         authUser = global.getAuthUser();
+        appInfo = global.getAppInfo();
     }
 
     private void setData() {

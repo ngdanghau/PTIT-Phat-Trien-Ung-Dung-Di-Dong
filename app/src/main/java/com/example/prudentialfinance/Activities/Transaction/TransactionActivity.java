@@ -1,7 +1,6 @@
 package com.example.prudentialfinance.Activities.Transaction;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
+import com.example.prudentialfinance.Helpers.ModalBottomSheet;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.TransactionRecycleViewAdapter;
@@ -35,7 +35,7 @@ import java.util.Map;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class TransactionActivity extends AppCompatActivity {
+public class TransactionActivity extends AppCompatActivity implements ModalBottomSheet.ModalBottomSheetListener {
 
     private RecyclerView recycleView;
     private HomeFragmentViewModel homeFragmentviewModel;
@@ -51,7 +51,7 @@ public class TransactionActivity extends AppCompatActivity {
     private static LiveData<Integer> transactionRemoval = null;
 
     private SearchView searchView;
-    private List<TransactionDetail> objects = new ArrayList<>();
+    private final List<TransactionDetail> objects = new ArrayList<>();
     private TransactionRecycleViewAdapter adapter;
 
     @Override
@@ -125,7 +125,6 @@ public class TransactionActivity extends AppCompatActivity {
             else
             {
                 notice.setVisibility(View.VISIBLE);
-                searchView.setVisibility(View.GONE);
                 recycleView.setVisibility(View.GONE);
             }
         });
@@ -171,8 +170,8 @@ public class TransactionActivity extends AppCompatActivity {
 
 
         buttonCreate.setOnClickListener(view -> {
-            Intent intent = new Intent(TransactionActivity.this, TransactionMenuActivity.class);
-            startActivity(intent);
+            ModalBottomSheet sheet = new ModalBottomSheet();
+            sheet.show(getSupportFragmentManager(), "TransactionMenu");
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

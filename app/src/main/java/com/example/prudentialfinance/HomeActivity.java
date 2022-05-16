@@ -1,35 +1,61 @@
 package com.example.prudentialfinance;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.prudentialfinance.Activities.General.AddGoalActivity;
+import com.example.prudentialfinance.Activities.General.CategoriesActivity;
+import com.example.prudentialfinance.Activities.General.GoalActivity;
+import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
-import com.example.prudentialfinance.Fragment.MenuFragment;
 import com.example.prudentialfinance.Fragment.ReportFragment;
 import com.example.prudentialfinance.Fragment.SettingsFragment;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.Model.Goal;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
+import com.example.prudentialfinance.ViewModel.CardFragmentViewModel;
+import com.example.prudentialfinance.ViewModel.HomeFragmentViewModel;
 import com.example.prudentialfinance.databinding.ActivityHomeBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String TAG = "HomeActivity";
     private ActivityHomeBinding binding;
     private Fragment fragment = null;
 
-    public static WeakReference<HomeActivity> weakActivity;
+    Animation rotateOpen, rotateClose, fromBottom, toBottom;
+    private boolean isOpen = false;
 
-    public static HomeActivity getmInstanceActivity() {
-        return weakActivity.get();
+    private CardFragmentViewModel cardFragmentViewModel = null;
+    private HomeFragmentViewModel homeFragmentViewModel = null;
+    private Map<String, String> headers;
+
+
+    @Override
+    public void onBackPressed() {
+        Alert alert = new Alert(this,0);
+        alert.btnOK.setOnClickListener(view->{
+            HomeActivity.super.onBackPressed();
+            alert.dismiss();
+        } );
+        alert.btnCancel.setOnClickListener(view-> alert.dismiss());
+        alert.showAlert("Thoát","Bạn có muốn thoát khỏi ứng dụng",R.drawable.ic_close);
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -37,8 +63,11 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*instantiate weak activity*/
-        weakActivity = new WeakReference<>(HomeActivity.this);
+        cardFragmentViewModel = new ViewModelProvider(this).get(CardFragmentViewModel.class);
+        homeFragmentViewModel = new ViewModelProvider(this).get(HomeFragmentViewModel.class);
+        headers = ((GlobalVariable)getApplication()).getHeaders();
+
+        setControl();
 
         /*bind data from home activity*/
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
@@ -71,9 +100,65 @@ public class HomeActivity extends AppCompatActivity {
 
 
         binding.fab.setOnClickListener(view->{
-            Fragment fragment = new MenuFragment();
-            enableFragment(fragment);
+            setVisibility();
+            setAnimation();
+            isOpen = !isOpen;
         });
+
+        binding.transactionFab.setOnClickListener(view -> {
+            Intent intent = new Intent(this, TransactionCreationActivity.class);
+            intent.putExtra("type", "1");
+            startActivity(intent);
+        });
+        binding.budgetFab.setOnClickListener(view -> System.out.println("budgetFab"));
+        binding.categoryFab.setOnClickListener(view -> {
+            Intent intent = new Intent(this, CategoriesActivity.class);
+            startActivity(intent);
+        });
+        binding.goalFab.setOnClickListener(view -> {
+            Intent intent = new Intent (this, AddGoalActivity.class);
+            intent.putExtra("goal", new Goal(0));
+            startActivity(intent);
+        });
+
+
+    }
+
+    private void setVisibility() {
+        if(isOpen){
+            binding.budgetFab.setVisibility(View.INVISIBLE);
+            binding.transactionFab.setVisibility(View.INVISIBLE);
+            binding.categoryFab.setVisibility(View.INVISIBLE);
+            binding.goalFab.setVisibility(View.INVISIBLE);
+        }else{
+            binding.transactionFab.setVisibility(View.VISIBLE);
+            binding.budgetFab.setVisibility(View.VISIBLE);
+            binding.categoryFab.setVisibility(View.VISIBLE);
+            binding.goalFab.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setAnimation() {
+        if(isOpen){
+            binding.transactionFab.startAnimation(toBottom);
+            binding.budgetFab.startAnimation(toBottom);
+            binding.categoryFab.startAnimation(toBottom);
+            binding.goalFab.startAnimation(toBottom);
+            binding.fab.startAnimation(rotateClose);
+        }else{
+            binding.transactionFab.startAnimation(fromBottom);
+            binding.budgetFab.startAnimation(fromBottom);
+            binding.categoryFab.startAnimation(fromBottom);
+            binding.goalFab.startAnimation(fromBottom);
+            binding.fab.startAnimation(rotateOpen);
+        }
+    }
+
+    private void setControl() {
+        rotateOpen = AnimationUtils.loadAnimation(this, R.anim.rotate_open);
+        rotateClose = AnimationUtils.loadAnimation(this, R.anim.rotate_close);
+        fromBottom = AnimationUtils.loadAnimation(this, R.anim.from_bottom);
+        toBottom = AnimationUtils.loadAnimation(this, R.anim.to_bottom);
     }
 
     /**
@@ -93,6 +178,7 @@ public class HomeActivity extends AppCompatActivity {
         String contentType = headers.get("Content-Type");
 
         User AuthUser = ((GlobalVariable)getApplication()).getAuthUser();
+        SiteSettings appInfo = ((GlobalVariable)getApplication()).getAppInfo();
 
 
         /*Step 3*/
@@ -100,14 +186,24 @@ public class HomeActivity extends AppCompatActivity {
 
         bundle.putString("accessToken", accessToken);
         bundle.putString("contentType", contentType);
-        if(AuthUser != null){
-            bundle.putParcelable("AuthUser", AuthUser);
-        }
+        bundle.putParcelable("AuthUser", AuthUser);
+        bundle.putParcelable("appInfo", appInfo);
         fragment.setArguments(bundle);
 
 
         /*Step 4*/
         transaction.replace(R.id.frameLayout, fragment, "myFragment");
         transaction.commit();
+    }
+
+    /**
+     * Every single time user navigates to the another Activity and return HomeActivity
+     * The application will request to retrieve latest data.
+     * */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cardFragmentViewModel.instanciate(headers);
+        homeFragmentViewModel.instanciate(headers);
     }
 }

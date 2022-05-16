@@ -13,6 +13,7 @@
     <color name="colorAccent">#03DAC5</color>
     <!--Phong's color-->
     <color name="colorTheme">#1D3A70</color>
+    <color name="colorThemeText">#1D3A70</color>
     <color name="colorNormalText">#2D313D</color>
     <color name="colorAlternativeText">#ffffff</color>
     <color name="colorSupportText">#8D8F97</color>
@@ -35,5 +36,7 @@
     <color name="colorWarning">#fb3</color>
     <color name="colorBlue">#33b5e5</color>
     <color name="backgroundBlack">#FF000000</color>
+    <color name="backgroundIcon">#F9FAFB</color>
+    <color name="backgroundStroke">#E5E7EB</color>
 
 </resources>

@@ -43,6 +43,11 @@ public class Helper {
         }
     }
 
+    /**
+     * @author Phong-Kaster
+     * convert application date to server-date date
+     * For example 12-05-2022 -> 2022-05-12
+     * */
     public static String convertStringToValidDate(String input)
     {
         if( input.length() == 0)
@@ -59,6 +64,28 @@ public class Helper {
         return year + "-" + month + "-" +day;
     }
 
+
+    /**
+     * @author Phong-Kaster
+     * convert server-side date to application date
+     * for example 2022-05-12 -> 12-05-2022
+     * */
+    public static String revertStringToReadableDate(String input)
+    {
+        if( input.length() == 0)
+        {
+            Date date = new Date();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat forrmatter =
+                    new SimpleDateFormat("yyyy-MM-dd");
+            return forrmatter.format(date);
+        }
+        String day = input.substring(8,10);
+        String month = input.substring(5,7);
+        String year = input.substring(0,4);
+
+        return day + "-" + month + "-" + year;
+    }
+
     /*
     * 123456 -> 123,456
     * */
@@ -66,6 +93,12 @@ public class Helper {
     {
         DecimalFormat formatter = new DecimalFormat("###,###,###");
         return formatter.format(input);
+    }
+
+    public static String formatNumberForListener(int input)
+    {
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        return formatter.format(input)+"-"+input;
     }
 
     public static String formatNumber(Double input)
@@ -143,5 +176,22 @@ public class Helper {
         }
 
         return text;
+    }
+
+    /**
+     * Convert hexColor #12345678 of ColorPicker to real HexColor #123456
+     * @param  hexColor String
+     * @return string
+     */
+    public static String getRealColor(String hexColor){
+        String prefix = "#";
+        if (hexColor.length() == 6) {
+            return prefix + hexColor;
+        } else if (hexColor.length() > 6) {
+            return prefix + hexColor.substring(hexColor.length() - 6);
+        } else {
+            // whatever is appropriate in this case
+            throw new IllegalArgumentException("word has fewer than 6 characters!");
+        }
     }
 }

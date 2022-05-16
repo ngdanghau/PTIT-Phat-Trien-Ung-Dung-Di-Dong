@@ -22,6 +22,7 @@ import com.example.prudentialfinance.Activities.Report.TransactionsByCategoryAct
 import com.example.prudentialfinance.Container.Report.CategoryReport;
 import com.example.prudentialfinance.Container.Report.DateRange;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.R;
 
 import java.util.ArrayList;
@@ -30,12 +31,14 @@ public class CategoryReportRecycleViewAdapter extends RecyclerView.Adapter<Categ
     private ArrayList<CategoryReport> objects;
     private Context context;
     private DateRange dateRange;
+    private SiteSettings appInfo;
 
 
-    public CategoryReportRecycleViewAdapter(Context context, ArrayList<CategoryReport> objects, DateRange dateRange) {
+    public CategoryReportRecycleViewAdapter(Context context, ArrayList<CategoryReport> objects, DateRange dateRange, SiteSettings appInfo) {
         this.objects = objects;
         this.context = context;
         this.dateRange = dateRange;
+        this.appInfo = appInfo;
 
     }
 
@@ -57,7 +60,7 @@ public class CategoryReportRecycleViewAdapter extends RecyclerView.Adapter<Categ
         holder.cat_color.getBackground().setColorFilter(Color.parseColor(entry.getColor()), PorterDuff.Mode.SRC);
         holder.cat_name.setText(Helper.truncate_string(entry.getName(), 70, "...", true));
         holder.cat_amount.setText("x" + Helper.formatNumber(entry.getTotal()));
-        holder.cat_value.setText(Helper.formatNumber(entry.getAmount()));
+        holder.cat_value.setText(Helper.formatNumber(entry.getAmount()) + " " + appInfo.getCurrency());
 
         Context parentContext = holder.parent.getContext();
         holder.cat_layout.setOnClickListener(view1 -> {

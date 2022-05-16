@@ -21,12 +21,11 @@ import com.example.prudentialfinance.Model.EmailSettings;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Settings.EmailSettingsViewModel;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-
 
 public class EmailSettingsActivity extends AppCompatActivity {
     ImageButton backBtn;
@@ -47,11 +46,11 @@ public class EmailSettingsActivity extends AppCompatActivity {
     Spinner spnEncryption;
     ArrayAdapter<String> adapter;
     List<String> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_settings);
-
 
         setComponent();
 
@@ -68,18 +67,17 @@ public class EmailSettingsActivity extends AppCompatActivity {
 
     private void setComponent() {
         global = (GlobalVariable) getApplication();
-        headers = ((GlobalVariable)getApplication()).getHeaders();
+        headers = ((GlobalVariable) getApplication()).getHeaders();
         loadingDialog = new LoadingDialog(EmailSettingsActivity.this);
         alert = new Alert(EmailSettingsActivity.this, 1);
         viewModel = new ViewModelProvider(this).get(EmailSettingsViewModel.class);
     }
 
-    private void setDataToControl(EmailSettings data){
+    private void setDataToControl(EmailSettings data) {
         swAuth.setChecked(data.getAuth());
 
         username_email.setText(data.getUsername());
         password_email.setText(data.getPassword());
-
 
         txtHost.setText(data.getHost());
         txtFrom.setText(data.getFrom());
@@ -87,14 +85,13 @@ public class EmailSettingsActivity extends AppCompatActivity {
 
         for (int i = 0; i < list.size(); i++) {
             String item = list.get(i);
-            if(item.equals(data.getEncryption().toUpperCase())){
+            if (item.equals(data.getEncryption().toUpperCase())) {
                 spnEncryption.setSelection(i);
                 break;
             }
         }
 
     }
-
 
     private void setEvent() {
         backBtn.setOnClickListener(view -> finish());
@@ -103,26 +100,29 @@ public class EmailSettingsActivity extends AppCompatActivity {
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
-        swAuth.setOnCheckedChangeListener((compoundButton, b) -> authSMTP.setVisibility(b ? View.VISIBLE : View.INVISIBLE));
+        swAuth.setOnCheckedChangeListener(
+                (compoundButton, b) -> authSMTP.setVisibility(b ? View.VISIBLE : View.INVISIBLE));
 
         viewModel.isLoading().observe(this, isLoading -> {
-            if(isLoading){
+            if (isLoading) {
                 loadingDialog.startLoadingDialog();
-            }else{
+            } else {
                 loadingDialog.dismissDialog();
             }
         });
 
         viewModel.getObject().observe(this, object -> {
-            if(object == null){
-                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+            if (object == null) {
+                alert.showAlert(getResources().getString(R.string.alertTitle),
+                        getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
             if (object.getResult() == 1) {
                 setDataToControl(object.getData());
-                if(object.getMethod().equals("POST")){
-                    Toast.makeText(EmailSettingsActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                if (object.getMethod().equals("POST")) {
+                    FancyToast.makeText(EmailSettingsActivity.this, object.getMsg(), FancyToast.LENGTH_SHORT,
+                            FancyToast.SUCCESS, R.drawable.ic_check, true).show();
                 }
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
@@ -130,7 +130,7 @@ public class EmailSettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void updateData(){
+    private void updateData() {
 
         String host = txtHost.getText().toString().trim();
         String port = txtPort.getText().toString().trim();

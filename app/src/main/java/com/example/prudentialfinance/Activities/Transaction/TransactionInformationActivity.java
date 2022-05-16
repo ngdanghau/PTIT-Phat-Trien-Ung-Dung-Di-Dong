@@ -1,28 +1,43 @@
 package com.example.prudentialfinance.Activities.Transaction;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
+
+import java.lang.ref.WeakReference;
 
 public class TransactionInformationActivity extends AppCompatActivity {
 
     private TransactionDetail transaction;
     private Account atm;
-    private NoticeDialog noticeDialog;
+    private Alert alert;
 
     private TextView name,date, amount, account, category, reference, description;
+    private AppCompatButton buttonEdit;
+    private ImageButton buttonGoBack;
+
+    public static WeakReference<TransactionInformationActivity> weakActivity;
+
+    public static TransactionInformationActivity getmInstanceActivity() {
+        return weakActivity.get();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_information);
+
+        /*instantiate weak activity*/
+        weakActivity = new WeakReference<>(TransactionInformationActivity.this);
 
         setControl();
 
@@ -30,7 +45,7 @@ public class TransactionInformationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if( bundle == null)
         {
-            noticeDialog.showDialogWithContent(this,"Đã xảy ra sự cố, vui lòng thử lại");
+            alert.showAlert("Thất bại", "Đã xảy ra sự cố", R.drawable.ic_close);
             return;
         }
 
@@ -40,6 +55,7 @@ public class TransactionInformationActivity extends AppCompatActivity {
 
         setControl();
         setContent();
+        setEvent();
     }
 
     private void setControl() {
@@ -53,6 +69,10 @@ public class TransactionInformationActivity extends AppCompatActivity {
         reference = findViewById(R.id.transactionInforReferenceContent);
 
         description = findViewById(R.id.transactionInforDescriptionContent);
+        buttonEdit = findViewById(R.id.transactionInforButtonEdit);
+        buttonGoBack = findViewById(R.id.transactionInforButtonGoBack);
+
+        alert = new Alert(this, 1);
     }
 
     private void setContent()
@@ -70,6 +90,45 @@ public class TransactionInformationActivity extends AppCompatActivity {
         String descriptionContent = transaction.getDescription().trim().length() > 0 ?
         transaction.getDescription().trim() : "Không có mô tả";
 
+        name.setText(nameContent);
+        date.setText(dateContent);
+
+        amount.setText(amountContent);
+        account.setText(accountContent);
+
+        category.setText(categoryContent);
+        reference.setText(referenceContent);
+
+        description.setText(descriptionContent);
+    }
+
+    /**
+     * @author Phong-Kaster
+     * set event for each component
+     * */
+    private void setEvent()
+    {
+        buttonEdit.setOnClickListener(view->{
+            /*Step 1*/
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("transaction", transaction);
+            bundle.putParcelable("atm", atm);
+            /*Step 2*/
+            Intent intent = new Intent(TransactionInformationActivity.this, TransactionUpdateActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+
+        buttonGoBack.setOnClickListener(view-> finish());
+
+        alert.btnOK.setOnClickListener(view->finish());
+    }
+
+    public void setContentWithValue(String nameContent, String dateContent,
+                                    String amountContent, String accountContent,
+                                    String categoryContent, String referenceContent,
+                                    String descriptionContent)
+    {
         name.setText(nameContent);
         date.setText(dateContent);
 

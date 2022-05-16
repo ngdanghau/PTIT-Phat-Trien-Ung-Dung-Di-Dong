@@ -14,6 +14,7 @@
 
     <!--Phong's color-->
     <color name="colorTheme">#2D313D</color>
+    <color name="colorThemeText">#ffffff</color>
     <color name="colorNormalText">#ffffff</color>
     <color name="colorAlternativeText">#ffffff</color>
     <color name="colorSupportText">#8D8F97</color>
@@ -34,4 +35,5 @@
     <color name="backgroundInput">#515155</color>
     <color name="backgroundWhite">#515155</color>
     <color name="backgroundBlack">#FFFFFFFF</color>
+    <color name="backgroundIcon">#d7d9e0</color>
 </resources>

@@ -44,9 +44,16 @@
             android:layout_marginLeft="20dp"
             android:background="@drawable/back_btn_background"
             android:src="@drawable/ic_add" />
+        <ImageButton
+            android:layout_weight="0.01"
+            android:id="@+id/Btn_more"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_option" />
 
     </LinearLayout>
-
 
 
     <androidx.appcompat.widget.SearchView
@@ -58,6 +65,7 @@
         android:background="@drawable/custom_input"
         app:queryHint="Search here..."
         app:iconifiedByDefault="false"/>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

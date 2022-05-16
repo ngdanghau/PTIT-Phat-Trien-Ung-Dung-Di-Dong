@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,12 +19,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.prudentialfinance.Activities.Card.CardIntroduceActivity;
+import com.example.prudentialfinance.Activities.Card.AccountReportActivity;
+import com.example.prudentialfinance.Activities.Card.CardCreationActivity;
+import com.example.prudentialfinance.Helpers.CardModalBottomSheet;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.Account;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.RecycleViewAdapter.CardRecycleViewAdapter;
 import com.example.prudentialfinance.ViewModel.CardFragmentViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,10 +38,10 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements CardModalBottomSheet.ModalBottomSheetListener {
 
     private LoadingDialog loadingDialog;
-    private AppCompatImageButton buttonCreate;
+    private ImageButton buttonCreate, chartBtn;
     private RecyclerView recycleView;
     private CardFragmentViewModel viewModel;
 
@@ -47,6 +50,8 @@ public class CardFragment extends Fragment {
 
     private TextView notice;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private HashMap<String, String> headers = null;
+
     public CardFragment() {
         // Required empty public constructor
     }
@@ -54,6 +59,28 @@ public class CardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getAccounts().observe((LifecycleOwner) requireContext(), accounts -> {
+            if( accounts.size() > 0)
+            {
+                objects.clear();
+                objects.addAll(accounts);
+                adapter.notifyDataSetChanged();
+
+                notice.setVisibility(View.GONE);
+                recycleView.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                notice.setVisibility(View.VISIBLE);
+                recycleView.setVisibility(View.GONE);
+            }
+        });
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -81,23 +108,7 @@ public class CardFragment extends Fragment {
         setEvent();
         setRecycleView(view);
 
-        viewModel.getAccounts().observe((LifecycleOwner) requireContext(), accounts -> {
-            if( accounts.size() > 0)
-            {
-                objects.clear();
-                objects.addAll(accounts);
-                adapter.notifyDataSetChanged();
-
-                notice.setVisibility(View.GONE);
-                recycleView.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                notice.setVisibility(View.VISIBLE);
-                recycleView.setVisibility(View.GONE);
-            }
-        });
-
+        
         viewModel.getAnimation().observe((LifecycleOwner)requireContext(), aBoolean -> {
             if( aBoolean )
             {
@@ -109,10 +120,12 @@ public class CardFragment extends Fragment {
             }
         });
 
+
         swipeRefreshLayout.setOnRefreshListener(() -> {
             viewModel.instanciate(headers);
             objects.clear();
             adapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
         });
 
 
@@ -124,6 +137,7 @@ public class CardFragment extends Fragment {
         loadingDialog = new LoadingDialog(getActivity());
         recycleView = view.findViewById(R.id.cardFragmentRecycleView);
         buttonCreate = view.findViewById(R.id.cardFragmentButtonCreate);
+        chartBtn = view.findViewById(R.id.chartBtn);
         notice = view.findViewById(R.id.cardFragmentNotice);
         swipeRefreshLayout = view.findViewById(R.id.cardFragmentSwipeRefreshLayout);
     }
@@ -167,9 +181,27 @@ public class CardFragment extends Fragment {
     private void setEvent()
     {
         buttonCreate.setOnClickListener(view->
-        {
-            Intent intent = new Intent(getContext(), CardIntroduceActivity.class);
-            startActivity(intent);
+                showCardModalBottomView());
+
+        chartBtn.setOnClickListener(view -> {
+            Intent chartIntent = new Intent(getContext(), AccountReportActivity.class);
+            startActivity(chartIntent);
         });
     }
+
+    private void showCardModalBottomView()
+    {
+        @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.activity_card_introduce, null);
+
+        Button button = view.findViewById(R.id.cardButtonCreate);
+        button.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), CardCreationActivity.class);
+            startActivity(intent);
+        });
+
+        BottomSheetDialog dialog = new BottomSheetDialog(requireActivity());
+        dialog.setContentView(view);
+        dialog.show();
+    }
+
 }

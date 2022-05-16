@@ -5,17 +5,18 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".Activities.Transaction.TransactionActivity">
+    tools:context=".Activities.Transaction.TransactionActivity"
+    android:padding="20dp">
 
     <LinearLayout
-        android:layout_marginTop="20sp"
+        android:weightSum="1"
         android:id="@+id/cardFragmentTitleAndButtonBack"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageButton
-            android:layout_marginStart="10dp"
+            android:layout_weight="0.01"
             android:id="@+id/transactionButtonGoBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -24,10 +25,9 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_weight="0.98"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/recent_transactions"
             android:textColor="@color/colorNormalText"
@@ -36,18 +36,13 @@
             tools:ignore="RtlSymmetry" />
 
         <ImageButton
+            android:layout_weight="0.01"
             android:id="@+id/transactionButtonCreate"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="60dp"
             android:background="@drawable/back_btn_background"
-            android:src="@drawable/ic_baseline_add_circle_24"
-            tools:ignore="ContentDescription" />
+            android:src="@drawable/ic_baseline_add_circle_24" />
     </LinearLayout>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20sp" />
 
     <TextView
         android:id="@+id/transactionNotice"

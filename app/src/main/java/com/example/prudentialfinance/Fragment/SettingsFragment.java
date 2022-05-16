@@ -63,23 +63,23 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        data.add(new Setting("dark_mode","Chế độ ban đêm", R.drawable.ic_baseline_dark_mode_24));
-        data.add(new Setting("personal_information", "Thông tin cá nhân", R.drawable.ic_baseline_person_24));
-        data.add(new Setting("change_password", "Đổi mật khẩu", R.drawable.ic_baseline_lock_open_24));
+        data.add(new Setting("dark_mode",getString(R.string.appearance), R.drawable.ic_baseline_dark_mode_24));
+        data.add(new Setting("personal_information", getString(R.string.personal_information), R.drawable.ic_baseline_person_24));
+        data.add(new Setting("change_password", getString(R.string.change_password), R.drawable.ic_baseline_lock_open_24));
 
         data.add(new Setting("header", "", 0));
-        data.add(new Setting("categories", "Thể loại", R.drawable.ic_baseline_category_24));
-        data.add(new Setting("goals", "Mục tiêu", R.drawable.ic_baseline_stars_24));
-        data.add(new Setting("budgets", "Ngân sách chi tiêu", R.drawable.ic_baseline_archive_24));
+        data.add(new Setting("categories", getString(R.string.category), R.drawable.ic_baseline_category_24));
+        data.add(new Setting("goals", getString(R.string.goal), R.drawable.icon_goal));
+        data.add(new Setting("budgets", getString(R.string.budget), R.drawable.ic_baseline_archive_24));
 
 
         if(authUser.getAccount_type().equals("admin")){
             data.add(new Setting("header", "", 0));
-            data.add(new Setting("site_settings","Cài đặt website", R.drawable.ic_baseline_web_24));
-            data.add(new Setting("email_settings","Cài đặt Email", R.drawable.ic_baseline_email_24));
+            data.add(new Setting("site_settings",getString(R.string.site_settings), R.drawable.ic_baseline_web_24));
+            data.add(new Setting("email_settings",getString(R.string.email_information), R.drawable.ic_baseline_email_24));
 
             data.add(new Setting("header", "", 0));
-            data.add(new Setting("user_management","Quản lý người dùng", R.drawable.ic_baseline_people_24));
+            data.add(new Setting("user_management",getString(R.string.user_management), R.drawable.ic_baseline_people_24));
         }
 
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
@@ -100,7 +100,6 @@ public class SettingsFragment extends Fragment {
 
         fullName.setText(authUser.getFirstname() + " " + authUser.getLastname());
         email.setText(authUser.getEmail());
-
 
 
         LinearLayoutManager manager = new LinearLayoutManager(requireActivity().getApplicationContext());

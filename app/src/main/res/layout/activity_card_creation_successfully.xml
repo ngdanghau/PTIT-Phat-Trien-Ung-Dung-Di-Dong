@@ -8,9 +8,10 @@
 
     <ImageView
         android:layout_gravity="center"
+        android:background="@drawable/ic_success_background"
         android:src="@drawable/ic_baseline_done_24"
-        android:layout_width="36sp"
-        android:layout_height="36sp"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
         tools:ignore="ContentDescription" />
 
     <TextView
