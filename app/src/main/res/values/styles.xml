@@ -40,7 +40,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:selectionDividerHeight" tools:targetApi="q">0dp</item>
         <item name="colorControlNormal">@color/transparent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">70sp</item>
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">20dp</item>
 

@@ -40,6 +40,7 @@ public class BudgetReportCategoriesActivity extends AppCompatActivity {
     ImageButton btnBack;
     String id, date;
     Alert alert;
+    String currency;
     ArrayList<PieEntry> entries;
     ArrayList<AmountGet> amountData;
     int amount, amountBudget;
@@ -59,6 +60,7 @@ public class BudgetReportCategoriesActivity extends AppCompatActivity {
 
     private void loadComponent() {
         headers = ((GlobalVariable)getApplication()).getHeaders();
+        currency = ((GlobalVariable)getApplication()).getAppInfo().getCurrency();
         loadingDialog = new LoadingDialog(BudgetReportCategoriesActivity.this);
         alert = new Alert(this, 1);
         amountViewModel = new ViewModelProvider(this).get(AmountViewModel.class);
@@ -69,7 +71,8 @@ public class BudgetReportCategoriesActivity extends AppCompatActivity {
         int amountRemain = amountBudget - amount;
         NumberFormat n = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         String s = n.format(amountRemain);
-        remainAmount.setText(s);
+        String a = String.valueOf(amountRemain) + " " + currency;
+        remainAmount.setText(a);
         entries = new ArrayList<>();
         PieChart pieChart = findViewById(R.id.pie_chart_report_budget);
         PieDataSet pieDataSet = new PieDataSet(entries, getResources().getString(R.string.report_lable));
