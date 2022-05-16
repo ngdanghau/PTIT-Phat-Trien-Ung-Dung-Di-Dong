@@ -33,7 +33,7 @@ import java.util.Map;
 public class AddGoalActivity extends AppCompatActivity {
 
     private EditText goal_name,goal_amount,goal_balance,goal_deadline;
-    private TextView topTitle;
+    private TextView topTitle,tv_currency_amount,tv_currency_balance;
     private AppCompatButton btn_add;
     private ImageButton btn_back;
     private Goal goal;
@@ -59,6 +59,7 @@ public class AddGoalActivity extends AppCompatActivity {
         setControl();
         initializeDatePicker();
         setComponent();
+        setCurrency();
         setData();
         setEvent();
     }
@@ -72,6 +73,14 @@ public class AddGoalActivity extends AppCompatActivity {
         goal_deadline = findViewById(R.id.goal_date_add);
         btn_add = findViewById(R.id.Btn_Add_Goal);
         btn_back = findViewById(R.id.backBtnAddGoal);
+        tv_currency_balance = findViewById(R.id.tv_currency_balance);
+        tv_currency_amount = findViewById(R.id.tv_currency_amount);
+    }
+
+    private void setCurrency()
+    {
+        tv_currency_balance.setText(global.getAppInfo().getCurrency());
+        tv_currency_amount.setText(global.getAppInfo().getCurrency());
     }
 
     private void setComponent() {
@@ -131,8 +140,8 @@ public class AddGoalActivity extends AppCompatActivity {
                 }
                 try
                 {
-                    int amount = Integer.parseInt(goal_amount.getText().toString().replace(".",""));
-                    int balance = Integer.parseInt(goal_balance.getText().toString().replace(".",""));
+                    int amount = Integer.parseInt(goal_amount.getText().toString().replace(",",""));
+                    int balance = Integer.parseInt(goal_balance.getText().toString().replace(",",""));
 
                     if(amount<balance)
                     {
