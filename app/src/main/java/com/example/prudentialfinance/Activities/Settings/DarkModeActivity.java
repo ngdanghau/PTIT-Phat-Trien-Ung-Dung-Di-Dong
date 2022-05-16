@@ -110,7 +110,9 @@ public class DarkModeActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedLang = adapterView.getItemAtPosition(i).toString();
-                alertConfirm.showAlert(getString(R.string.alertTitle), getString(R.string.warning_change_language), R.drawable.ic_close);
+                if(!languageManager.getCurrent().equals(selectedLang)){
+                    alertConfirm.showAlert(getString(R.string.alertTitle), getString(R.string.warning_change_language), R.drawable.ic_close);
+                }
             }
 
             @Override
@@ -136,11 +138,9 @@ public class DarkModeActivity extends AppCompatActivity {
 
         alertConfirm.btnCancel.setOnClickListener(view -> alertConfirm.dismiss());
         alertConfirm.btnOK.setOnClickListener(view -> {
-            if(!languageManager.getCurrent().equals(selectedLang)){
-                languageManager.setLang(selectedLang);
-                languageManager.updateResource();
-                viewModel.updateLanguage(headers, languageManager.getCurrent());
-            }
+            languageManager.setLang(selectedLang);
+            languageManager.updateResource();
+            viewModel.updateLanguage(headers, languageManager.getCurrent());
             alertConfirm.dismiss();
         });
 
