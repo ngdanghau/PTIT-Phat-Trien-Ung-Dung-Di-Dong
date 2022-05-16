@@ -316,25 +316,23 @@
     <string name="budget_element_date">Tháng 3 2022</string>
     <string name="budget_month">Tháng</string>
     <string name="budget_year">Năm</string>
-    <string name="vn">VNĐ</string>
 
     <string name="budget_add_categories">Thể loại</string>
     <string name="budget_add_budget">Ngân sách</string>
     <string name="budget_description_hint">Mô tả ngân sách</string>
     <string name="budget_description">Mô tả</string>
     <string name="budget_error">Thiếu phần</string>
-    <string name="budget_des_value">Mô tả</string>
 
-    <string name="budget_value">30000</string>
-
-
+    <string name="budget_des_value">Description</string>
+    <string name="budget_value" translatable="false">30000</string>
     <string name="chart_center_lable">Ngân sách</string>
     <string name="report_lable">Ngân sách</string>
 
     <string name="name_title">Tên</string>
-    <string name="description_title">Mô tả</string>
-    <string name="todate_title">Hạn chót</string>
-    <string name="amount_title">Mức tiền</string>
+    <string name="description_title">Description</string>
+    <string name="todate_title">To date</string>
+    <string name="amount_title">Amount</string>
+
     <string name="report_lable_real">Thực tế</string>
     <string name="report_lable_plan">Kế hoạch</string>
     <string name="budget_value_have">Ngân sách còn lại</string>
@@ -342,5 +340,7 @@
 
     <string name="english">Tiếng anh</string>
     <string name="vietnamese">Tiếng việt</string>
+
+
 
 </resources>
