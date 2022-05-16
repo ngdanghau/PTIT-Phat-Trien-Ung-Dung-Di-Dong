@@ -268,7 +268,7 @@
     <string name="masked_as_read">Masked As Read</string>
 
     <string name="appearance">Appearance</string>
-    <string name="warning_change_language">You must restart your computer to apply these changes</string>
+    <string name="warning_change_language">You must restart your application to apply these changes</string>
 
     <string name="creat_new_account">Thêm tài khoản ngân hàng mới</string>
     <string name="add_account_to_manage_easily">Thêm thông tin tài khoản ngân hàng mới của bạn để tiện quản lý chi tiêu</string>
