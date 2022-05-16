@@ -175,7 +175,6 @@
     <string name="year">Năm</string>
     <string name="week">Tuần</string>
 
-    <string name="amount_value">x5</string>
     <string name="money_value">1,000,000đ</string>
     <string name="money_string">Số tiền</string>
 
@@ -291,14 +290,13 @@
     <string name="budget_element_date">Tháng 3 2022</string>
     <string name="budget_month">Tháng</string>
     <string name="budget_year">Năm</string>
-    <string name="vn">VNĐ</string>
 
     <string name="budget_add_categories">Thể loại</string>
     <string name="budget_add_budget">Ngân sách</string>
     <string name="budget_description_hint">Mô tả ngân sách</string>
     <string name="budget_description">Mô tả</string>
     <string name="budget_error">Thiếu phần</string>
-    <string name="budget_des_value">Mô t</string>
+    <string name="budget_des_value">Mô tả</string>
 
     <string name="budget_value">30000</string>
 
@@ -310,5 +308,6 @@
     <string name="description_title">Mô tả</string>
     <string name="todate_title">Hạn chót</string>
     <string name="amount_title">Mức tiền</string>
+    <string name="vn" translatable="false">VNĐ</string>
 
 </resources>
