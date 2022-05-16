@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class AddBudgetActivity extends AppCompatActivity {
 
-    private TextView topTitle;
+    private TextView topTitle, currencylable;
     private AppCompatButton btnAdd;
     private ImageButton btnBack;
     private Datum datum;
@@ -49,6 +49,7 @@ public class AddBudgetActivity extends AppCompatActivity {
     private CategoryViewModel categoryViewModel;
 
     private String catID;
+    private String currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class AddBudgetActivity extends AppCompatActivity {
         budgetDescription= findViewById(R.id.budget_description);
         budgetAmount = findViewById(R.id.budget_budget);
         btnAdd = findViewById(R.id.btn_budget);
+        currencylable = findViewById(R.id.currency_lable);
         btnBack = findViewById(R.id.budget_back);
     }
 
@@ -87,10 +89,11 @@ public class AddBudgetActivity extends AppCompatActivity {
         headers = ((GlobalVariable)getApplication()).getHeaders();
         loadingDialog = new LoadingDialog(AddBudgetActivity.this);
         alert = new Alert(this, 1);
-
+        currency = ((GlobalVariable)getApplication()).getAppInfo().getCurrency();
         budgetAddViewModel = new ViewModelProvider(this).get(BudgetAddViewModel.class);
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
         categoryViewModel.instanciate(headers, "1");
+        currencylable.setText(currency);
     }
     private void initializeCategorySpinner(ArrayList<Category> categories)
     {

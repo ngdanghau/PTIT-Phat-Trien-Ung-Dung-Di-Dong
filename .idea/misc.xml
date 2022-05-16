@@ -168,7 +168,8 @@
         <entry key="app/src/main/res/layout/activity_add_user.xml" value="0.34103260869565216" />
         <entry key="app/src/main/res/layout/activity_b.xml" value="0.11354166666666667" />
         <entry key="app/src/main/res/layout/activity_b2.xml" value="0.340625" />
-        <entry key="app/src/main/res/layout/activity_budget_add.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_budget_add.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_budget_edit.xml" value="0.2957427536231884" />
         <entry key="app/src/main/res/layout/activity_budget_element.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_budget_report.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_budgets.xml" value="0.4283185840707965" />
@@ -195,10 +196,15 @@
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.4615036231884058" />
         <entry key="app/src/main/res/layout/activity_password.xml" value="0.2658514492753623" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2658514492753623" />
+        <entry key="app/src/main/res/layout/activity_recovery.xml" value="0.340625" />
+        <entry key="app/src/main/res/layout/activity_report_category_element.xml" value="0.340625" />
+        <entry key="app/src/main/res/layout/activity_reset_password.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/activity_site_settings.xml" value="0.2658514492753623" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.2658514492753623" />
         <entry key="app/src/main/res/layout/activity_transaction.xml" value="0.3265625" />
+        <entry key="app/src/main/res/layout/activity_transaction_creation.xml" value="0.2957427536231884" />
+        <entry key="app/src/main/res/layout/activity_transaction_information.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/activity_transaction_menu.xml" value="0.26132246376811596" />
         <entry key="app/src/main/res/layout/activity_transaction_preview_statement.xml" value="0.4121376811594203" />
         <entry key="app/src/main/res/layout/activity_transaction_statement.xml" value="0.2653985507246377" />
@@ -224,15 +230,18 @@
         <entry key="app/src/main/res/layout/logout_btn_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/normal_alert.xml" value="0.33967391304347827" />
         <entry key="app/src/main/res/layout/notif_popup.xml" value="0.3383152173913043" />
+        <entry key="app/src/main/res/layout/notification_with_content.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/slide_layout.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/spinner_account_element.xml" value="0.340625" />
+        <entry key="app/src/main/res/layout/spinner_category_element.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/spinner_element.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/spinner_element_selected.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/user_management_element.xml" value="0.5484601449275363" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.47314814814814815" />
         <entry key="app/src/main/res/menu/card_menu.xml" value="0.3027656477438137" />
         <entry key="app/src/main/res/menu/category_menu.xml" value="0.5635416666666667" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1965" />
         <entry key="app/src/main/res/menu/transaction_menu.xml" value="0.3265625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1965" />
       </map>
     </option>
   </component>

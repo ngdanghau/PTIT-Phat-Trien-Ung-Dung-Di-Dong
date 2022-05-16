@@ -130,6 +130,7 @@
                 android:textColor="@color/colorNormalText" />
 
             <TextView
+                android:id="@+id/currency_lable"
                 style="@style/text_view_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
