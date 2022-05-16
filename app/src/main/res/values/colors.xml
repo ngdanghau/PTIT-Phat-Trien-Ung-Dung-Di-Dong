@@ -13,6 +13,7 @@
     <color name="colorAccent">#03DAC5</color>
     <!--Phong's color-->
     <color name="colorTheme">#1D3A70</color>
+    <color name="colorThemeText">#1D3A70</color>
     <color name="colorNormalText">#2D313D</color>
     <color name="colorAlternativeText">#ffffff</color>
     <color name="colorSupportText">#8D8F97</color>

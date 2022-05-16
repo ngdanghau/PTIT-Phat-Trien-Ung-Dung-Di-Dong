@@ -11,7 +11,7 @@
     </style>
 
     <style name="text_view_color_theme_style">
-        <item name="android:textColor">@color/colorTheme</item>
+        <item name="android:textColor">@color/colorThemeText</item>
         <item name="android:textStyle">bold</item>
     </style>
 

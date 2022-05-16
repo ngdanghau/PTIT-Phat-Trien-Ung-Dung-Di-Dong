@@ -125,7 +125,6 @@ public class TransactionActivity extends AppCompatActivity implements ModalBotto
             else
             {
                 notice.setVisibility(View.VISIBLE);
-                searchView.setVisibility(View.GONE);
                 recycleView.setVisibility(View.GONE);
             }
         });
