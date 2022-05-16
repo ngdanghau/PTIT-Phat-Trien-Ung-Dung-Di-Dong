@@ -85,11 +85,4 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveBtn"
-        style="@style/button_style"
-        android:layout_gravity="center"
-        android:text="@string/save" />
-
-
 </LinearLayout>

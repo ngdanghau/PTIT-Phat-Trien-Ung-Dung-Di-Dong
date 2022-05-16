@@ -36,7 +36,6 @@ import java.util.Map;
 public class DarkModeActivity extends AppCompatActivity {
 
     SwitchCompat switchCompat;
-    AppCompatButton saveBtn;
     ImageButton backBtn;
     Spinner spnLanguage;
 
@@ -102,10 +101,6 @@ public class DarkModeActivity extends AppCompatActivity {
             }
         });
 
-        saveBtn.setOnClickListener(view -> {
-
-        });
-
         spnLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -156,8 +151,6 @@ public class DarkModeActivity extends AppCompatActivity {
     private void setControl() {
         backBtn = findViewById(R.id.backBtn);
         switchCompat = findViewById(R.id.darkModeSwitch);
-        saveBtn = findViewById(R.id.saveBtn);
-
 
         spnLanguage = findViewById(R.id.spnLanguage);
 

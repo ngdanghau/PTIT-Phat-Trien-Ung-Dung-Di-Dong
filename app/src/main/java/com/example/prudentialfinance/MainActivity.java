@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        Alert alert = new Alert(this, 1);
 
         viewModel.getObjectAppInfo().observe(this, object -> {
             if(object == null){
-                Alert alert = new Alert(this, 1);
                 alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
@@ -89,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
                     openActivity();
                 }
             }
+        });
+
+        alert.btnOK.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            this.startActivity(intent);
+            this.finishAffinity();
         });
 
         viewModel.getInfoSettings();
