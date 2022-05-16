@@ -270,6 +270,9 @@
     <string name="appearance">Giao diện</string>
     <string name="warning_change_language">Bạn phải khởi động lại máy tính của mình để áp dụng các thay đổi này</string>
 
+    <string name="creat_new_account">Thêm tài khoản ngân hàng mới</string>
+    <string name="add_account_to_manage_easily">Thêm thông tin tài khoản ngân hàng mới của bạn để tiện quản lý chi tiêu</string>
+
     <!--    Config google services-->
     <string name="server_client_id">538016634184-aqf25ouan4v2bscstec48atnh05ibv13.apps.googleusercontent.com</string>
 
