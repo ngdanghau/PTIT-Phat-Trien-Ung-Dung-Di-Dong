@@ -311,6 +311,25 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb477715650706961</string>
     <string name="facebook_client_token">b4344548855c73b2adc72bbe3917b1d7</string>
 
+    <string name="budget_title">Budget</string>
+    <string name="budget_edit_title">Edit Budget</string>
+    <string name="budget_report_title">Budget Report</string>
+    <string name="budget_add_title">New Budget</string>
+
+    <string name="budget_element_name">Food\'s Budget</string>
+    <string name="budget_element_description">Food\'s Budget Summary</string>
+    <string name="budget_element_date">Mar 2022</string>
+    <string name="budget_month">Month</string>
+    <string name="budget_year">Year</string>
+    <string name="vn">VNĐ</string>
+
+    <string name="budget_add_categories">Categories</string>
+    <string name="budget_add_budget">Budget</string>
+    <string name="budget_description_hint">Description</string>
+    <string name="budget_description">Description</string>
+    <string name="budget_error">Missing</string>
+    <string name="budget_des_value">Descrition</string>
+
     <string name="budget_title">Ngân sách chi tiêu</string>
     <string name="budget_edit_title">Edit budget</string>
     <string name="budget_report_title">Xem thống kê ngân sách</string>
@@ -329,9 +348,10 @@
     <string name="budget_description">Description</string>
     <string name="budget_error">Thiếu phần</string>
     <string name="budget_des_value">Description</string>
-
     <string name="budget_value" translatable="false">30000</string>
 
+    <string name="chart_center_lable">Budget</string>
+    <string name="report_lable">Budget</string>
 
     <string name="chart_center_lable">Ngân sách</string>
     <string name="report_lable">Ngân sách</string>
@@ -345,6 +365,12 @@
     <string name="english">English</string>
     <string name="vietnamese">Vietnamese</string>
 
-
+    <string name="name_title">Name</string>
+    <string name="description_title">Description</string>
+    <string name="todate_title">To Date</string>
+    <string name="amount_title">Amount</string>
+    <string name="report_lable_real">Actually</string>
+    <string name="report_lable_plan">Plan</string>
+    <string name="budget_value_have">Remaining Amount</string>
 
 </resources>

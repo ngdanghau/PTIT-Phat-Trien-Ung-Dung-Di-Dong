@@ -46,7 +46,7 @@ public class Datum implements Serializable {
     public String toString() {
         return "Datum{" +
                 "id=" + id +
-                (category == null ? "null" : ( ", category=" + category.getName() + " " + category.getDescription()))+
+                (category == null ? "null" : ( ", category="+ " " + category.getId() + category.getName() + " " + category.getDescription()))+
                 ", user=" + user +
                 ", amount=" + amount +
                 ", fromdate='" + fromdate + '\'' +

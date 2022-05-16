@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="20dp">
 
         <ImageButton
             android:id="@+id/budget_back"
@@ -33,6 +33,23 @@
             android:textSize="22sp"
             android:textColor="@color/colorButtomNavigationMenuPressed"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/budget_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="@string/budget_value_have"
+        android:textColor="@color/colorButtomNavigationMenuPressed"/>
+    <TextView
+        android:id="@+id/budget_amount_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="normal"
+        android:textSize="22sp"
+        android:textColor="@color/colorButtomNavigationMenuPressed"/>
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart_report_budget"
         android:layout_width="match_parent"

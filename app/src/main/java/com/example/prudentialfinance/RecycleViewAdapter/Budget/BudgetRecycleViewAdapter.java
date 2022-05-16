@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prudentialfinance.Activities.Budget.AddBudgetActivity;
+import com.example.prudentialfinance.Activities.Budget.BudgetReportCategoriesActivity;
 import com.example.prudentialfinance.Container.budgets.budgetGET.Datum;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.R;
@@ -55,9 +57,21 @@ public class BudgetRecycleViewAdapter extends RecyclerView.Adapter<BudgetRecycle
         holder.budgetDescription.setText(Helper.truncate_string(description, 70, "...", true));
         holder.budgetDate.setText(Helper.truncate_string(entry.getTodate(), 70, "...", true));
         Context parentContext = holder.parent.getContext();
-        holder.budgetElementParent.setOnClickListener(view -> {
+        holder.budgetEdit.setOnClickListener(view -> {
             Intent intent = new Intent (parentContext, AddBudgetActivity.class);
             intent.putExtra("budget", entry);
+            addRootActivity.launch(intent);
+        });
+        holder.budgetElementParent.setOnClickListener(view -> {
+            Intent intent = new Intent (parentContext, BudgetReportCategoriesActivity.class);
+            Datum d = objects.get(position);
+            String id = String.valueOf(d.getId());
+            String date = com.example.prudentialfinance.Activities.Budget.Helper.getYear(d.getTodate()) + "-" + com.example.prudentialfinance.Activities.Budget.Helper.getMonth(d.getTodate());
+            int amount = d.getAmount();
+
+            intent.putExtra("id", id);
+            intent.putExtra("date", date);
+            intent.putExtra("amount", amount);
             addRootActivity.launch(intent);
         });
     }
@@ -72,6 +86,7 @@ public class BudgetRecycleViewAdapter extends RecyclerView.Adapter<BudgetRecycle
     {
         private TextView budgetName, budgetDescription, budgetDate;
         private LinearLayout budgetElementParent;
+        private ImageButton budgetEdit;
         private ViewGroup parent;
 
         public ViewHolder(@NonNull View itemView, ViewGroup parent) {
@@ -86,6 +101,7 @@ public class BudgetRecycleViewAdapter extends RecyclerView.Adapter<BudgetRecycle
             budgetDescription = itemView.findViewById(R.id.budget_element_description);
             budgetDate = itemView.findViewById(R.id.budget_element_date);
             budgetElementParent = itemView.findViewById(R.id.budget_element_parent);
+            budgetEdit = itemView.findViewById(R.id.budget_icon);
         }
     }
 }

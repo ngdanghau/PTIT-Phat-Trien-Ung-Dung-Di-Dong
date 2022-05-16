@@ -65,6 +65,9 @@
             android:name=".Activities.Budget.AddBudgetActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.Budget.BudgetReportCategoriesActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Report.TransactionsByCategoryActivity"
             android:exported="false" />
         <activity
