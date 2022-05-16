@@ -32,10 +32,10 @@ import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Settings.ProfileViewModel;
+import com.shashank.sony.fancytoastlib.FancyToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.Map;
-
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -54,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     Map<String, String> headers;
 
     Uri selectedImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setComponent() {
         global = (GlobalVariable) getApplication();
-        headers = ((GlobalVariable)getApplication()).getHeaders();
+        headers = ((GlobalVariable) getApplication()).getHeaders();
         loadingDialog = new LoadingDialog(ProfileActivity.this);
         alert = new Alert(ProfileActivity.this, 1);
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
@@ -93,38 +94,42 @@ public class ProfileActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(view -> updateData());
 
         viewModel.isLoading().observe(this, isLoading -> {
-            if(isLoading){
+            if (isLoading) {
                 loadingDialog.startLoadingDialog();
-            }else{
+            } else {
                 loadingDialog.dismissDialog();
             }
         });
 
-
-
         viewModel.getObject().observe(this, object -> {
-            if(object == null){
-                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+            if (object == null) {
+                alert.showAlert(getResources().getString(R.string.alertTitle),
+                        getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
             if (object.getResult() == 1) {
                 global.getAuthUser().setAvatar(object.getImage());
-                Toast.makeText(ProfileActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                FancyToast.makeText(this, object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
+                        R.drawable.ic_check, true).show();
+                ;
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
         });
 
         viewModel.getObjectProfile().observe(this, object -> {
-            if(object == null){
-                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+            if (object == null) {
+                alert.showAlert(getResources().getString(R.string.alertTitle),
+                        getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
             if (object.getResult() == 1) {
                 global.setAuthUser(object.getData());
-                Toast.makeText(ProfileActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                FancyToast.makeText(this, object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
+                        R.drawable.ic_check, true).show();
+                ;
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
@@ -139,7 +144,8 @@ public class ProfileActivity extends AppCompatActivity {
         viewModel.updateData(headers, action, firstName, lastName);
     }
 
-    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+    // You can do the assignment inside onAttach or onCreate, i.e, before the
+    // activity is displayed
     ActivityResultLauncher<Intent> pickerImageActivity = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -169,13 +175,13 @@ public class ProfileActivity extends AppCompatActivity {
         lastname.setText(AuthUser.getLastname());
         tvEmail.setText(AuthUser.getEmail());
 
-        loadImgToElement(HTTPService.UPLOADS_URL + "/"+ AuthUser.getAvatar(), false);
+        loadImgToElement(HTTPService.UPLOADS_URL + "/" + AuthUser.getAvatar(), false);
 
     }
 
-    private void uploadAvatar(){
+    private void uploadAvatar() {
         // get real path
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
         Cursor cursor = getContentResolver().query(selectedImage,
                 filePathColumn, null, null, null);
@@ -190,7 +196,7 @@ public class ProfileActivity extends AppCompatActivity {
         viewModel.uploadAvatar(token, picturePath);
     }
 
-    private void loadImgToElement(String img, boolean isUpload){
+    private void loadImgToElement(String img, boolean isUpload) {
         Picasso
                 .get()
                 .load(img)
@@ -198,10 +204,10 @@ public class ProfileActivity extends AppCompatActivity {
                 .placeholder(R.drawable.someone)
                 .error(R.drawable.someone)
                 .transform(Helper.getRoundedTransformationBuilder())
-                .into(ivAvatar,  new com.squareup.picasso.Callback() {
+                .into(ivAvatar, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
-                        if(isUpload && selectedImage != null){
+                        if (isUpload && selectedImage != null) {
                             uploadAvatar();
                         }
                     }
@@ -222,12 +228,11 @@ public class ProfileActivity extends AppCompatActivity {
             // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(
                     activity,
-                    new String[]{
+                    new String[] {
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                     },
-                    1
-            );
+                    1);
         }
     }
 }

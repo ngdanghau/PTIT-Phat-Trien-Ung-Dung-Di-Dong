@@ -16,4 +16,11 @@ public class Summary {
     public void setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
     }
+
+    @Override
+    public String toString() {
+        return "Summary{" +
+                "totalCount=" + totalCount +
+                '}';
+    }
 }

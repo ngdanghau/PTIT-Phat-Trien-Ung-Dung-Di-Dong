@@ -33,9 +33,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.Arrays;
-
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -89,8 +89,8 @@ public class SignUpActivity extends AppCompatActivity {
         loginSignInWithFacebook = findViewById(R.id.loginSignInWithFacebook);
     }
 
-    private void setAuthorizedToken( String accessToken) {
-        String token = "JWT " +  accessToken.trim();
+    private void setAuthorizedToken(String accessToken) {
+        String token = "JWT " + accessToken.trim();
         state = ((GlobalVariable) this.getApplication());
 
         state.setAccessToken(token);
@@ -114,17 +114,18 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         viewModel.isLoading().observe(this, isLoading -> {
-            if(isLoading){
+            if (isLoading) {
                 loadingDialog.startLoadingDialog();
-            }else{
+            } else {
                 loadingDialog.dismissDialog();
             }
         });
 
         viewModel.getObject().observe(this, object -> {
-            if(object == null){
+            if (object == null) {
                 setAuthorizedToken("");
-                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+                alert.showAlert(getResources().getString(R.string.alertTitle),
+                        getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
@@ -135,7 +136,8 @@ public class SignUpActivity extends AppCompatActivity {
                 Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
                 startActivity(intent);
 
-                Toast.makeText(SignUpActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                FancyToast.makeText(this, object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
+                        R.drawable.ic_check, true).show();
                 finish();
             } else {
                 setAuthorizedToken("");
@@ -162,7 +164,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
+                        alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault),
+                                R.drawable.ic_close);
                     }
 
                     @Override
@@ -193,7 +196,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             });
 
-
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -201,8 +203,10 @@ public class SignUpActivity extends AppCompatActivity {
             viewModel.loginGoogle(idToken);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            alert.showAlert(getString(R.string.alertTitle), "signInResult:failed code=" + e.getStatusCode(), R.drawable.ic_close);
+            // Please refer to the GoogleSignInStatusCodes class reference for more
+            // information.
+            alert.showAlert(getString(R.string.alertTitle), "signInResult:failed code=" + e.getStatusCode(),
+                    R.drawable.ic_close);
         }
     }
 }

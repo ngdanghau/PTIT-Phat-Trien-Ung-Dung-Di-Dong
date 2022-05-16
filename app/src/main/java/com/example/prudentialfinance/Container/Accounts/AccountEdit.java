@@ -1,17 +1,20 @@
-package com.example.prudentialfinance.Container;
+package com.example.prudentialfinance.Container.Accounts;
 
-import com.example.prudentialfinance.ContainerModel.TransactionTotal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TransactionGetTotal {
+public class AccountEdit {
     @SerializedName("result")
     @Expose
     private int result;
 
-    @SerializedName("data")
+    @SerializedName("account")
     @Expose
-    private TransactionTotal data;
+    private int account;
+
+    @SerializedName("msg")
+    @Expose
+    private String msg;
 
     @SerializedName("method")
     @Expose
@@ -25,12 +28,20 @@ public class TransactionGetTotal {
         this.result = result;
     }
 
-    public TransactionTotal getData() {
-        return data;
+    public int getAccount() {
+        return account;
     }
 
-    public void setData(TransactionTotal data) {
-        this.data = data;
+    public void setAccount(int account) {
+        this.account = account;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public String getMethod() {
@@ -43,9 +54,10 @@ public class TransactionGetTotal {
 
     @Override
     public String toString() {
-        return "TransactionGetTotal{" +
+        return "AccountEdit{" +
                 "result=" + result +
-                ", data=" + data +
+                ", account=" + account +
+                ", msg='" + msg + '\'' +
                 ", method='" + method + '\'' +
                 '}';
     }

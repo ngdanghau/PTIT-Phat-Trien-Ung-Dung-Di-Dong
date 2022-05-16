@@ -1,6 +1,5 @@
 package com.example.prudentialfinance.Activities.Transaction;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
@@ -18,9 +18,9 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.prudentialfinance.ContainerModel.TransactionDetail;
+import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
-import com.example.prudentialfinance.Helpers.NoticeDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
@@ -69,8 +69,9 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
     private final HashMap<String, String> natureOptions = new HashMap<>();
     private final HashMap<String, String> columnOptions = new HashMap<>();
-
+    private ImageButton buttonGoBack;
     private TransactionViewModel transactionViewModel = null;
+    private Alert alert;
     private LoadingDialog loadingDialog;
 
     @Override
@@ -144,7 +145,6 @@ public class TransactionStatementActivity extends AppCompatActivity {
     /**
      * @author Phong-Kaster
      * */
-    @SuppressLint("CutPasteId")
     private void setComponent() {
         fromDate = findViewById(R.id.fromDate);
         toDate = findViewById(R.id.toDate);
@@ -157,6 +157,8 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
         buttonCreate = findViewById(R.id.buttonCreateStatement);
         buttonPreview = findViewById(R.id.buttonPreviewStatement);
+        buttonGoBack = findViewById(R.id.buttonGoBack);
+        alert = new Alert(this, 1);
         loadingDialog = new LoadingDialog(this);
     }
 
@@ -174,6 +176,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
         initializeNatureSpinner();
         initializeColumnSpinner();
 
+        buttonGoBack.setOnClickListener(view -> finish());
 
         buttonCreate.setOnClickListener(view->{
             dateFrom = Helper.convertStringToValidDate( fromDate.getText().toString() );
@@ -236,8 +239,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
             }
             else
             {
-                NoticeDialog noticeDialog = new NoticeDialog();
-                noticeDialog.showDialogWithContent(TransactionStatementActivity.this, "Đã xảy ra sự cố vui lòng thử lại");
+                alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
             }
         });
     }

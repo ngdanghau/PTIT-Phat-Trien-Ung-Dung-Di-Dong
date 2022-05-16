@@ -1,13 +1,18 @@
 package com.example.prudentialfinance.API;
 
-import com.example.prudentialfinance.Container.AccountCreate;
-import com.example.prudentialfinance.Container.AccountDelete;
-import com.example.prudentialfinance.Container.AccountEdit;
-import com.example.prudentialfinance.Container.AccountGetAll;
-import com.example.prudentialfinance.Container.AccountGetById;
+import com.example.prudentialfinance.Container.Accounts.AccountBalanceResponse;
+import com.example.prudentialfinance.Container.Accounts.AccountCreate;
+import com.example.prudentialfinance.Container.Accounts.AccountDelete;
+import com.example.prudentialfinance.Container.Accounts.AccountEdit;
+import com.example.prudentialfinance.Container.Accounts.AccountGetAll;
+import com.example.prudentialfinance.Container.Accounts.AccountGetById;
+import com.example.prudentialfinance.Container.Accounts.AccountMonthlyResponse;
+import com.example.prudentialfinance.Container.CategoryMonthlyResponse;
 import com.example.prudentialfinance.Container.GoalAdd;
 import com.example.prudentialfinance.Container.GoalGetAll;
 import com.example.prudentialfinance.Container.CategoryAdd;
+import com.example.prudentialfinance.Container.NotificationGetAll;
+import com.example.prudentialfinance.Container.NotificationResponse;
 import com.example.prudentialfinance.Container.Report.CategoryReportResponse;
 import com.example.prudentialfinance.Container.Report.IncomeVsExpenseResponse;
 import com.example.prudentialfinance.Container.Report.TransactionByCategoryResponse;
@@ -18,13 +23,14 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
-import com.example.prudentialfinance.Model.Goal;
-import com.example.prudentialfinance.Container.TransactionCreate;
-import com.example.prudentialfinance.Container.TransactionGetTotal;
-import com.example.prudentialfinance.Container.TransactionRemove;
-import com.example.prudentialfinance.Container.TransactionUpdate;
+import com.example.prudentialfinance.Container.SimpleResponse;
+import com.example.prudentialfinance.Container.Transactions.TransactionCreate;
+import com.example.prudentialfinance.Container.Transactions.TransactionGetTotal;
+import com.example.prudentialfinance.Container.Transactions.TransactionRemove;
+import com.example.prudentialfinance.Container.Transactions.TransactionUpdate;
 import com.example.prudentialfinance.Container.Users.UserAdd;
 import com.example.prudentialfinance.Container.Users.UserGetAll;
+import com.example.prudentialfinance.Model.AccountMonthly;
 
 import java.util.Map;
 
@@ -111,6 +117,12 @@ public interface HTTPRequest {
                                     @Part("action") RequestBody action,
                                     @Part MultipartBody.Part file);
 
+    @FormUrlEncoded
+    @POST("api/profile")
+    Call<SimpleResponse> updateLanguage(@HeaderMap Map<String, String> headers,
+                                        @Field("action") String action,
+                                        @Field("langcode") String langcode);
+
 
     @FormUrlEncoded
     @POST("api/change-password")
@@ -193,7 +205,16 @@ public interface HTTPRequest {
 
 
     @DELETE("api/accounts/{id}")
-    Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers,@Path("id") int id);
+    Call<AccountDelete> accountDelete(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+    @GET("/api/home/accountbalance")
+    Call<AccountBalanceResponse> accountBalance(@HeaderMap Map<String, String> headers);
+
+
+    @GET("/api/accounts/accountbalancebymonth/{id}")
+    Call<AccountMonthlyResponse> accountBalanceMonthly(@HeaderMap Map<String, String> headers, @Path("id") int id);
+
+
 
 
     /***************************HOME*********************************/
@@ -378,6 +399,15 @@ public interface HTTPRequest {
                                                                  @Query("todate") String todate,
                                                                  @Query("category_id") int category_id);
 
+    @GET("/api/report/categorymonthly")
+    Call<CategoryMonthlyResponse> getCategoryMonthly(@HeaderMap Map<String, String> headers,
+                                                     @Query("search") String search,
+                                                     @Query("start") int start,
+                                                     @Query("length") int length,
+                                                     @Query("order[column]") String column,
+                                                     @Query("order[dir]") String dir,
+                                                     @Query("type") int type);
+
 
     /***************************TRANSACTIONS***************************/
     @GET("/api/transactions/income/gettotal")
@@ -414,5 +444,15 @@ public interface HTTPRequest {
                                               @Field("transactiondate") String transactionDate,
                                               @Field("type") String type,
                                               @Field("description") String description);
+
+    // Notification
+    @GET("/api/notifications")
+    Call<NotificationGetAll> getNotification(@HeaderMap Map<String, String> headers);
+
+    @POST("/api/notifications")
+    Call<NotificationResponse> maskedAsRead(@HeaderMap Map<String, String> headers);
+
+    @GET("/api/notifications/{id}")
+    Call<NotificationResponse> maskedAsReadOne(@HeaderMap Map<String, String> headers, @Path("id") int id);
 
 }

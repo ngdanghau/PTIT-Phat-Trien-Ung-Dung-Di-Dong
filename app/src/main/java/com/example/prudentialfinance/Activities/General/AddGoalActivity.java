@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
 import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
+import com.example.prudentialfinance.Helpers.NumberTextWatcher;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Model.User;
@@ -64,10 +66,10 @@ public class AddGoalActivity extends AppCompatActivity {
     private void setControl()
     {
         topTitle = findViewById(R.id.goal_topTitle);
-        goal_name = findViewById(R.id.goal_name);
-        goal_amount = findViewById(R.id.goal_amount);
-        goal_balance = findViewById(R.id.goal_balance);
-        goal_deadline = findViewById(R.id.goal_date);
+        goal_name = findViewById(R.id.goal_name_add);
+        goal_amount = findViewById(R.id.goal_amount_add);
+        goal_balance = findViewById(R.id.goal_balance_add);
+        goal_deadline = findViewById(R.id.goal_date_add);
         btn_add = findViewById(R.id.Btn_Add_Goal);
         btn_back = findViewById(R.id.backBtnAddGoal);
     }
@@ -90,8 +92,8 @@ public class AddGoalActivity extends AppCompatActivity {
             btn_add.setText("Xác nhận");
             topTitle.setText("Sửa mục tiêu");
             goal_name.setText(goal.getName());
-            goal_amount.setText(String.valueOf(goal.getAmount()));
-            goal_balance.setText(String.valueOf(goal.getBalance()));
+            goal_amount.setText(Helper.formatNumber((int)goal.getAmount()));
+            goal_balance.setText(Helper.formatNumber((int)goal.getBalance()));
             goal_deadline.setText(goal.getDeadline());
         }
     }
@@ -114,11 +116,11 @@ public class AddGoalActivity extends AppCompatActivity {
                 {
                     alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập tên mục tiêu.", R.drawable.ic_info);
                     return;
-                }else if (goal_balance.getText().toString().isEmpty())
+                }else if (goal_amount.getText().toString().isEmpty())
                 {
                     alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số tiền mục tiêu.", R.drawable.ic_info);
                     return;
-                }else if (goal_amount.getText().toString().isEmpty())
+                }else if (goal_balance.getText().toString().isEmpty())
                 {
                     alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số dư cho mục tiêu.", R.drawable.ic_info);
                     return;
@@ -127,15 +129,28 @@ public class AddGoalActivity extends AppCompatActivity {
                     alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập ngày hết hạn mục tiêu.", R.drawable.ic_info);
                     return;
                 }
-                if(Integer.parseInt(goal_amount.getText().toString())<=Integer.parseInt(goal_balance.getText().toString()))
+                try
                 {
-                    alert.showAlert(getResources().getString(R.string.alertTitle), "Số dư phải nhỏ hơn mục tiêu.", R.drawable.ic_info);
+                    int amount = Integer.parseInt(goal_amount.getText().toString().replace(".",""));
+                    int balance = Integer.parseInt(goal_balance.getText().toString().replace(".",""));
+
+                    if(amount<balance)
+                    {
+                        alert.showAlert(getResources().getString(R.string.alertTitle), "Số dư phải nhỏ hơn mục tiêu.", R.drawable.ic_info);
+                        return;
+                    }
+                    goal.setName(goal_name.getText().toString());
+                    goal.setAmount(amount);
+                    goal.setBalance(balance);
+                    goal.setDeadline(goal_deadline.getText().toString());
+
+                }catch (NumberFormatException e)
+                {
+                    alert.showAlert(getResources().getString(R.string.alertTitle), "Vui lòng nhập số dư bằng số nguyên.", R.drawable.ic_info);
                     return;
                 }
-                goal.setName(goal_name.getText().toString());
-                goal.setAmount(Long.parseLong(goal_amount.getText().toString()));
-                goal.setBalance(Long.parseLong(goal_balance.getText().toString()));
-                goal.setDeadline(goal_deadline.getText().toString());
+
+
 
                 if(goal.getId()==0)
                 {
@@ -173,6 +188,10 @@ public class AddGoalActivity extends AppCompatActivity {
                 loadingDialog.dismissDialog();
             }
         });
+//        Format 1000 -> 1.000 ...
+        goal_amount.addTextChangedListener(new NumberTextWatcher(goal_amount));
+        goal_balance.addTextChangedListener(new NumberTextWatcher(goal_balance));
+
     }
 
     private void initializeDatePicker()

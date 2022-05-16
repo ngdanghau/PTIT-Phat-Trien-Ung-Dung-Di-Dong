@@ -119,10 +119,10 @@
 
 
             <TextView
-                style="@style/text_view_color_theme_style"
-                android:text="@string/sort_by_column"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            style="@style/text_view_color_theme_style"
+            android:text="@string/sort_by_column"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
             <!--Category Spinner-->
             <androidx.appcompat.widget.AppCompatSpinner

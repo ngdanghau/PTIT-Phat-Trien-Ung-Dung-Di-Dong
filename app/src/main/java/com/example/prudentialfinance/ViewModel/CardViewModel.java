@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.prudentialfinance.API.HTTPRequest;
 import com.example.prudentialfinance.API.HTTPService;
-import com.example.prudentialfinance.Container.AccountCreate;
-import com.example.prudentialfinance.Container.AccountDelete;
-import com.example.prudentialfinance.Container.AccountEdit;
+import com.example.prudentialfinance.Container.Accounts.AccountCreate;
+import com.example.prudentialfinance.Container.Accounts.AccountDelete;
+import com.example.prudentialfinance.Container.Accounts.AccountEdit;
 
 import org.json.JSONObject;
 

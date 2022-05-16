@@ -8,10 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.prudentialfinance.Activities.Card.AccountReportActivity;
 import com.example.prudentialfinance.Activities.Card.CardCreationActivity;
 import com.example.prudentialfinance.Helpers.CardModalBottomSheet;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
@@ -41,7 +41,7 @@ import java.util.Map;
 public class CardFragment extends Fragment implements CardModalBottomSheet.ModalBottomSheetListener {
 
     private LoadingDialog loadingDialog;
-    private AppCompatImageButton buttonCreate;
+    private ImageButton buttonCreate, chartBtn;
     private RecyclerView recycleView;
     private CardFragmentViewModel viewModel;
 
@@ -137,6 +137,7 @@ public class CardFragment extends Fragment implements CardModalBottomSheet.Modal
         loadingDialog = new LoadingDialog(getActivity());
         recycleView = view.findViewById(R.id.cardFragmentRecycleView);
         buttonCreate = view.findViewById(R.id.cardFragmentButtonCreate);
+        chartBtn = view.findViewById(R.id.chartBtn);
         notice = view.findViewById(R.id.cardFragmentNotice);
         swipeRefreshLayout = view.findViewById(R.id.cardFragmentSwipeRefreshLayout);
     }
@@ -181,6 +182,11 @@ public class CardFragment extends Fragment implements CardModalBottomSheet.Modal
     {
         buttonCreate.setOnClickListener(view->
                 showCardModalBottomView());
+
+        chartBtn.setOnClickListener(view -> {
+            Intent chartIntent = new Intent(getContext(), AccountReportActivity.class);
+            startActivity(chartIntent);
+        });
     }
 
     private void showCardModalBottomView()

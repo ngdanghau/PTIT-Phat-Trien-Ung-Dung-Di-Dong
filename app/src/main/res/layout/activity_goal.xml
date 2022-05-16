@@ -56,7 +56,6 @@
     </LinearLayout>
 
 
-
     <androidx.appcompat.widget.SearchView
         android:id="@+id/goal_SearchView"
         app:queryBackground="@color/transparent"
@@ -66,6 +65,7 @@
         android:background="@drawable/custom_input"
         app:queryHint="Search here..."
         app:iconifiedByDefault="false"/>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

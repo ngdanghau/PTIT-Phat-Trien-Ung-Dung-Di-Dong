@@ -1,18 +1,25 @@
 package com.example.prudentialfinance.Fragment;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,6 +36,9 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.HoverMode;
 import com.anychart.enums.Position;
 import com.anychart.enums.TooltipPositionMode;
+import com.example.prudentialfinance.Activities.Card.AccountChartActivity;
+import com.example.prudentialfinance.Activities.Card.CardUpdateActivity;
+import com.example.prudentialfinance.Activities.Report.CategoryExportActivity;
 import com.example.prudentialfinance.Container.Report.CategoryReport;
 import com.example.prudentialfinance.Container.Report.DateRange;
 import com.example.prudentialfinance.Container.Report.DateReport;
@@ -49,7 +59,8 @@ import java.util.Map;
 public class ReportFragment extends Fragment{
 
     ImageButton btnMenu, exportBtn;
-    PopupMenu popupMenu;
+    private MenuPopupHelper menuHelper;
+    private MenuBuilder menuBuilder;
     View view;
     ViewGroup container;
     TextView topTitle, total_money, title_total;
@@ -121,45 +132,54 @@ public class ReportFragment extends Fragment{
         viewModel = new ViewModelProvider(this).get(ReportViewModel.class);
     }
 
+    @SuppressLint("RestrictedApi")
     private void setEvent() {
         btnMenu.setOnClickListener(view -> {
-            popupMenu.show();
+            menuHelper.show();
         });
 
         exportBtn.setOnClickListener(view -> {
-            System.out.println("export");
+            Intent intent = new Intent(getContext(), CategoryExportActivity.class);
+            startActivity(intent);
         });
 
-        popupMenu.setOnMenuItemClickListener(menuItem -> {
-            switch (menuItem.getItemId()){
-                case R.id.incomeMenu:
-                    typeCategory = "income";
-                    topTitle.setText(getString(R.string.reportIncome));
-                    break;
-                case R.id.expenseMenu:
-                    typeCategory = "expense";
-                    topTitle.setText(getString(R.string.reportExpense));
-                    break;
+        menuBuilder.setCallback(new MenuBuilder.Callback() {
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuBuilder menu, @NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.incomeMenu:
+                        typeCategory = "income";
+                        topTitle.setText(getString(R.string.reportIncome));
+                        break;
+                    case R.id.expenseMenu:
+                        typeCategory = "expense";
+                        topTitle.setText(getString(R.string.reportExpense));
+                        break;
+                }
+
+                switch (typeDate){
+                    case "week":
+                        title_total.setText(getString(R.string.total_money_income_week));
+                        break;
+                    case "month":
+                        title_total.setText(getString(R.string.total_money_income_month));
+                        break;
+                    case "year":
+                        title_total.setText(getString(R.string.total_money_income_year));
+                        break;
+                }
+
+                viewModel.getData(headers, typeCategory, typeDate);
+                viewModel.getDataChart(headers, typeCategory, typeDate);
+                viewModel.getTotal(headers, typeCategory);
+                return false;
             }
 
-            switch (typeDate){
-                case "week":
-                    title_total.setText(getString(R.string.total_money_income_week));
-                    break;
-                case "month":
-                    title_total.setText(getString(R.string.total_money_income_month));
-                    break;
-                case "year":
-                    title_total.setText(getString(R.string.total_money_income_year));
-                    break;
-            }
+            @Override
+            public void onMenuModeChange(@NonNull MenuBuilder menu) {
 
-            viewModel.getData(headers, typeCategory, typeDate);
-            viewModel.getDataChart(headers, typeCategory, typeDate);
-            viewModel.getTotal(headers, typeCategory);
-            return true;
+            }
         });
-
 
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
@@ -243,6 +263,7 @@ public class ReportFragment extends Fragment{
         });
     }
 
+    @SuppressLint("RestrictedApi")
     private void setControl() {
         btnMenu = view.findViewById(R.id.btnMenu);
         exportBtn = view.findViewById(R.id.exportBtn);
@@ -252,8 +273,12 @@ public class ReportFragment extends Fragment{
         rGroup = view.findViewById(R.id.rGroup);
         checkedRadioButton = rGroup.findViewById(rGroup.getCheckedRadioButtonId());
 
-        popupMenu = new PopupMenu(getContext(), btnMenu);
-        popupMenu.getMenuInflater().inflate(R.menu.category_menu, popupMenu.getMenu());
+        menuBuilder = new MenuBuilder(getContext());
+        MenuInflater inflater = new MenuInflater(getContext());
+        inflater.inflate(R.menu.category_menu, menuBuilder);
+
+        menuHelper = new MenuPopupHelper(getContext(), menuBuilder, btnMenu);
+        menuHelper.setForceShowIcon(true);
 
         lvCategory = view.findViewById(R.id.lvCategory);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
@@ -293,7 +318,7 @@ public class ReportFragment extends Fragment{
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format("số tiền: {%Value} " + appInfo.getCurrency());
+                .format(getString(R.string.money_string) + ": {%Value} " + appInfo.getCurrency());
 
         cartesian.animation(true);
         cartesian.yScale().minimum(0d);

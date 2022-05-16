@@ -42,6 +42,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +51,7 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private  AppCompatButton buttonSignIn;
+    private AppCompatButton buttonSignIn;
     private EditText username, password;
     private LoginViewModel viewModel;
     private TextView loginTextViewCreateAccount, txt_forgotpassword;
@@ -65,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageButton loginSignInWithGoogle, loginSignInWithFacebook;
 
     CallbackManager callbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,15 +103,17 @@ public class LoginActivity extends AppCompatActivity {
     /***
      * @author Phong-Kaster
      *
-     * this function set Access token after loginning successfully. Then, this token can be utilized in
-     * header. To get Header, we call (Model/Global Variable) getHeader
+     *         this function set Access token after loginning successfully. Then,
+     *         this token can be utilized in
+     *         header. To get Header, we call (Model/Global Variable) getHeader
      *
      */
-    private void setAuthorizedToken( String accessToken) {
+    private void setAuthorizedToken(String accessToken) {
         state = ((GlobalVariable) this.getApplication());
         state.setAccessToken(accessToken.trim());
 
-        SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(), this.MODE_PRIVATE);
+        SharedPreferences preferences = this.getApplication().getSharedPreferences(state.getAppName(),
+                this.MODE_PRIVATE);
         preferences.edit().putString("accessToken", accessToken.trim()).apply();
     }
 
@@ -123,44 +127,41 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         txt_forgotpassword.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this,RecoveryActivity.class);
+            Intent intent = new Intent(LoginActivity.this, RecoveryActivity.class);
             startActivity(intent);
         });
 
-
-
-
         viewModel.isLoading().observe(this, isLoading -> {
-            if(isLoading){
+            if (isLoading) {
                 loadingDialog.startLoadingDialog();
-            }else{
+            } else {
                 loadingDialog.dismissDialog();
             }
         });
 
         viewModel.getObject().observe(this, object -> {
-            if(object == null){
+            if (object == null) {
                 alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
             if (object.getResult() == 1) {
-                setAuthorizedToken( object.getAccessToken() );
+                setAuthorizedToken(object.getAccessToken());
                 state.setAuthUser(object.getData());
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
 
-                Toast.makeText(LoginActivity.this, "Đăng nhập thành công !", Toast.LENGTH_LONG).show();
+                FancyToast.makeText(this, object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
+                        R.drawable.ic_check, true).show();
                 finish();
             } else {
-                setAuthorizedToken( "" );
+                setAuthorizedToken("");
                 state.setAuthUser(null);
                 alert.showAlert(getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
             }
         });
 
-
-        buttonSignIn.setOnClickListener(view->{
+        buttonSignIn.setOnClickListener(view -> {
             String user = username.getText().toString();
             String pass = password.getText().toString();
 
@@ -190,7 +191,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault), R.drawable.ic_close);
+                        alert.showAlert(getString(R.string.alertTitle), getString(R.string.alertDefault),
+                                R.drawable.ic_close);
                     }
 
                     @Override
@@ -214,14 +216,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
@@ -230,8 +229,10 @@ public class LoginActivity extends AppCompatActivity {
             viewModel.loginGoogle(idToken);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            alert.showAlert(getString(R.string.alertTitle), "signInResult:failed code=" + e.getStatusCode(), R.drawable.ic_close);
+            // Please refer to the GoogleSignInStatusCodes class reference for more
+            // information.
+            alert.showAlert(getString(R.string.alertTitle), "signInResult:failed code=" + e.getStatusCode(),
+                    R.drawable.ic_close);
         }
     }
 }

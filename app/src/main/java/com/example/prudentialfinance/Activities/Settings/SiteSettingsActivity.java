@@ -11,18 +11,17 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Settings.SiteSettingsViewModel;
+import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 
 public class SiteSettingsActivity extends AppCompatActivity {
 
@@ -37,7 +36,6 @@ public class SiteSettingsActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     Alert alert;
     Map<String, String> headers;
-
 
     ArrayAdapter<String> adapter;
     List<String> list = new ArrayList<>();
@@ -62,13 +60,13 @@ public class SiteSettingsActivity extends AppCompatActivity {
 
     private void setComponent() {
         global = (GlobalVariable) getApplication();
-        headers = ((GlobalVariable)getApplication()).getHeaders();
+        headers = ((GlobalVariable) getApplication()).getHeaders();
         loadingDialog = new LoadingDialog(SiteSettingsActivity.this);
         alert = new Alert(SiteSettingsActivity.this, 1);
         viewModel = new ViewModelProvider(this).get(SiteSettingsViewModel.class);
     }
 
-    private void setDataToControl(SiteSettings data){
+    private void setDataToControl(SiteSettings data) {
         siteName.setText(data.getSite_name());
         siteSlogan.setText(data.getSite_slogan());
         siteKeyword.setText(data.getSite_keywords());
@@ -81,7 +79,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
 
         for (int i = 0; i < list.size(); i++) {
             String item = list.get(i);
-            if(item.equals(data.getLanguage())){
+            if (item.equals(data.getLanguage())) {
                 spnLanguage.setSelection(i);
                 break;
             }
@@ -104,29 +102,33 @@ public class SiteSettingsActivity extends AppCompatActivity {
             String language = spnLanguage.getSelectedItem().toString();
             String action = "save";
 
-            viewModel.updateData(headers, action, site_name, site_slogan, site_description, site_keyword, logo_type, logo_mark, language, currency);
+            viewModel.updateData(headers, action, site_name, site_slogan, site_description, site_keyword, logo_type,
+                    logo_mark, language, currency);
         });
 
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
         viewModel.isLoading().observe(this, isLoading -> {
-            if(isLoading){
+            if (isLoading) {
                 loadingDialog.startLoadingDialog();
-            }else{
+            } else {
                 loadingDialog.dismissDialog();
             }
         });
 
         viewModel.getObject().observe(this, object -> {
-            if(object == null){
-                alert.showAlert(getResources().getString(R.string.alertTitle), getResources().getString(R.string.alertDefault), R.drawable.ic_close);
+            if (object == null) {
+                alert.showAlert(getResources().getString(R.string.alertTitle),
+                        getResources().getString(R.string.alertDefault), R.drawable.ic_close);
                 return;
             }
 
             if (object.getResult() == 1) {
                 setDataToControl(object.getData());
-                if(object.getMethod().equals("POST")){
-                    Toast.makeText(SiteSettingsActivity.this, object.getMsg(), Toast.LENGTH_LONG).show();
+                if (object.getMethod().equals("POST")) {
+                    FancyToast.makeText(this, object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
+                            R.drawable.ic_check, true).show();
+                    ;
                 }
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
@@ -134,11 +136,9 @@ public class SiteSettingsActivity extends AppCompatActivity {
         });
     }
 
-
     private void setControl() {
         backBtn = findViewById(R.id.backBtn);
         saveBtn = findViewById(R.id.saveBtn);
-
 
         siteName = findViewById(R.id.siteName);
         siteSlogan = findViewById(R.id.siteSlogan);
@@ -158,8 +158,6 @@ public class SiteSettingsActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 
         spnLanguage.setAdapter(adapter);
-
-
 
     }
 }

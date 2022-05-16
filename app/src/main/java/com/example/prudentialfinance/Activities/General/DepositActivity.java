@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.Helpers.Alert;
@@ -37,6 +38,8 @@ public class DepositActivity extends AppCompatActivity {
     private Alert alert;
     private User authUser;
 
+    private ImageButton Btn_back_detail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class DepositActivity extends AppCompatActivity {
     private void setControl()
     {
         goal_deposit = findViewById(R.id.et_deposit);
+        Btn_back_detail = findViewById(R.id.Btn_back_detail);
         btn_deposit = findViewById(R.id.btn_deposit);
     }
     private void setComponent()
@@ -67,18 +71,18 @@ public class DepositActivity extends AppCompatActivity {
 
     private void setEvent()
     {
+        Btn_back_detail.setOnClickListener(view -> finish());
         goal_deposit.addTextChangedListener(new NumberTextWatcher(goal_deposit));
 
-        btn_deposit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try{
-                    deposit = Integer.parseInt(goal_deposit.getText().toString().replace(".",""));
-                    viewModel.deposit(headers,id,deposit);
-                }catch(Exception e)
-                {
-                    Toast.makeText(DepositActivity.this, "Lỗi chuyển số", Toast.LENGTH_SHORT).show();
-                }
+        alert.btnOK.setOnClickListener(view -> alert.dismiss());
+
+        btn_deposit.setOnClickListener(view -> {
+            try{
+                deposit = Integer.parseInt(goal_deposit.getText().toString().replace(".",""));
+                viewModel.deposit(headers,id,deposit);
+            }catch(Exception e)
+            {
+                alert.showAlert(getString(R.string.alertTitle), "Lỗi chuyển số", R.drawable.ic_close);
             }
         });
 
