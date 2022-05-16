@@ -3,6 +3,7 @@ package com.example.prudentialfinance.Activities.Budget;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
@@ -18,10 +19,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import androidx.appcompat.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.Container.budgets.budgetGET.Datum;
@@ -37,20 +41,25 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class BudgetsActivity extends AppCompatActivity {
 
     BudgetGetModelView budgetViewModel;
-    ImageButton btnBack, btnAdd, btnReport, btnPDF;
+    ImageButton btnBack, btnAdd, btnPDF;
     LoadingDialog loadingDialog;
     Alert alert;
     Map<String, String > headers;
     ArrayList<Datum> budgetData;
+    ArrayList<Datum> budgetDataS;
     BudgetRecycleViewAdapter budgetRecycleViewAdapter;
     RecyclerView rViewGoal;
+    SearchView budgetSearch;
     LinearLayoutManager manager;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -73,9 +82,8 @@ public class BudgetsActivity extends AppCompatActivity {
     private void setControl(){
         btnBack = findViewById(R.id.budget_back);
         btnAdd = findViewById(R.id.budget_add);
-        btnReport = findViewById(R.id.budget_report);
         btnPDF = findViewById(R.id.budget_pdf);
-
+        budgetSearch = findViewById(R.id.budget_search);
         rViewGoal = findViewById(R.id.rv_budgets);
         swipeRefreshLayout = findViewById(R.id.refresh_layout_budget);
     }
@@ -90,13 +98,6 @@ public class BudgetsActivity extends AppCompatActivity {
             intent.putExtra("budget", new Datum(0));
             addBudgetActivity.launch(intent);
         });
-        btnReport.setOnClickListener(
-            view->{
-                Intent intent = new Intent (this, BudgetReportActivity.class);
-                intent.putExtra("budgets", budgetData);
-                report.launch(intent);
-            }
-        );
         btnPDF.setOnClickListener(
                 view->{
                     generatePDF();
@@ -105,6 +106,33 @@ public class BudgetsActivity extends AppCompatActivity {
         );
         alert.btnOK.setOnClickListener(view -> alert.dismiss());
 
+        final SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                List<Datum> temp = budgetDataS.stream()
+                        .filter(datum -> datum.getCategory().getName().toLowerCase().contains(newText.toLowerCase(Locale.ROOT)))
+                        .collect(Collectors.toList());
+                budgetData.clear();
+                budgetData.addAll(temp);
+                budgetRecycleViewAdapter.notifyDataSetChanged();
+                return true;
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                List<Datum> temp = budgetDataS.stream()
+                        .filter(datum -> datum.getCategory().getName().toLowerCase().contains(query.toLowerCase(Locale.ROOT)))
+                        .collect(Collectors.toList());
+                budgetData.clear();
+                budgetData.addAll(temp);
+                budgetRecycleViewAdapter.notifyDataSetChanged();
+                return true;
+            }
+        };
+
+        budgetSearch.setOnQueryTextListener(queryTextListener);
         budgetViewModel.isLoading().observe((LifecycleOwner) this, isLoading -> {
             if(isLoading){
                 loadingDialog.startLoadingDialog();
@@ -122,6 +150,8 @@ public class BudgetsActivity extends AppCompatActivity {
             if (object.getResult() == 1) {
                 budgetData.clear();
                 budgetData.addAll(object.getData() == null ? new ArrayList<>() : object.getData());
+                budgetDataS.clear();
+                budgetDataS.addAll(budgetData);
                 budgetRecycleViewAdapter.notifyDataSetChanged();
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
@@ -138,6 +168,7 @@ public class BudgetsActivity extends AppCompatActivity {
     private void loadData() {
         Log.i("Datum data", "Load data");
         budgetData = new ArrayList<>();
+        budgetDataS = new ArrayList<>();
         budgetViewModel.getData(headers, "");
         budgetViewModel.getObject().observe(this, models -> {
             if (models != null) {
@@ -231,6 +262,8 @@ public class BudgetsActivity extends AppCompatActivity {
                 int position = viewHolder.getLayoutPosition();
                 entry = budgetData.get(position);
                 budgetData.remove(position);
+                budgetDataS.clear();
+                budgetDataS.addAll(budgetData);
                 budgetRecycleViewAdapter.notifyItemRemoved(position);
                 Snackbar.make(rViewGoal, "Đã xóa " + entry.getDescription(), 3000)
                         .addCallback(new Snackbar.Callback(){
@@ -238,11 +271,15 @@ public class BudgetsActivity extends AppCompatActivity {
                             public void onDismissed(Snackbar snackbar, int event) {
                                 if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
                                     budgetViewModel.remove(headers, entry.getId());
+                                    budgetDataS.clear();
+                                    budgetDataS.addAll(budgetData);
                                 }
                             }
                         })
                         .setAction("Khôi phục", view -> {
                             budgetData.add(position, entry);
+                            budgetDataS.clear();
+                            budgetDataS.addAll(budgetData);
                             budgetRecycleViewAdapter.notifyItemInserted(position);
                         }).show();
             }
