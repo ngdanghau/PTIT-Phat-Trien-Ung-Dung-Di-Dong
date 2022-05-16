@@ -84,17 +84,17 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
         holder.goal_deadline.setText(Helper.truncate_string(entry.getDeadline(), 25, "...", true));
         holder.goal_amount.setText(Helper.truncate_string(Helper.formatNumber((int)entry.getAmount())+ appInfo.getCurrency(), 25, "...", true));
         if(progress>=100)
-            holder.goal_balance.setText("Hoàn thành");
+            holder.goal_balance.setText(context.getString(R.string.done));
         else
-        holder.goal_balance.setText(Helper.truncate_string("Đã có: "+Helper.formatNumber((int)(entry.getDeposit()+entry.getBalance()))+appInfo.getCurrency(), 70, "...", true));
+        holder.goal_balance.setText(Helper.truncate_string(context.getString(R.string.had_money)+'\t'+Helper.formatNumber((int)(entry.getDeposit()+entry.getBalance()))+appInfo.getCurrency(), 70, "...", true));
 
         AlertDialog.Builder b = new AlertDialog.Builder(context);
-        b.setTitle("Hành động");
-        String[] types;
-        if(entry.getStatus()==3)
-            types = new String[]{"Chi tiết", "Sửa"};
+        b.setTitle(context.getString(R.string.action));
+        String[] types ;
+        if(entry.getStatus()!=1)
+            types = context.getResources().getStringArray(R.array.action_forgoal23);
         else
-            types = new String[]{"Chi tiết", "Sửa", "Thêm tiền"};
+            types = context.getResources().getStringArray(R.array.action);
         b.setItems(types, (dialog, which) -> {
             dialog.dismiss();
             switch(which){
@@ -110,7 +110,7 @@ public class GoalRecycleViewAdapter extends RecyclerView.Adapter<GoalRecycleView
                     break;
                 case 2:
                     Intent intent2 = new Intent (context, DepositActivity.class);
-                    intent2.putExtra("id", entry.getId());
+                    intent2.putExtra("goal", entry);
                     addGoalActivity.launch(intent2);
             }
         });

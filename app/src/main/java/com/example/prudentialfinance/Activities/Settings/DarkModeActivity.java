@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.LanguageManager;
@@ -22,6 +23,7 @@ import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.AppearanceViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +33,9 @@ public class DarkModeActivity extends AppCompatActivity {
     ImageButton backBtn;
     Spinner spnLanguage;
 
-    ArrayAdapter<String> adapter;
-    List<String> listLanguage = new ArrayList<>();
+    SpinnerAdapter adapter;
+    HashMap<String, String> listLanguage = new HashMap<>();
+    String[] spinnerOptions;
 
     GlobalVariable global;
     Alert alert;
@@ -42,6 +45,7 @@ public class DarkModeActivity extends AppCompatActivity {
     Map<String, String> headers;
     AppearanceViewModel viewModel;
     String selectedLang;
+    String shortLang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,8 @@ public class DarkModeActivity extends AppCompatActivity {
         alertConfirm = new Alert(this, 2);
         alert = new Alert(this, 1);
         viewModel = new ViewModelProvider(this).get(AppearanceViewModel.class);
+
+        listLanguage = languageManager.getList();
 
     }
 
@@ -96,9 +102,11 @@ public class DarkModeActivity extends AppCompatActivity {
         spnLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedLang = adapterView.getItemAtPosition(i).toString();
-                if(!languageManager.getCurrent().equals(selectedLang)){
-                    alertConfirm.showAlert(getString(R.string.alertTitle), getString(R.string.warning_change_language), R.drawable.ic_close);
+                selectedLang = spinnerOptions[i];
+                shortLang = listLanguage.get(selectedLang);
+
+                if(!languageManager.getCurrent().equals(shortLang)){
+                    alertConfirm.showAlert(getString(R.string.alertTitle), getString(R.string.warning_change_language), R.drawable.ic_info);
                 }
             }
 
@@ -125,7 +133,7 @@ public class DarkModeActivity extends AppCompatActivity {
 
         alertConfirm.btnCancel.setOnClickListener(view -> alertConfirm.dismiss());
         alertConfirm.btnOK.setOnClickListener(view -> {
-            languageManager.setLang(selectedLang);
+            languageManager.setLang(shortLang);
             languageManager.updateResource();
             viewModel.updateLanguage(headers, languageManager.getCurrent());
             alertConfirm.dismiss();
@@ -143,24 +151,25 @@ public class DarkModeActivity extends AppCompatActivity {
     private void setControl() {
         backBtn = findViewById(R.id.backBtn);
         switchCompat = findViewById(R.id.darkModeSwitch);
-
         spnLanguage = findViewById(R.id.spnLanguage);
 
-        listLanguage = languageManager.getList();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listLanguage);
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-
+        spinnerOptions = listLanguage.keySet().toArray(new String[0]);
+        adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item , spinnerOptions);
         spnLanguage.setAdapter(adapter);
 
-        for (int i = 0; i < listLanguage.size(); i++) {
-            String item = listLanguage.get(i);
-            if (item.equals(languageManager.getCurrent())) {
-                spnLanguage.setSelection(i);
+
+
+        int index = 0;
+        for(Map.Entry<String, String> entry : listLanguage.entrySet()) {
+            String value = entry.getValue();
+
+            if (value.equals(languageManager.getCurrent())) {
+                spnLanguage.setSelection(index);
                 break;
             }
+            index++;
         }
-
     }
 
     public void restart(){

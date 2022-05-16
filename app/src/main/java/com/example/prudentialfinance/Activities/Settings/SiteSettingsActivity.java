@@ -5,13 +5,17 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.example.prudentialfinance.Helpers.Alert;
+import com.example.prudentialfinance.Helpers.LanguageManager;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.GlobalVariable;
 import com.example.prudentialfinance.Model.SiteSettings;
@@ -20,6 +24,7 @@ import com.example.prudentialfinance.ViewModel.Settings.SiteSettingsViewModel;
 import com.shashank.sony.fancytoastlib.FancyToast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +42,11 @@ public class SiteSettingsActivity extends AppCompatActivity {
     Alert alert;
     Map<String, String> headers;
 
-    ArrayAdapter<String> adapter;
-    List<String> list = new ArrayList<>();
+    SpinnerAdapter adapter;
+    HashMap<String, String> listLanguage = new HashMap<>();
+    String[] spinnerOptions;
+    LanguageManager languageManager;
+    String shortLang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,9 @@ public class SiteSettingsActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(SiteSettingsActivity.this);
         alert = new Alert(SiteSettingsActivity.this, 1);
         viewModel = new ViewModelProvider(this).get(SiteSettingsViewModel.class);
+        languageManager = new LanguageManager(this, global.getAppName());
+        listLanguage = languageManager.getList();
+
     }
 
     private void setDataToControl(SiteSettings data) {
@@ -77,12 +88,15 @@ public class SiteSettingsActivity extends AppCompatActivity {
 
         currencyField.setText(data.getCurrency());
 
-        for (int i = 0; i < list.size(); i++) {
-            String item = list.get(i);
-            if (item.equals(data.getLanguage())) {
-                spnLanguage.setSelection(i);
+        int index = 0;
+        for(Map.Entry<String, String> entry : listLanguage.entrySet()) {
+            String value = entry.getValue();
+
+            if (value.equals(languageManager.getCurrent())) {
+                spnLanguage.setSelection(index);
                 break;
             }
+            index++;
         }
     }
 
@@ -99,7 +113,7 @@ public class SiteSettingsActivity extends AppCompatActivity {
             String logo_type = logoType.getText().toString().trim();
 
             String currency = currencyField.getText().toString().trim();
-            String language = spnLanguage.getSelectedItem().toString();
+            String language = shortLang.trim();
             String action = "save";
 
             viewModel.updateData(headers, action, site_name, site_slogan, site_description, site_keyword, logo_type,
@@ -128,10 +142,22 @@ public class SiteSettingsActivity extends AppCompatActivity {
                 if (object.getMethod().equals("POST")) {
                     FancyToast.makeText(this, object.getMsg(), FancyToast.LENGTH_SHORT, FancyToast.SUCCESS,
                             R.drawable.ic_check, true).show();
-                    ;
                 }
             } else {
                 alert.showAlert(getResources().getString(R.string.alertTitle), object.getMsg(), R.drawable.ic_close);
+            }
+        });
+
+        spnLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String key = spinnerOptions[i];
+                shortLang = listLanguage.get(key);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -151,12 +177,8 @@ public class SiteSettingsActivity extends AppCompatActivity {
         currencyField = findViewById(R.id.currency);
         spnLanguage = findViewById(R.id.spnLanguage);
 
-        list.add("en-US");
-        list.add("vi-VN");
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-
+        spinnerOptions = listLanguage.keySet().toArray(new String[0]);
+        adapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item , spinnerOptions);
         spnLanguage.setAdapter(adapter);
 
     }

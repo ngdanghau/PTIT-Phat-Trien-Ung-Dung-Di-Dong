@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
+import com.example.prudentialfinance.R;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class LanguageManager {
@@ -43,16 +46,23 @@ public class LanguageManager {
 
     public String getCurrent(){
         String locale = sharedPreferences.getString("locale", null);
-        this.langCode = locale == null ? "en_US" : locale;
-        setLang(this.langCode);
+        if(locale == null){
+            this.langCode = "en-US";
+        }else{
+            this.langCode = locale;
+            setLang(this.langCode);
+        }
+
+        String[] langArr = this.langCode.split("-");
+        this.shortCode = langArr[0];
+
         return this.langCode;
     }
 
-    public ArrayList<String> getList(){
-        ArrayList<String> list = new ArrayList<>();
-        list.add("en-US");
-        list.add("vi-VN");
-
+    public HashMap<String, String> getList(){
+        HashMap<String, String> list = new HashMap<>();
+        list.put(ctx.getString(R.string.english), "en-US");
+        list.put(ctx.getString(R.string.vietnamese), "vi-VN");
         return list;
     }
 }
