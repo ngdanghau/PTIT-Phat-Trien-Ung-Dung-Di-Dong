@@ -86,12 +86,12 @@
     <string name="card_number">0312 0000 0000 7616</string>
     <string name="card_description">Tài khoản ngân hàng Prudential Finance</string>
 
-    <string name="host">Host</string>
-    <string name="port">Port</string>
-    <string name="encryption">Encryption</string>
-    <string name="from">From</string>
-    <string name="auth">Auth</string>
-    <string name="username_email">Username</string>
+    <string name="host">Máy chủ</string>
+    <string name="port">Cổng</string>
+    <string name="encryption">Mã hoá</string>
+    <string name="from">Từ</string>
+    <string name="auth">Xác thực</string>
+    <string name="username_email">Tên đăng nhập</string>
     <string name="begin_create_account">Bắt đầu tạo tài khoản</string>
     <string name="enter_account_detail">Nhập thông tin tài khoản</string>
     <string name="account_number">Số tài khoản</string>
@@ -121,7 +121,7 @@
 
 
     <!--    GOALS-->
-    <string name="goal_name">Mục tiêu</string>
+    <string name="goal_name">Tên mục tiêu</string>
     <string name="goal_deadline">15/11/2000</string>
     <string name="Deleted">Đã xóa</string>
     <string name="goal_name_tv">Tên mục tiêu</string>
@@ -136,11 +136,11 @@
     <string name="goal_deposit">Thêm tiền cho mục tiêu</string>
     <string name="goal_export">Xuất file pdf</string>
     <string name="export_excel">Xuất file excel</string>
-    <string name="export_success">Xuất thàng công</string>
+    <string name="export_success">Xuất thành công</string>
     <string name="goal_deposit_tv">Tiền cộng dồn</string>
 
     <string name="categories">Thể loại</string>
-    <string name="alertDefault">Oops! Something went wrong. Please try again later!</string>
+    <string name="alertDefault">Oops! Đã xảy ra lỗi. Vui lòng thử lại sau!</string>
     <string name="alertNumber">Hãy nhập đúng ký tự số nguyên dương > 0</string>
     <string name="alertTitle">Oops!</string>
     <string name="alertConfirm">Bạn có chắc không? Dữ liệu đã xoá không thể khôi phục!</string>
