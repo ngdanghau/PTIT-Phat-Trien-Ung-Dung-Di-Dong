@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
+import com.example.prudentialfinance.R;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class LanguageManager {
@@ -56,11 +59,10 @@ public class LanguageManager {
         return this.langCode;
     }
 
-    public ArrayList<String> getList(){
-        ArrayList<String> list = new ArrayList<>();
-        list.add("en-US");
-        list.add("vi-VN");
-
+    public HashMap<String, String> getList(){
+        HashMap<String, String> list = new HashMap<>();
+        list.put(ctx.getString(R.string.english), "en-US");
+        list.put(ctx.getString(R.string.vietnamese), "vi-VN");
         return list;
     }
 }

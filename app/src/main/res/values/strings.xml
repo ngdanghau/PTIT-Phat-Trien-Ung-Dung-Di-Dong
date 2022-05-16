@@ -313,5 +313,9 @@
     <string name="amount_title">Amount</string>
 
 
+    <string name="english">English</string>
+    <string name="vietnamese">Vietnamese</string>
+
+
 
 </resources>

@@ -310,4 +310,7 @@
     <string name="amount_title">Mức tiền</string>
     <string name="vn" translatable="false">VNĐ</string>
 
+    <string name="english">Tiếng anh</string>
+    <string name="vietnamese">Tiếng việt</string>
+
 </resources>
