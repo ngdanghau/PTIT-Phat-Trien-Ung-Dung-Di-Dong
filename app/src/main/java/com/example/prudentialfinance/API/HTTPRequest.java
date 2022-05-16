@@ -23,6 +23,7 @@ import com.example.prudentialfinance.Container.HomeLatestTransactions;
 import com.example.prudentialfinance.Container.Login;
 import com.example.prudentialfinance.Container.ReportTotalBalance;
 import com.example.prudentialfinance.Container.Settings.SiteSettingsResponse;
+import com.example.prudentialfinance.Container.SimpleResponse;
 import com.example.prudentialfinance.Container.Transactions.TransactionCreate;
 import com.example.prudentialfinance.Container.Transactions.TransactionGetTotal;
 import com.example.prudentialfinance.Container.Transactions.TransactionRemove;
@@ -115,6 +116,12 @@ public interface HTTPRequest {
     Call<AvatarUpload> uploadAvatar(@Header("Authorization") String authorization,
                                     @Part("action") RequestBody action,
                                     @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("api/profile")
+    Call<SimpleResponse> updateLanguage(@HeaderMap Map<String, String> headers,
+                                        @Field("action") String action,
+                                        @Field("langcode") String langcode);
 
 
     @FormUrlEncoded

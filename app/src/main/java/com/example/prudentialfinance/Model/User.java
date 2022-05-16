@@ -28,6 +28,10 @@ public class User implements Parcelable {
     @Expose
     private String avatar;
 
+    @SerializedName("language")
+    @Expose
+    private String language;
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -40,15 +44,31 @@ public class User implements Parcelable {
     @Expose
     private String date;
 
-    public User(String account_type, String email, String firstname, String lastname, String avatar, Integer id, Boolean is_active, String date) {
+    public User(String account_type, String email, String firstname, String lastname, String avatar, String language, Integer id, Boolean is_active, String date) {
         this.account_type = account_type;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.avatar = avatar;
+        this.language = language;
         this.id = id;
         this.is_active = is_active;
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "account_type='" + account_type + '\'' +
+                ", email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", language='" + language + '\'' +
+                ", id=" + id +
+                ", is_active=" + is_active +
+                ", date='" + date + '\'' +
+                '}';
     }
 
     protected User(Parcel in) {
@@ -57,6 +77,7 @@ public class User implements Parcelable {
         firstname = in.readString();
         lastname = in.readString();
         avatar = in.readString();
+        language = in.readString();
         if (in.readByte() == 0) {
             id = null;
         } else {
@@ -111,6 +132,22 @@ public class User implements Parcelable {
         this.lastname = lastname;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -135,28 +172,6 @@ public class User implements Parcelable {
         this.date = date;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "account_type='" + account_type + '\'' +
-                ", email='" + email + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", id=" + id +
-                ", is_active=" + is_active +
-                ", date='" + date + '\'' +
-                '}';
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -169,6 +184,7 @@ public class User implements Parcelable {
         parcel.writeString(firstname);
         parcel.writeString(lastname);
         parcel.writeString(avatar);
+        parcel.writeString(language);
         if (id == null) {
             parcel.writeByte((byte) 0);
         } else {

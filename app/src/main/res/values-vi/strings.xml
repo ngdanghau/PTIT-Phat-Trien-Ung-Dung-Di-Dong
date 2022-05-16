@@ -5,9 +5,9 @@
     <string name="introduce2">Quản lý các tài khoản cá nhân, thêm các danh mục chi tiêu, các mục tiêu tài chính bản thân muốn thiết lập.</string>
     <string name="introduce3">Hỗ trợ các thông tin về tài khoản cá nhân</string>
     <string name="introduce4">Quản lý các tài khoản cá nhân, thêm các danh mục chi tiêu, các mục tiêu tài chính bản thân muốn thiết lập.</string>
-    <string name="introduce5">Welcome back, </string>
-    <string name="nice_day">Have a nice day</string>
+    <string name="introduce5">Chào mừng quay lại, </string>
     <string name="introduce6">hãy nhập thông tin để đăng nhập!</string>
+    <string name="nice_day">Ngày mới tốt lành</string>
     <string name="skip">Bỏ qua</string>
     <string name="next">Tiếp tục</string>
     <string name="prev">Lùi lại</string>
@@ -42,15 +42,15 @@
     <string name="recent">Gần đây</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home">Home</string>
-    <string name="setting">Setting</string>
-    <string name="profile">Profile</string>
+    <string name="home">Trang chủ</string>
+    <string name="setting">Cài đặt</string>
+    <string name="profile">Hồ sơ</string>
     <string name="menus">Danh mục</string>
-    <string name="see_all">See all</string>
-    <string name="card">Card</string>
-    <string name="create_new_transaction">Add new</string>
-    <string name="create_card">Create new card</string>
-    <string name="account">Account</string>
+    <string name="see_all">Xem tất cả</string>
+    <string name="card">Thẻ</string>
+    <string name="create_new_transaction">Thêm mới</string>
+    <string name="create_card">Tạo thẻ mới</string>
+    <string name="account">Tai khoan</string>
 
     <string name="personal_information">Thông tin cá nhân</string>
     <string name="public_information">Thông tin công khai</string>
@@ -166,7 +166,7 @@
     <string name="report">Báo cáo</string>
     <string name="report_category_expense">Thống kê chi tiêu</string>
     <string name="report_category_income">Thống kê thu nhập</string>
-    <string name="turn_on_off_dark_mode">Dark mode</string>
+    <string name="turn_on_off_dark_mode">Chế độ ban đêm</string>
     <string name="turn_on_dark_mode">Bật chế độ ban đêm</string>
     <string name="turn_off_dark_mode">Tắt chế độ dark mode</string>
 
@@ -262,13 +262,12 @@
     <string name="nov_short">11</string>
     <string name="dec_short">12</string>
 
-    <string name="total">Total</string>
+    <string name="total">Tổng cộng</string>
     <string name="name_col">Tên</string>
-    <string name="masked_as_read">Masked As Read</string>
+    <string name="masked_as_read">Đánh dấu đã đọc</string>
 
-    <string name="appearance">Appearance</string>
-    <string name="warning_change_language">You must restart your computer to apply these changes</string>
-
+    <string name="appearance">Giao diện</string>
+    <string name="warning_change_language">Bạn phải khởi động lại máy tính của mình để áp dụng các thay đổi này</string>
 
     <!--    Config google services-->
     <string name="server_client_id">538016634184-aqf25ouan4v2bscstec48atnh05ibv13.apps.googleusercontent.com</string>

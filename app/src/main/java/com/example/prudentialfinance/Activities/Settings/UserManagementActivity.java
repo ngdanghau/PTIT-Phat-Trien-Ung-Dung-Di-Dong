@@ -128,7 +128,7 @@ public class UserManagementActivity extends AppCompatActivity {
         btnBack.setOnClickListener(view -> finish());
         addBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddUserActivity.class);
-            intent.putExtra("user", new User("member", "", "", "","",0,true, ""));
+            intent.putExtra("user", new User("member", "", "", "","","", 0,true, ""));
             updateUserActivity.launch(intent);
         });
 
