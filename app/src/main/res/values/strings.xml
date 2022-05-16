@@ -224,7 +224,7 @@
     <string name="cost">Cost:</string>
     <string name="account_name">Account name:</string>
     <string name="category_name_2">Category Name:</string>
-    <string name="reference_2">Payment reference</string>
+    <string name="reference_2">Payment reference:</string>
     <string name="edit">Edit</string>
     <string name="transaction_menu_content">Thêm hoạt động thu nhập, chi tiêu hoặc tạo sao kê</string>
     <string name="create_income_transaction">"Add new Income transaction "</string>

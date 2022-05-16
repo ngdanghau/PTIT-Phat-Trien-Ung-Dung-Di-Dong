@@ -23,14 +23,13 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="65dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/create_statement"
             android:textColor="@color/colorNormalText"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>

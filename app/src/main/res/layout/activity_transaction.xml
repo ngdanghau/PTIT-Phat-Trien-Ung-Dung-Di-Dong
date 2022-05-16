@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="@string/recent_transactions"
             android:textColor="@color/colorNormalText"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry" />
 

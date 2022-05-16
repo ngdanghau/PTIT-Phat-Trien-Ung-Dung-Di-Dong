@@ -6,7 +6,7 @@
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/button_style_state</item>
         <item name="android:textColor">@drawable/button_text_color_style_state</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -33,6 +33,7 @@
         <item name="android:layout_height">50dp</item>
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">20dp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="custom_picker">
@@ -59,8 +60,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginStart">35dp</item>
         <item name="android:textColor">@color/colorNormalText</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="income_expense_layout_style">
@@ -113,11 +114,10 @@
     </style>
 
     <style name="transaction_information_text_view_content">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:paddingStart">5sp</item>
         <item name="android:textColor">@color/colorNormalText</item>
     </style>
 
@@ -125,7 +125,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">20sp</item>
-        <item name="android:paddingBottom">10sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorTheme</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -136,6 +136,7 @@
         <item name="android:textColor">@drawable/button_text_color_style_state</item>
         <item name="android:background">@drawable/button_style_state</item>
         <item name="android:layout_marginStart">55dp</item>
+        <item name="android:layout_marginEnd">55dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
     </style>

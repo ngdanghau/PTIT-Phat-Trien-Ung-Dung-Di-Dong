@@ -36,6 +36,7 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -258,7 +259,8 @@ public class TransactionStatementActivity extends AppCompatActivity {
         User AuthUser = ((GlobalVariable)getApplication()).getAuthUser();
         /*Step 1*/
         String path = getApplicationContext().getFilesDir().getPath();
-        File file = new File(path, "transaction-statement.pdf");
+        System.out.println("Path: " + path);
+        File file = new File(path, "transactionStatement.pdf");
 
 
         /*Step 2*/
@@ -396,7 +398,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
         /*Step 7*/
         document.add(table);
         document.close();
-        Toast.makeText(this, "Created PDF Successfully !", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Mở đường dẫn: " + path.toString() + " để xem file", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -29,7 +30,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_gravity="center"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:text="@string/create_income_transaction"
         android:id="@+id/transactionMenuButtonCreateIncome"
         style="@style/button_style"/>
@@ -40,20 +41,22 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_gravity="center"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:text="@string/create_expense_transaction"
         android:id="@+id/transactionMenuButtonCreateExpense"
-        style="@style/button_style"/>
+        style="@style/button_style"
+        tools:ignore="SmallSp" />
     <Space
         android:layout_width="match_parent"
         android:layout_height="20sp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_gravity="center"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:text="@string/create_statement"
         android:id="@+id/transactionMenuButtonCreateStatement"
-        style="@style/button_style"/>
+        style="@style/button_style"
+        tools:ignore="SmallSp" />
 
     <Space
         android:layout_width="match_parent"
