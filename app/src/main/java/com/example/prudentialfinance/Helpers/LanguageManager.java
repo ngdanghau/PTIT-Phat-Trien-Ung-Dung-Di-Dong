@@ -43,7 +43,8 @@ public class LanguageManager {
 
     public String getCurrent(){
         String locale = sharedPreferences.getString("locale", null);
-        setLang(locale);
+        this.langCode = locale == null ? "en_US" : locale;
+        setLang(this.langCode);
         return this.langCode;
     }
 
