@@ -3,6 +3,7 @@ package com.example.prudentialfinance.Activities.Transaction;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -36,7 +37,6 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import com.itextpdf.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -235,6 +235,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
                 try {
                     createAndExportPDF(data, dateFrom, dateTo);
                 } catch (FileNotFoundException e) {
+                    System.out.println(e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -258,7 +259,8 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
         User AuthUser = ((GlobalVariable)getApplication()).getAuthUser();
         /*Step 1*/
-        String path = getApplicationContext().getFilesDir().getPath();
+//        String path = getApplicationContext().getFilesDir().getPath();
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
         System.out.println("Path: " + path);
         File file = new File(path, "transactionStatement.pdf");
 
@@ -356,7 +358,7 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
         /*Step 6*/
 
-        Paragraph footer1 = new Paragraph("\nThank you for using Prudential Bank's service\n****************************");
+        Paragraph footer1 = new Paragraph("\nThank you for using Prudential Bank's service\n*************************\n");
         Paragraph footer2 = new Paragraph("\nPRUDENTIAL BANK - Together for the future");
         Paragraph footer3 = new Paragraph("\nNote: This statement does not create any Prudential Bank's commitments or guarantee in the present or future" +
                 "regarding customer's obligation with the third party");
@@ -396,9 +398,16 @@ public class TransactionStatementActivity extends AppCompatActivity {
 
 
         /*Step 7*/
-        document.add(table);
-        document.close();
-        Toast.makeText(this, "Mở đường dẫn: " + path.toString() + " để xem file", Toast.LENGTH_SHORT).show();
+        try {
+            document.add(table);
+            document.close();
+            Toast.makeText(this,"File được lưu tại " + path.toString(), Toast.LENGTH_LONG).show();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("PDF Error: " + ex.getMessage());
+        }
+
 
     }
 

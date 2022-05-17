@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
 
     private boolean isShow = false;
     private boolean isNotificationRemaning = false;
-    private Map<String, String> headers = new HashMap<>();
+    private final Map<String, String> headers = new HashMap<>();
 
 
     private List<TransactionDetail> objects = new ArrayList<>();

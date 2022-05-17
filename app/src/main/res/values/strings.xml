@@ -30,7 +30,7 @@
     <string name="password_confirm">Confirm your password</string>
     <string name="create_new_account">Create new account</string>
     <string name="welcome_back">Welcome back</string>
-    <string name="name_profile" translatable="false">Nguyen Van Chung</string>
+    <string name="name_profile" translatable="false">Nguyen Thanh Phong</string>
     <string name="total_remaining">Total Balance</string>
     <string name="total_remaining_value" translatable="false">0</string>
     <string name="dashboard">Dashboard</string>
