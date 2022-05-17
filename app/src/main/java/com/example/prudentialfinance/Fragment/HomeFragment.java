@@ -377,7 +377,9 @@ public class HomeFragment extends Fragment {
      * */
     private void setScreen()
     {
-        String fullName = AuthUser.getFirstname() + " " + AuthUser.getLastname();
-        name.setText(fullName);
+        try{
+            String fullName = AuthUser.getFirstname() + " " + AuthUser.getLastname();
+            name.setText(fullName);
+        }catch(Exception e){}
     }
 }
