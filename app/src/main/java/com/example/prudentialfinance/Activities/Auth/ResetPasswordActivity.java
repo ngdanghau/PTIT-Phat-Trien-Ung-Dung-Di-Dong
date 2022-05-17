@@ -121,6 +121,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 alert_confirm.showAlert("Xác nhận","Bạn có muốn gửi lại otp không ?",R.drawable.ic_info);
                 alert_confirm.btnCancel.setOnClickListener(view1 -> alert_confirm.dismiss());
                 alert_confirm.btnOK.setOnClickListener(view1 -> {
+                    alert_confirm.dismiss();
                     loadingDialog.startLoadingDialog();
 
 
@@ -145,6 +146,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                     alert.showAlert("Oops",resource.getMsg(), R.drawable.ic_close);
                                     alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                                 }
+
                             }
                             else
                             {
@@ -157,7 +159,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<Login> call, Throwable t) {
                             loadingDialog.dismissDialog();
-                            alert.showAlert("Oops","Something went wrong!", R.drawable.ic_check);
+                            alert.showAlert("Oops",getString(R.string.alertDefault), R.drawable.ic_check);
                             alert.btnOK.setOnClickListener(view ->{alert.dismiss();});
                         }
                     });
