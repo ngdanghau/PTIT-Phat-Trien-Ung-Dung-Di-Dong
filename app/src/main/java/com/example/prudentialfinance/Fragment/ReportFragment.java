@@ -44,6 +44,7 @@ import com.example.prudentialfinance.Container.Report.DateRange;
 import com.example.prudentialfinance.Container.Report.DateReport;
 import com.example.prudentialfinance.Helpers.Alert;
 import com.example.prudentialfinance.Helpers.Helper;
+import com.example.prudentialfinance.Helpers.LanguageManager;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Model.SiteSettings;
 import com.example.prudentialfinance.Model.User;
@@ -83,6 +84,7 @@ public class ReportFragment extends Fragment{
     String typeCategory;
     String typeDate;
     DateRange dateRange;
+    LanguageManager languageManager;
 
 
     //chart
@@ -119,6 +121,7 @@ public class ReportFragment extends Fragment{
         appInfo = this.getArguments().getParcelable("appInfo");
         String accessToken = this.getArguments().getString("accessToken");
         String contentType = this.getArguments().getString("contentType");
+        String appName = this.getArguments().getString("appName");
 
 
         // initialize headers to attach HTTP Request
@@ -128,6 +131,8 @@ public class ReportFragment extends Fragment{
 
 
         loadingDialog = new LoadingDialog(this.getActivity());
+        languageManager = new LanguageManager(container.getContext(), appName);
+        languageManager.getCurrent();
         alert = new Alert(this.getContext(), 1);
         viewModel = new ViewModelProvider(this).get(ReportViewModel.class);
     }
@@ -149,23 +154,23 @@ public class ReportFragment extends Fragment{
                 switch (item.getItemId()){
                     case R.id.incomeMenu:
                         typeCategory = "income";
-                        topTitle.setText(container.getContext().getString(R.string.reportIncome));
+                        topTitle.setText(Helper.getResStringLanguage(getContext(), R.string.reportIncome, languageManager.getShortCode()));
                         break;
                     case R.id.expenseMenu:
                         typeCategory = "expense";
-                        topTitle.setText(container.getContext().getString(R.string.reportExpense));
+                        topTitle.setText(Helper.getResStringLanguage(getContext(), R.string.reportExpense, languageManager.getShortCode()));
                         break;
                 }
 
                 switch (typeDate){
                     case "week":
-                        title_total.setText(container.getContext().getString(R.string.total_money_income_week));
+                        title_total.setText(Helper.getResStringLanguage(getContext(), R.string.total_money_income_week, languageManager.getShortCode()));
                         break;
                     case "month":
-                        title_total.setText(container.getContext().getString(R.string.total_money_income_month));
+                        title_total.setText(Helper.getResStringLanguage(getContext(), R.string.total_money_income_month, languageManager.getShortCode()));
                         break;
                     case "year":
-                        title_total.setText(container.getContext().getString(R.string.total_money_income_year));
+                        title_total.setText(Helper.getResStringLanguage(getContext(), R.string.total_money_income_year, languageManager.getShortCode()));
                         break;
                 }
 
@@ -216,15 +221,15 @@ public class ReportFragment extends Fragment{
                 switch (checked.getId()){
                     case R.id.btnWeek:
                         typeDate = "week";
-                        title_total.setText(getString(R.string.total_money_income_week));
+                        title_total.setText(Helper.getResStringLanguage(getContext(), R.string.total_money_income_week, languageManager.getShortCode()));
                         break;
                     case R.id.btnMonth:
                         typeDate = "month";
-                        title_total.setText(getString(R.string.total_money_income_month));
+                        title_total.setText(Helper.getResStringLanguage(getContext(), R.string.total_money_income_month, languageManager.getShortCode()));
                         break;
                     case R.id.btnYear:
                         typeDate = "year";
-                        title_total.setText(getString(R.string.total_money_income_year));
+                        title_total.setText(Helper.getResStringLanguage(getContext(), R.string.total_money_income_year, languageManager.getShortCode()));
                         break;
                 }
                 viewModel.getData(headers, typeCategory, typeDate);
@@ -318,7 +323,7 @@ public class ReportFragment extends Fragment{
                 .anchor(Anchor.CENTER_BOTTOM)
                 .offsetX(0d)
                 .offsetY(5d)
-                .format(getString(R.string.money_string) + ": {%Value} " + appInfo.getCurrency());
+                .format(Helper.getResStringLanguage(getContext(),R.string.money_string, languageManager.getShortCode()) + ": {%Value} " + appInfo.getCurrency());
 
         cartesian.animation(true);
         cartesian.yScale().minimum(0d);

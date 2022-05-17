@@ -59,6 +59,10 @@ public class LanguageManager {
         return this.langCode;
     }
 
+    public String getShortCode(){
+        return this.shortCode == null || this.shortCode.isEmpty() ? "vi" : this.shortCode;
+    }
+
     public HashMap<String, String> getList(){
         HashMap<String, String> list = new HashMap<>();
         list.put(ctx.getString(R.string.english), "en-US");

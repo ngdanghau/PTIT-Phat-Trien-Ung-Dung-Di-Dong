@@ -1,7 +1,11 @@
 package com.example.prudentialfinance.Helpers;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.util.DisplayMetrics;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Transformation;
@@ -11,6 +15,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Helper {
 
@@ -193,5 +198,24 @@ public class Helper {
             // whatever is appropriate in this case
             throw new IllegalArgumentException("word has fewer than 6 characters!");
         }
+    }
+
+    public static String getResStringLanguage(Context ctx, int id, String lang){
+        //Get default locale to back it
+        Resources res = ctx.getResources();
+        Configuration conf = res.getConfiguration();
+        Locale savedLocale = conf.locale;
+        //Retrieve resources from desired locale
+        Configuration confAr = ctx.getResources().getConfiguration();
+        confAr.locale = new Locale(lang);
+        DisplayMetrics metrics = new DisplayMetrics();
+        Resources resources = new Resources(ctx.getAssets(), metrics, confAr);
+        //Get string which you want
+        String string = resources.getString(id);
+        //Restore default locale
+        conf.locale = savedLocale;
+        res.updateConfiguration(conf, null);
+        //return the string that you want
+        return string;
     }
 }
