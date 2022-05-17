@@ -18,6 +18,7 @@ import com.example.prudentialfinance.Helpers.Helper;
 import com.example.prudentialfinance.Helpers.LoadingDialog;
 import com.example.prudentialfinance.Helpers.NumberTextWatcher;
 import com.example.prudentialfinance.Model.GlobalVariable;
+import com.example.prudentialfinance.Model.Goal;
 import com.example.prudentialfinance.Model.User;
 import com.example.prudentialfinance.R;
 import com.example.prudentialfinance.ViewModel.Goal.DepositViewModel;
@@ -30,6 +31,7 @@ public class DepositActivity extends AppCompatActivity {
     private EditText goal_deposit;
     private AppCompatButton btn_deposit;
     private int id,deposit;
+    Goal goal;
 
     private DepositViewModel viewModel;
     private GlobalVariable global;
@@ -46,7 +48,7 @@ public class DepositActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deposit);
         Intent intent = getIntent();
-        id = (int)intent.getSerializableExtra("id");
+        goal = (Goal)intent.getSerializableExtra("goal");
         setControl();
         setComponent();
         setEvent();
@@ -78,11 +80,18 @@ public class DepositActivity extends AppCompatActivity {
 
         btn_deposit.setOnClickListener(view -> {
             try{
-                deposit = Integer.parseInt(goal_deposit.getText().toString().replace(".",""));
-                viewModel.deposit(headers,id,deposit);
+                deposit = Integer.parseInt(goal_deposit.getText().toString().replace(",",""));
+                long money = goal.getBalance()+goal.getDeposit();
+                if(money+deposit>goal.getAmount()) {
+                    alert.showAlert(getString(R.string.alertTitle), global.getString(R.string.error_deposit_max)+
+                                                                     Helper.formatNumber((int)(goal.getAmount()-money))+
+                                                                        global.getAppInfo().getCurrency(), R.drawable.ic_close);
+                }
+                else
+                viewModel.deposit(headers,goal.getId(),deposit);
             }catch(Exception e)
             {
-                alert.showAlert(getString(R.string.alertTitle), "Lỗi chuyển số", R.drawable.ic_close);
+                alert.showAlert(getString(R.string.alertTitle), getString(R.string.number_format_exception), R.drawable.ic_close);
             }
         });
 
@@ -94,7 +103,7 @@ public class DepositActivity extends AppCompatActivity {
 
             if (object.getResult() == 1) {
                 Intent intent = new Intent();
-                intent.putExtra("id", id);
+                intent.putExtra("id", goal.getId());
                 intent.putExtra("deposit", deposit);
                 setResult(79, intent);
                 finish();
