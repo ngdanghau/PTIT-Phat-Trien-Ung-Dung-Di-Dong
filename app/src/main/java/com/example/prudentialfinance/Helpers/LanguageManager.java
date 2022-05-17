@@ -47,7 +47,7 @@ public class LanguageManager {
     public String getCurrent(){
         String locale = sharedPreferences.getString("locale", null);
         if(locale == null){
-            this.langCode = "en-US";
+            this.langCode = "vi-VN";
         }else{
             this.langCode = locale;
             setLang(this.langCode);
