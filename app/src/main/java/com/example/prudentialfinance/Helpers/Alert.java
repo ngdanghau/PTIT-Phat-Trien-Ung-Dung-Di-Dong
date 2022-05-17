@@ -105,6 +105,8 @@ public class Alert {
     }
 
     public void dismiss(){
-        alert.dismiss();
+        if(alert != null){
+            alert.dismiss();
+        }
     }
 }

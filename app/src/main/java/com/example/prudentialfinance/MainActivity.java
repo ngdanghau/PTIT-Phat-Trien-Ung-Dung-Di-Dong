@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel viewModel;
     private Intent intent;
     private LanguageManager languageManager;
+    private Alert alert;
     /**
      * Activities Order Thread
      * 1. Main Activity
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        Alert alert = new Alert(this, 1);
+        alert = new Alert(this, 1);
 
         viewModel.getObjectAppInfo().observe(this, object -> {
             if(object == null){
@@ -103,5 +104,11 @@ public class MainActivity extends AppCompatActivity {
     private void openActivity(){
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        alert.dismiss();
+        super.onDestroy();
     }
 }

@@ -68,6 +68,7 @@
 
 
     <androidx.appcompat.widget.SearchView
+        android:focusable="false"
         android:id="@+id/searchView"
         app:queryBackground="@color/transparent"
         android:layout_width="match_parent"
