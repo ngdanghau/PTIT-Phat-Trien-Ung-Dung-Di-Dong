@@ -13,10 +13,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.prudentialfinance.Activities.Budget.AddBudgetActivity;
 import com.example.prudentialfinance.Activities.General.AddGoalActivity;
 import com.example.prudentialfinance.Activities.General.CategoriesActivity;
 import com.example.prudentialfinance.Activities.General.GoalActivity;
 import com.example.prudentialfinance.Activities.Transaction.TransactionCreationActivity;
+import com.example.prudentialfinance.Container.budgets.budgetGET.BudgetAdd;
 import com.example.prudentialfinance.Fragment.CardFragment;
 import com.example.prudentialfinance.Fragment.HomeFragment;
 import com.example.prudentialfinance.Fragment.ReportFragment;
@@ -110,7 +112,11 @@ public class HomeActivity extends AppCompatActivity {
             intent.putExtra("type", "1");
             startActivity(intent);
         });
-        binding.budgetFab.setOnClickListener(view -> System.out.println("budgetFab"));
+        binding.budgetFab.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddBudgetActivity.class);
+            intent.putExtra("goal", new BudgetAdd(0));
+            startActivity(intent);
+        });
         binding.categoryFab.setOnClickListener(view -> {
             Intent intent = new Intent(this, CategoriesActivity.class);
             startActivity(intent);
